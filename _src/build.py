@@ -370,6 +370,14 @@ def top():
         o+=f'<section class="blk" id="{k}" style="max-width:1040px;padding-top:44px"><div class="h"><span class="en">{en}</span><h2>{lab}</h2><p>{TA[k][0]}</p></div><div class="cards">'+''.join(card(x) for x in ks)+'</div>'
         if k=='partners': o+='<p style="margin-top:18px"><a class="btn" href="business/">企業・支援機関の方へ →</a></p>'
         o+='</section>'
+    o+='''<section class="blk wide" id="news"><div class="h"><span class="en">NEWS</span><h2>最新のお知らせ</h2></div><div class="snsw">
+<div class="snsb"><a class="twitter-timeline" data-height="500" data-lang="ja" data-chrome="noheader nofooter noborders transparent" data-dnt="true" href="https://x.com/gcbfhq">Xで最新の投稿を見る</a></div>
+<div class="snsb snsc"><p class="en">INSTAGRAM</p><p class="nm">星心会<br>@psr_seishinkai</p><a class="go" href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener">Instagramで見る</a></div>
+<div class="snsb snsc"><p class="en">THREADS</p><p class="nm">星心会<br>@psr_seishinkai</p><a class="go" href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener">Threadsで見る</a></div>
+</div></section>
+<style>.snsw{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.snsb{height:500px;overflow-y:auto;border-top:2px solid currentColor;padding-top:12px;-webkit-overflow-scrolling:touch}.snsb>a.twitter-timeline{display:inline-block;font-weight:700;text-decoration:underline}.snsc{display:flex;flex-direction:column;justify-content:space-between;padding-bottom:16px}.snsc .nm{font-size:22px;font-weight:700;line-height:1.4}@media(max-width:800px){.snsw{grid-template-columns:1fr}.snsc{height:auto;min-height:200px}}</style>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+'''
     o+='''<div class="dark"><section class="blk wide"><div class="h"><span class="en">ACCESS</span><h2>名古屋から<br>30分です。</h2></div><div>
 <p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から直通バス</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
 <a class="go" href="access/" style="margin-top:28px">アクセスを見る</a></div></section></div>
