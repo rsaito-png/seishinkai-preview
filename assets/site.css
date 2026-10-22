@@ -208,3 +208,4 @@ dl.info{border-top:2px solid var(--ink)}dl.info dt{letter-spacing:.02em}
 details summary{font-weight:500}
 @media(min-width:900px){.hin h1,.hin h1.long{font-size:64px}.copy{font-size:40px}.h h2{font-size:34px}.hlogo img{width:56px;height:56px}.hlogo span{font-size:28px}.logo img{height:34px!important;width:34px}.logo span{font-size:19px}.hin{padding:64px 26px}.acc{padding:0 26px 22px}}
 .hero.type .big{opacity:.18}
+@media(max-width:899px){.hin h1.long{font-size:30px}}
