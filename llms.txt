@@ -1,18 +1,18 @@
 # 星心会（一般社団法人 心理社会的リハビリテーション・星心会）
 > 環境調整という、メンタルヘルスケア。三重県四日市市。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から直通バス。電話 059-315-0697。所在地 〒512-8048 三重県四日市市山城町59-4。
 
-メンタルヘルスが目的。障害福祉の制度は手段として使う。全事業の相談窓口は水晶玉。
+メンタルヘルスの専門組織。目的は情緒の安定。精神科にも公的支援にも縁がなかった人が対象の中心。全事業の相談窓口は水晶玉。
 
 ## 事業
-- [水晶玉](https://www.psr-seishinkai.org/suishodama/): メンタルヘルスコーディネート（環境調整）。心の状態を左右する環境を、評価し、設計し、手配する。
-- [RYDEEN](https://www.psr-seishinkai.org/rydeen/): 就労継続支援B型｜2026年11月1日開所。PCで、働く。SNS運用代行などの実務。
-- [茶夢](https://www.psr-seishinkai.org/chamu/): 生活介護｜3時間未満から。料理・喫茶・読書・アート。静かな日中の居場所。
-- [レオ](https://www.psr-seishinkai.org/leo/): 児童発達支援・放課後等デイサービス。おもちゃ、武道、庭いじり。体で覚える療育。
-- [金斗雲](https://www.psr-seishinkai.org/kintoun/): 居宅介護｜アウトリーチ。来られないなら、こちらから行く。
-- [梁山泊](https://www.psr-seishinkai.org/ryozanpaku/): シェアハウス｜月額8万円すべて込み。実家を出る。その最初の拠点。
+- [水晶玉](https://www.psr-seishinkai.org/suishodama/): メンタルヘルスコーディネート（環境調整）。眠れない、気分の波。原因の環境から手を打つ。
+- [RYDEEN](https://www.psr-seishinkai.org/rydeen/): PCで働く｜2026年11月1日開所。仕事が続かない。PCなら続く人の職場。
+- [茶夢](https://www.psr-seishinkai.org/chamu/): 日中の居場所｜3時間未満から。人間関係に疲れたら。料理・喫茶・読書・アート。
+- [レオ](https://www.psr-seishinkai.org/leo/): 子どもの情緒｜1歳から。おもちゃ、武道、庭いじり。遊びの中で情緒を整える。
+- [金斗雲](https://www.psr-seishinkai.org/kintoun/): 訪問｜アウトリーチ。家族が家から出ない。なら、こちらから行く。
+- [梁山泊](https://www.psr-seishinkai.org/ryozanpaku/): シェアハウス｜月額8万円すべて込み。家に居づらい。なら、住む場所を変える。
 
 ## 自費プログラム
-- [しちりんの会](https://www.psr-seishinkai.org/shichirin/): 七輪で火を起こし焼いて食べる自費参加の会。障害福祉サービスではなく手続き・診断不要。不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円。
+- [しちりんの会](https://www.psr-seishinkai.org/shichirin/): 七輪で火を起こし焼いて食べる自費参加の会。手続き・診断不要。不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円。
 
 ## 保護者向け
 - [ペアレントトレーニング](https://www.psr-seishinkai.org/leo/parent-training/): 子どもへの関わり方を変える保護者プログラム（レオで実施）。
@@ -20,8 +20,8 @@
 
 ## 企業・法人向け
 - [ストレスチェック](https://www.psr-seishinkai.org/business/stress-check/): 実施して終わらせない。組織を変える材料にする。
-- [障害者雇用サポート](https://www.psr-seishinkai.org/business/employment/): 現場に任せない。専任の担当者をつける。
-- [エージェントコンサル](https://www.psr-seishinkai.org/business/agent-consulting/): AIエージェントを、福祉の現場の戦力にする。
+- [雇用定着サポート](https://www.psr-seishinkai.org/business/employment/): 現場に任せない。専任の担当者をつける。
+- [エージェントコンサル](https://www.psr-seishinkai.org/business/agent-consulting/): AIエージェントを、現場の戦力にする。
 - [研修](https://www.psr-seishinkai.org/business/training/): 児童指導員研修と合気道研修。
 
 ## その他
