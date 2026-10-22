@@ -146,3 +146,65 @@ details p{margin-top:10px;color:var(--soft);font-size:14px}
  .hero.type .big{font-size:22vw}
 }
 .fab.top{opacity:0;pointer-events:none}
+/* ===== v9.1 Swiss style override ===== */
+:root{--bg:#fff;--ink:#111;--soft:#6b6b6b;--line:#e3e3e3;--hi:#e0662b}
+body{font-family:"Inter","Noto Sans JP",sans-serif;background:#fff;color:var(--ink);letter-spacing:0;line-height:1.8;font-feature-settings:"palt"}
+.en{font-family:"Inter",sans-serif;font-weight:500;letter-spacing:.08em;font-size:11px;text-transform:uppercase}
+h1,h2,h3,.copy,.nm,.big30,.cta h2,.price{font-family:"Inter","Noto Sans JP",sans-serif!important;font-weight:600!important;letter-spacing:-.01em!important}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo img{height:30px!important;width:30px}.logo span{font-weight:600;font-size:17px;letter-spacing:.02em}
+.gh{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+.gh nav a{opacity:1;letter-spacing:.02em;font-size:13px}.menu-btn i{background:var(--ink)}
+.gh .cta-btn{letter-spacing:.04em;font-weight:500}
+.drawer{background:#fff;color:var(--ink);border-top:1px solid var(--line)}.drawer a{border-bottom-color:var(--line);letter-spacing:.02em}.drawer a small{color:var(--soft)}
+.drawer h4{font-family:Inter,sans-serif;letter-spacing:.08em;font-weight:500}
+.hlogo{display:flex;align-items:center;gap:10px;margin-bottom:18px}.hlogo img{width:44px;height:44px}.hlogo span{font-weight:600;font-size:22px;letter-spacing:.02em}
+.hin{align-items:flex-start;text-align:left;width:100%;max-width:1040px;margin:0 auto;padding:48px 22px}
+.hin h1,.hin h1.long{font-size:40px;letter-spacing:-.01em!important;margin-right:0;line-height:1.2}
+.hin .mark{width:64px}
+.svc{border:none;padding:0;margin-top:12px;font-weight:500;letter-spacing:.02em;font-size:14px}.svc em{color:#fff}
+.copy{font-size:28px;line-height:1.35;margin-top:28px;text-shadow:none}
+.copy span{display:block}
+.hin .sub{font-size:14px;line-height:1.8}
+.go{min-width:0;padding:14px 26px;letter-spacing:.04em;font-size:14px;font-weight:500}
+.acc{text-align:left;max-width:1040px;margin:0 auto;width:100%;padding:0 22px 18px;letter-spacing:0}
+.badge{letter-spacing:.04em}
+.hero.type{background:#fff;color:var(--ink);border-bottom:1px solid var(--ink)}
+.hero.type .svc em{color:var(--hi)}.hero.type .go{background:var(--ink);color:#fff}
+.hero.type .big{font-family:Inter,sans-serif;font-weight:600;opacity:.9;color:var(--hi);letter-spacing:-.04em}
+.h h2{font-size:28px;line-height:1.3;margin-top:8px}
+.h p{font-size:14px}
+section.blk{padding-top:72px;padding-bottom:72px}
+.dark{background:#fff;color:var(--ink);border-top:1px solid var(--ink)}.dark .h p{color:var(--soft)}
+.chips button{color:var(--ink);border:1px solid var(--ink);letter-spacing:.02em;text-align:left;padding:14px 12px}
+.chips button:hover{border-color:var(--hi)}.chips button.on{color:#fff}
+.card{box-shadow:none;border:none;border-top:2px solid var(--ink);padding:24px 0 0;margin-right:0;min-height:240px;background:none}
+.card .num{font-family:Inter,sans-serif;font-weight:500;letter-spacing:-.03em}
+.card .k{font-family:Inter,sans-serif;letter-spacing:.08em}
+.btn{letter-spacing:.04em;font-weight:500}
+dl.info{border-top:2px solid var(--ink)}dl.info dt{letter-spacing:.02em}
+.sc{border:none;border-top:2px solid var(--ink);background:none}.sc:hover{box-shadow:none;transform:none}.sc:hover .nm{color:var(--hi)}
+.sc .bd{padding:12px 0 6px}.sc .nm{font-size:20px}.sc .th.t{background:#f2f2f2}.sc .th.t b{font-family:Inter,sans-serif;font-weight:600;letter-spacing:-.02em}
+.cards.filtered .sc.pick{box-shadow:none;border-top-color:var(--hi)}
+.aud button,.aud a{text-align:left;letter-spacing:.02em;border:none;border-top:1px solid var(--ink);padding:14px 2px;background:none;font-weight:500}
+.aud button.on{background:var(--ink);color:#fff;padding-left:10px}
+.self{border:none;border-top:2px solid var(--ink);background:none}.self .bd{padding:18px 0}
+.lst{border-top:2px solid var(--ink)}
+.big30{font-size:40px;line-height:1.2}.big30 em{font-family:Inter,sans-serif;color:var(--hi)}
+.dark .lst li{border-color:var(--line)!important}.dark .lst{border-top-color:var(--ink)!important}
+.dark .go{background:var(--ink);color:#fff}
+.cta{background:#fff;color:var(--ink);text-align:left;border-top:2px solid var(--ink);padding:72px 22px}
+.cta>*{max-width:1040px;margin-left:auto!important;margin-right:auto!important}
+.cta h2{font-size:30px}.cta .mark{display:none}
+.cta .row{max-width:1040px}.cta .row a{text-align:center;letter-spacing:.04em}
+.cta .w{background:var(--hi);color:#fff}.cta .w:hover{background:var(--ink)}
+.cta .o{border:1px solid var(--ink)}.cta .o:hover{color:var(--hi);border-color:var(--hi)}
+.cta .tnum{font-family:Inter,sans-serif;font-weight:500;letter-spacing:0}
+.cta .row{display:grid;grid-template-columns:1fr 1fr;max-width:520px!important;margin-left:0!important}
+.gf{background:#fff;color:var(--ink);border-top:2px solid var(--ink)}.gf h5{font-family:Inter,sans-serif;letter-spacing:.08em;color:var(--soft)}
+.gf a:hover{color:var(--hi)}.gf .cp{border-top-color:var(--line);color:var(--soft)}
+.fab{box-shadow:none;letter-spacing:.04em}
+.tag{letter-spacing:.04em}
+details summary{font-weight:500}
+@media(min-width:900px){.hin h1,.hin h1.long{font-size:64px}.copy{font-size:40px}.h h2{font-size:34px}.hlogo img{width:56px;height:56px}.hlogo span{font-size:28px}.logo img{height:34px!important;width:34px}.logo span{font-size:19px}.hin{padding:64px 26px}.acc{padding:0 26px 22px}}
+.hero.type .big{opacity:.18}
