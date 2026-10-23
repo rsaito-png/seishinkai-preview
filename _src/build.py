@@ -1,3 +1,4 @@
+import re as _re
 import os, json, html, shutil
 import os as _o
 OUT=_o.environ.get('OUT','/workspace/site_v9'); CONTENT=_o.environ.get('CONTENT',''); DUMP=_o.environ.get('DUMP','')
@@ -150,7 +151,7 @@ def service_page(d):
         if d.get('extra'): o+=d['extra'](rel)
     else:
         chips=''.join(f'<button data-a="{esc(a.replace('<br>','\n'))}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
-        o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{d["what_h"]}</h2><p>押すと内容が表示されます。</p></div>
+        o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{_re.sub(r"[0-9０-９]+つの",f"{len(d.get('what') or [])}つの",d["what_h"],count=1) if d.get("what") else d["what_h"]}</h2><p>押すと内容が表示されます。</p></div>
     <div>{f'<p class="intro" style="margin:0 0 1.2em;font-size:1.05rem;line-height:1.9">{d["what_intro"]}</p>' if d.get("what_intro") else ""}<div class="chips">{chips}</div><p class="ans" style="white-space:pre-line">押すと内容が表示されます。</p></div></section></div>'''
         if d.get('gal'): o+='<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>'
         if d.get('extra'): o+=d['extra'](rel)
