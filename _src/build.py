@@ -119,9 +119,9 @@ def service_page(d):
         o+=old_html(OLD[path])
         if d.get('extra'): o+=d['extra'](rel)
     else:
-        chips=''.join(f'<button data-a="{esc(a)}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
+        chips=''.join(f'<button data-a="{esc(a.replace('<br>','\n'))}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
         o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{d["what_h"]}</h2><p>押すと内容が表示されます。</p></div>
-    <div><div class="chips">{chips}</div><p class="ans">押すと内容が表示されます。</p></div></section></div>'''
+    <div>{f'<p class="intro" style="margin:0 0 1.2em;font-size:1.05rem;line-height:1.9">{d["what_intro"]}</p>' if d.get("what_intro") else ""}<div class="chips">{chips}</div><p class="ans" style="white-space:pre-line">押すと内容が表示されます。</p></div></section></div>'''
         if d.get('gal'): o+='<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>'
         if d.get('extra'): o+=d['extra'](rel)
         o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>

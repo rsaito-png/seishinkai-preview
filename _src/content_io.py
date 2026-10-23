@@ -55,11 +55,18 @@ def clean(md):
     return md
 def split(md):
     """returns list of (level,title,[lines]) sections"""
-    secs=[];cur=None
+    secs=[];cur=None;h2='';prev=''
     for ln in clean(md).split('\n'):
         m=re.match(r'^(#{1,4})\s+(.*?)\s*#*\s*$',ln)
+        # Docs export: a heading whose style was lost becomes "title<2 spaces>" + soft return + body.
+        # In info/FAQ sections treat such a paragraph-opening line as an h3 (text unchanged).
+        if not m and h2 in ('対象・費用・場所','よくある質問') and not prev.strip() and re.search(r'\S {2,}$',ln):
+            m=re.match(r'^()(.*?)\s*$',ln); m=('###',ln.strip())
+            cur=[3,m[1],[]];secs.append(cur);prev=ln;continue
+        prev=ln
         if m:
             cur=[len(m.group(1)),m.group(2).replace('**','').strip(),[]];secs.append(cur)
+            if cur[0]==2: h2=cur[1]
         elif cur is not None and ln.strip(): cur[2].append(ln.strip())
     return secs
 def h2groups(md):
@@ -111,6 +118,7 @@ def parse_page(md,d,ph):
             for lv,t,ls in g['本文']:
                 if lv==3: n,_,s=t.partition('｜'); w.append((n,s,f(ls)))
             if w: r['what']=w
+            r['what_intro']=f([x for lv,t,ls in g['本文'] if lv==0 for x in ls])
     if '進め方' in g and not d.get('_old'):
         fl=[(t,f(ls)) for lv,t,ls in g['進め方'] if lv==3]
         if fl:
