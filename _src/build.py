@@ -42,6 +42,7 @@ def _short(n):
     b=_r.sub(r'[（(].*?[）)]','',n).strip()
     if '・' in b: b=b.split('・')[-1]
     return b.split()[-1] if ' ' in b or '　' in b else b
+SHOW_FAQ=False  # FAQセクションは非表示（FAQPage JSON-LDは出力）
 DOCMETA={}
 for _i,_s in enumerate(SVCS):
     _m=_docmeta(_s[2])
@@ -159,7 +160,7 @@ def service_page(d):
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
     <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">もどる</button><button class="btn next">次へ</button></div></div></div></section>'''
     if d['info']: o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in d['info'])+'</dl></section>'
-    o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
+    if SHOW_FAQ: o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
