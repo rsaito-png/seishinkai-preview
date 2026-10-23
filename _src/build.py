@@ -135,14 +135,14 @@ def service_page(d):
         add=[(q,a.format(what=__import__('re').sub('<[^>]+>','',d['sub']))) for q,a in COMMON if (q.startswith('診断') or q[:4] not in have and not (path=='chamu/' and q.startswith('家族に'))) and not (path=='leo/' and q.startswith('家族')) and not (q.startswith('いくら') and ('費用' in have or '料金' in have or path=='ryozanpaku/'))]
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
-    ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
+    ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
     o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
     if d.get('photo'):
         o+=f'<section class="hero{" short" if d.get("short") else ""}"><div class="bg" style="background-image:url({rel}img/{d["photo"]}.jpg);background-position:{d.get("pos","50% 50%")}"></div>'
     else:
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
     mark=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
-    o+=f'''<div class="hin">{mark}<p class="en">{d["en"]}</p><h1{' class="long"' if len(d["name"])>5 else ''}>{d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
+    o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1{' class="long"' if len(d["name"])>5 else ''}>{d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
 <p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}<a class="go" href="#what">{d.get("go","中身を見る")}</a></div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
@@ -245,7 +245,7 @@ PAGES.append(dict(path='suishodama/',name='水晶玉',en='SUISHODAMA',photo='her
  faq=[('親と離れて暮らしたいです。','対応します。親元を出る計画を立て、住まい（梁山泊・一人暮らし）と日中の行き先まで手配します。'),('料金は？','多くの場合、自己負担はありません。公的制度を使い、'+TEJUN),('家族からの依頼は？','受け付けます。本人の利用意思は面談で確認します。'),NAGOYA,('他の支援機関を利用中でも？','対応します。現在の利用先を前提に設計します。')],
  rel=[('しちりんの会','shichirin/'),('RYDEEN','rydeen/')],cta_h='申し込み'))
 
-PAGES.append(dict(path='rydeen/',name='RYDEEN',en='RYDEEN',big='R',
+PAGES.append(dict(path='rydeen/',name='RYDEEN',en='RYDEEN',big='R',logo='rydeen_logo.webp',
  title='RYDEEN｜PCで働く｜名古屋から30分（三重県四日市市山城町）',
  desc='仕事が続かない、でもPCは得意。そういう人が実務で働く場所がRYDEENです。SNS運用代行などWeb広報の実務を行います。2026年11月1日、三重県四日市市山城町に開所します。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。',
  cat='PCで働く',copy=['PCで、','働きます。'],sub='SNS運用代行、Web広報、AIを使った事務。<br>練習ではなく、実務です。',badge='<p class="badge">2026年11月1日 開所</p>',acc=ACC,addr_ld=YAMA,
@@ -381,6 +381,7 @@ for d in PAGES: service_page(d)
 def card(k,rel=''):
     _,n,u,c,l,t=SV[k]
     th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>' if t else f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","employment":"EMPLOY","agent":"AI"}.get(k,n)}</b></div>'
+    if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
 TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='名古屋から30分です。',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
 def top():
