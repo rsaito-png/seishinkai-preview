@@ -127,7 +127,7 @@ def service_page(d):
         o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
     <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">もどる</button><button class="btn next">次へ</button></div></div></div></section>'''
-    o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in d['info'])+'</dl></section>'
+    if d['info']: o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in d['info'])+'</dl></section>'
     o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'

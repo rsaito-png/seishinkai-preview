@@ -116,7 +116,7 @@ def parse_page(md,d,ph):
         if fl:
             ens=[x[0] for x in d['flow']]
             r['flow']=[[ens[i] if i<len(ens) else 'STEP',t,x] for i,(t,x) in enumerate(fl)]
-    if '対象・費用・場所' in g: r['info']=[(t,f(ls)) for lv,t,ls in g['対象・費用・場所'] if lv==3]
+    r['info']=[(t,f(ls)) for lv,t,ls in g.get('対象・費用・場所',[]) if lv==3]  # removed section => hide
     if 'よくある質問' in g: r['faq']=[(md2h([t],p,ph),f(ls)) for lv,t,ls in g['よくある質問'] if lv==3]
     return r
 def top_md(t):
