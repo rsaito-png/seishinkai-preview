@@ -42,7 +42,8 @@ def _short(n):
     b=_r.sub(r'[（(].*?[）)]','',n).strip()
     if '・' in b: b=b.split('・')[-1]
     return b.split()[-1] if ' ' in b or '　' in b else b
-SHOW_FAQ=False  # FAQセクションは非表示（FAQPage JSON-LDは出力）
+SHOW_FAQ=False
+DUPLOG=[]  # FAQセクションは非表示（FAQPage JSON-LDは出力）
 DOCMETA={}
 for _i,_s in enumerate(SVCS):
     _m=_docmeta(_s[2])
@@ -159,13 +160,32 @@ def service_page(d):
         o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
     <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">もどる</button><button class="btn next">次へ</button></div></div></div></section>'''
+    _bt=lambda h:_re.sub(r'\s|　','',_re.sub('<[^>]+>','',h))
+    B=_bt(o.split('<p class="acc">')[1].split('</section>',1)[1]) if '<p class="acc">' in o else ''
+    def _dup(v):
+        t=_bt(v.replace('<br>',''))
+        if len(t)>=4 and t in B: return True
+        m=_re.search(r'([^\s　、（(]+駅).*?(徒歩\d+分)',t)
+        if m and m.group(1).replace('三岐線','') in B and _re.search(_re.escape(m.group(1).replace('三岐線',''))+r'.{0,4}'+m.group(2),B): return True
+        return False
+    if path in OLD and d['info']:
+        _n=[(k,v) for k,v in d['info'] if not _dup(v)]
+        if len(_n)<len(d['info']): DUPLOG.append((path,'info',[k for k,v in d['info'] if (k,v) not in _n])); d['info']=_n
     if d['info']: o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in d['info'])+'</dl></section>'
     if SHOW_FAQ: o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    B=_bt(o.split('<p class="acc">')[1].split('</section>',1)[1].split('class="rel"')[0]) if '<p class="acc">' in o else ''
+    if d.get('acc'):
+        _ap=d['acc'].split('／'); _keep=[x for x in _ap if not _dup(x)]
+        if len(_keep)<len(_ap):
+            DUPLOG.append((path,'acc',[x for x in _ap if x not in _keep]))
+            o=o.replace(f'<p class="acc">{d["acc"]}</p>',f'<p class="acc">{"／".join(_keep)}</p>' if _keep else '',1)
+    _tdup=path in OLD and _bt(tel) in B
+    if _tdup: DUPLOG.append((path,'tel',[tel]))
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
     o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>
-<div class="row"><a class="w" href="{line}">LINE</a><a class="o" href="tel:{tel.replace("-","")}">電話</a></div><a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>{d.get("cta_note","")}</section>'''
+<div class="row"><a class="w" href="{line}">LINE</a><a class="o" href="tel:{tel.replace("-","")}">電話</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
     o+=footer(rel); write(path,o)
 
 def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub=''):
@@ -522,3 +542,6 @@ for old,new in RED:
     write(old,f'<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>移動しました｜星心会</title><link rel="canonical" href="{BASE}/{new}"><meta http-equiv="refresh" content="0; url={r}"><script>location.replace("{r}"+location.hash)</script></head><body><p>このページは移動しました：<a href="{r}">{BASE}/{new}</a></p></body></html>')
 open(OUT+'/.nojekyll','w').write('')
 print('placeholders:',sorted(PH))
+
+import sys as _sy
+for _x in DUPLOG: print('DUP',*_x,file=_sy.stderr)
