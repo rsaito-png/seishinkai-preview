@@ -39,6 +39,7 @@ def _docmeta(url):
 def _short(n):
     import re as _r
     b=_r.sub(r'[（(].*?[）)]','',n).strip()
+    if '・' in b: b=b.split('・')[-1]
     return b.split()[-1] if ' ' in b or '　' in b else b
 DOCMETA={}
 for _i,_s in enumerate(SVCS):
@@ -182,7 +183,7 @@ NAGOYA=('名古屋在住でも利用できますか？','相談はできます�
 PAGES=[]
 def partners(rel): return f'''<section class="blk wide" id="partners"><div class="h"><span class="en">FOR PARTNERS</span><h2>企業・支援機関の方へ</h2><p>企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。</p></div><div>
 <ul class="lst"><li><b>職場定着を支える住まい</b>メンタルピアレジデンス・梁山泊は、障害者雇用で働く人の職場定着を生活の側から支える住まいとケアの場です。睡眠と生活リズムを整え、崩れの兆しを早く拾います。</li>
-<li><b>紹介・連携の窓口</b>入居の紹介、定着支援の連携、職場との情報共有の方法は、星心会本部が一本で受けます。本人の同意を前提に進めます。</li>
+<li><b>紹介・連携の窓口</b>入居の紹介、職場定着の連携、職場との情報共有の方法は、星心会本部が一本で受けます。本人の同意を前提に進めます。</li>
 <li><b>定着支援と一体で</b>専任担当による<a href="{rel}business/employment/" style="display:inline;color:var(--hi)">雇用定着サポート</a>と住まいを組み合わせて提供できます。</li></ul>
 <div class="cta" style="padding:28px 20px;margin-top:22px;text-align:left"><p class="en" style="color:var(--hi)">CONTACT</p><p style="margin:6px 0 14px">紹介・連携の問い合わせ</p><div class="row" style="margin:0;max-width:none"><a class="o" href="tel:0593150697" style="text-align:center">電話 059-315-0697</a><a class="w" href="{rel}contact/" style="text-align:center">フォーム</a></div></div></div></section>'''
 AUD_P=[{"@type":"Audience","audienceType":"企業の人事・雇用担当"},{"@type":"Audience","audienceType":"JEED（高齢・障害・求職者雇用支援機構）"},{"@type":"Audience","audienceType":"ハローワーク"},{"@type":"Audience","audienceType":"労働局"},{"@type":"Audience","audienceType":"働き続けたい社会人・親元を出たい人"}]
@@ -445,7 +446,7 @@ def access(rel): return f'''<section class="blk wide"><div class="h"><span class
 simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から直通バスもあります。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow',sub='名古屋から30分です。')
 
 # ---------- faq ----------
-FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は月額8万円すべて込みです。'),
+FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は一般の賃貸住居で、賃料は'+ph('梁山泊の賃料')+'です。'),
 ('診断がなくても相談できますか？','できます。診断の有無は問いません。'),('家族から相談してもいいですか？','受け付けます。本人が動けない状態でも、家族からの相談で始められます。'),
 NAGOYA,('どこに相談すればいいかわかりません。','水晶玉が全事業の入口です。どの事業か決まっていなくても、059-315-0697へご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から直通バスもあります。'),
 ('病院に通っていないと使えませんか？','使えます。通院の有無を前提にしていません。生活と環境の側から組み立てます。'),('人間関係に疲れています。どこに相談すればいいですか？','水晶玉で環境を整えるか、しちりんの会に参加してください。住まいごと変えたい方は梁山泊をご覧ください。')]
