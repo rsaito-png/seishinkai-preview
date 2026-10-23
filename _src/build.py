@@ -126,7 +126,7 @@ def service_page(d):
         d.update(r)
     if path in DOCMETA:
         h1,first=DOCMETA[path]
-        d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=''
+        d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=d.pop('_pre','')
         if first: d['desc']=first
         d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
     if path in CP and not ovr:

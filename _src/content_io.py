@@ -79,6 +79,13 @@ def h2groups(md):
 def lines(ls): return [x for x in ls if x!=NOTE]
 def parse_page(md,d,ph):
     p=d['path'];g=h2groups(md);r={}
+    pre=[];seen=False
+    for x in md.splitlines():
+        x=x.strip()
+        if x.startswith('# '): seen=True; continue
+        if x.startswith('## '): break
+        if seen and x and x!=NOTE: pre.append(x)
+    r['_pre']=' '.join(pre)
     f=lambda ls:md2h(lines(ls),p,ph)
     if g.get('見出し'): r['copy']=[x for _,_,ls in g['見出し'] for x in lines(ls)]
     if g.get('リード文'): r['sub']=f([x for _,_,ls in g['リード文'] for x in ls])
