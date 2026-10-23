@@ -22,6 +22,30 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。','karate_sit'),
 ('agent','エージェントコンサル','business/agent-consulting/','AIエージェント導入','AIエージェントを、事業所の戦力にします。',None),
 ('training','研修','business/training/','児童指導員研修・合気道研修','体を使って支援を学ぶ研修を、土日に行います。','karate_bow')]
+def _docmeta(url):
+    """name (# line) and first sentence of リード文 from content/<slug>.md, if present"""
+    if not CONTENT: return None
+    f=_o.path.join(CONTENT,CI.slug(url)+'.md')
+    if not _o.path.exists(f): return None
+    secs=CI.split(open(f,errors='ignore').read()); h1=next((t for lv,t,_ in secs if lv==1),None)
+    lead=next((ls for lv,t,ls in secs if lv==2 and t=='リード文'),[])
+    lead=[x for x in lead if x!=CI.NOTE]
+    import re as _r
+    first=''
+    if lead:
+        t=_r.sub(r'\*\*|\[([^\]]+)\]\([^)]*\)',lambda m:m.group(1) or '',lead[0]).strip()
+        m=_r.match(r'.*?[。！？]',t); first=m.group(0) if m else t
+    return h1,first
+def _short(n):
+    import re as _r
+    b=_r.sub(r'[（(].*?[）)]','',n).strip()
+    return b.split()[-1] if ' ' in b or '　' in b else b
+DOCMETA={}
+for _i,_s in enumerate(SVCS):
+    _m=_docmeta(_s[2])
+    if _m and _m[0]:
+        DOCMETA[_s[2]]=_m
+        SVCS[_i]=(_s[0],_short(_m[0]),_s[2],'',_m[1] or _s[4],_s[5])
 SV={s[0]:s for s in SVCS}
 AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['suishodama','shichirin','rydeen','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
@@ -59,7 +83,7 @@ def head(rel,title,desc,path,ld=None):
 def sns_html(labels=False):
     return '<div class="sns">'+''.join(f'<a href="{u}" target="_blank" rel="noopener" aria-label="{n}">{ICON[n]}{(" "+n) if labels else ""}</a>' for n,u in SNS)+'</div>'
 def header(rel):
-    dr=''.join(f'<h4>{lab}</h4>'+''.join(f'<a href="{rel}{SV[k][2]}">{SV[k][1]}<small>{SV[k][3].split("｜")[0]}</small></a>' for k in ks) for _,lab,_,_,ks,_h in AUD)
+    dr=''.join(f'<h4>{lab}</h4>'+''.join(f'<a href="{rel}{SV[k][2]}">{SV[k][1]}{f'<small>{SV[k][3].split("｜")[0]}</small>' if SV[k][3] else ''}</a>' for k in ks) for _,lab,_,_,ks,_h in AUD)
     return f'''<header class="gh"><a class="logo" href="{rel}"><img src="{rel}img/mark_black.svg" alt=""><span>星心会</span></a>
 <nav><a href="{rel}#self">ご本人</a><a href="{rel}#family">ご家族</a><a href="{rel}#parents">保護者</a><a href="{rel}#partners">企業・支援機関</a><a href="{rel}access/">アクセス</a>{sns_html()}</nav>
 <a class="cta-btn" href="{rel}contact/">相談する</a><button class="menu-btn" aria-label="メニュー"><i></i><i></i></button></header>
@@ -99,6 +123,11 @@ def service_page(d):
         r=CI.parse_page(open(cf,errors='ignore').read(),d,ph); ovr=True
         if 'old' in r: OLD[path]=r.pop('old')
         d.update(r)
+    if path in DOCMETA:
+        h1,first=DOCMETA[path]
+        d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=''
+        if first: d['desc']=first
+        d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
     if path in CP and not ovr:
         have=' '.join(q for q,a in d['faq'])
         add=[(q,a.format(what=__import__('re').sub('<[^>]+>','',d['sub']))) for q,a in COMMON if (q.startswith('診断') or q[:4] not in have and not (path=='chamu/' and q.startswith('家族に'))) and not (path=='leo/' and q.startswith('家族')) and not (q.startswith('いくら') and ('費用' in have or '料金' in have or path=='ryozanpaku/'))]
@@ -111,7 +140,7 @@ def service_page(d):
     else:
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
     mark=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
-    o+=f'''<div class="hin">{mark}<p class="en">{d["en"]}</p><h1{' class="long"' if len(d["name"])>5 else ''}>{d["name"]}</h1><p class="svc">{d["cat"]}</p>
+    o+=f'''<div class="hin">{mark}<p class="en">{d["en"]}</p><h1{' class="long"' if len(d["name"])>5 else ''}>{d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
 <p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}<a class="go" href="#what">{d.get("go","中身を見る")}</a></div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
