@@ -216,3 +216,9 @@ details summary{font-weight:500}
 .hin h1.deco{word-break:keep-all;overflow-wrap:anywhere;max-width:100%;padding-left:18px;border-left:6px solid var(--hi);font-size:clamp(26px,7.4vw,30px)}
 .hin h1.deco::after{content:"";display:block;width:56px;height:2px;background:currentColor;margin-top:16px}
 @media(min-width:900px){.hin h1.deco{font-size:52px;padding-left:24px}}
+
+.hin h1.deco{font-weight:800;font-size:clamp(30px,8.6vw,36px);line-height:1.25;letter-spacing:.02em!important;border-left-width:8px;margin:18px 0 40px}
+.hin h1.deco::after{width:72px;height:4px;background:var(--hi);margin-top:22px}
+.hero:has(h1.deco){padding-bottom:72px}
+.hero:has(h1.deco)+*{margin-top:24px}
+@media(min-width:900px){.hin h1.deco{font-size:60px;margin:24px 0 56px}.hero:has(h1.deco){padding-bottom:110px}}
