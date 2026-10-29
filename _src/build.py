@@ -199,7 +199,7 @@ ACC='四日市市山城町／三岐線 山城駅から徒歩5分／名古屋西I
 ACC2='四日市市あさけが丘／三岐線 山城駅から徒歩12分／名古屋西ICから車で約30分'
 YAMA={"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"}
 ASAKE={"@type":"PostalAddress","postalCode":"512-8055","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"あさけが丘2-1-42"}
-PLACE_Y='三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分／四日市駅から直通バス'
+PLACE_Y='三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分／四日市駅から三岐バス「団地下」'
 PLACE_A='三重県四日市市あさけが丘2-1-42<br>三岐線 山城駅から徒歩12分<br>名古屋西ICから車で約30分'
 NAGOYA=('名古屋在住でも利用できますか？','相談はできます。居住地によって使える制度が異なるため、初回連絡時に確認し、手続きはこちらで進めます。')
 
@@ -268,7 +268,7 @@ PAGES.append(dict(path='rydeen/',name='RYDEEN',en='RYDEEN',big='R',logo='rydeen_
  what_h='3つの<br>実務',what=[('SNS運用代行','','企業・店舗のSNSを、投稿の企画から作成・予約まで請け負います。'),('Web広報','','ホームページの更新、写真の整理、告知文の作成を、外部の仕事として納品します。'),('AI事務','','AIを道具として使い、文書作成やデータ整理をこなします。使い方は現場で覚えます。')],
  flow=[["VISIT","見学","作業内容と環境を確認します。PCの得意・不得意もここで見ます。"],["TRIAL","体験","実際の作業を体験し、ペースと担当を決めます。"],["CONTRACT","手続き",TEJUN],["WORK","通所","担当業務を持ち、実務として納品します。"]],
  info=[('対象','PC作業が得意、または得意にしたい方'),('場所',PLACE_Y),('開所','2026年11月1日'),('時間',ph('利用時間')),('費用','公的制度の利用可（手続きはこちらで代行） '+ph('利用料')),('申し込み','見学予約は電話またはLINE')],
- faq=[('PCはどの程度使えればいいですか？','見学・体験で作業内容を確認し、担当を決めます。'),('何か準備は要りますか？','要りません。'+TEJUN),('名古屋から通えますか？','通えます。名古屋西ICから車で約30分、三岐線 山城駅から徒歩5分です。四日市駅から直通バスもあります。')],
+ faq=[('PCはどの程度使えればいいですか？','見学・体験で作業内容を確認し、担当を決めます。'),('何か準備は要りますか？','要りません。'+TEJUN),('名古屋から通えますか？','通えます。名古屋西ICから車で約30分、三岐線 山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。')],
  rel=[('梁山泊','ryozanpaku/'),('水晶玉','suishodama/')],cta_h='見学を申し込む'))
 
 PAGES.append(dict(path='chamu/',badge='<p class="badge">短時間利用OK</p>',name='茶夢',en='CHAMU',photo='counter',pos='50% 60%',
@@ -420,7 +420,7 @@ def top():
     o+=f'''<section class="hero"><div class="bg" style="background-image:url(img/hero_top.jpg);background-position:50% 88%"></div>
 <div class="hin"><div class="hlogo"><img src="img/mark_white.svg" alt=""><span>星心会</span></div><p class="en">SEISHINKAI · YOKKAICHI</p>
 <p class="copy" style="margin-top:18px">{''.join(f'<span>{x}</span>' for x in TOPC['copy'])}</p><p class="sub" style="font-size:16px">{TOPC['sub']}</p>
-</div><p class="acc">名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分／四日市駅から直通バスあり</p></section>
+</div><p class="acc">名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分／四日市駅から三岐バス「団地下」</p></section>
 <section class="blk" id="entry" style="max-width:1040px;padding-bottom:10px"><div class="h"><span class="en">ENTRY</span><h2>{TOPC['entry_h']}</h2><p>{TOPC['entry_p']}</p></div>
 <div class="aud" style="grid-template-columns:repeat(2,minmax(0,1fr))">{''.join(f'<a href="#{k}">{lab}<small>{TA[k][1]} ↓</small></a>' for k,lab,en,lead,ks,hint in AUD)}</div></section>'''
     for k,lab,en,lead,ks,hint in AUD:
@@ -436,7 +436,7 @@ def top():
 '''
     o+='''<div class="dark"><section class="blk wide"><div class="h"><span class="en">ACCESS</span><h2>名古屋から<br>30分です。</h2></div><div>
 <p class="big30">名古屋西IC<br>から車で <em>30</em>分</p>
-<img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px"><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から直通バス</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
+<img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px"><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
 <a class="go" href="access/" style="margin-top:28px">アクセスを見る</a></div></section></div>
 <section class="cta" id="contact"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><p style="font-size:13px;opacity:.7;margin-top:8px">どの事業か決まっていなくてもかまいません。</p>
 <div class="row"><a class="w" href="contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
@@ -465,18 +465,18 @@ simple_page('about/','星心会について｜理念・法人概要・代表｜�
 # ---------- access ----------
 MAP='https://www.google.com/maps/search/?api=1&query='
 def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span><h2>名古屋から<br>30分です。</h2></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px">
-<ul class="lst" style="margin-top:22px"><li><b>車</b>名古屋西ICから約30分です。</li><li><b>電車</b>三岐鉄道三岐線「山城」駅から徒歩5分です。</li><li><b>バス</b>四日市駅から直通バスがあります。 {ph('路線名・停留所名')}</li></ul></div></section>
+<ul class="lst" style="margin-top:22px"><li><b>車</b>名古屋西ICから約30分です。</li><li><b>電車</b>三岐鉄道三岐線「山城」駅から徒歩5分です。</li><li><b>バス</b>四日市駅から三岐バスで「団地下」下車です。</li></ul></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">LOCATIONS</span><h2>拠点</h2></div><ul class="lst">
 <li><b>本部・水晶玉・RYDEEN・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>茶夢・レオ</b>〒512-8055 三重県四日市市あさけが丘2-1-42（山城駅から徒歩12分）<br><a href="{MAP}三重県四日市市あさけが丘2-1-42" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>金斗雲</b>三重県三重郡菰野町田光1801-165</li><li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
 <section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="w" href="{rel}contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
-simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から直通バスもあります。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow',sub='名古屋から30分です。')
+simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow',sub='名古屋から30分です。')
 
 # ---------- faq ----------
 FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は一般の賃貸住居で、家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。'),
 ('診断がなくても相談できますか？','できます。診断の有無は問いません。'),('家族から相談してもいいですか？','受け付けます。本人が動けない状態でも、家族からの相談で始められます。'),
-NAGOYA,('どこに相談すればいいかわかりません。','水晶玉が全事業の入口です。どの事業か決まっていなくても、059-315-0697へご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から直通バスもあります。'),
+NAGOYA,('どこに相談すればいいかわかりません。','水晶玉が全事業の入口です。どの事業か決まっていなくても、059-315-0697へご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。'),
 ('病院に通っていないと使えませんか？','使えます。通院の有無を前提にしていません。生活と環境の側から組み立てます。'),('人間関係に疲れています。どこに相談すればいいですか？','水晶玉で環境を整えるか、しちりんの会に参加してください。住まいごと変えたい方は梁山泊をご覧ください。')]
 def faqb(rel): return '<section class="blk"><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in FAQ)+'</div><p style="margin-top:30px;font-size:14px">事業ごとの質問は各ページにあります。</p><ul class="lst" style="margin-top:10px">'+''.join(f'<li><a href="{rel}{s[2]}#faq"><span>{s[1]}</span></a></li>' for s in SVCS)+'</ul></section>'
 simple_page('faq/','よくある質問｜費用・診断・家族からの相談・名古屋から｜星心会','星心会のよくある質問です。費用、診断の有無、家族からの相談、名古屋在住でも利用できるか、アクセスについてお答えします。',"よくある質問",'FAQ',faqb,ld=[faq_ld(FAQ)])
@@ -520,7 +520,7 @@ write('404.html',o+header('')+'<section class="blk" style="text-align:center;min
 # ---------- robots / llms ----------
 open(OUT+'/robots.txt','w').write('# TEST PHASE: block all crawlers. At launch replace with:\n# User-agent: *\n# Allow: /\n# Sitemap: '+BASE+'/sitemap.xml\nUser-agent: *\nDisallow: /\n')
 L=f'''# 星心会（{ORG}）
-> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から直通バスがあります。電話は{TEL}、所在地は{ADDR}です。
+> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。
 
 眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。全事業の相談窓口は水晶玉です。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
 
