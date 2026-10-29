@@ -91,9 +91,10 @@ Squareカード決済または銀行振込
 研修の内容は、厚生労働省の次の資料に基づいています。
 
 - [ストレスチェック制度の省令・告示・指針の公表](https://www.mhlw.go.jp/stf/houdou/0000082587.html)
-- [研修に係る具体的事項（基発0501第4号）](https://www.mhlw.go.jp/web/t_doc?dataId=00tc1014&dataType=1&pageNo=1)
+- [研修に係る具体的事項（基発0501第4号・PDF）](https://www.mhlw.go.jp/content/11300000/0000084675.pdf)
+- [小規模事業場ストレスチェック制度実施マニュアルの公表](https://www.mhlw.go.jp/stf/newpage_69680.html)
+- [小規模事業場ストレスチェック制度実施マニュアル（PDF）](https://www.mhlw.go.jp/content/11300000/001678866.pdf)
 - [こころの耳（ストレスチェック制度）](https://kokoro.mhlw.go.jp/etc/kaiseianeihou/)
-- [ストレスチェック実施機関等の方](https://www.mhlw.go.jp/stf/newpage_71429.html)
 - [治療と仕事の両立支援ナビ](https://chiryoutoshigoto.mhlw.go.jp/)
 
 ## よくある質問
