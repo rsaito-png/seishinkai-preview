@@ -238,7 +238,7 @@ details summary{font-weight:500}
 .hero:has(h1.deco)+.blk{padding-top:28px}.hero:has(h1.deco)+.blk .prose>h3:first-child{margin-top:0!important}
 /* portrait beside 担当 — square, left, no extra section gap */
 dd.who{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-areas:"img cap" "bio bio";gap:6px 12px;align-items:end}
-dd.who img{grid-area:img;width:96px;height:96px;object-fit:cover;object-position:50% 42%;align-self:start}
+dd.who img{grid-area:img;width:96px;height:96px;object-fit:cover;object-position:center top;align-self:start}
 dd.who .cap{grid-area:cap;font-size:13px;font-weight:600;line-height:1.35;letter-spacing:.02em}
 dd.who .bio{grid-area:bio}
 @media(min-width:900px){
