@@ -212,3 +212,7 @@ details summary{font-weight:500}
 .hin .plogo{display:block;width:120px;height:120px;border-radius:50%;margin:0 0 16px;box-shadow:0 0 24px rgba(90,110,255,.35)}
 @media(max-width:899px){.hin .plogo{width:88px;height:88px;margin-bottom:12px}}
 .sc .th.t img{display:block;margin:auto}
+
+.hin h1.deco{word-break:keep-all;overflow-wrap:anywhere;max-width:100%;padding-left:18px;border-left:6px solid var(--hi);font-size:clamp(26px,7.4vw,30px)}
+.hin h1.deco::after{content:"";display:block;width:56px;height:2px;background:currentColor;margin-top:16px}
+@media(min-width:900px){.hin h1.deco{font-size:52px;padding-left:24px}}

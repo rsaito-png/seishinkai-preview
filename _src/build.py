@@ -145,7 +145,7 @@ def service_page(d):
     else:
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
     mark=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
-    o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1{' class="long"' if len(d["name"])>5 else ''}>{d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
+    o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1 class="{'long' if len(d["name"])>5 else ''}{' deco' if d.get('deco') else ''}">{d["name"].replace("ストレスチェック実施者","ストレスチェック<wbr>実施者<wbr>").replace("<wbr>養成研修","養成<wbr>研修") if d.get("deco") else d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
 <p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
@@ -386,10 +386,10 @@ PAGES.append(dict(path='business/agent-consulting/',name='エージェントコ�
  faq=[('高額なシステムが必要ですか？','不要です。今ある環境と予算に合わせます。'),('PCに詳しいスタッフがいません。','現場が使えるところまで研修します。'),('旧「AIコンサル」との違いは？','AIチャットの導入から、業務を自律的にこなすAIエージェントの活用へ刷新しました。')],
  rel=[('研修','business/training/'),('ストレスチェック','business/stress-check/')],cta_h='無料で相談する'))
 
-PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,gal=[('sct_soudan','相談の様子のイラスト')],name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
+PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,deco=True,gal=[('sct_soudan','相談の様子のイラスト')],name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
  title='ストレスチェック実施者養成研修｜歯科医師・看護師・精神保健福祉士・公認心理師｜オンライン 星心会',
  desc='ストレスチェック実施者養成研修です。歯科医師・看護師・精神保健福祉士・公認心理師の方を対象に、Google Meetのリアルタイム開催で3科目・計5時間を行います。受講料は税込12,800円です。',
- cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='オンライン（Google Meet）',
+ cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='',
  what_h='3つの<br>科目',what=[],flow=[],info=[],faq=[],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
 
