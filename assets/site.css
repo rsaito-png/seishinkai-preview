@@ -234,3 +234,4 @@ details summary{font-weight:500}
 .hero:has(h1.deco) h1.deco,.hero:has(h1.deco) .copy,.hero:has(h1.deco) .svc{color:#fff}
 .hero:has(h1.deco) .sub{color:#fff;opacity:.82}
 @media(min-width:900px){.hin h1.deco{margin:14px 0 24px}.hero:has(h1.deco){padding-bottom:0}.hero:has(h1.deco) .hin{padding-top:56px;padding-bottom:44px}}
+@media(max-width:899px){.hero:has(h1.deco) .big{opacity:.3}}
