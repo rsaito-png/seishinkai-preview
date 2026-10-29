@@ -370,7 +370,9 @@ PAGES.append(dict(path='business/employment/',extra=partners,audience=AUD_P[:4],
  faq=[('すでに雇用している社員だけでも依頼できますか？','依頼できます。プランBから直接申し込めます。'),('企業側に偏った支援ですか？','本人の側にも企業の側にも寄せません。双方に無理のない体制を作ります。'),('社員の住まいまで対応できますか？','対応します。メンタルピアレジデンス・梁山泊を、働き続けるための住まいとして紹介できます。'),('支援機関からの紹介は？','受け付けます。窓口は本部（059-315-0697）です。'),('三重県外の企業も対象ですか？',ph('対応エリア'))],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='相談する'))
 
-PAGES.append(dict(path='business/agent-consulting/',deco=True,name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
+def agent_howto(rel): return '''<section class="blk wide"><div class="h"><span class="en">HOW WE USE IT</span><h2>代表 齊藤の<br>Grok Botの使い方</h2><p>作業はボットに任せ、人は確認と判断だけをします。</p></div>
+<dl class="info"><div><dt>毎朝の計画書</dt><dd>平日の朝、前回の計画とモニタリング記録から、個別支援計画の下書きをGoogleドキュメントに作ります。職員は読んで直し、確定します。</dd></div><div><dt>会議録とアセスメント</dt><dd>居宅介護の利用者ごとに、計画や過去の記録からアセスメントシートと担当者会議録を下書きします。</dd></div><div><dt>保護者への報告から広報へ</dt><dd>レオの日々の報告を、名前を出さない投稿文と画像にします。出すかどうかは人が決めます。</dd></div><div><dt>入札情報の巡回</dt><dd>自治体の入札案件を平日に巡回し、関係する案件だけを報告します。</dd></div><div><dt>このホームページ</dt><dd>文言の修正や写真の差し替えをチャットで頼み、反映後の画面を確認して公開します。</dd></div></dl></section>'''
+PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=agent_howto,name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
  title='エージェントコンサル｜Grok Botで事業所の書類と広報をAIエージェントに任せる｜星心会',
  desc='対人支援の事業所のためのAIエージェント導入支援です。Grok Botを使い、計画書・記録・会議録の下書き、SNS投稿、ホームページ更新をAIエージェントに任せます。星心会が自ら毎日運用している方法をそのまま伝えます。',
  cat='事業所・法人向け',copy=['Grok Botを、','事業所の職員にします。'],sub='チャットで頼むと、書類と広報を仕上げて戻します。<br>星心会が毎日使っている方法を、そのまま伝えます。',acc='',
