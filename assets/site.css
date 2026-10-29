@@ -220,5 +220,5 @@ details summary{font-weight:500}
 .hin h1.deco{font-weight:800;font-size:clamp(30px,8.6vw,36px);line-height:1.25;letter-spacing:.02em!important;border-left-width:8px;margin:18px 0 40px}
 .hin h1.deco::after{width:72px;height:4px;background:var(--hi);margin-top:22px}
 .hero:has(h1.deco){padding-bottom:72px}
-.hero:has(h1.deco)+*{margin-top:24px}
+.hero:has(h1.deco) .sub{margin-bottom:48px}
 @media(min-width:900px){.hin h1.deco{font-size:60px;margin:24px 0 56px}.hero:has(h1.deco){padding-bottom:110px}}
