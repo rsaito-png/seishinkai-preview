@@ -86,6 +86,16 @@ Squareカード決済または銀行振込
 
 [申込ページ](https://rsaito-png.github.io/portal/sct.html)からお申し込みください。
 
+### 資料
+
+研修の内容は、厚生労働省の次の資料に基づいています。
+
+- [研修に係る具体的事項（基発0501第4号）](https://www.mhlw.go.jp/bunya/roudoukijun/anzeneisei12/pdf/150511-4.pdf)
+- [ストレスチェック制度 関係法令等（告示・ストレスチェック指針）](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000181838.html)
+- [小規模事業場ストレスチェック制度実施マニュアル](https://www.mhlw.go.jp/content/11300000/001678866.pdf)
+- [ストレスチェック制度について（こころの耳）](https://kokoro.mhlw.go.jp/etc/kaiseianeihou/)
+- [治療と仕事の両立支援ナビ](https://chiryoutoshigoto.mhlw.go.jp/)
+
 ## よくある質問
 
 ### 誰が受講できますか？
