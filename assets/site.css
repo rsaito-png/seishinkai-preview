@@ -222,3 +222,4 @@ details summary{font-weight:500}
 .hero:has(h1.deco){padding-bottom:72px}
 .hero:has(h1.deco) .sub{margin-bottom:48px}
 @media(min-width:900px){.hin h1.deco{font-size:60px;margin:24px 0 56px}.hero:has(h1.deco){padding-bottom:110px}}
+.acc:empty{display:none}
