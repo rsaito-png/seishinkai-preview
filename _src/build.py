@@ -175,7 +175,14 @@ def service_page(d):
     if path in OLD and d['info']:
         _n=[(k,v) for k,v in d['info'] if not _dup(v)]
         if len(_n)<len(d['info']): DUPLOG.append((path,'info',[k for k,v in d['info'] if (k,v) not in _n])); d['info']=_n
-    if d['info']: o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in d['info'])+'</dl></section>'
+    if d['info']:
+        def _dd(k,v):
+            st=d.get('staff')
+            if st and k=='担当' and st['name'] in v:
+                n=esc(st['name'])
+                return f'<dd class="who"><img src="{rel}img/{st["img"]}" alt="{n}" width="640" height="640"><span class="cap">{n}</span><span class="bio">{v}</span></dd>'
+            return f'<dd>{v}</dd>'
+        o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt>{_dd(k,v)}' for k,v in d['info'])+'</dl></section>'
     if SHOW_FAQ: o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'
@@ -310,7 +317,7 @@ PAGES.append(dict(path='leo/',name='レオ',en='LEO',photo='panda',pos='50% 60%'
  faq=[('送迎はありますか？','地域によって相談を受けます。'),('昼食は？','手作りの和食を1回300円で提供します。'),('保護者向けの支援は？','ペアレントトレーニングと発達検査を行っています。')],
  rel=[('ペアレントトレーニング','leo/parent-training/'),('発達検査','leo/assessment/')],cta_h='見学を申し込む'))
 
-PAGES.append(dict(path='leo/parent-training/',name='ペアレントトレーニング',en='PARENT TRAINING',photo='consult',pos='50% 50%',short=True,type='Service',
+PAGES.append(dict(path='leo/parent-training/',name='ペアレントトレーニング',en='PARENT TRAINING',photo='pt-classroom',pos='50% 50%',short=True,type='Service',staff=dict(img='kato.jpg',name='加藤幸弘'),
  title='ペアレントトレーニング｜育児のモヤモヤをカウンセラーに相談｜三重県四日市市 レオ',
  desc='子育てのこと、学校とのかかわり、家族関係。公認心理師の加藤幸弘が、保護者の方の話を丁寧にお聴きします。レオの利用者とご家族は無料です。三重県四日市市、レオで行います。',
  cat='保護者向けプログラム｜レオ',copy=['育児のモヤモヤを、','解決します。'],sub='カウンセラーが、あなたの話を丁寧にお聴きします。',acc='',
