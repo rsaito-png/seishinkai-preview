@@ -161,6 +161,9 @@ def service_page(d):
         o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
     <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">もどる</button><button class="btn next">次へ</button></div></div></div></section>'''
+    if d.get('voice'):
+        _v=d['voice']; _by=_v[-1] if _v and _v[-1].lstrip('<p>').startswith('—') else ''; _q=_v[:-1] if _by else _v
+        o+='<section class="blk wide" id="voice"><div class="h"><span class="en">VOICE</span><h2>保護者の声</h2></div><blockquote style="margin:0;padding:0 0 0 1.2em;border-left:3px solid currentColor;line-height:1.9">'+''.join(f'<div style="margin:0 0 1em">{x}</div>' for x in _q)+(f'<div style="opacity:.7;font-size:14px">{_by}</div>' if _by else '')+'</blockquote></section>'
     _bt=lambda h:_re.sub(r'\s|　','',_re.sub('<[^>]+>','',h))
     B=_bt(o.split('<p class="acc">')[1].split('</section>',1)[1]) if '<p class="acc">' in o else ''
     def _dup(v):
