@@ -223,3 +223,14 @@ details summary{font-weight:500}
 .hero:has(h1.deco) .sub{margin-bottom:48px}
 @media(min-width:900px){.hin h1.deco{font-size:60px;margin:24px 0 56px}.hero:has(h1.deco){padding-bottom:110px}}
 .acc:empty{display:none}
+.hero:has(h1.deco){min-height:0!important;padding-bottom:0;background:#111 linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px;color:#fff;border-bottom:10px solid var(--hi);position:relative;overflow:hidden}
+.hero:has(h1.deco)::before{content:"";position:absolute;left:0;top:0;width:38%;height:10px;background:var(--hi);z-index:1}
+.hero:has(h1.deco) .hin{padding-top:36px;padding-bottom:28px}
+.hin h1.deco{margin:10px 0 18px}
+.hin h1.deco::after{margin-top:14px;background:#fff}
+.hero:has(h1.deco) .sub{margin-bottom:0}
+.hero:has(h1.deco) .big{color:transparent;-webkit-text-stroke:2px var(--hi);opacity:.6}
+.hero:has(h1.deco) .en{color:var(--hi);font-weight:600;letter-spacing:.2em}
+.hero:has(h1.deco) h1.deco,.hero:has(h1.deco) .copy,.hero:has(h1.deco) .svc{color:#fff}
+.hero:has(h1.deco) .sub{color:#fff;opacity:.82}
+@media(min-width:900px){.hin h1.deco{margin:14px 0 24px}.hero:has(h1.deco){padding-bottom:0}.hero:has(h1.deco) .hin{padding-top:56px;padding-bottom:44px}}
