@@ -345,7 +345,7 @@ PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',photo='homemeal'
  faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋の方は水晶玉にご相談ください。'),('家庭の環境ごと見直したい場合は？','家庭や職場の環境を整える<a href="../suishodama/" style="display:inline;color:var(--hi)">水晶玉</a>で、ご家族からの相談を受け付けます。')],
  rel=[('茶夢','chamu/'),('ご家族の方へ','#family')],cta_h='相談する'))
 
-PAGES.append(dict(path='ryozanpaku/',extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
+PAGES.append(dict(path='ryozanpaku/',deco=True,extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
  title='メンタルピアレジデンス・梁山泊｜働き続ける人の住まい 家賃 月8万円｜名古屋から30分（三重県四日市市山城町）',
  desc='メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。',
  cat='メンタルピアレジデンス｜家賃 月8万円',copy=['仕事はできる人が、','崩れないための住まいです。'],sub='職場定着を支える、住まいとケアの場です。<br>似た者同士で暮らし、仕事帰りに整えます。',acc=ACC,
