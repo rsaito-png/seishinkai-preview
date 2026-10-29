@@ -149,14 +149,14 @@ def service_page(d):
 <p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
-        if d.get('gal'): o+='<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>'
+        if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
         o+=old_html(OLD[path])
         if d.get('extra'): o+=d['extra'](rel)
     else:
         chips=''.join(f'<button data-a="{esc(a.replace('<br>','\n'))}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
         o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{_re.sub(r"[0-9０-９]+つの",f"{len(d.get('what') or [])}つの",d["what_h"],count=1) if d.get("what") else d["what_h"]}</h2><p>押すと内容が表示されます。</p></div>
     <div>{f'<p class="intro" style="margin:0 0 1.2em;font-size:1.05rem;line-height:1.9">{d["what_intro"]}</p>' if d.get("what_intro") else ""}<div class="chips">{chips}</div><p class="ans" style="white-space:pre-line">押すと内容が表示されます。</p></div></section></div>'''
-        if d.get('gal'): o+='<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>'
+        if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
         if d.get('extra'): o+=d['extra'](rel)
         o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
@@ -386,7 +386,7 @@ PAGES.append(dict(path='business/agent-consulting/',name='エージェントコ�
  faq=[('高額なシステムが必要ですか？','不要です。今ある環境と予算に合わせます。'),('PCに詳しいスタッフがいません。','現場が使えるところまで研修します。'),('旧「AIコンサル」との違いは？','AIチャットの導入から、業務を自律的にこなすAIエージェントの活用へ刷新しました。')],
  rel=[('研修','business/training/'),('ストレスチェック','business/stress-check/')],cta_h='無料で相談する'))
 
-PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
+PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,gal=[('sct_soudan','相談の様子のイラスト')],name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
  title='ストレスチェック実施者養成研修｜歯科医師・看護師・精神保健福祉士・公認心理師｜オンライン 星心会',
  desc='ストレスチェック実施者養成研修です。歯科医師・看護師・精神保健福祉士・公認心理師の方を対象に、Google Meetのリアルタイム開催で3科目・計5時間を行います。受講料は税込12,800円です。',
  cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='オンライン（Google Meet）',
