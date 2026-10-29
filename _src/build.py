@@ -22,6 +22,7 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('employment','雇用定着サポート','business/employment/','専任担当による職場定着','メンタル不調・発達特性のある社員に専任の担当者をつけます。',None),
 ('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。','karate_sit'),
 ('agent','エージェントコンサル','business/agent-consulting/','AIエージェント導入','AIエージェントを、事業所の戦力にします。',None),
+('sct','実施者養成研修','business/stress-check-training/','ストレスチェック実施者養成研修','歯科医師・看護師・精神保健福祉士・公認心理師の方のための実施者養成研修です。','karate_sit'),
 ('training','研修','business/training/','児童指導員研修・合気道研修','体を使って支援を学ぶ研修を、土日に行います。','karate_bow')]
 def _docmeta(url):
     """name (# line) and first sentence of リード文 from content/<slug>.md, if present"""
@@ -54,7 +55,7 @@ SV={s[0]:s for s in SVCS}
 AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['suishodama','shichirin','rydeen','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
 ('parents','お子さまの保護者','FOR PARENTS','落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。',['leo','parent','assess'],'落ち着かない・かんしゃく・発達が気になる'),
-('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','agent','training'],'職場定着・ストレスチェック・研修')]
+('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','sct','agent','training'],'職場定着・ストレスチェック・研修')]
 def esc(s): return html.escape(s)
 def P(t): return f'<span class="ph">要確認：{t}</span>'
 PH=set()
@@ -130,7 +131,7 @@ def service_page(d):
     if path in DOCMETA:
         h1,first=DOCMETA[path]
         d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=d.pop('_pre','')
-        if first: d['desc']=first
+        if first and not d.get('keep_desc'): d['desc']=first
         d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
     if path in CP and not ovr:
         have=' '.join(q for q,a in d['faq'])
@@ -354,7 +355,7 @@ PAGES.append(dict(path='ryozanpaku/',extra=partners,audience=AUD_P,name='梁山�
  faq=[('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。紹介・連携の窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),('親に知られずに相談できますか？','対応します。連絡方法は本人の指定に従います。'),('費用は？','家賃は月8万円です。ほかに費用はかかりません。'),('名古屋から移り住めますか？','移り住めます。名古屋西ICから車で約30分です。')],
  rel=[('水晶玉','suishodama/'),('しちりんの会','shichirin/')],cta_h='見学を申し込む'))
 
-BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','AIエージェントを、現場の戦力にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
+BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('stress-check-training','ストレスチェック実施者養成研修','PRACTITIONER TRAINING','実施者になるための研修を、オンラインで行います。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','AIエージェントを、現場の戦力にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
 PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',photo='karate_sit',short=True,type='Service',
  title='職場ストレスチェック｜アドラー心理学×ラインケア支援｜三重県四日市市 星心会',
  desc='ストレスチェックを、組織が変わるきっかけにします。管理職研修・アドラー流個別面談・ラインケア定着支援まで一社完結で行います。三重県四日市市、名古屋から30分です。',
@@ -384,6 +385,13 @@ PAGES.append(dict(path='business/agent-consulting/',name='エージェントコ�
  info=[('対象','対人支援の事業所・法人'),('料金',ph('料金プラン')),('実施','オンライン・訪問 '+ph('実施方法')),('申し込み','電話または相談フォーム')],
  faq=[('高額なシステムが必要ですか？','不要です。今ある環境と予算に合わせます。'),('PCに詳しいスタッフがいません。','現場が使えるところまで研修します。'),('旧「AIコンサル」との違いは？','AIチャットの導入から、業務を自律的にこなすAIエージェントの活用へ刷新しました。')],
  rel=[('研修','business/training/'),('ストレスチェック','business/stress-check/')],cta_h='無料で相談する'))
+
+PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
+ title='ストレスチェック実施者養成研修｜歯科医師・看護師・精神保健福祉士・公認心理師｜オンライン 星心会',
+ desc='ストレスチェック実施者養成研修です。歯科医師・看護師・精神保健福祉士・公認心理師の方を対象に、Google Meetのリアルタイム開催で3科目・計5時間を行います。受講料は税込12,800円です。',
+ cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='オンライン（Google Meet）',
+ what_h='3つの<br>科目',what=[],flow=[],info=[],faq=[],
+ rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
 
 PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',photo='karate_bow',short=True,type='Service',
  title='研修｜児童指導員研修・合気道研修｜三重県四日市市 星心会',
@@ -521,11 +529,12 @@ L=f'''# 星心会（{ORG}）
 
 '''
 for _,lab,en,lead,ks,_h in AUD:
-    L+=f'## {lab}向け\n{lead}\n'+''.join(f'- [{SV[k][1]}]({BASE}/{SV[k][2]}): {SV[k][3]}。{SV[k][4]}\n' for k in ks)+'\n'
+    L+=f'## {lab}向け\n{lead}\n'+''.join(f'- [{SV[k][1]}]({BASE}/{SV[k][2]}): {'。'.join(x for x in (SV[k][3],SV[k][4]) if x)}\n' for k in ks)+'\n'
 L+='''補足：
 - 茶夢は統合失調症・自閉症の方のための日中の居場所です。
 - メンタルピアレジデンス・梁山泊は、障害者雇用で働く人の職場定着を支える住まいとケアの場です。企業・JEED・ハローワーク・労働局からの紹介・連携は本部（059-315-0697）が窓口です。
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
+- ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催（オンデマンド不可）で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
 
 ## その他
