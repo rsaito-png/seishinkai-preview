@@ -5,29 +5,29 @@
 
 ## ご本人向け
 眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。
-- [水晶玉](https://www.psr-seishinkai.org/suishodama/): 心の不調・家庭環境・就労環境・人間関係。
-- [しちりんの会](https://www.psr-seishinkai.org/shichirin/): 火を囲めば黙っていてもゆるみます
-- [RYDEEN](https://www.psr-seishinkai.org/rydeen/): SNS運用代行、システム構築、AIを使った事務。
-- [梁山泊](https://www.psr-seishinkai.org/ryozanpaku/): 仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。
+- [環境調整支援　水晶玉](https://www.psr-seishinkai.org/suishodama/): メンタルヘルスコーディネート（環境調整）。心の不調・家庭環境・就労環境・人間関係。
+- [しちりんの会](https://www.psr-seishinkai.org/shichirin/): 自費参加｜手続き不要。火を囲めば黙っていてもゆるみます
+- [B型事業所　次世代労働研究所　RYDEEN](https://www.psr-seishinkai.org/rydeen/): PCで働く｜2026年11月1日開所。SNS運用代行、システム構築、AIを使った事務。
+- [自立支援寮　梁山泊](https://www.psr-seishinkai.org/ryozanpaku/): メンタルピアレジデンス｜家賃 月8万円。仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。
 
 ## ご家族向け
 家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。
-- [金斗雲](https://www.psr-seishinkai.org/kintoun/): 家から出られない、窓口に行けない。
-- [茶夢](https://www.psr-seishinkai.org/chamu/): 料理・喫茶・読書・アートで、静かに過ごします。
+- [訪問支援　金斗雲](https://www.psr-seishinkai.org/kintoun/): 訪問｜アウトリーチ。家から出られない、窓口に行けないかたへ
+- [生活介護事業所　茶夢](https://www.psr-seishinkai.org/chamu/): 統合失調症・自閉症の方のための日中の居場所。料理・喫茶・読書・アートで、静かに過ごします。
 
 ## お子さまの保護者向け
 落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。
-- [レオ](https://www.psr-seishinkai.org/leo/): 体を動かし、手を動かします。
-- [ペアレントトレーニング](https://www.psr-seishinkai.org/leo/parent-training/): アドラー心理学に基づくペアレントトレーニング「アドペア」です。
-- [発達検査](https://www.psr-seishinkai.org/leo/assessment/): 検査して終わりにはしません。
+- [児発・放デイ　レオ](https://www.psr-seishinkai.org/leo/): 子どもの情緒。すべての基礎となる「情緒」の安定を図ります。
+- [ペアレントトレーニング](https://www.psr-seishinkai.org/leo/parent-training/): 保護者向けプログラム。アドラー心理学に基づくペアレントトレーニング「アドペア」です。
+- [発達検査](https://www.psr-seishinkai.org/leo/assessment/): WISC-V・新版K式。検査して終わりにはしません。
 
 ## 企業・支援機関向け
 企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。
-- [雇用定着サポート](https://www.psr-seishinkai.org/business/employment/): メンタルヘルスの実務家が、社員一人ひとりを担当します。
-- [ストレスチェック](https://www.psr-seishinkai.org/business/stress-check/): アドラー心理学 × ラインケア支援です。
-- [ストレスチェック実施者養成研修](https://www.psr-seishinkai.org/business/stress-check-training/): 歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。
-- [エージェントコンサル](https://www.psr-seishinkai.org/business/agent-consulting/): チャットで頼むと、書類と広報を仕上げて戻します。
-- [研修](https://www.psr-seishinkai.org/business/training/): オーダーメイドで、土日に開催します。
+- [雇用定着サポート](https://www.psr-seishinkai.org/business/employment/): 専任担当による職場定着。メンタルヘルスの実務家が、社員一人ひとりを担当します。
+- [ストレスチェック](https://www.psr-seishinkai.org/business/stress-check/): アドラー心理学×ラインケア。アドラー心理学 × ラインケア支援です。
+- [ストレスチェック実施者養成研修](https://www.psr-seishinkai.org/business/stress-check-training/): ストレスチェック実施者養成研修。歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。
+- [エージェントコンサル](https://www.psr-seishinkai.org/business/agent-consulting/): AIエージェント導入。チャットで頼むと、書類と広報を仕上げて戻します。
+- [研修](https://www.psr-seishinkai.org/business/training/): 児童指導員研修・合気道研修。オーダーメイドで、土日に開催します。
 
 補足：
 - 茶夢は統合失調症・自閉症の方のための日中の居場所です。
