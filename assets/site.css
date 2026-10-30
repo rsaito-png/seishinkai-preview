@@ -268,3 +268,6 @@ dd.who .bio{grid-area:bio}
   .ans{font-size:18px}
   section.blk{max-width:820px}
 }
+
+/* inline photos inside old body */
+.prose.old img,.prose img{display:block;width:100%;height:auto;margin:8px 0 22px;border-radius:0}
