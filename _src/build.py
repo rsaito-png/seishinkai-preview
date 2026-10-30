@@ -80,7 +80,7 @@ def head(rel,title,desc,path,ld=None):
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/site.css?v=20261030c">
+<link rel="stylesheet" href="{rel}assets/site.css?v=20261030d">
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
 </head>
 <body>
@@ -252,14 +252,14 @@ OLD['business/training/']=[('h','研修情報'),('dl',[('開催','土日開催')
 def old_html(blocks,rel='../'):
     o='<section class="blk" id="what"><div class="prose old">'
     for t,v in blocks:
-        if t=='h': o+=f'<h3 style="font-size:26px;margin:34px 0 10px">{v}</h3>'
+        if t=='h': o+=f'<h3 class="oh">{v}</h3>'
         elif t=='p': o+=f'<p style="margin:0 0 12px">{v}</p>'
         elif t=='note': o+=f'<p style="margin:0 0 18px;padding:12px 16px;border-left:3px solid var(--hi);font-weight:600">{v}</p>'
         elif t=='ul': o+='<ul class="lst" style="margin:6px 0 14px">'+''.join(f'<li>{x}</li>' for x in v)+'</ul>'
         elif t=='img':
             src,alt=v
             if not str(src).endswith(('.jpg','.jpeg','.png','.webp')): src=f'{src}.jpg'
-            o+=f'<img class="pin" src="{rel}img/{src}" alt="{esc(alt)}" loading="lazy" width="560" height="420" style="display:block;width:100%;max-width:280px;height:auto;margin:8px 0 16px">'
+            o+=f'<img class="pin" src="{rel}img/{src}" alt="{esc(alt)}" loading="lazy" width="720" height="540">'
         elif t=='dl': o+='<dl class="info" style="margin:6px 0 16px">'+''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a,b in v)+'</dl>'
     return o+'</div></section>'
 
