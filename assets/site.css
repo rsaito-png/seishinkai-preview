@@ -255,7 +255,6 @@ dd.who .bio{grid-area:bio}
   .wide > :only-child{grid-column:1 / -1;max-width:820px}
   body{font-size:19px}
   .prose p{font-size:19px;line-height:1.95}
-  .prose.old h3{font-size:26px!important}
   .prose.old p,.prose.old li{font-size:19px}
   .lst li{font-size:18px}
   .lst li b{font-size:19px}
@@ -269,5 +268,20 @@ dd.who .bio{grid-area:bio}
   section.blk{max-width:820px}
 }
 
-/* inline photos inside old body */
-.prose.old img,.prose img{display:block;width:100%;max-width:280px;height:auto;margin:8px 0 16px;border-radius:0}
+/* old body: stronger hierarchy */
+.prose.old{background:#fff;padding:26px 20px 22px;border-top:3px solid var(--ink)}
+.prose.old h3,.prose.old h3.oh{font-size:24px!important;font-weight:700!important;letter-spacing:-.02em!important;line-height:1.35!important;margin:32px 0 14px!important;padding:2px 0 10px 14px!important;border-left:5px solid var(--hi)!important;border-bottom:1px solid var(--line);color:var(--ink)}
+.prose.old h3:first-child,.prose.old h3.oh:first-child{margin-top:0!important}
+.prose.old .lst{list-style:none;border-top:3px solid var(--ink)!important;margin:4px 0 22px!important}
+.prose.old .lst li{position:relative;border-bottom:1px solid var(--ink)!important;padding:16px 0 16px 18px!important;font-size:16px!important;line-height:1.75!important;font-weight:500}
+.prose.old .lst li::before{content:"";position:absolute;left:0;top:20px;width:8px;height:8px;background:var(--hi)}
+.prose.old p{font-size:16px;line-height:1.85;margin:0 0 14px}
+.prose.old img,.prose.old img.pin{display:block;width:100%;max-width:320px;height:auto;margin:10px 0 20px;border-top:4px solid var(--hi)}
+@media(min-width:900px){
+  .prose.old{padding:32px 28px 28px}
+  .prose.old h3,.prose.old h3.oh{font-size:28px!important}
+  .prose.old .lst li{font-size:19px!important;padding:18px 0 18px 20px!important}
+  .prose.old .lst li::before{top:24px;width:9px;height:9px}
+  .prose.old p{font-size:19px}
+  .prose.old img,.prose.old img.pin{max-width:360px}
+}
