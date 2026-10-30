@@ -41,6 +41,16 @@
 
 建物の２階です。看板のあるドアからお入りください。
 
+### 令和7年度　事業所評価の公表
+
+- [保護者評価（児発）](https://drive.google.com/file/d/14OypM0APjAh34RtH2quEMIqe6ip6Ho5H/view)
+- [保護者評価（放デイ）](https://drive.google.com/file/d/10l7_-n_o4skBCgxZ35YOSQEhlD7Fy_v7/view)
+- [従業員評価（児発）](https://drive.google.com/file/d/1YD2ecQgUOtg6cIQg5aTGtEEMQ-LCjVE8/view)
+- [従業員評価（放デイ）](https://drive.google.com/file/d/1yrSP-dmLRmtEHtutC6_cvXlzKXXN80FP/view)
+- [総括表（児発）](https://drive.google.com/file/d/17myXyFuwv6h46gbrnSeM-U_HvjDwzRTm/view)
+- [総括表（放デイ）](https://drive.google.com/file/d/1WEtF9XmGiatfKcp-scK35GLzyXfzONWJ/view)
+
+
 ## 対象・費用・場所
 
 ### 対象
