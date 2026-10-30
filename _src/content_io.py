@@ -36,6 +36,8 @@ def page_md(d,old_blocks=None):
             elif t=='p': o.append(para(h2md(v,p)))
             elif t=='note': o.append('\n\n'.join('> '+x for x in h2md(v,p)))
             elif t=='ul': o.append('\n'.join('- '+' '.join(h2md(x,p)) for x in v))
+            elif t=='img':
+                src,alt=v; o.append(f'![{alt}](../img/{src}.jpg)' if not str(src).endswith(('.jpg','.png','.webp')) else f'![{alt}]({src})')
             elif t=='dl':
                 for a,b in v: o+=['#### '+' '.join(h2md(a,p)),para(h2md(b,p))]
     else:
@@ -99,8 +101,16 @@ def parse_page(md,d,ph):
                 def flush():
                     if buf: bl.append(('p',f(buf))); buf.clear()
                 for x in ls:
-                    if lv==4 and bl and bl[-1][0]=='dl' and not x.startswith(('- ','> ')):
+                    if lv==4 and bl and bl[-1][0]=='dl' and not x.startswith(('- ','> ','![')):
                         a,b=bl[-1][1][-1]; bl[-1][1][-1]=(a,(b+'<br>' if b else '')+f([x])); continue
+                    mimg=re.match(r'^!\[([^\]]*)\]\(([^)]+)\)\s*$',x)
+                    if mimg:
+                        flush(); src=mimg.group(2).strip(); alt=mimg.group(1).strip() or ''
+                        # normalize ../img/foo.jpg -> foo
+                        m2=re.search(r'/img/([^/]+?)\.(?:jpg|jpeg|png|webp)$',src,re.I)
+                        if m2: src=m2.group(1)
+                        elif src.endswith(('.jpg','.jpeg','.png','.webp')): src=re.sub(r'\.(?:jpg|jpeg|png|webp)$','',src,flags=re.I)
+                        bl.append(('img',(src,alt))); continue
                     if x.startswith('- '):
                         flush(); it=f([x[2:]])
                         if bl and bl[-1][0]=='ul' and bl[-1][2]: bl[-1][1].append(it)
