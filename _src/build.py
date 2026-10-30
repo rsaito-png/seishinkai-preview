@@ -13,9 +13,9 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('suishodama','水晶玉','suishodama/','メンタルヘルスコーディネート（環境調整）','眠れない、気分の波がある。原因の環境から手を打ちます。','consult'),
 ('shichirin','しちりんの会','shichirin/','自費参加｜手続き不要','七輪で火を起こし、焼いて食べます。手続きも診断も要りません。','fish'),
 ('rydeen','RYDEEN','rydeen/','PCで働く｜2026年11月1日開所','仕事が続かない人が、PCの実務で働く職場です。',None),
-('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。',None),
+('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。','homemeal'),
 ('chamu','茶夢','chamu/','統合失調症・自閉症の方のための日中の居場所','料理・喫茶・読書・アートで、日中を安全に過ごす場所です。','counter'),
-('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。','homemeal'),
+('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。',None),
 ('leo','レオ','leo/','子どもの情緒','おもちゃ、武道、庭いじり。遊びの中で情緒を整えます。','panda'),
 ('parent','ペアレントトレーニング','leo/parent-training/','保護者向けプログラム','子どもを変える前に、親の関わり方を変えます。','pt-classroom'),
 ('assess','発達検査','leo/assessment/','WISC-V・新版K式','特性を数値で掴み、支援に直結させます。','record'),
@@ -341,7 +341,7 @@ PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',pho
  faq=[('市役所や学校に提出できますか？','提出先によっては、民間施設の結果を公的な判定基準（各種申請や入級判定など）として受理しない場合があります。申請目的の場合は、事前に提出先へ有効性を確認してください。'),('料金に含まれるものは？','事前面談、検査実施、結果報告書の作成、フィードバック面談です。'),('検査後の支援は？','結果をもとに学習アプローチを設計します。レオの利用やペアレントトレーニングにも直結します。')],
  rel=[('ペアレントトレーニング','leo/parent-training/'),('レオ','leo/')],cta_h='検査を申し込む'))
 
-PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',photo='homemeal',pos='50% 45%',
+PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',big='金',
  addr_ld={"@type":"PostalAddress","addressCountry":"JP","addressRegion":"三重県","addressLocality":"三重郡菰野町","streetAddress":"田光1801-165"},
  title='金斗雲｜訪問・アウトリーチ｜家族が家から出ないご家庭へ（三重県四日市市・菰野町）',
  desc='家族が家から出ない、相談に行けない。金斗雲は、こちらから自宅へ出向く訪問とアウトリーチです。家族からの相談でも始められます。訪問は四日市市・菰野町など三重県内です。',
@@ -353,7 +353,7 @@ PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',photo='homemeal'
  faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋の方は水晶玉にご相談ください。'),('家庭の環境ごと見直したい場合は？','家庭や職場の環境を整える<a href="../suishodama/" style="display:inline;color:var(--hi)">水晶玉</a>で、ご家族からの相談を受け付けます。')],
  rel=[('茶夢','chamu/'),('ご家族の方へ','#family')],cta_h='相談する'))
 
-PAGES.append(dict(path='ryozanpaku/',deco=True,extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
+PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
  title='メンタルピアレジデンス・梁山泊｜働き続ける人の住まい 家賃 月8万円｜名古屋から30分（三重県四日市市山城町）',
  desc='メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。',
  cat='メンタルピアレジデンス｜家賃 月8万円',copy=['仕事はできる人が、','崩れないための住まいです。'],sub='職場定着を支える、住まいとケアの場です。<br>似た者同士で暮らし、仕事帰りに整えます。',acc=ACC,
@@ -419,7 +419,7 @@ for d in PAGES: service_page(d)
 # ---------- TOP ----------
 def card(k,rel=''):
     _,n,u,c,l,t=SV[k]
-    th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>' if t else f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","employment":"EMPLOY","agent":"AI"}.get(k,n)}</b></div>'
+    th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>' if t else f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","kintoun":"KINTOUN","employment":"EMPLOY","agent":"AI"}.get(k,n)}</b></div>'
     if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
 TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='名古屋から30分です。',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
