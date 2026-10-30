@@ -17,7 +17,7 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('chamu','茶夢','chamu/','統合失調症・自閉症の方のための日中の居場所','料理・喫茶・読書・アートで、日中を安全に過ごす場所です。','counter'),
 ('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。','homemeal'),
 ('leo','レオ','leo/','子どもの情緒','おもちゃ、武道、庭いじり。遊びの中で情緒を整えます。','panda'),
-('parent','ペアレントトレーニング','leo/parent-training/','保護者向けプログラム','子どもを変える前に、親の関わり方を変えます。','consult'),
+('parent','ペアレントトレーニング','leo/parent-training/','保護者向けプログラム','子どもを変える前に、親の関わり方を変えます。','pt-classroom'),
 ('assess','発達検査','leo/assessment/','WISC-V・新版K式','特性を数値で掴み、支援に直結させます。','record'),
 ('employment','雇用定着サポート','business/employment/','専任担当による職場定着','メンタル不調・発達特性のある社員に専任の担当者をつけます。',None),
 ('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。','karate_sit'),
@@ -304,8 +304,8 @@ PAGES.append(dict(path='shichirin/',name='しちりんの会',en='SHICHIRIN',pho
  rel=[('RYDEEN','rydeen/'),('梁山泊','ryozanpaku/')],cta_h='参加を申し込む'))
 
 def leo_extra(rel): return f'''<section class="blk"><div class="h"><span class="en">FOR PARENTS</span><h2>保護者向けプログラム</h2></div>
-<div class="cards" style="grid-template-columns:1fr 1fr"><a class="sc" href="{rel}leo/parent-training/"><div class="th" style="background-image:url({rel}img/consult.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">ペアレント<br>トレーニング</p><p class="ln">関わり方を変えます。</p></div></a>
-<a class="sc" href="{rel}leo/assessment/"><div class="th" style="background-image:url({rel}img/record.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">発達検査</p><p class="ln">WISC-V・新版K式。</p></div></a></div></section>'''
+<div class="cards" style="grid-template-columns:1fr 1fr"><a class="sc" href="{rel}leo/parent-training/"><div class="th" style="background-image:url({rel}img/pt-classroom.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">ペアレント<br>トレーニング</p><p class="ln">関わり方を変えます。</p></div></a>
+<a class="sc" href="{rel}leo/assessment/"><div class="th" style="background-image:url({rel}img/jigsaw.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">発達検査</p><p class="ln">WISC-V・新版K式。</p></div></a></div></section>'''
 PAGES.append(dict(path='leo/',name='レオ',en='LEO',photo='panda',pos='50% 60%',addr_ld=ASAKE,tel='070-6967-0011',
  title='レオ｜子どもが落ち着かない保護者へ｜おもちゃ・武道・庭いじり｜三重県四日市市あさけが丘',
  desc='子どもが落ち着かない、かんしゃくが多い。レオは、遊びと体で子どもの情緒を整える場所です。おもちゃ、武道・ヨガ、庭いじり、手作りの和食を用意しています。ペアレントトレーニングと発達検査も行います。三重県四日市市あさけが丘、名古屋西ICから車で約30分です。',
