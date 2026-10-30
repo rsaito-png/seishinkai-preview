@@ -80,7 +80,7 @@ def head(rel,title,desc,path,ld=None):
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/site.css">
+<link rel="stylesheet" href="{rel}assets/site.css?v=20261030c">
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
 </head>
 <body>
@@ -259,7 +259,7 @@ def old_html(blocks,rel='../'):
         elif t=='img':
             src,alt=v
             if not str(src).endswith(('.jpg','.jpeg','.png','.webp')): src=f'{src}.jpg'
-            o+=f'<img src="{rel}img/{src}" alt="{esc(alt)}" loading="lazy">'
+            o+=f'<img class="pin" src="{rel}img/{src}" alt="{esc(alt)}" loading="lazy" width="560" height="420" style="display:block;width:100%;max-width:280px;height:auto;margin:8px 0 16px">'
         elif t=='dl': o+='<dl class="info" style="margin:6px 0 16px">'+''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a,b in v)+'</dl>'
     return o+'</div></section>'
 
