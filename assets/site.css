@@ -270,4 +270,4 @@ dd.who .bio{grid-area:bio}
 }
 
 /* inline photos inside old body */
-.prose.old img,.prose img{display:block;width:100%;max-width:360px;height:auto;margin:8px 0 18px;border-radius:0}
+.prose.old img,.prose img{display:block;width:100%;max-width:280px;height:auto;margin:8px 0 16px;border-radius:0}
