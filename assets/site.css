@@ -246,3 +246,22 @@ dd.who .bio{grid-area:bio}
  dd.who img{width:112px;height:112px}
  dd.who .bio{align-self:center}
 }
+
+/* ===== PC readable body (2026-10-30) =====
+   .wide is a 250px|1fr grid for heading+body pairs.
+   old_html puts a lone .prose inside .wide, so text was stuck in 250px. */
+@media(min-width:900px){
+  .wide > .prose,
+  .wide > :only-child{grid-column:1 / -1;max-width:760px}
+  body{font-size:17px}
+  .prose p{font-size:17px;line-height:1.9}
+  .prose.old h3{font-size:22px!important}
+  .lst li{font-size:16px}
+  .lst li b{font-size:17px}
+  dl.info{font-size:16px}
+  details{font-size:16px}
+  details p{font-size:15px}
+  .h p{font-size:15px}
+  .card p{font-size:16px}
+  .ans{font-size:16px}
+}
