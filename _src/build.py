@@ -250,9 +250,9 @@ OLD['business/employment/']=[('h','精神・発達障害専門　現場に任せ
 ('p','📍 担当地域：三重県・愛知県の全域と滋賀県南東部（その他地域もご相談ください）')]
 OLD['business/training/']=[('h','研修情報'),('dl',[('開催','土日開催'),('形式','オーダーメイドにつきご相談ください'),('料金','お志')]),('h','オルタナティブ・スキル（担当：齊藤または外部講師）'),('ul',['野口整体、合気道、各種マッサージなど療育に役立つボディワーク','マクロビオティック調理法','心理占星術による性格分析','シュタイナー哲学講義']),('p','など希望に応じて実施いたします。'),('note','合気道研修を新設しました（内容・日程は準備中です）。')]
 def old_html(blocks):
-    o='<section class="blk wide" id="what"><div class="prose old">'
+    o='<section class="blk" id="what"><div class="prose old">'
     for t,v in blocks:
-        if t=='h': o+=f'<h3 style="font-size:19px;margin:34px 0 10px">{v}</h3>'
+        if t=='h': o+=f'<h3 style="font-size:22px;margin:34px 0 10px">{v}</h3>'
         elif t=='p': o+=f'<p style="margin:0 0 12px">{v}</p>'
         elif t=='note': o+=f'<p style="margin:0 0 18px;padding:12px 16px;border-left:3px solid var(--hi);font-weight:600">{v}</p>'
         elif t=='ul': o+='<ul class="lst" style="margin:6px 0 14px">'+''.join(f'<li>{x}</li>' for x in v)+'</ul>'
