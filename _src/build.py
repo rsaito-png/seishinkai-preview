@@ -150,7 +150,7 @@ def service_page(d):
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
         if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
-        o+=old_html(OLD[path])
+        o+=old_html(OLD[path],rel)
         if d.get('extra'): o+=d['extra'](rel)
     else:
         chips=''.join(f'<button data-a="{esc(a.replace('<br>','\n'))}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
@@ -249,13 +249,17 @@ OLD['business/employment/']=[('h','精神・発達障害専門　現場に任せ
 ('h','【料金プラン】'),('dl',[('A. 導入セットアップパッケージ（3ヶ月間）','新規で採用・受け入れを行う企業様<br>料金：初期15万円 ＋ 月額5万円/人 × 3ヶ月（税別）<br>これから新しく雇用する方向け。業務切り出し、勤務枠組み設計、マニュアル・配慮合意書の作成、現場研修、入社初期3ヶ月間の高頻度な専任フォローまで丸ごと立ち上げます。'),('B. 個人担当・専任定着支援プラン【一番人気】','すでに雇用中・中途で困っている企業様も直接利用OK<br>料金：対象者1名につき 月額 3万円〜（税別）<br>初期導入パッケージ（A）を経由せず、直接このプランからお申し込みいただけます。「すでに雇用している社員の欠勤やトラブルで困っている」「中途採用した社員に個別担当をつけて定着させたい」という企業様に最適です。専任担当者による定期面談（月1〜2回）、生活動向のアセスメント、社内担当者様との定期連携を行い、離職や現場の疲弊を防ぎます。'),('C. スポット現場研修・面談プラン','現状の課題整理・単発相談<br>料金：1回 5万円（税別）<br>※「既存社員の業務整理や合理的な配慮の合意書だけ単発で作ってほしい」「まず1回現場研修をして様子を見たい」という場合にご利用いただけます。')]),
 ('p','📍 担当地域：三重県・愛知県の全域と滋賀県南東部（その他地域もご相談ください）')]
 OLD['business/training/']=[('h','研修情報'),('dl',[('開催','土日開催'),('形式','オーダーメイドにつきご相談ください'),('料金','お志')]),('h','オルタナティブ・スキル（担当：齊藤または外部講師）'),('ul',['野口整体、合気道、各種マッサージなど療育に役立つボディワーク','マクロビオティック調理法','心理占星術による性格分析','シュタイナー哲学講義']),('p','など希望に応じて実施いたします。'),('note','合気道研修を新設しました（内容・日程は準備中です）。')]
-def old_html(blocks):
+def old_html(blocks,rel='../'):
     o='<section class="blk" id="what"><div class="prose old">'
     for t,v in blocks:
         if t=='h': o+=f'<h3 style="font-size:26px;margin:34px 0 10px">{v}</h3>'
         elif t=='p': o+=f'<p style="margin:0 0 12px">{v}</p>'
         elif t=='note': o+=f'<p style="margin:0 0 18px;padding:12px 16px;border-left:3px solid var(--hi);font-weight:600">{v}</p>'
         elif t=='ul': o+='<ul class="lst" style="margin:6px 0 14px">'+''.join(f'<li>{x}</li>' for x in v)+'</ul>'
+        elif t=='img':
+            src,alt=v
+            if not str(src).endswith(('.jpg','.jpeg','.png','.webp')): src=f'{src}.jpg'
+            o+=f'<img src="{rel}img/{src}" alt="{esc(alt)}" loading="lazy">'
         elif t=='dl': o+='<dl class="info" style="margin:6px 0 16px">'+''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a,b in v)+'</dl>'
     return o+'</div></section>'
 
@@ -311,7 +315,7 @@ PAGES.append(dict(path='leo/',name='レオ',en='LEO',photo='panda',pos='50% 60%'
  desc='子どもが落ち着かない、かんしゃくが多い。レオは、遊びと体で子どもの情緒を整える場所です。おもちゃ、武道・ヨガ、庭いじり、手作りの和食を用意しています。ペアレントトレーニングと発達検査も行います。三重県四日市市あさけが丘、名古屋西ICから車で約30分です。',
  cat='子どもの情緒',copy=['おもちゃ、武道、','庭いじりで整えます。'],sub='体を動かし、手を動かします。<br>情緒は、遊びの中で整えます。',acc=ACC2,
  what_h='4つの<br>柱',what=[('おもちゃ','','大量のおもちゃから好きなものを選び、少し難しいものにも挑みます。認知・言語・社会性を遊びで伸ばします。'),('武道・ヨガ','','格闘家のもとへ出向き、体を鍛えます。運動と感覚を育てます。'),('庭いじり','','花壇を作り、植え、育てます。菰野のフィールドでは自然観察と七輪の火起こしを行います。'),('和食の昼食','1回300円','手作りの和食を提供します。食事も情緒を整える時間です。')],
- gal=[('child_shichirin','行事・七輪'),('toyshelf','おもちゃの部屋'),('blocks','積み木'),('leo_ext','レオの建物')],extra=leo_extra,
+ gal=[],extra=leo_extra,
  flow=[["VISIT","見学","建物の2階、看板のあるドアからお入りください。予約制です。"],["PAPER","手続き",TEJUN],["PLAN","計画","お子さまの様子を確認し、過ごし方の計画を作ります。"],["START","利用開始","1部・2部から選んで通います。地域によって送迎の相談も受けます。"]],
  info=[('対象','落ち着かない、こだわりが強い、集団が苦手なお子さま。診断の有無は問いません'+ph('対象年齢の表記')),('時間','1部 11:00〜14:30／2部 放課後〜17:00'),('昼食','1回300円'),('場所',PLACE_A+'<br>建物の2階'),('送迎','地域により相談可'),('費用','公的制度の利用可（自治体の手続きが必要。こちらで案内）')],
  faq=[('送迎はありますか？','地域によって相談を受けます。'),('昼食は？','手作りの和食を1回300円で提供します。'),('保護者向けの支援は？','ペアレントトレーニングと発達検査を行っています。')],
