@@ -252,7 +252,7 @@ OLD['business/training/']=[('h','研修情報'),('dl',[('開催','土日開催')
 def old_html(blocks):
     o='<section class="blk" id="what"><div class="prose old">'
     for t,v in blocks:
-        if t=='h': o+=f'<h3 style="font-size:22px;margin:34px 0 10px">{v}</h3>'
+        if t=='h': o+=f'<h3 style="font-size:26px;margin:34px 0 10px">{v}</h3>'
         elif t=='p': o+=f'<p style="margin:0 0 12px">{v}</p>'
         elif t=='note': o+=f'<p style="margin:0 0 18px;padding:12px 16px;border-left:3px solid var(--hi);font-weight:600">{v}</p>'
         elif t=='ul': o+='<ul class="lst" style="margin:6px 0 14px">'+''.join(f'<li>{x}</li>' for x in v)+'</ul>'
