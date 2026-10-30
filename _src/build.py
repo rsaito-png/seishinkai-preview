@@ -52,6 +52,8 @@ for _i,_s in enumerate(SVCS):
         DOCMETA[_s[2]]=_m
         SVCS[_i]=(_s[0],_short(_m[0]),_s[2],'',_m[1] or _s[4],_s[5])
 SV={s[0]:s for s in SVCS}
+CHROME={}
+CUR={}
 AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['suishodama','shichirin','rydeen','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
 ('parents','お子さまの保護者','FOR PARENTS','落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。',['leo','parent','assess'],'落ち着かない・かんしゃく・発達が気になる'),
@@ -87,23 +89,48 @@ def head(rel,title,desc,path,ld=None):
 '''
 def sns_html(labels=False):
     return '<div class="sns">'+''.join(f'<a href="{u}" target="_blank" rel="noopener" aria-label="{n}">{ICON[n]}{(" "+n) if labels else ""}</a>' for n,u in SNS)+'</div>'
+def _navlabs():
+    d=['ご本人','ご家族','保護者','企業・支援機関','アクセス','相談する']
+    v=CHROME.get('top') or []
+    return [(v[i] if i<len(v) and v[i] else d[i]) for i in range(6)]
+def _infolinks(key,default):
+    v=CHROME.get(key) or []
+    out=[]
+    for i,(n,u,sm) in enumerate(default):
+        if i<len(v) and v[i]:
+            row=v[i]
+            if '｜' in row: n,sm=row.split('｜',1); n,sm=n.strip(),sm.strip()
+            else: n=row.strip()
+        out.append((n,u,sm))
+    return out
+_DRAWER=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/','名古屋から30分'),('よくある質問','faq/',''),('相談する','contact/','')]
+_FOOT=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
 def header(rel):
-    dr=''.join(f'<h4>{lab}</h4>'+''.join(f'<a href="{rel}{SV[k][2]}">{SV[k][1]}{f'<small>{SV[k][3].split("｜")[0]}</small>' if SV[k][3] else ''}</a>' for k in ks) for _,lab,_,_,ks,_h in AUD)
+    lab=_navlabs(); gs=CHROME.get('groups')
+    dr=''
+    for i,(_,glab,_,_,ks,_h) in enumerate(AUD):
+        names=gs[i] if gs and i<len(gs) else None
+        dr+=f'<h4>{glab}</h4>'+''.join(f'<a href="{rel}{SV[k][2]}">{html.escape(names[j]) if names and j<len(names) and names[j] else SV[k][1]}{f'<small>{SV[k][3].split("｜")[0]}</small>' if SV[k][3] else ''}</a>' for j,k in enumerate(ks))
+    info=''.join(f'<a href="{rel}{u}">{n}{f"<small>{sm}</small>" if sm else ""}</a>' for n,u,sm in _infolinks('drawer',_DRAWER))
     return f'''<header class="gh"><a class="logo" href="{rel}"><img src="{rel}img/mark_black.svg" alt=""><span>星心会</span></a>
-<nav><a href="{rel}#self">ご本人</a><a href="{rel}#family">ご家族</a><a href="{rel}#parents">保護者</a><a href="{rel}#partners">企業・支援機関</a><a href="{rel}access/">アクセス</a>{sns_html()}</nav>
-<a class="cta-btn" href="{rel}contact/">相談する</a><button class="menu-btn" aria-label="メニュー"><i></i><i></i></button></header>
+<nav><a href="{rel}#self">{lab[0]}</a><a href="{rel}#family">{lab[1]}</a><a href="{rel}#parents">{lab[2]}</a><a href="{rel}#partners">{lab[3]}</a><a href="{rel}access/">{lab[4]}</a>{sns_html()}</nav>
+<a class="cta-btn" href="{rel}contact/">{lab[5]}</a><button class="menu-btn" aria-label="メニュー"><i></i><i></i></button></header>
 <div class="drawer">{dr}
-<h4>INFO</h4><a href="{rel}business/">企業・支援機関の方へ</a><a href="{rel}about/">星心会について</a><a href="{rel}access/">アクセス<small>名古屋から30分</small></a><a href="{rel}faq/">よくある質問</a><a href="{rel}contact/">相談する</a>
+<h4>INFO</h4>{info}
 {sns_html()}</div>
 '''
 def footer(rel):
-    cols=''.join(f'<div><h5>{lab}</h5><ul>'+''.join(f'<li><a href="{rel}{SV[k][2]}">{SV[k][1]}</a></li>' for k in ks)+'</ul></div>' for _,lab,_,_,ks,_h in AUD)
+    gs=CHROME.get('groups')
+    cols=''
+    for i,(_,lab,_,_,ks,_h) in enumerate(AUD):
+        names=gs[i] if gs and i<len(gs) else None
+        cols+=f'<div><h5>{lab}</h5><ul>'+''.join(f'<li><a href="{rel}{SV[k][2]}">{html.escape(names[j]) if names and j<len(names) and names[j] else SV[k][1]}</a></li>' for j,k in enumerate(ks))+'</ul></div>'
     return f'''<footer class="gf"><div class="in">
-<div><a class="logo" href="{rel}"><img src="{rel}img/mark_black.svg" alt=""><span>星心会</span></a><p style="margin-top:12px">{ORG}<br>{ADDR}<br>TEL <a href="tel:0593150697">{TEL}</a><br>名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分</p></div>
+<div><a class="logo" href="{rel}"><img src="{rel}img/mark_black.svg" alt=""><span>星心会</span></a><p style="margin-top:12px">{CHROME.get('foot_html') or f'{ORG}<br>{ADDR}<br>TEL <a href="tel:0593150697">{TEL}</a><br>名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分'}</p></div>
 {cols}
-<div><h5>INFO</h5><ul><li><a href="{rel}business/">企業・支援機関の方へ</a></li><li><a href="{rel}about/">星心会について</a></li><li><a href="{rel}access/">アクセス</a></li><li><a href="{rel}faq/">よくある質問</a></li><li><a href="{rel}contact/">相談する</a></li><li><a href="{rel}privacy/">プライバシーポリシー</a></li><li><a href="{rel}sitemap/">サイトマップ</a></li></ul>
+<div><h5>INFO</h5><ul>{''.join(f'<li><a href="{rel}{u}">{n}</a></li>' for n,u,sm in _infolinks('foot',_FOOT))}</ul>
 <h5 style="margin-top:20px">FOLLOW</h5>{sns_html(True).replace('class="sns"','class="sns" style="flex-direction:column;align-items:flex-start;gap:10px"')}</div>
-<p class="cp">© 星心会 {ORG}</p></div></footer>
+<p class="cp">{html.escape(CHROME.get('copy') or f'© 星心会 {ORG}')}</p></div></footer>
 <a class="fab" href="{rel}contact/">相談する</a>
 <script src="{rel}assets/site.js"></script>
 </body></html>'''
@@ -133,6 +160,8 @@ def service_page(d):
         d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=d.pop('_pre','')
         if first and not d.get('keep_desc'): d['desc']=first
         d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
+    apply_page_misc(d)
+    global CUR; CUR=d
     if path in CP and not ovr:
         have=' '.join(q for q,a in d['faq'])
         add=[(q,a.format(what=__import__('re').sub('<[^>]+>','',d['sub']))) for q,a in COMMON if (q.startswith('診断') or q[:4] not in have and not (path=='chamu/' and q.startswith('家族に'))) and not (path=='leo/' and q.startswith('家族')) and not (q.startswith('いくら') and ('費用' in have or '料金' in have or path in ('ryozanpaku/','chamu/')))]
@@ -154,13 +183,13 @@ def service_page(d):
         if d.get('extra'): o+=d['extra'](rel)
     else:
         chips=''.join(f'<button data-a="{esc(a.replace('<br>','\n'))}">{n}{f"<small>{s}</small>" if s else ""}</button>' for n,s,a in d['what'])
-        o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{_re.sub(r"[0-9０-９]+つの",f"{len(d.get('what') or [])}つの",d["what_h"],count=1) if d.get("what") else d["what_h"]}</h2><p>押すと内容が表示されます。</p></div>
-    <div>{f'<p class="intro" style="margin:0 0 1.2em;font-size:1.05rem;line-height:1.9">{d["what_intro"]}</p>' if d.get("what_intro") else ""}<div class="chips">{chips}</div><p class="ans" style="white-space:pre-line">押すと内容が表示されます。</p></div></section></div>'''
+        o+=f'''<div class="dark"><section class="blk wide" id="what"><div class="h"><span class="en">WHAT</span><h2>{_re.sub(r"[0-9０-９]+つの",f"{len(d.get('what') or [])}つの",d["what_h"],count=1) if d.get("what") else d["what_h"]}</h2><p>{html.escape(CHROME.get('what_hint') or '押すと内容が表示されます。')}</p></div>
+    <div>{f'<p class="intro" style="margin:0 0 1.2em;font-size:1.05rem;line-height:1.9">{d["what_intro"]}</p>' if d.get("what_intro") else ""}<div class="chips">{chips}</div><p class="ans" style="white-space:pre-line">{html.escape(CHROME.get('what_hint') or '押すと内容が表示されます。')}</p></div></section></div>'''
         if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
         if d.get('extra'): o+=d['extra'](rel)
-        o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>ボタンで一段ずつ進みます。</p></div>
+        o+=f'''<section class="blk" id="flow"><div class="h"><span class="en">PROCESS</span><h2>進め方</h2><p>{html.escape(CHROME.get('flow_hint') or 'ボタンで一段ずつ進みます。')}</p></div>
     <div class="steps" data-cta="#contact"><script type="application/json">{json.dumps(d["flow"],ensure_ascii=False)}</script><div class="sbar"></div>
-    <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">もどる</button><button class="btn next">次へ</button></div></div></div></section>'''
+    <div class="card"><div class="num"></div><div class="k"></div><h3></h3><p></p><div class="ctl"><button class="ghost prev">{html.escape(CHROME.get('prev') or 'もどる')}</button><button class="btn next">{html.escape(CHROME.get('next') or '次へ')}</button></div></div></div></section>'''
     if d.get('voice'):
         _v=d['voice']; _by=_v[-1] if _v and _v[-1].lstrip('<p>').startswith('—') else ''; _q=_v[:-1] if _by else _v
         o+='<section class="blk wide" id="voice"><div class="h"><span class="en">VOICE</span><h2>保護者の声</h2></div><blockquote style="margin:0;padding:0 0 0 1.2em;border-left:3px solid currentColor;line-height:1.9">'+''.join(f'<div style="margin:0 0 1em">{x}</div>' for x in _q)+(f'<div style="opacity:.7;font-size:14px">{_by}</div>' if _by else '')+'</blockquote></section>'
@@ -196,7 +225,7 @@ def service_page(d):
     if _tdup: DUPLOG.append((path,'tel',[tel]))
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
     o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>
-<div class="row"><a class="w" href="{line}">LINE</a><a class="o" href="tel:{tel.replace("-","")}">電話</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
+<div class="row"><a class="w" href="{line}">{html.escape(CHROME.get('line_label') or 'LINE')}</a><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
     o+=footer(rel); write(path,o)
 
 def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub=''):
@@ -214,10 +243,24 @@ PLACE_A='三重県四日市市あさけが丘2-1-42<br>三岐線 山城駅から
 NAGOYA=('名古屋在住でも利用できますか？','相談はできます。居住地によって使える制度が異なるため、初回連絡時に確認し、手続きはこちらで進めます。')
 
 PAGES=[]
-def partners(rel): return f'''<section class="blk wide" id="partners"><div class="h"><span class="en">FOR PARTNERS</span><h2>企業・支援機関の方へ</h2><p>企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。</p></div><div>
-<ul class="lst"><li><b>職場定着を支える住まい</b>メンタルピアレジデンス・梁山泊は、ケアの付いた一般の賃貸住居です。現在、入居者のうち3人が障害者枠で一般就労しています。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。</li>
+def _slot(name):
+    return ((CUR or {}).get('_slots') or {}).get(name) or {}
+def _slines(b):
+    return [x.strip() for x in (b or {}).get('lines') or [] if x and str(x).strip()]
+def _soft(s):
+    return html.escape(s or '').replace('&lt;br&gt;','<br>').replace('&lt;br/&gt;','<br>')
+def partners(rel):
+    b=_slot('partners'); lines=_slines(b)
+    h=_soft(b.get('title') or '企業・支援機関の方へ')
+    p=_soft(lines[0]) if lines else '企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。'
+    if b.get('h4'):
+        ul='<ul class="lst">'+''.join(f'<li><b>{_soft(t)}</b>{_soft(" ".join(ls))}</li>' for t,ls in b['h4'])+'</ul>'
+    else:
+        ul=f'''<ul class="lst"><li><b>職場定着を支える住まい</b>メンタルピアレジデンス・梁山泊は、ケアの付いた一般の賃貸住居です。現在、入居者のうち3人が障害者枠で一般就労しています。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。</li>
 <li><b>紹介・連携の窓口</b>入居の紹介、職場定着の連携、職場との情報共有の方法は、星心会本部が一本で受けます。本人の同意を前提に進めます。</li>
-<li><b>定着支援と一体で</b>専任担当による<a href="{rel}business/employment/" style="display:inline;color:var(--hi)">雇用定着サポート</a>と住まいを組み合わせて提供できます。</li></ul>
+<li><b>定着支援と一体で</b>専任担当による<a href="{rel}business/employment/" style="display:inline;color:var(--hi)">雇用定着サポート</a>と住まいを組み合わせて提供できます。</li></ul>'''
+    return f'''<section class="blk wide" id="partners"><div class="h"><span class="en">FOR PARTNERS</span><h2>{h}</h2><p>{p}</p></div><div>
+{ul}
 <div class="cta" style="padding:28px 20px;margin-top:22px;text-align:left"><p class="en" style="color:var(--hi)">CONTACT</p><p style="margin:6px 0 14px">紹介・連携の問い合わせ</p><div class="row" style="margin:0;max-width:none"><a class="o" href="tel:0593150697" style="text-align:center">電話 059-315-0697</a><a class="w" href="{rel}contact/" style="text-align:center">フォーム</a></div></div></div></section>'''
 AUD_P=[{"@type":"Audience","audienceType":"企業の人事・雇用担当"},{"@type":"Audience","audienceType":"JEED（高齢・障害・求職者雇用支援機構）"},{"@type":"Audience","audienceType":"ハローワーク"},{"@type":"Audience","audienceType":"労働局"},{"@type":"Audience","audienceType":"働き続けたい社会人・親元を出たい人"}]
 TEJUN='書類と手続きはこちらで進めます。'
@@ -307,9 +350,17 @@ PAGES.append(dict(path='shichirin/',name='しちりんの会',en='SHICHIRIN',pho
  faq=[('手続きは必要ですか？','不要です。自費参加で、診断も要りません。'),('眠れないだけでも参加していいですか？','参加できます。理由は問いません。'),('費用は？','食材費込み3,000円です。'),('次の開催日は？','不定期の土曜日です。申し込み時にご案内します。'),('名古屋から参加できますか？','参加できます。会場は三重県菰野町田光です。詳しい場所は申し込み後にご案内します。'),('一人で参加してもいいですか？','参加できます。')],
  rel=[('RYDEEN','rydeen/'),('梁山泊','ryozanpaku/')],cta_h='参加を申し込む'))
 
-def leo_extra(rel): return f'''<section class="blk"><div class="h"><span class="en">FOR PARENTS</span><h2>保護者向けプログラム</h2></div>
-<div class="cards" style="grid-template-columns:1fr 1fr"><a class="sc" href="{rel}leo/parent-training/"><div class="th" style="background-image:url({rel}img/pt-classroom.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">ペアレント<br>トレーニング</p><p class="ln">関わり方を変えます。</p></div></a>
-<a class="sc" href="{rel}leo/assessment/"><div class="th" style="background-image:url({rel}img/jigsaw.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">発達検査</p><p class="ln">WISC-V・新版K式。</p></div></a></div></section>'''
+def leo_extra(rel):
+    b=_slot('parents'); h4=b.get('h4') or []
+    def one(i,name,line):
+        if i<len(h4) and h4[i][0]: name=h4[i][0]
+        if i<len(h4) and h4[i][1]: line=h4[i][1][0]
+        return _soft(name),_soft(line)
+    n1,l1=one(0,'ペアレント<br>トレーニング','関わり方を変えます。'); n2,l2=one(1,'発達検査','WISC-V・新版K式。')
+    h=_soft(b.get('title') or '保護者向けプログラム')
+    return f'''<section class="blk"><div class="h"><span class="en">FOR PARENTS</span><h2>{h}</h2></div>
+<div class="cards" style="grid-template-columns:1fr 1fr"><a class="sc" href="{rel}leo/parent-training/"><div class="th" style="background-image:url({rel}img/pt-classroom.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">{n1}</p><p class="ln">{l1}</p></div></a>
+<a class="sc" href="{rel}leo/assessment/"><div class="th" style="background-image:url({rel}img/jigsaw.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">{n2}</p><p class="ln">{l2}</p></div></a></div></section>'''
 PAGES.append(dict(path='leo/',name='レオ',en='LEO',photo='panda',pos='50% 60%',addr_ld=ASAKE,tel='070-6967-0011',
  title='レオ｜子どもが落ち着かない保護者へ｜おもちゃ・武道・庭いじり｜三重県四日市市あさけが丘',
  desc='子どもが落ち着かない、かんしゃくが多い。レオは、遊びと体で子どもの情緒を整える場所です。おもちゃ、武道・ヨガ、庭いじり、手作りの和食を用意しています。ペアレントトレーニングと発達検査も行います。三重県四日市市あさけが丘、名古屋西ICから車で約30分です。',
@@ -384,7 +435,12 @@ PAGES.append(dict(path='business/employment/',extra=partners,audience=AUD_P[:4],
  faq=[('すでに雇用している社員だけでも依頼できますか？','依頼できます。プランBから直接申し込めます。'),('企業側に偏った支援ですか？','本人の側にも企業の側にも寄せません。双方に無理のない体制を作ります。'),('社員の住まいまで対応できますか？','対応します。メンタルピアレジデンス・梁山泊を、働き続けるための住まいとして紹介できます。'),('支援機関からの紹介は？','受け付けます。窓口は本部（059-315-0697）です。'),('三重県外の企業も対象ですか？',ph('対応エリア'))],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='相談する'))
 
-def agent_howto(rel): return '''<section class="blk wide"><div class="h"><span class="en">HOW WE USE IT</span><h2>代表 齊藤の<br>Grok Botの使い方</h2><p>作業はボットに任せ、人は確認と判断だけをします。</p></div>
+def agent_howto(rel):
+    b=_slot('howto'); lines=_slines(b)
+    title=b.get('title') or ''
+    h=_soft(title).replace('のGrok','の<br>Grok').replace('の Grok','の<br>Grok') if title else '代表 齊藤の<br>Grok Botの使い方'
+    p=_soft(lines[0]) if lines else '作業はボットに任せ、人は確認と判断だけをします。'
+    return f'''<section class="blk wide"><div class="h"><span class="en">HOW WE USE IT</span><h2>{h}</h2><p>{p}</p></div>
 <div><div class="howto" style="border-top:2px solid var(--ink)"><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">毎朝の計画書</h3><p style="font-size:14px;line-height:1.8;margin:0">平日の朝、前回の計画とモニタリング記録から、個別支援計画の下書きをGoogleドキュメントに作ります。職員は読んで直し、確定します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">会議録とアセスメント</h3><p style="font-size:14px;line-height:1.8;margin:0">居宅介護の利用者ごとに、計画や過去の記録からアセスメントシートと担当者会議録を下書きします。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">保護者への報告から広報へ</h3><p style="font-size:14px;line-height:1.8;margin:0">レオの日々の報告を、名前を出さない投稿文と画像にします。出すかどうかは人が決めます。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">入札情報の巡回</h3><p style="font-size:14px;line-height:1.8;margin:0">自治体の入札案件を平日に巡回し、関係する案件だけを報告します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">このホームページ</h3><p style="font-size:14px;line-height:1.8;margin:0">文言の修正や写真の差し替えをチャットで頼み、反映後の画面を確認して公開します。</p></div></div></div></section>'''
 PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=agent_howto,name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
  title='エージェントコンサル｜Grok Botで事業所の書類と広報をAIエージェントに任せる｜星心会',
@@ -414,6 +470,117 @@ PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',photo='k
  faq=[('内容は選べますか？','希望に応じて組み立てます。'),('合気道の経験がなくても参加できますか？',ph('合気道研修の参加条件'))],
  rel=[('雇用定着サポート','business/employment/'),('エージェントコンサル','business/agent-consulting/')],cta_h='相談する'))
 
+def apply_card_overrides(cards):
+    """top.md 事業カード → SV/SVCS name, cat, line. URL と thumb はそのまま。無いカードは DOCMETA のまま。"""
+    if not cards: return
+    rows=[]
+    if isinstance(cards,dict):
+        for k,v in cards.items():
+            if isinstance(v,(list,tuple)): v={'name':v[0] if v else None,'cat':v[1] if len(v)>1 else None,'line':v[2] if len(v)>2 else None}
+            if isinstance(v,dict): rows.append((k,v))
+    elif isinstance(cards,(list,tuple)):
+        for v in cards:
+            if isinstance(v,dict): rows.append((v.get('key') or v.get('name'),v))
+    for k,v in rows:
+        key=k if k in SV else CI.card_key(k or v.get('name') or '')
+        if not key or key not in SV: continue
+        o=list(SV[key]); nm=(v.get('name') or '').strip()
+        if nm and nm!=key: o[1]=nm
+        if 'cat' in v and v['cat'] is not None: o[3]=v['cat']
+        ln=(v.get('line') or '').strip()
+        if ln: o[4]=ln
+        SV[key]=tuple(o)
+        for i,s in enumerate(SVCS):
+            if s[0]==key: SVCS[i]=SV[key]; break
+def apply_page_misc(d):
+    """末尾「ページのその他の表示」のうち、知っている欄だけ上書き。無い欄はハードコードのまま。"""
+    raw=d.get('misc')
+    if not raw: return
+    s=CI.misc_slots(raw,CI.PAGE_SLOTS)
+    if not s: return
+    d['_slots']=s
+    under=_slines(s.get('under'))
+    if under: d['cat']=html.escape(under[0])
+    badge=_slines(s.get('badge'))
+    if badge: d['badge']='<p class="badge">'+html.escape(badge[0])+'</p>'
+    acc=_slines(s.get('acc'))
+    if acc: d['acc']=acc[0] if len(acc)==1 else '／'.join(acc)
+    wh=_slines(s.get('what'))
+    if wh: d['what_h']='<br>'.join(html.escape(x) for x in wh)
+    rel=_slines(s.get('rel'))
+    if rel and d.get('rel'):
+        d['rel']=[(html.escape(rel[i]) if i<len(rel) and rel[i] else n,u) for i,(n,u) in enumerate(d['rel'])]
+    cta=_slines(s.get('cta'))
+    if cta: d['cta_h']=cta[0]
+    sub=_slines(s.get('sub'))
+    if sub: d['sub']='<br>'.join(html.escape(x) for x in sub)
+    ap=_slines(s.get('apply'))
+    if ap and d.get('cta_note'):
+        d['cta_note']=_re.sub(r'(>)([^<]+)(</a>)',lambda m,t=html.escape(ap[0]): m.group(1)+t+m.group(3),d['cta_note'],count=1)
+def _slash(s):
+    return [p.strip() for p in _re.split(r'\s*[/／]\s*',s) if p.strip()]
+def load_chrome(parsed):
+    global CHROME
+    if not parsed: return
+    nav=CI.misc_slots(parsed.get('nav'),CI.NAV_SLOTS)
+    ch={}
+    top=[]
+    for x in _slines(nav.get('top')):
+        x=_re.sub(r'^[-*]\s*','',x).strip()
+        top.extend(_slash(x) if ('／' in x or '/' in x) else [x])
+    if top: ch['top']=top
+    groups=[]; info=[]
+    for raw in _slines(nav.get('drawer')):
+        x=_re.sub(r'^[-*]\s*','',raw).strip()
+        if '：' not in x and ':' not in x: continue
+        lab,rest=x.split('：',1) if '：' in x else x.split(':',1)
+        names=_slash(rest)
+        if lab.strip().upper()=='INFO':
+            for n in names:
+                m=_re.match(r'^(.+?)（(.+)）$',n)
+                info.append((m.group(1),m.group(2)) if m else (n,''))
+        else: groups.append(names)
+    if groups: ch['groups']=groups
+    if info: ch['drawer']=[n+('｜'+sm if sm else '') for n,sm in info]
+    bits=[]; copy=None; addr=False
+    for raw in _slines(nav.get('foot')):
+        x=_re.sub(r'^[-*]\s*','',raw).strip()
+        if not x: continue
+        if x.startswith('©'): copy=x; continue
+        if 'プライバシー' in x and ('／' in x or '/' in x): continue
+        addr=addr or x.startswith(('〒','TEL','一般社団法人'))
+        m=_re.match(r'^TEL\s*([\d\-]+)\s*$',x)
+        bits.append(f'TEL <a href="tel:{m.group(1).replace("-","")}">{html.escape(m.group(1))}</a>' if m else html.escape(x))
+    if addr and bits: ch['foot_html']='<br>'.join(bits)
+    if copy: ch['copy']=copy
+    for raw in _slines(nav.get('parts')):
+        x=_re.sub(r'^[-*]\s*','',raw).strip()
+        if x.startswith('本文'):
+            ch['what_hint']=x.split('：',1)[-1].strip()
+        elif 'もどる' in x and '次へ' in x:
+            m=_re.search(r'ボタン：\s*([^／/]+)[／/]\s*([^）)]+)',x)
+            if m: ch['prev'],ch['next']=m.group(1).strip(),m.group(2).strip()
+            m2=_re.search(r'案内：\s*([^（(]+)',x)
+            if m2: ch['flow_hint']=m2.group(1).strip()
+        elif '申し込み' in x and '：' in x:
+            parts=_slash(x.split('：',1)[-1])
+            if parts: ch['line_label']=parts[0]
+            if len(parts)>1: ch['tel_label']=parts[1]
+    steps=_slines(nav.get('steps'))
+    if len(steps)>=2: ch['prev'],ch['next']=steps[0],steps[1]
+    if _slines(nav.get('prev')): ch['prev']=_slines(nav.get('prev'))[0]
+    if _slines(nav.get('next')): ch['next']=_slines(nav.get('next'))[0]
+    ch['misc']=CI.misc_slots(parsed.get('misc'),CI.TOP_SLOTS)
+    CHROME=ch
+def _top_doc():
+    if not CONTENT or DUMP: return None
+    f=_o.path.join(CONTENT,'top.md')
+    if not _o.path.exists(f): return None
+    return CI.parse_top(open(f,errors='ignore').read(),dict(aud=[(a[0],a[1],a[3],a[5]) for a in AUD]))
+_td=_top_doc()
+if _td:
+    apply_card_overrides(_td.get('cards'))
+    load_chrome(_td)
 for d in PAGES: service_page(d)
 
 # ---------- TOP ----------
@@ -427,19 +594,51 @@ def top():
     global TOPC
     rel=''
     cf=CONTENT and _o.path.join(CONTENT,'top.md')
-    if cf and _o.path.exists(cf) and not DUMP: TOPC=CI.parse_top(open(cf,errors='ignore').read(),TOPC)
+    if cf and _o.path.exists(cf) and not DUMP:
+        TOPC=CI.parse_top(open(cf,errors='ignore').read(),TOPC)
+        apply_card_overrides(TOPC.get('cards'))
+        load_chrome(TOPC)
     if DUMP: open(_o.path.join(DUMP,'top.md'),'w').write(CI.top_md(TOPC))
     TA={k:(lead,hint) for k,lab,lead,hint in TOPC['aud']}
+    M=(CHROME.get('misc') or {})
+    def TL(k): return _slines(M.get(k))
+    hero_acc=(TL('hero_acc') or ['名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分／四日市駅から三岐バス「団地下」'])[0]
+    sns_h='SNS'; col_nm=None; sbtn={'X':'Xで最新の投稿を見る','Instagram':'Instagramで見る','Threads':'Threadsで見る'}; btns=[]
+    for raw in TL('sns'):
+        x=_re.sub(r'^[-*・]\s*','',raw).strip()
+        if not x or (x.startswith('（') and x.endswith('）')): continue
+        if x.startswith('見出し：') or x.startswith('見出し:'): sns_h=x.split('：',1)[-1].split(':',1)[-1].strip(); continue
+        if '：' in x and x.split('：',1)[0].strip() in sbtn: sbtn[x.split('：',1)[0].strip()]=x.split('：',1)[1].strip(); continue
+        if '見る' in x or '投稿を見る' in x: btns.append(x); continue
+        if col_nm is None: col_nm=x
+        else: btns.append(x)
+    for i,b in enumerate(btns[:3]): sbtn[['X','Instagram','Threads'][i]]=b
+    acc_h='名古屋から<br>30分です。'; acc_items=['三岐線 山城駅から徒歩5分','四日市駅から三岐バス「団地下」','本部：三重県四日市市山城町59-4']; acc_btn='アクセスを見る'; big=None
+    hl=[]; items=[]; seen_big=False
+    for raw in TL('access'):
+        x=_re.sub(r'^[-*]\s*','',raw).strip()
+        if x.startswith('ボタン：') or x.startswith('ボタン:'): acc_btn=x.split('：',1)[-1].split(':',1)[-1].strip(); continue
+        if '車で' in x and '分' in x: big=x; seen_big=True; continue
+        if not seen_big: hl.append(x)
+        else: items.append(x)
+    if items: acc_items=items
+    if hl: acc_h='<br>'.join(html.escape(x) for x in hl)
+    big_html=None
+    if big:
+        m=_re.match(r'^(.+?)\s*から車で\s*(\d+)\s*分\s*$',big.strip())
+        big_html=(html.escape(m.group(1))+'<br>から車で <em>'+m.group(2)+'</em>分') if m else html.escape(big)
+    pb=TL('partner_btn'); partner_btn=pb[0] if pb else '企業・支援機関の方へ →'
+    ct=TL('contact'); ct_h=ct[0] if ct else '相談する'; ct_p='<br>'.join(html.escape(x) for x in ct[1:]) if len(ct)>1 else 'どの事業か決まっていなくてもかまいません。'
     o=head(rel,'星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）','星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。','')+header(rel)
     o+=f'''<section class="hero"><div class="bg" style="background-image:url(img/hero_top.jpg);background-position:50% 88%"></div>
 <div class="hin"><div class="hlogo"><img src="img/mark_white.svg" alt=""><span>星心会</span></div><p class="en">SEISHINKAI · YOKKAICHI</p>
 <p class="copy" style="margin-top:18px">{''.join(f'<span>{x}</span>' for x in TOPC['copy'])}</p><p class="sub" style="font-size:16px">{TOPC['sub']}</p>
-</div><p class="acc">名古屋西ICから車で約30分／三岐線 山城駅から徒歩5分／四日市駅から三岐バス「団地下」</p></section>
+</div><p class="acc">{html.escape(hero_acc)}</p></section>
 <section class="blk" id="entry" style="max-width:1040px;padding-bottom:10px"><div class="h"><span class="en">ENTRY</span><h2>{TOPC['entry_h']}</h2><p>{TOPC['entry_p']}</p></div>
 <div class="aud" style="grid-template-columns:repeat(2,minmax(0,1fr))">{''.join(f'<a href="#{k}">{lab}<small>{TA[k][1]} ↓</small></a>' for k,lab,en,lead,ks,hint in AUD)}</div></section>'''
     for k,lab,en,lead,ks,hint in AUD:
         o+=f'<section class="blk" id="{k}" style="max-width:1040px;padding-top:44px"><div class="h"><span class="en">{en}</span><h2>{lab}</h2><p>{TA[k][0]}</p></div><div class="cards">'+''.join(card(x) for x in ks)+'</div>'
-        if k=='partners': o+='<p style="margin-top:18px"><a class="btn" href="business/">企業・支援機関の方へ →</a></p>'
+        if k=='partners': o+=f'<p style="margin-top:18px"><a class="btn" href="business/">{html.escape(partner_btn)}</a></p>'
         o+='</section>'
     o+='''<section class="blk wide" id="news"><div class="h"><h2>SNS</h2></div><div class="snsw">
 <div class="snsb"><p class="en sl">X</p><div class="tt"><p class="nm">世界のメンタルヘルス・ニュース</p><p class="hd">@gcbfhq</p></div><div class="snss"><a class="xc" href="https://x.com/gcbfhq/status/2113412690064327131" target="_blank" rel="noopener"><time>2026年10月23日</time><p>マレーシアの公的相談電話「Talian HEAL 15555」(毎日8時〜24時)を、保健省が段階的に24時間化する方針。待ち時間を減らす折り返し電話も検討中。相談で一番多い悩みは「仕事のストレス」だという。開設から4年。 #メンタルヘルス #マレーシア</p></a><a class="xc" href="https://x.com/gcbfhq/status/2113060017540591787" target="_blank" rel="noopener"><time>2026年10月22日</time><p>カザフスタンでは、国の名簿に登録しないと「心理士」を名乗れなくなりました。9月施行の新法で、「サイコ〜」と紛らわしい肩書きも禁止。自称ヒーラーの締め出しが狙いです。登録の猶予は1年、10月13日には職業基準も発効。 #カザフスタン #メンタルヘルス</p></a><a class="xc" href="https://x.com/gcbfhq/status/2112710209227436094" target="_blank" rel="noopener"><time>2026年10月21日</time><p>1〜6のうち「4」だけ抜けた番号。中国の全国統一こころの相談電話「12356」は、「没四(4がない)」と「没事(大丈夫)」をかけて「大丈夫ダイヤル」と呼ばれる。広東省では330人が24時間交代で、月4.5万件超の電話を受ける。 #メンタルヘルス #中国</p></a></div><a class="go" href="https://x.com/gcbfhq" target="_blank" rel="noopener">Xで最新の投稿を見る</a></div>
@@ -454,6 +653,17 @@ def top():
 <a class="go" href="access/" style="margin-top:28px">アクセスを見る</a></div></section></div>
 <section class="cta" id="contact"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><p style="font-size:13px;opacity:.7;margin-top:8px">どの事業か決まっていなくてもかまいません。</p>
 <div class="row"><a class="w" href="contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
+    o=o.replace('<h2>SNS</h2>',f'<h2>{html.escape(sns_h)}</h2>',1)
+    if col_nm: o=o.replace('<p class="nm">世界のメンタルヘルス・ニュース</p>',f'<p class="nm">{html.escape(col_nm)}</p>',1)
+    if big_html: o=o.replace('<p class="big30">名古屋西IC<br>から車で <em>30</em>分</p>',f'<p class="big30">{big_html}</p>',1)
+    o=o.replace('>Xで最新の投稿を見る</a>',f'>{html.escape(sbtn["X"])}</a>',1)
+    o=o.replace('>Instagramで見る</a>',f'>{html.escape(sbtn["Instagram"])}</a>',1)
+    o=o.replace('>Threadsで見る</a>',f'>{html.escape(sbtn["Threads"])}</a>',1)
+    o=o.replace('<h2>名古屋から<br>30分です。</h2>',f'<h2>{acc_h}</h2>',1)
+    o=o.replace('<li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li>',''.join(f'<li style="border-color:rgba(255,255,255,.12)">{html.escape(x)}</li>' for x in acc_items),1)
+    o=o.replace('>アクセスを見る</a>',f'>{html.escape(acc_btn)}</a>',1)
+    o=o.replace('<h2>相談する</h2>',f'<h2>{html.escape(ct_h)}</h2>',1)
+    o=o.replace('どの事業か決まっていなくてもかまいません。',ct_p,1)
     o+=footer(rel); write('',o)
 top()
 
