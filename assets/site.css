@@ -276,7 +276,7 @@ dd.who .bio{grid-area:bio}
 .prose.old .lst li{position:relative;border-bottom:1px solid var(--ink)!important;padding:16px 0 16px 18px!important;font-size:16px!important;line-height:1.75!important;font-weight:500}
 .prose.old .lst li::before{content:"";position:absolute;left:0;top:20px;width:8px;height:8px;background:var(--hi)}
 .prose.old p{font-size:16px;line-height:1.85;margin:0 0 14px}
-.prose.old img,.prose.old img.pin{display:block;width:100%;max-width:320px;height:auto;margin:10px 0 20px;border-top:4px solid var(--hi)}
+.prose.old img,.prose.old img.pin{display:block;width:100%;max-width:320px;height:auto;margin:10px 0 20px;border-top:none}
 @media(min-width:900px){
   .prose.old{padding:32px 28px 28px}
   .prose.old h3,.prose.old h3.oh{font-size:28px!important}
