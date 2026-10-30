@@ -252,16 +252,19 @@ dd.who .bio{grid-area:bio}
    old_html puts a lone .prose inside .wide, so text was stuck in 250px. */
 @media(min-width:900px){
   .wide > .prose,
-  .wide > :only-child{grid-column:1 / -1;max-width:760px}
-  body{font-size:17px}
-  .prose p{font-size:17px;line-height:1.9}
-  .prose.old h3{font-size:22px!important}
-  .lst li{font-size:16px}
-  .lst li b{font-size:17px}
-  dl.info{font-size:16px}
-  details{font-size:16px}
-  details p{font-size:15px}
-  .h p{font-size:15px}
-  .card p{font-size:16px}
-  .ans{font-size:16px}
+  .wide > :only-child{grid-column:1 / -1;max-width:820px}
+  body{font-size:19px}
+  .prose p{font-size:19px;line-height:1.95}
+  .prose.old h3{font-size:26px!important}
+  .prose.old p,.prose.old li{font-size:19px}
+  .lst li{font-size:18px}
+  .lst li b{font-size:19px}
+  dl.info{font-size:18px}
+  details{font-size:18px}
+  details p{font-size:17px}
+  .h h2{font-size:36px}
+  .h p{font-size:17px}
+  .card p{font-size:18px}
+  .ans{font-size:18px}
+  section.blk{max-width:820px}
 }
