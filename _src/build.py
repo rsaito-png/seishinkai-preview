@@ -103,7 +103,7 @@ def _infolinks(key,default):
             else: n=row.strip()
         out.append((n,u,sm))
     return out
-_DRAWER=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/','名古屋から30分'),('よくある質問','faq/',''),('相談する','contact/','')]
+_DRAWER=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/','')]
 _FOOT=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
 def header(rel):
     lab=_navlabs(); gs=CHROME.get('groups')
@@ -605,7 +605,7 @@ def card(k,rel=''):
     if k=='suishodama': th=f'<div class="th t" style="background:#f5f5f3"><img src="{rel}img/suisho_mark_ink.svg" alt="水晶玉 ロゴ" style="width:60%;max-width:130px"></div>'
     if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
-TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='名古屋から30分です。',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
+TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
 def top():
     global TOPC
     rel=''
@@ -629,7 +629,7 @@ def top():
         if col_nm is None: col_nm=x
         else: btns.append(x)
     for i,b in enumerate(btns[:3]): sbtn[['X','Instagram','Threads'][i]]=b
-    acc_h='名古屋から<br>30分です。'; acc_items=['三岐線 山城駅から徒歩5分','四日市駅から三岐バス「団地下」','本部：三重県四日市市山城町59-4']; acc_btn='アクセスを見る'; big=None
+    acc_h=''; acc_items=['三岐線 山城駅から徒歩5分','四日市駅から三岐バス「団地下」','本部：三重県四日市市山城町59-4']; acc_btn='アクセスを見る'; big=None
     hl=[]; items=[]; seen_big=False
     for raw in TL('access'):
         x=_re.sub(r'^[-*]\s*','',raw).strip()
@@ -648,7 +648,7 @@ def top():
     o=head(rel,'星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）','星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。','')+header(rel)
     o+=f'''<section class="hero"><div class="bg" style="background-image:url(img/hero_top.jpg);background-position:50% 88%"></div>
 <div class="hin"><div class="hlogo"><img src="img/mark_white.svg" alt=""><span>星心会</span></div><p class="en">SEISHINKAI · YOKKAICHI</p>
-<p class="copy" style="margin-top:18px">{''.join(f'<span>{x}</span>' for x in TOPC['copy'])}</p><p class="sub" style="font-size:16px">{TOPC['sub']}</p>
+<p class="copy" style="margin-top:18px">{''.join(f'<span>{x}</span>' for x in TOPC['copy'])}</p>{f'<p class="sub" style="font-size:16px">{TOPC["sub"]}</p>' if TOPC.get('sub') else ''}
 </div><p class="acc">{html.escape(hero_acc)}</p></section>
 <section class="blk" id="entry" style="max-width:1040px;padding-bottom:10px"><div class="h"><span class="en">ENTRY</span><h2>{TOPC['entry_h']}</h2><p>{TOPC['entry_p']}</p></div>
 <div class="aud" style="grid-template-columns:repeat(2,minmax(0,1fr))">{''.join(f'<a href="#{k}">{lab}<small>{TA[k][1]} ↓</small></a>' for k,lab,en,lead,ks,hint in AUD)}</div></section>'''
@@ -675,7 +675,7 @@ def top():
     o=o.replace('>Xで最新の投稿を見る</a>',f'>{html.escape(sbtn["X"])}</a>',1)
     o=o.replace('>Instagramで見る</a>',f'>{html.escape(sbtn["Instagram"])}</a>',1)
     o=o.replace('>Threadsで見る</a>',f'>{html.escape(sbtn["Threads"])}</a>',1)
-    o=o.replace('<h2>名古屋から<br>30分です。</h2>',f'<h2>{acc_h}</h2>',1)
+    o=o.replace('<h2>名古屋から<br>30分です。</h2>',f'<h2>{acc_h}</h2>' if acc_h else '',1)
     o=o.replace('<li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li>',''.join(f'<li style="border-color:rgba(255,255,255,.12)">{html.escape(x)}</li>' for x in acc_items),1)
     o=o.replace('>アクセスを見る</a>',f'>{html.escape(acc_btn)}</a>',1)
     o=o.replace('<h2>相談する</h2>',f'<h2>{html.escape(ct_h)}</h2>',1)
@@ -704,14 +704,14 @@ simple_page('about/','星心会について｜理念・法人概要・代表｜�
 
 # ---------- access ----------
 MAP='https://www.google.com/maps/search/?api=1&query='
-def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span><h2>名古屋から<br>30分です。</h2></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px">
+def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px">
 <ul class="lst" style="margin-top:22px"><li><b>車</b>名古屋西ICから約30分です。</li><li><b>電車</b>三岐鉄道三岐線「山城」駅から徒歩5分です。</li><li><b>バス</b>四日市駅から三岐バスで「団地下」下車です。</li></ul></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">LOCATIONS</span><h2>拠点</h2></div><ul class="lst">
 <li><b>本部・水晶玉・RYDEEN・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>茶夢・レオ</b>〒512-8055 三重県四日市市あさけが丘2-1-42（山城駅から徒歩12分）<br><a href="{MAP}三重県四日市市あさけが丘2-1-42" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>金斗雲</b>三重県三重郡菰野町田光1801-165</li><li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
 <section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="w" href="{rel}contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
-simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow',sub='名古屋から30分です。')
+simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow')
 
 # ---------- faq ----------
 FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は一般の賃貸住居で、家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。'),
@@ -731,7 +731,7 @@ def contact(rel): return f'''<section class="blk"><div class="h"><span class="en
 <label>お名前</label><input type="text"><label>メールアドレス</label><input type="email"><label>内容（要点のみ）</label><textarea></textarea>
 <button class="btn" type="submit" disabled style="margin-top:18px;width:100%">送信</button><p style="margin-top:8px">{ph('フォーム送信先（未設定のため送信不可）')}</p>
 <p style="font-size:12px;color:var(--soft);margin-top:8px"><a href="{rel}privacy/">プライバシーポリシー</a>が適用されます。</p></form></section>'''
-simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）','星心会への相談は、公式LINE、電話059-315-0697、相談フォームで受け付けます。どの事業か決まっていなくてもかまいません。','相談する','CONTACT',contact,sub='どの事業か、決まっていなくてもかまいません。')
+simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）','星心会への相談は、公式LINE、電話059-315-0697、相談フォームで受け付けます。','相談する','CONTACT',contact)
 
 # ---------- privacy ----------
 def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法人」）は、相談・問い合わせ等で取得した個人情報を、次のとおり取り扱います。</p>
