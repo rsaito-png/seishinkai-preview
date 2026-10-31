@@ -169,7 +169,9 @@ def service_page(d):
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
     o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
-    if d.get('photo'):
+    if d.get('ink'):
+        o+=f'<section class="hero"><div class="bg" style="background:#1d1d1b"></div>'
+    elif d.get('photo'):
         o+=f'<section class="hero{" short" if d.get("short") else ""}"><div class="bg" style="background-image:url({rel}img/{d["photo"]}.jpg);background-position:{d.get("pos","50% 50%")}"></div>'
     else:
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
@@ -306,7 +308,7 @@ def old_html(blocks,rel='../'):
         elif t=='dl': o+='<dl class="info" style="margin:6px 0 16px">'+''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a,b in v)+'</dl>'
     return o+'</div></section>'
 
-PAGES.append(dict(path='suishodama/',name='水晶玉',en='SUISHODAMA',photo='hero_top',pos='50% 88%',mark='suisho_mark_white.svg',
+PAGES.append(dict(path='suishodama/',name='水晶玉',en='SUISHODAMA',ink=True,mark='suisho_mark_white.svg',
  title='水晶玉｜メンタルヘルスコーディネート（環境調整）｜名古屋から30分（三重県四日市市）',
  desc='眠れない、気分の波がある、親元にいると息が詰まる。水晶玉は、心の状態を左右する環境を評価し、設計し、手配するメンタルヘルスコーディネート（環境調整）です。三重県四日市市山城町、名古屋西ICから車で約30分です。',
  cat='メンタルヘルスコーディネート<em>（環境調整）</em>',copy=['環境調整は、','それ自体がケアです。'],
@@ -600,6 +602,7 @@ for d in PAGES: service_page(d)
 def card(k,rel=''):
     _,n,u,c,l,t=SV[k]
     th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>' if t else f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","kintoun":"KINTOUN","employment":"EMPLOY","agent":"AI"}.get(k,n)}</b></div>'
+    if k=='suishodama': th=f'<div class="th t" style="background:#1d1d1b"><img src="{rel}img/suisho_mark_white.svg" alt="水晶玉 ロゴ" style="width:60%;max-width:130px"></div>'
     if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
 TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='名古屋から30分です。',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
