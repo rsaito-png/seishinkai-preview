@@ -62,7 +62,7 @@ def split(md):
         m=re.match(r'^(#{1,4})\s+(.*?)\s*#*\s*$',ln)
         # Docs export: a heading whose style was lost becomes "title<2 spaces>" + soft return + body.
         # In info/FAQ sections treat such a paragraph-opening line as an h3 (text unchanged).
-        if not m and h2 in ('対象・費用・場所','よくある質問') and not prev.strip() and re.search(r'\S {2,}$',ln):
+        if not m and (h2.startswith('対象・費用') or h2=='よくある質問') and not prev.strip() and re.search(r'\S {2,}$',ln):
             m=re.match(r'^()(.*?)\s*$',ln); m=('###',ln.strip())
             cur=[3,m[1],[]];secs.append(cur);prev=ln;continue
         prev=ln
@@ -231,7 +231,7 @@ PAGE_SLOTS=[
  (['申し込み欄の見出し','申し込み欄'],'cta'),
  (['企業・支援機関の方へ'],'partners'),
  (['保護者向けプログラム'],'parents'),
- (['代表齊藤のGrokBotの使い方','GrokBotの使い方'],'howto'),
+ (['代表齊藤のGrokBotの使い方','GrokBotの使い方','代表齊藤の使い方','追加の欄：代表齊藤の使い方'],'howto'),
  (['申込ページへ'],'apply'),
  (['見出し下2行','見出しの下','見出し下'],'sub')]
 TOP_SLOTS=[
@@ -326,7 +326,8 @@ def parse_page(md,d,ph):
             ens=[x[0] for x in d['flow']]
             r['flow']=[[ens[i] if i<len(ens) else 'STEP',t,x] for i,(t,x) in enumerate(fl)]
     if g.get('保護者の声'): r['voice']=[f([x]) for _,_,ls in g['保護者の声'] for x in lines(ls)]
-    r['info']=[(t,f(ls)) for lv,t,ls in g.get('対象・費用・場所',[]) if lv==3]  # removed section => hide
+    r['info_h']=next((k for k in g if k.startswith('対象・費用')),None)
+    r['info']=[(t,f(ls)) for lv,t,ls in next((v for k,v in g.items() if k.startswith('対象・費用')),[]) if lv==3]  # removed section => hide
     if 'よくある質問' in g: r['faq']=[(md2h([t],p,ph),f(ls)) for lv,t,ls in g['よくある質問'] if lv==3]
     misc=_misc_block(g,'ページのその他の表示')
     if misc is not None: r['misc']=misc

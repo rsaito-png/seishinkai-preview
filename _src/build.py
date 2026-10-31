@@ -211,7 +211,7 @@ def service_page(d):
                 n=esc(st['name'])
                 return f'<dd class="who"><img src="{rel}img/{st["img"]}" alt="{n}" width="640" height="640"><span class="cap">{n}</span><span class="bio">{v}</span></dd>'
             return f'<dd>{v}</dd>'
-        o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>対象・費用・場所</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt>{_dd(k,v)}' for k,v in d['info'])+'</dl></section>'
+        o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>'+(d.get("info_h") or "対象・費用・場所")+'</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt>{_dd(k,v)}' for k,v in d['info'])+'</dl></section>'
     if SHOW_FAQ: o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'
@@ -435,13 +435,19 @@ PAGES.append(dict(path='business/employment/',extra=partners,audience=AUD_P[:4],
  faq=[('すでに雇用している社員だけでも依頼できますか？','依頼できます。プランBから直接申し込めます。'),('企業側に偏った支援ですか？','本人の側にも企業の側にも寄せません。双方に無理のない体制を作ります。'),('社員の住まいまで対応できますか？','対応します。メンタルピアレジデンス・梁山泊を、働き続けるための住まいとして紹介できます。'),('支援機関からの紹介は？','受け付けます。窓口は本部（059-315-0697）です。'),('三重県外の企業も対象ですか？',ph('対応エリア'))],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='相談する'))
 
+def _howto_items(lines):
+    its=[_re.sub(r'^[-・]\s*','',x).strip() for x in lines[1:]]
+    its=[x for x in its if x]
+    if not its: return _HOWTO_DEFAULT
+    return '<div><div class="howto" style="border-top:2px solid var(--ink)">'+''.join(f'<div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0">{_soft(x)}</h3></div>' for x in its)+'</div></div>'
+_HOWTO_DEFAULT='''<div><div class="howto" style="border-top:2px solid var(--ink)"><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">毎朝の計画書</h3><p style="font-size:14px;line-height:1.8;margin:0">平日の朝、前回の計画とモニタリング記録から、個別支援計画の下書きをGoogleドキュメントに作ります。職員は読んで直し、確定します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">会議録とアセスメント</h3><p style="font-size:14px;line-height:1.8;margin:0">居宅介護の利用者ごとに、計画や過去の記録からアセスメントシートと担当者会議録を下書きします。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">保護者への報告から広報へ</h3><p style="font-size:14px;line-height:1.8;margin:0">レオの日々の報告を、名前を出さない投稿文と画像にします。出すかどうかは人が決めます。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">入札情報の巡回</h3><p style="font-size:14px;line-height:1.8;margin:0">自治体の入札案件を平日に巡回し、関係する案件だけを報告します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">このホームページ</h3><p style="font-size:14px;line-height:1.8;margin:0">文言の修正や写真の差し替えをチャットで頼み、反映後の画面を確認して公開します。</p></div></div></div>'''
 def agent_howto(rel):
     b=_slot('howto'); lines=_slines(b)
-    title=b.get('title') or ''
+    title=_re.sub(r'^追加の欄[：:]\s*','',b.get('title') or '')
     h=_soft(title).replace('のGrok','の<br>Grok').replace('の Grok','の<br>Grok') if title else '代表 齊藤の<br>Grok Botの使い方'
     p=_soft(lines[0]) if lines else '作業はボットに任せ、人は確認と判断だけをします。'
     return f'''<section class="blk wide"><div class="h"><span class="en">HOW WE USE IT</span><h2>{h}</h2><p>{p}</p></div>
-<div><div class="howto" style="border-top:2px solid var(--ink)"><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">毎朝の計画書</h3><p style="font-size:14px;line-height:1.8;margin:0">平日の朝、前回の計画とモニタリング記録から、個別支援計画の下書きをGoogleドキュメントに作ります。職員は読んで直し、確定します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">会議録とアセスメント</h3><p style="font-size:14px;line-height:1.8;margin:0">居宅介護の利用者ごとに、計画や過去の記録からアセスメントシートと担当者会議録を下書きします。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">保護者への報告から広報へ</h3><p style="font-size:14px;line-height:1.8;margin:0">レオの日々の報告を、名前を出さない投稿文と画像にします。出すかどうかは人が決めます。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">入札情報の巡回</h3><p style="font-size:14px;line-height:1.8;margin:0">自治体の入札案件を平日に巡回し、関係する案件だけを報告します。</p></div><div style="padding:16px 0;border-bottom:1px solid var(--line)"><h3 style="font-size:16px;margin:0 0 6px">このホームページ</h3><p style="font-size:14px;line-height:1.8;margin:0">文言の修正や写真の差し替えをチャットで頼み、反映後の画面を確認して公開します。</p></div></div></div></section>'''
+{_howto_items(lines)}</section>'''
 PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=agent_howto,name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
  title='エージェントコンサル｜Grok Botで事業所の書類と広報をAIエージェントに任せる｜星心会',
  desc='対人支援の事業所のためのAIエージェント導入支援です。Grok Botを使い、計画書・記録・会議録の下書き、SNS投稿、ホームページ更新をAIエージェントに任せます。星心会が自ら毎日運用している方法をそのまま伝えます。',
@@ -509,7 +515,7 @@ def apply_page_misc(d):
     if wh: d['what_h']='<br>'.join(html.escape(x) for x in wh)
     rel=_slines(s.get('rel'))
     if rel and d.get('rel'):
-        d['rel']=[(html.escape(rel[i]) if i<len(rel) and rel[i] else n,u) for i,(n,u) in enumerate(d['rel'])]
+        d['rel']=[(html.escape(_re.sub(r'\s*→\s*$','',_re.sub(r'^[-・]\s*','',rel[i])).strip()) if i<len(rel) and rel[i] else n,u) for i,(n,u) in enumerate(d['rel'])]
     cta=_slines(s.get('cta'))
     if cta: d['cta_h']=cta[0]
     sub=_slines(s.get('sub'))
