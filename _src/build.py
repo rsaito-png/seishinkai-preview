@@ -451,8 +451,8 @@ def agent_howto(rel):
 def agent_demo(rel):
     b=_slot('demo'); lines=[x for x in _slines(b) if 'img/agent-demo' not in x]
     title=_re.sub(r'^追加の欄[：:]\s*','',b.get('title') or '')
-    h=_soft(title) if title else 'Grok Botの活躍'
-    p=_soft(lines[0]) if lines else 'このページの更新も、Grok Bot（AIエージェント）がチャットの指示で進めています。'
+    h=_soft(title) if title else 'AIエージェントの活躍'
+    p=_soft(lines[0]) if lines else 'このページの更新も、AIエージェントがチャットの指示で進めています。'
     return f'''<section class="blk wide" id="demo"><div class="h"><span class="en">IN ACTION</span><h2>{h}</h2><p>{p}</p></div>
 <div><video controls playsinline preload="metadata" poster="{rel}img/agent-demo-poster.jpg" style="display:block;width:100%;height:auto;border:1px solid var(--line)"><source src="{rel}img/agent-demo.webm" type="video/webm"><source src="{rel}img/agent-demo.mp4" type="video/mp4"></video></div></section>'''
 PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=lambda rel: agent_howto(rel)+agent_demo(rel),name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
