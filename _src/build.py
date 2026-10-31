@@ -448,7 +448,14 @@ def agent_howto(rel):
     p=_soft(lines[0]) if lines else '作業はボットに任せ、人は確認と判断だけをします。'
     return f'''<section class="blk wide"><div class="h"><span class="en">HOW WE USE IT</span><h2>{h}</h2><p>{p}</p></div>
 {_howto_items(lines)}</section>'''
-PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=agent_howto,name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
+def agent_demo(rel):
+    b=_slot('demo'); lines=[x for x in _slines(b) if 'img/agent-demo' not in x]
+    title=_re.sub(r'^追加の欄[：:]\s*','',b.get('title') or '')
+    h=_soft(title) if title else 'Grok Botの活躍'
+    p=_soft(lines[0]) if lines else 'このページの更新も、Grok Bot（AIエージェント）がチャットの指示で進めています。'
+    return f'''<section class="blk wide" id="demo"><div class="h"><span class="en">IN ACTION</span><h2>{h}</h2><p>{p}</p></div>
+<div><video controls playsinline preload="metadata" poster="{rel}img/agent-demo-poster.jpg" style="display:block;width:100%;height:auto;border:1px solid var(--line)"><source src="{rel}img/agent-demo.webm" type="video/webm"><source src="{rel}img/agent-demo.mp4" type="video/mp4"></video></div></section>'''
+PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=lambda rel: agent_howto(rel)+agent_demo(rel),name='エージェントコンサル',en='AGENT CONSULTING',big='AI',short=True,type='Service',
  title='エージェントコンサル｜Grok Botで事業所の書類と広報をAIエージェントに任せる｜星心会',
  desc='対人支援の事業所のためのAIエージェント導入支援です。Grok Botを使い、計画書・記録・会議録の下書き、SNS投稿、ホームページ更新をAIエージェントに任せます。星心会が自ら毎日運用している方法をそのまま伝えます。',
  cat='事業所・法人向け',copy=['Grok Botを、','事業所の職員にします。'],sub='チャットで頼むと、書類と広報を仕上げて戻します。<br>星心会が毎日使っている方法を、そのまま伝えます。',acc='',
