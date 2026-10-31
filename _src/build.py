@@ -63,7 +63,7 @@ def P(t): return f'<span class="ph">要確認：{t}</span>'
 PH=set()
 def ph(t): PH.add(t); return P(t)
 
-def head(rel,title,desc,path,ld=None):
+def head(rel,title,desc,path,ld=None,extra='',body_class=''):
     graph=[{"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
       "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
       "areaServed":["四日市市","三重県","名古屋市","愛知県"],"sameAs":[u for _,u in SNS],"logo":BASE+"/img/logo_black.svg"}]
@@ -82,10 +82,10 @@ def head(rel,title,desc,path,ld=None):
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/site.css?v=20261030e">
+<link rel="stylesheet" href="{rel}assets/site.css?v=20261030e">{extra}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
 </head>
-<body>
+<body{(' class="'+body_class+'"') if body_class else ''}>
 '''
 def sns_html(labels=False):
     return '<div class="sns">'+''.join(f'<a href="{u}" target="_blank" rel="noopener" aria-label="{n}">{ICON[n]}{(" "+n) if labels else ""}</a>' for n,u in SNS)+'</div>'
@@ -168,6 +168,8 @@ def service_page(d):
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
+    if path=='chamu/':
+        chamu_page(d,rel,ld); return
     o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
     if d.get('ink'):
         o+=f'<section class="hero type"><div class="bg" style="background:#fff"></div>'
@@ -587,6 +589,98 @@ def load_chrome(parsed):
     if _slines(nav.get('next')): ch['next']=_slines(nav.get('next'))[0]
     ch['misc']=CI.misc_slots(parsed.get('misc'),CI.TOP_SLOTS)
     CHROME=ch
+def _scrub_chamu(s):
+    """茶夢の本文から「生活介護事業所です。」だけ外す。カテゴリの「生活介護事業所」は残す。"""
+    return (s or '').replace('生活介護事業所です。','').replace('生活介護事業所です','')
+def _plain(s):
+    return _re.sub(r'[\s　]','',_re.sub(r'<[^>]+>','',s or ''))
+def chamu_page(d,rel,ld):
+    """案22「季節の便り」。写真は既存パスのまま、手紙の紙に挟む。FAQはJSON-LDのみ。"""
+    if '生活介護事業所です' in (d.get('desc') or ''): d['desc']=_scrub_chamu(d['desc'])
+    blocks=OLD.get(d['path']) or []
+    pool=[]
+    if d.get('photo'): pool.append((d['photo'],'テーブルのコーヒー'))
+    for g,a in d.get('gal') or []: pool.append((g,a))
+    for t,v in blocks:
+        if t=='img':
+            src,alt=v
+            src=_re.sub(r'\.(?:jpg|jpeg|png|webp)$','',str(src),flags=_re.I)
+            pool.append((src,alt))
+    by={}
+    for src,alt in pool: by[src]=alt
+    seq=[]; seen=set()
+    def add(src):
+        if not src or src in seen or src not in by: return
+        seen.add(src); seq.append((src,by[src]))
+    for src in ('counter','ikebana','kitchen','library','parfait'): add(src)
+    for src,_a in pool: add(src)
+    pi=0
+    def tuck():
+        nonlocal pi
+        if pi>=len(seq): return ''
+        src,alt=seq[pi]; pi+=1
+        cls='abcde'[(pi-1)%5]
+        lazy=' loading="lazy"' if pi>1 else ''
+        return f'<figure class="tuck {cls}"><img src="{rel}img/{src}.jpg" alt="{esc(alt)}"{lazy}></figure>'
+    def paras(html_s):
+        parts=[x.strip() for x in _re.split(r'<br\s*/?>',_scrub_chamu(html_s or '')) if x.strip()]
+        return ''.join(f'<p>{x}</p>' for x in parts)
+    def emit_dl(pairs,so_far):
+        o=''
+        for a,b in pairs:
+            if any(k in _plain(a) for k in ('料金','費用','金額','利用料')): continue
+            bp=_plain(b)
+            if len(bp)>=6 and bp in _plain(so_far): continue
+            lab=_plain(a)
+            cls=' class="place"' if any(k in lab for k in ('アクセス','場所','所在')) else (' class="when"' if any(k in lab for k in ('時間','営業')) else '')
+            o+=f'<p{cls}><span class="k">{a}</span>{_scrub_chamu(b)}</p>'
+        return o
+    def emit(t,v,so_far):
+        if t=='h': return f'<h2>{_scrub_chamu(v)}</h2>'
+        if t=='p' or t=='note': return paras(v)
+        if t=='ul': return ''.join(paras(x) for x in v)
+        if t=='dl': return emit_dl(v,so_far)
+        return ''
+    pre=[]; facts=[]; post=[]; mode='pre'
+    for b in blocks:
+        if b[0]=='img': continue
+        if b[0]=='dl':
+            mode='post'; facts.append(b)
+        elif mode=='pre': pre.append(b)
+        else: post.append(b)
+    extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
+           f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261031b">')
+    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-chamu')+header(rel)
+    o+='<main id="main"><article class="tegami"><header><p class="to">みなさまへ</p>'
+    cat=_scrub_chamu((d.get('cat') or '').strip())
+    if cat: o+=f'<p class="role">{esc(cat)}</p>'
+    o+=f'<h1>{esc(d["name"])}</h1>'
+    badge=_re.sub(r'<[^>]+>','',d.get('badge') or '').strip()
+    badge=_scrub_chamu(badge)
+    if badge: o+=f'<p class="stamp">{esc(badge)}</p>'
+    for x in d.get('copy') or []:
+        x=_scrub_chamu(x).strip()
+        if x: o+=f'<p class="lead">{esc(x)}</p>'
+    o+='</header>'
+    o+=tuck()
+    o+=paras(d.get('sub') or '')
+    o+=tuck()
+    for b in pre: o+=emit(b[0],b[1],o)
+    o+=tuck()
+    for b in facts: o+=emit(b[0],b[1],o)
+    o+=tuck()
+    for b in post: o+=emit(b[0],b[1],o)
+    while pi<len(seq): o+=tuck()
+    if d.get('rel'):
+        o+=''.join(f'<p class="more"><a href="{rel}{u}">{esc(n)}</a></p>' for n,u in d['rel'])
+    tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    o+=f'<section class="sign" id="contact"><h2>{esc(d.get("cta_h") or "相談する")}</h2>'
+    o+=f'<p><a href="{line}">{esc(CHROME.get("line_label") or "LINE")}</a></p>'
+    # JSON-LDのtelephoneは本文の重複ではない。手紙の末尾に番号を一度だけ出す。
+    if _plain(tel) not in _plain(o[o.rfind('<article'):]):
+        o+=f'<p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
+    o+=(d.get('cta_note') or '')+'</section></article></main>'
+    o+=footer(rel); write(d['path'],o)
 def _top_doc():
     if not CONTENT or DUMP: return None
     f=_o.path.join(CONTENT,'top.md')
