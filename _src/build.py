@@ -169,6 +169,12 @@ def service_page(d):
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
     o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
+    if path=='leo/':
+        # 案02「見開き絵本」。共通ヘッダー／フッターはそのまま。FAQの見えるUIは出さない。
+        o=o.replace('<body>','<body class="leo-book">',1)
+        o=o.replace('<body class="leo-book">','<body class="leo-book">\n<a class="skip" href="#book">本文へ</a>',1)
+        o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="'+rel+'assets/leo.css?v=20261031b">\n</head>',1)
+        o+=leo_book_html(d,rel)+footer(rel); write(path,o); return
     if d.get('ink'):
         o+=f'<section class="hero type"><div class="bg" style="background:#fff"></div>'
     elif d.get('photo'):
@@ -592,6 +598,127 @@ def _top_doc():
     f=_o.path.join(CONTENT,'top.md')
     if not _o.path.exists(f): return None
     return CI.parse_top(open(f,errors='ignore').read(),dict(aud=[(a[0],a[1],a[3],a[5]) for a in AUD]))
+def leo_book_html(d,rel):
+    """レオを案02の見開きにする。文言は本文と対象欄から取り、営業時間・場所・昼食はページ内で一度だけ見せる。"""
+    blocks=OLD.get(d['path']) or []
+    bullets=[]; prelude=[]; pics=[]; sections=[]; cur=None
+    for t,v in blocks:
+        if t=='h':
+            if cur: sections.append(cur)
+            cur={'h':v,'ps':[],'imgs':[],'links':[]}
+            continue
+        bucket=cur
+        if bucket is None:
+            if t=='ul': bullets.extend(v); continue
+            if t=='img': pics.append(v); continue
+            if t=='dl':
+                prelude.extend(f'{a}　{b}' for a,b in v); continue
+            if t in ('p','note'): prelude.append(v); continue
+        else:
+            if t=='img': bucket['imgs'].append(v)
+            elif t=='ul': bucket['links'].extend(v)
+            elif t=='dl': bucket['ps'].extend(f'{a}　{b}' for a,b in v)
+            elif t in ('p','note'): bucket['ps'].append(v)
+    if cur: sections.append(cur)
+    def plain(s):
+        s=_re.sub(r'<[^>]+>','',s or '')
+        s=s.translate(str.maketrans('０１２３４５６７８９：／','0123456789:/'))
+        return _re.sub(r'\s+','',s.replace('〜','～').replace('－','-').replace('—','-'))
+    def frags(h):
+        return [p.strip() for p in _re.split(r'<br\s*/?>',h or '') if p and p.strip()]
+    def lines_of(chunks):
+        out=[]
+        for c in chunks: out.extend(frags(c))
+        return out
+    def is_lunch(s):
+        t=plain(s)
+        return ('昼食' in t) or ('和定食' in t) or ('300円' in t)
+    story=[]; evals=None
+    for s in sections:
+        if ('評価' in plain(s['h'])) or (s['links'] and not s['ps'] and not s['imgs']): evals=s
+        else: story.append(s)
+    lunch=[b for b in bullets if is_lunch(b)]
+    opening=[b for b in bullets if not is_lunch(b)]
+    open_ps,pre_ps,lunch_ps=lines_of(opening),lines_of(prelude),lines_of(lunch)
+    shown=[plain(p) for p in open_ps+pre_ps+lunch_ps]
+    for s in story: shown.extend(plain(p) for p in lines_of([s['h']]+s['ps']))
+    blob=''.join(shown)
+    hours_said=('11:00' in blob and '17:00' in blob)
+    pickup_said=('送迎' in blob)
+    info_ps=[]
+    for k,v in d.get('info') or []:
+        if ('時間' in (k or '')) and hours_said: continue
+        if (('昼食' in (k or '')) or ('食事' in (k or '')) or is_lunch(v)) and lunch_ps: continue
+        if ('送迎' in (k or '')) and pickup_said: continue
+        for line in frags(v):
+            tl=plain(line)
+            if len(tl)>=4 and tl in blob: continue
+            if hours_said and '11:00' in tl and ('17:00' in tl or '14:30' in tl): continue
+            if lunch_ps and is_lunch(line): continue
+            if pickup_said and '送迎' in tl and len(tl)<=12: continue
+            info_ps.append(line); blob+=tl
+    def src_of(src):
+        src=str(src)
+        return src if src.endswith(('.jpg','.jpeg','.png','.webp')) else src+'.jpg'
+    def picture(src,alt,kind=''):
+        extra=' dayori' if kind=='dayori' else ''
+        lazy='' if kind=='cover' else ' loading="lazy"'
+        return f'<div class="pic{extra}"><img src="{rel}img/{src_of(src)}" alt="{esc(alt)}"{lazy}></div>'
+    def paras(items):
+        return ''.join(f'<p>{p}</p>' for p in items)
+    flip_next=True
+    def spread(txt,picture_html,soft=False,cover=False):
+        nonlocal flip_next
+        if cover:
+            return f'<section class="spread cover">{picture_html}{txt}</section>'
+        flipped=flip_next; flip_next=not flip_next
+        cls='spread'+(' flip' if flipped else '')+(' soft' if soft else '')
+        inner=(txt+picture_html) if flipped else (picture_html+txt)
+        return f'<section class="{cls}">{inner}</section>'
+    cover=pics[0] if pics else ((d.get('photo') or 'panda'),'おもちゃの棚と、床に座るパンダのぬいぐるみ')
+    role='<br>'.join(esc(x) for x in (d.get('copy') or []) if str(x).strip())
+    lead=d.get('sub') or ''
+    o=f'<main id="book"><article class="book"><section class="spread cover">{picture(cover[0],cover[1],"cover")}<div class="txt"><p class="role">{role}</p><h1>{esc(d.get("name") or "レオ")}</h1><p class="lead">{lead}</p></div></section>'
+    if open_ps:
+        alt='おもちゃの棚と、床に座るパンダのぬいぐるみ'
+        o+=spread(f'<div class="txt">{paras(open_ps)}</div>',picture(d.get('photo') or 'panda',alt))
+    if pre_ps:
+        if len(pics)>1:
+            o+=spread(f'<div class="txt">{paras(pre_ps)}</div>',picture(pics[1][0],pics[1][1]))
+        else:
+            o+=f'<section class="spread solo"><div class="txt">{paras(pre_ps)}</div></section>'
+    for s in story:
+        body=f'<div class="txt">{f"<h2>{s["h"]}</h2>" if s["h"] else ""}{paras(lines_of(s["ps"]))}</div>'
+        if s['imgs']:
+            im=s['imgs'][0]
+            o+=spread(body,picture(im[0],im[1]))
+        else:
+            flipped=flip_next; flip_next=not flip_next
+            o+=f'<section class="spread solo{" flip" if flipped else ""}">{body}</section>'
+    o+=spread(f'<div class="txt">{paras(lunch_ps+info_ps)}</div>',picture('leo-dayori.png','レオだより','dayori'),soft=True)
+    o+='<section class="end" id="contact">'
+    if evals:
+        o+=f'<p class="evalh">{evals["h"]}</p>'
+        if evals['ps']: o+=paras(lines_of(evals['ps']))
+        if evals['links']:
+            def ext(html):
+                html=_re.sub(r'\sstyle="[^"]*"','',html)
+                def add(m):
+                    tag=m.group(0)
+                    if m.group(1).startswith('http') and 'target=' not in tag:
+                        tag=tag[:-1]+' target="_blank" rel="noopener">'
+                    return tag
+                return _re.sub(r'<a href="([^"]*)"[^>]*>',add,html)
+            o+='<p class="evals">'+' '.join(ext(x) for x in evals['links'])+'</p>'
+    blurbs={'leo/parent-training/':'関わり方を変えます。','leo/assessment/':'WISC-V・新版K式。'}
+    slot=_slot('parents'); h4=slot.get('h4') or []
+    for i,(n,u) in enumerate(d.get('rel') or []):
+        line=h4[i][1][0] if i<len(h4) and h4[i][1] else blurbs.get(u,'')
+        o+=f'<p><a href="{rel}{u}">{esc(n)}</a>{("　"+_soft(line)) if line else ""}</p>'
+    tel=d.get('tel') or TEL
+    o+=f'<h2>{esc(d.get("cta_h") or "見学を申し込む")}</h2><p><a href="{rel}contact/#line">{esc(CHROME.get("line_label") or "LINE")}</a></p><p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
+    return o+'</section></article></main>'
+
 _td=_top_doc()
 if _td:
     apply_card_overrides(_td.get('cards'))
