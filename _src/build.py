@@ -599,26 +599,31 @@ def _top_doc():
     if not _o.path.exists(f): return None
     return CI.parse_top(open(f,errors='ignore').read(),dict(aud=[(a[0],a[1],a[3],a[5]) for a in AUD]))
 def leo_book_html(d,rel):
-    """レオを案02の見開きにする。文言は本文と対象欄から取り、営業時間・場所・昼食はページ内で一度だけ見せる。"""
+    """見開き絵本。本文の写真は content の並びのまま残す。食事写真の位置だけレオだよりにする。"""
     blocks=OLD.get(d['path']) or []
-    bullets=[]; prelude=[]; pics=[]; sections=[]; cur=None
+    bullets=[]; pre=[]; sections=[]; cur=None; buf=[]
+    def flush_pre(img=None):
+        nonlocal buf
+        if buf or img: pre.append({'ps':buf,'img':img})
+        buf=[]
     for t,v in blocks:
         if t=='h':
+            if cur is None: flush_pre()
             if cur: sections.append(cur)
             cur={'h':v,'ps':[],'imgs':[],'links':[]}
             continue
-        bucket=cur
-        if bucket is None:
-            if t=='ul': bullets.extend(v); continue
-            if t=='img': pics.append(v); continue
-            if t=='dl':
-                prelude.extend(f'{a}　{b}' for a,b in v); continue
-            if t in ('p','note'): prelude.append(v); continue
+        if cur is None:
+            if t=='ul': flush_pre(); bullets.extend(v); continue
+            if t=='img': flush_pre(v); continue
+            if t=='dl': buf.extend(f'{a}　{b}' for a,b in v); continue
+            if t in ('p','note'): buf.append(v); continue
         else:
+            bucket=cur
             if t=='img': bucket['imgs'].append(v)
             elif t=='ul': bucket['links'].extend(v)
             elif t=='dl': bucket['ps'].extend(f'{a}　{b}' for a,b in v)
             elif t in ('p','note'): bucket['ps'].append(v)
+    if cur is None: flush_pre()
     if cur: sections.append(cur)
     def plain(s):
         s=_re.sub(r'<[^>]+>','',s or '')
@@ -639,7 +644,8 @@ def leo_book_html(d,rel):
         else: story.append(s)
     lunch=[b for b in bullets if is_lunch(b)]
     opening=[b for b in bullets if not is_lunch(b)]
-    open_ps,pre_ps,lunch_ps=lines_of(opening),lines_of(prelude),lines_of(lunch)
+    open_ps,lunch_ps=lines_of(opening),lines_of(lunch)
+    pre_ps=[p for seg in pre for p in lines_of(seg['ps'])]
     shown=[plain(p) for p in open_ps+pre_ps+lunch_ps]
     for s in story: shown.extend(plain(p) for p in lines_of([s['h']]+s['ps']))
     blob=''.join(shown)
@@ -675,26 +681,26 @@ def leo_book_html(d,rel):
         cls='spread'+(' flip' if flipped else '')+(' soft' if soft else '')
         inner=(txt+picture_html) if flipped else (picture_html+txt)
         return f'<section class="{cls}">{inner}</section>'
-    cover=pics[0] if pics else ((d.get('photo') or 'panda'),'おもちゃの棚と、床に座るパンダのぬいぐるみ')
     role='<br>'.join(esc(x) for x in (d.get('copy') or []) if str(x).strip())
     lead=d.get('sub') or ''
-    o=f'<main id="book"><article class="book"><section class="spread cover">{picture(cover[0],cover[1],"cover")}<div class="txt"><p class="role">{role}</p><h1>{esc(d.get("name") or "レオ")}</h1><p class="lead">{lead}</p></div></section>'
-    if open_ps:
-        alt='おもちゃの棚と、床に座るパンダのぬいぐるみ'
-        o+=spread(f'<div class="txt">{paras(open_ps)}</div>',picture(d.get('photo') or 'panda',alt))
-    if pre_ps:
-        if len(pics)>1:
-            o+=spread(f'<div class="txt">{paras(pre_ps)}</div>',picture(pics[1][0],pics[1][1]))
-        else:
-            o+=f'<section class="spread solo"><div class="txt">{paras(pre_ps)}</div></section>'
+    hero=d.get('photo') or 'panda'
+    o=f'<main id="book"><article class="book"><section class="spread cover">{picture(hero,"おもちゃの棚と、床に座るパンダのぬいぐるみ","cover")}<div class="txt"><p class="role">{role}</p><h1>{esc(d.get("name") or "レオ")}</h1><p class="lead">{lead}</p></div></section>'
+    def solo(inner):
+        nonlocal flip_next
+        flipped=flip_next; flip_next=not flip_next
+        return f'<section class="spread solo{" flip" if flipped else ""}"><div class="txt">{inner}</div></section>'
+    if open_ps: o+=solo(paras(open_ps))
+    for seg in pre:
+        body=paras(lines_of(seg['ps']))
+        if seg['img']: o+=spread(f'<div class="txt">{body}</div>',picture(seg['img'][0],seg['img'][1]))
+        elif body: o+=solo(body)
     for s in story:
-        body=f'<div class="txt">{f"<h2>{s["h"]}</h2>" if s["h"] else ""}{paras(lines_of(s["ps"]))}</div>'
-        if s['imgs']:
-            im=s['imgs'][0]
-            o+=spread(body,picture(im[0],im[1]))
-        else:
-            flipped=flip_next; flip_next=not flip_next
-            o+=f'<section class="spread solo{" flip" if flipped else ""}">{body}</section>'
+        body=f'{f"<h2>{s["h"]}</h2>" if s["h"] else ""}{paras(lines_of(s["ps"]))}'
+        imgs=s['imgs']
+        if imgs:
+            o+=spread(f'<div class="txt">{body}</div>',picture(imgs[0][0],imgs[0][1]))
+            for im in imgs[1:]: o+=spread('<div class="txt"></div>',picture(im[0],im[1]))
+        else: o+=solo(body)
     o+=spread(f'<div class="txt">{paras(lunch_ps+info_ps)}</div>',picture('leo-dayori.png','レオだより','dayori'),soft=True)
     o+='<section class="end" id="contact">'
     if evals:
