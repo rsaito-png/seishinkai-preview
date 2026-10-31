@@ -1,7 +1,13 @@
 /* 茶夢だけ。案22「季節の便り」: 青の余白に手紙の紙、写真を少し傾けて挟む。
    共通ヘッダー／フッターの格子や罫線には手を入れない。 */
 
-body.page-chamu{background:#d5e3ea;color:#1d3340}
+/* くすみ青の机。便箋（.tegami）より一段暗い青灰で、白く見えないようにする。 */
+html:has(body.page-chamu),
+body.page-chamu{
+  background-color:#8d9fa8;
+  background-image:radial-gradient(ellipse 100% 42% at 50% -8%, rgba(255,255,255,.2), transparent 68%);
+  color:#1d3340;
+}
 body.page-chamu .gh,
 body.page-chamu .drawer,
 body.page-chamu .gf,

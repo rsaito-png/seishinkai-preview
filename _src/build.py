@@ -655,7 +655,7 @@ def chamu_page(d,rel,ld):
         elif mode=='pre': pre.append(b)
         else: post.append(b)
     extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
-           f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261031b">')
+           f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261031c">')
     o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-chamu')+header(rel)
     o+='<main id="main"><article class="tegami"><header><p class="to">みなさまへ</p>'
     cat=_scrub_chamu((d.get('cat') or '').strip())
