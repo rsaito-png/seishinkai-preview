@@ -1,0 +1,43 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#c4492c}
+body{background:#1a2a22;color:#1a2a22;font-family:"Kaisei Decol",serif}
+.back{position:fixed;z-index:5;top:.6rem;left:.6rem;background:#f4f7ef;color:#1a2a22;text-decoration:none;padding:.3rem .6rem}
+.scroll{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100svh}
+.panel{flex:0 0 78vw;scroll-snap-align:start;height:100svh;padding:12vh 6vw 8vh;background:#e7f0df;overflow:auto}
+.title{flex-basis:64vw}
+.panel.pic{padding:0;position:relative;background:#102018;color:#f4f7ef}
+.panel img{width:100%;height:100svh;object-fit:cover}
+.panel.pic p,.panel.pic h2{position:absolute;right:6vw;left:auto;bottom:8vh;margin:0;max-width:min(24rem,70%);font-size:1.2rem;text-align:right;text-shadow:0 1px 10px rgba(0,0,0,.55)}
+.title{background:#d7e3d2}
+h1{font-size:clamp(4rem,10vw,8rem);margin:0;line-height:1}
+.lead{font-size:clamp(1.3rem,3vw,2rem)}
+.place{font-size:1.7rem}
+h2{font-size:1.5rem}
+a{color:inherit;text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.3rem .7rem .3rem 0}
+.last h2{font-size:2.2rem}
+@media(max-width:760px){
+  .scroll{flex-direction:column;overflow-x:hidden;height:auto;scroll-snap-type:y mandatory}
+  .panel{flex-basis:auto;width:100%;height:auto;min-height:100svh}
+  .title{min-height:78svh}
+  .panel img{height:70vh}
+  .panel.pic p,.panel.pic h2{position:relative;left:auto;right:auto;bottom:auto;text-align:left;max-width:none;padding:1rem 6vw 1.4rem;text-shadow:none}
+}

@@ -1,0 +1,41 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#e2b657}
+body{background:#f4efe4;color:#1a2744;font-family:"Yuji Syuku",serif;line-height:1.9}
+.back{position:absolute;z-index:3;top:.7rem;left:.8rem;background:#f4efe4;color:#1a2744;text-decoration:none;padding:.2rem .6rem}
+.curtain{display:flex;min-height:100svh;overflow:hidden}
+.panel{width:50%;background:#1a2744;color:#f4efe4;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14vh 6vw 16vh;position:relative}
+.panel.right{background:#243456}
+h1{font-size:clamp(5.5rem,14vw,10rem);margin:0;font-weight:400;line-height:1;writing-mode:horizontal-tb}
+.role,.lead{position:absolute;left:8%;right:8%;bottom:8vh;margin:0;font-size:1.05rem;line-height:1.7;text-align:center}
+.beyond{position:relative}
+.beyond img{width:100%;height:80vh;object-fit:cover}
+.say{position:absolute;left:6vw;bottom:6vh;background:rgba(244,239,228,.92);color:#1a2744;padding:1rem 1.2rem;max-width:min(28rem,80vw)}
+.place{font-size:1.35rem}
+.cloth{padding:8vh 10vw;background:#f4efe4}
+.cloth img{width:min(100%,760px);margin:1rem auto;height:auto}
+a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.3rem .7rem .3rem 0}
+h2{font-size:1.5rem}
+@media(max-width:700px){
+  .panel{padding:18vh 4vw 8rem}
+  h1{font-size:4.4rem}
+  .role,.lead{font-size:.95rem}
+}
