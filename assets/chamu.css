@@ -1,0 +1,80 @@
+/* 茶夢だけ。案22「季節の便り」: 青の余白に手紙の紙、写真を少し傾けて挟む。
+   共通ヘッダー／フッターの格子や罫線には手を入れない。 */
+
+body.page-chamu{background:#d5e3ea;color:#1d3340}
+body.page-chamu .gh,
+body.page-chamu .drawer,
+body.page-chamu .gf,
+body.page-chamu .fab{font-family:"Inter","Noto Sans JP",sans-serif}
+
+body.page-chamu .tegami{
+  width:min(760px,100%);
+  margin:4vh auto 6vh;
+  background:#f4f8fa;
+  padding:clamp(2.6rem,6vh,4.8rem) clamp(1.35rem,4vw,3.4rem) 3.4rem;
+  color:#1d3340;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:1.12rem;
+  line-height:1.9;
+  font-weight:400;
+}
+body.page-chamu .tegami p,
+body.page-chamu .tegami h2{margin:0 0 .95rem;text-wrap:balance}
+body.page-chamu .tegami h2{margin:1.5rem 0 .55rem}
+body.page-chamu .tegami .to{margin:0}
+body.page-chamu .tegami .role{margin:.35rem 0 0}
+body.page-chamu .tegami h1,
+body.page-chamu .tegami h2{
+  font-family:"Klee One","Noto Sans JP",sans-serif!important;
+  font-weight:600!important;
+  letter-spacing:.02em!important;
+  line-height:1.35;
+}
+body.page-chamu .tegami h1{
+  font-size:clamp(3rem,8vw,4.8rem);
+  margin:.2rem 0 .35rem;
+}
+body.page-chamu .tegami .lead{
+  font-size:clamp(1.2rem,2.15vw,1.48rem);
+  line-height:1.75;
+  margin:.2rem 0 1rem;
+  text-wrap:balance;
+}
+body.page-chamu .tegami .stamp{
+  display:inline-block;
+  margin:.15rem 0 1.1rem;
+  font-size:clamp(1.45rem,3.5vw,1.95rem);
+  font-weight:600;
+  line-height:1.45;
+  letter-spacing:.08em;
+  color:#9a3412;
+  background:linear-gradient(#f3e2b0,#f3e2b0) 0 76%/100% 34% no-repeat;
+  transform:rotate(-1.4deg);
+}
+body.page-chamu .tegami h2{font-size:1.35rem;margin:1.5rem 0 .55rem}
+body.page-chamu .tegami .k{font-weight:600;margin-right:.7em}
+body.page-chamu .tegami .place{font-size:1.28rem;line-height:1.75;text-wrap:pretty}
+body.page-chamu .tegami .tuck{margin:1.2rem 0 1.5rem}
+body.page-chamu .tegami .tuck img{width:min(100%,460px);height:auto}
+body.page-chamu .tegami .tuck.a{transform:rotate(-2deg)}
+body.page-chamu .tegami .tuck.b{transform:rotate(2.2deg);margin-left:12%}
+body.page-chamu .tegami .tuck.c{transform:rotate(-1deg)}
+body.page-chamu .tegami .tuck.d{width:min(70%,320px);transform:rotate(3deg);margin-left:20%}
+body.page-chamu .tegami .tuck.e{transform:rotate(-2.4deg);margin-left:6%}
+body.page-chamu .tegami .tuck.d img{width:100%}
+body.page-chamu .tegami a{text-decoration:underline;text-underline-offset:.18em}
+body.page-chamu .tegami .more{margin:.15rem 0}
+body.page-chamu .tegami .sign{margin-top:2rem}
+body.page-chamu .tegami .sign h2{font-size:1.8rem;margin-bottom:.4rem}
+body.page-chamu .tegami a:focus-visible{outline:3px solid #b45309;outline-offset:3px}
+@media(max-width:700px){
+  body.page-chamu .tegami{padding:3.2rem 1.35rem 2.8rem}
+  body.page-chamu .tegami .tuck.b,
+  body.page-chamu .tegami .tuck.d,
+  body.page-chamu .tegami .tuck.e{margin-left:0}
+  body.page-chamu .tegami .tuck.d{width:min(100%,460px)}
+}
+@media(prefers-reduced-motion:reduce){
+  body.page-chamu .tegami .stamp,
+  body.page-chamu .tegami .tuck{transform:none}
+}
