@@ -1,0 +1,44 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#ffe08a}
+body{background:#f6efe8;color:#3a1416;font-family:"Shippori Mincho B1",serif;line-height:1.9}
+.back{position:absolute;z-index:3;top:.8rem;left:.8rem;background:#fff6ee;color:#6e1d22;text-decoration:none;padding:.3rem .6rem}
+.table{position:relative;min-height:100svh;background:#3a1416}
+.table img{width:100%;height:100svh;object-fit:cover}
+.cap{position:absolute;right:0;top:0;bottom:0;width:min(42vw,460px);background:rgba(110,29,34,.9);color:#fff6ee;display:flex;flex-direction:column;justify-content:flex-end;padding:8vh 1.6rem}
+h1{font-size:clamp(3.4rem,7vw,5.5rem);margin:.2rem 0;font-weight:800;letter-spacing:.12em}
+.lacquer{background:#6e1d22;color:#fff6ee;padding:8vh 10vw}
+.deep{background:#4a1418}
+.lead{font-size:clamp(1.4rem,3vw,2rem)}
+.beside{display:flex;align-items:center;background:#f6efe8;color:#3a1416}
+.beside img{width:56%;height:70vh;object-fit:cover}
+.beside > p,.beside > div{width:44%;padding:2rem}
+.place{font-size:clamp(1.5rem,3vw,2.1rem)}
+a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.35rem .8rem .35rem 0}
+h2{font-size:1.6rem}
+.lacquer img{width:min(100%,720px);margin-top:1rem;height:auto}
+@media(max-width:760px){
+  .cap{position:relative;width:100%;background:#6e1d22}
+  .table img{height:70vh}
+  .beside{flex-direction:column}
+  .beside > img,.beside > p,.beside > div{width:100%}
+  .beside img{height:52vw}
+}

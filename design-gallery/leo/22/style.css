@@ -1,0 +1,37 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#b45309}
+body{background:#d5e3ea;color:#1d3340;font-family:"Klee One",sans-serif}
+.tegami{width:min(760px,100%);margin:4vh auto;background:#f4f8fa;padding:8vh 8vw 4rem;font-size:1.12rem;line-height:1.9}
+.back{color:#1d3340}
+.to{margin:0}
+h1{font-size:clamp(3rem,8vw,4.8rem);font-weight:600;margin:.2rem 0}
+.lead{font-size:clamp(1.25rem,2.6vw,1.7rem)}
+.tuck{margin:1.2rem 0}
+.tuck img{width:min(100%,460px);height:auto}
+.tuck.a{transform:rotate(-2deg)}
+.tuck.b{transform:rotate(2.2deg);margin-left:12%}
+.tuck.c{transform:rotate(-1deg)}
+.tuck.d{width:min(70%,320px);transform:rotate(3deg);margin-left:20%}
+.place{font-size:1.4rem}
+a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.25rem .6rem .25rem 0}
+.sign h2{font-size:1.8rem}
+@media(max-width:700px){.tuck.b,.tuck.d{margin-left:0}}
