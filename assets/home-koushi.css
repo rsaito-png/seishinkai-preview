@@ -1,301 +1,65 @@
-/* Warm paper, soft gothic. Same sections and links as main. */
+/* Refine the current homepage only: no shadow, square corners, quiet ink. */
 body.home-koushi{
-  --bg:#F3E6D0;
-  --ink:#4A3428;
-  --soft:#7A6254;
-  --line:transparent;
-  --hi:#8C5E46;
-  --card:#FBF4E8;
-  background:#F3E6D0;
-  color:#4A3428;
-  line-height:1.9!important;
-  letter-spacing:.02em!important;
+  --bg:#f6f6f5;
+  --ink:#1a1a1a;
+  --soft:#5e5e5e;
+  --line:#e4e4e2;
+  --hi:#3d4c5c;
+  --card:#fff;
+  background:#f6f6f5;
+  color:#1a1a1a;
 }
-body.home-koushi,
-body.home-koushi *{
-  font-family:"Noto Sans JP",sans-serif!important;
-  box-shadow:none!important;
-}
-body.home-koushi .en{display:none!important}
-
-body.home-koushi .gh{
-  background:#F3E6D0!important;
-  color:#4A3428!important;
-  border:none!important;
-}
-body.home-koushi .gh nav a{color:#4A3428;letter-spacing:.04em!important}
-body.home-koushi .gh nav a:hover{color:#8C5E46!important}
-body.home-koushi .menu-btn i{background:#4A3428!important}
-body.home-koushi .gh .cta-btn{
-  background:#8C5E46!important;
-  color:#FBF4E8!important;
-  letter-spacing:.08em!important;
-  font-weight:500!important;
-}
-body.home-koushi .gh .cta-btn:hover{background:#734C38!important}
-body.home-koushi .drawer{background:#F7EDDC!important;color:#4A3428!important;border:none!important}
-body.home-koushi .drawer h4{color:#8C5E46!important;letter-spacing:.06em!important;font-weight:500!important}
-body.home-koushi .drawer a{border:none!important}
-body.home-koushi .drawer a small{color:#7A6254!important}
-
-/* hero stays large, type sits softly on the photo */
-body.home-koushi .hero{
-  min-height:calc(100svh - 60px)!important;
-  height:auto!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:flex-end!important;
-  background:#3A2C24!important;
-  color:#FBF4E8!important;
-  padding:0!important;
-}
-body.home-koushi .hero::after{
-  display:block!important;
-  background:linear-gradient(180deg,rgba(74,52,40,.12),rgba(58,40,32,.28) 42%,rgba(48,32,24,.62))!important;
-}
-body.home-koushi .hero .bg{
-  position:absolute!important;
-  inset:0!important;
-  width:auto!important;
-  height:auto!important;
-  margin:0!important;
-  order:0;
-  align-self:auto;
-  filter:sepia(.22) saturate(.82) contrast(1.02);
-}
-body.home-koushi .hin{
-  order:0;
-  flex:1 1 auto!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:flex-end!important;
-  align-items:flex-start!important;
-  width:100%!important;
-  max-width:1040px!important;
-  margin:0 auto!important;
-  padding:48px 22px 8px!important;
-  text-align:left!important;
-}
-body.home-koushi .copy{
-  margin:0!important;
-  color:#FBF4E8!important;
-  text-shadow:none!important;
-  font-size:34px!important;
-  font-weight:500!important;
-  line-height:1.55!important;
-  letter-spacing:.06em!important;
-}
-body.home-koushi .copy span{
-  display:block;
-  width:auto;
-  max-width:none;
-  margin:0;
-  padding:0;
-  background:none;
-  color:#FBF4E8!important;
-}
-body.home-koushi .acc{
-  order:0;
-  position:relative!important;
-  width:100%!important;
-  max-width:1040px!important;
-  margin:0 auto!important;
-  padding:8px 22px 22px!important;
-  text-align:left!important;
-  color:#F6EBDA!important;
-  opacity:1!important;
-  font-size:13px!important;
-  letter-spacing:.04em!important;
-  line-height:1.7!important;
+body.home-koushi *{box-shadow:none!important}
+body.home-koushi .sc,
+body.home-koushi .sc .th,
+body.home-koushi .btn,
+body.home-koushi .go,
+body.home-koushi .fab,
+body.home-koushi .gh .cta-btn,
+body.home-koushi .cta .row a,
+body.home-koushi .aud a,
+body.home-koushi .aud button{
+  border-radius:0!important;
 }
 
-body.home-koushi section.blk{
-  padding-top:64px!important;
-  padding-bottom:28px!important;
-  max-width:1040px!important;
-}
-body.home-koushi .h{margin-bottom:18px!important}
-body.home-koushi .h h2{
-  color:#4A3428!important;
-  font-size:30px!important;
-  font-weight:500!important;
-  line-height:1.5!important;
-  letter-spacing:.08em!important;
-  margin:0!important;
-}
-body.home-koushi .h p{
-  color:#6B5346!important;
-  font-size:15px!important;
-  font-weight:400!important;
-  line-height:1.9!important;
-  letter-spacing:.03em!important;
-  margin-top:8px!important;
-  max-width:40em;
-}
-
-body.home-koushi .aud{
-  display:grid!important;
-  grid-template-columns:1fr 1fr!important;
-  gap:18px 28px!important;
-  border:none!important;
-}
-body.home-koushi .aud a{
-  display:block;
-  background:transparent!important;
-  color:#4A3428!important;
-  border:none!important;
-  text-align:left!important;
-  padding:4px 0!important;
-  font-size:18px!important;
-  font-weight:500!important;
-  letter-spacing:.06em!important;
-  line-height:1.5!important;
-}
-body.home-koushi .aud a:hover{color:#8C5E46!important}
-body.home-koushi .aud small{
-  display:block;
-  margin-top:2px;
-  color:#7A6254!important;
-  font-size:13px!important;
-  font-weight:400!important;
-  letter-spacing:.02em!important;
-}
-
-body.home-koushi .cards{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:28px 22px!important;
-}
+/* drop the shared top-rules on this page so it does not read as a lattice */
 body.home-koushi .sc,
 body.home-koushi .sc:hover{
-  display:flex!important;
-  flex-direction:column!important;
-  grid-template-columns:none!important;
+  border:none!important;
   background:transparent!important;
-  border:none!important;
-  border-radius:2px!important;
-  box-shadow:none!important;
   transform:none!important;
-  padding:0!important;
-  column-gap:0;
-  row-gap:0;
 }
-body.home-koushi .sc .th{
-  grid-column:auto;
-  grid-row:auto;
-  width:100%;
-  height:auto;
-  aspect-ratio:4/3!important;
-  filter:sepia(.16) saturate(.86) contrast(1.02);
-}
-body.home-koushi .sc .th.t{background:#EFE0CC!important}
-body.home-koushi .sc .bd{
-  grid-column:auto;
-  grid-row:auto;
-  padding:12px 2px 0!important;
-  align-self:auto;
-}
-body.home-koushi .sc .nm{
-  color:#4A3428!important;
-  font-size:18px!important;
-  font-weight:500!important;
-  letter-spacing:.05em!important;
-  line-height:1.55!important;
-}
-body.home-koushi .sc .ct{
-  color:#7A6254!important;
-  font-size:12px!important;
-  margin-top:3px!important;
-  letter-spacing:.03em!important;
-}
-body.home-koushi .sc .ln{
-  color:#5C4638!important;
-  font-size:14px!important;
-  margin-top:6px!important;
-  line-height:1.75!important;
-  letter-spacing:.02em!important;
-}
-body.home-koushi .sc:hover .nm{color:#8C5E46!important}
-body.home-koushi .btn{
-  background:#8C5E46!important;
-  color:#FBF4E8!important;
-  letter-spacing:.06em!important;
-  font-weight:500!important;
-}
-body.home-koushi .btn:hover{background:#734C38!important}
-
-body.home-koushi #news .h h2{color:#4A3428!important}
-body.home-koushi .snsb{border:none!important}
-body.home-koushi .xc{border:none!important}
-body.home-koushi .snsb .nm{color:#4A3428!important;font-weight:500!important}
-body.home-koushi .thb{background:transparent!important}
-body.home-koushi .thm{color:#8C5E46!important}
-body.home-koushi .go{background:#8C5E46!important;color:#FBF4E8!important}
-body.home-koushi .go:hover{background:#734C38!important;color:#FBF4E8!important}
-
-body.home-koushi .dark{
-  background:#EAD8BE!important;
-  color:#4A3428!important;
-  border:none!important;
-}
-body.home-koushi .dark .h p{color:#6B5346!important}
-body.home-koushi .big30{
-  color:#4A3428!important;
-  font-size:36px!important;
-  font-weight:500!important;
-  letter-spacing:.06em!important;
-  line-height:1.45!important;
-}
-body.home-koushi .big30 em{color:#8C5E46!important;font-style:normal;font-weight:500!important}
+body.home-koushi .aud a,
+body.home-koushi .aud button{border:none!important}
 body.home-koushi .lst,
-body.home-koushi .lst li{border:none!important}
-body.home-koushi .stph{filter:sepia(.14) saturate(.88);margin-top:16px!important}
+body.home-koushi .lst li{border-color:transparent!important}
+body.home-koushi .cta,
+body.home-koushi .gf,
+body.home-koushi .dark,
+body.home-koushi .gh{border-color:#e4e4e2!important}
 
-body.home-koushi .cta{
-  background:#F3E6D0!important;
-  color:#4A3428!important;
-  border:none!important;
-  padding-top:56px!important;
-  padding-bottom:48px!important;
-}
-body.home-koushi .cta h2{
-  color:#4A3428!important;
-  font-size:30px!important;
-  font-weight:500!important;
-  letter-spacing:.08em!important;
-  line-height:1.5!important;
-}
-body.home-koushi .cta .w{background:#8C5E46!important;color:#FBF4E8!important}
-body.home-koushi .cta .w:hover{background:#734C38!important}
-body.home-koushi .cta .o{border:1px solid #8C5E46!important;color:#8C5E46!important;background:transparent!important}
-body.home-koushi .cta .o:hover{background:#8C5E46!important;color:#FBF4E8!important}
-body.home-koushi .cta .tnum{color:#4A3428!important;font-weight:500!important}
-
-body.home-koushi .gf{
-  background:#EAD8BE!important;
-  color:#4A3428!important;
-  border:none!important;
-}
-body.home-koushi .gf h5{color:#8C5E46!important;letter-spacing:.06em!important;font-weight:500!important}
-body.home-koushi .gf a:hover{color:#8C5E46!important}
-body.home-koushi .gf .cp{border:none!important;color:#7A6254!important}
-body.home-koushi .fab{background:#8C5E46!important;color:#FBF4E8!important}
-
-@media(min-width:900px){
-  body.home-koushi .gh{height:68px}
-  body.home-koushi .hero{min-height:calc(100svh - 68px)!important}
-  body.home-koushi .hin{padding:64px 28px 10px!important}
-  body.home-koushi .acc{padding:8px 28px 28px!important}
-  body.home-koushi .copy{font-size:42px!important}
-  body.home-koushi .h h2{font-size:34px!important}
-  body.home-koushi .cards{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:36px 24px!important}
-  body.home-koushi .sc .nm{font-size:20px!important}
-  body.home-koushi section.blk{padding-top:80px!important;padding-bottom:36px!important}
-  body.home-koushi .big30{font-size:42px!important}
-  body.home-koushi .cta h2{font-size:34px!important}
-}
-@media(max-width:800px){
-  body.home-koushi .copy{font-size:28px!important}
-  body.home-koushi .h h2{font-size:26px!important}
-  body.home-koushi .aud{grid-template-columns:1fr!important;gap:14px!important}
-}
+body.home-koushi .gh{background:#f6f6f5!important;color:#1a1a1a!important}
+body.home-koushi .gh .cta-btn{background:#3d4c5c!important;color:#f6f6f5!important}
+body.home-koushi .gh .cta-btn:hover{background:#2c3844!important}
+body.home-koushi .menu-btn i{background:#1a1a1a!important}
+body.home-koushi .drawer{background:#f6f6f5!important;color:#1a1a1a!important}
+body.home-koushi .drawer h4,
+body.home-koushi .h .en,
+body.home-koushi .gf h5,
+body.home-koushi .big30 em{color:#3d4c5c!important}
+body.home-koushi .sc:hover .nm,
+body.home-koushi .gh nav a:hover,
+body.home-koushi .gf a:hover{color:#3d4c5c!important}
+body.home-koushi .btn,
+body.home-koushi .go,
+body.home-koushi .cta .w,
+body.home-koushi .fab{background:#3d4c5c!important;color:#f6f6f5!important}
+body.home-koushi .btn:hover,
+body.home-koushi .go:hover,
+body.home-koushi .cta .w:hover,
+body.home-koushi .fab:hover{background:#1a1a1a!important;color:#f6f6f5!important}
+body.home-koushi .cta .o{border-color:#1a1a1a!important;color:#1a1a1a!important}
+body.home-koushi .cta .o:hover{border-color:#3d4c5c!important;color:#3d4c5c!important}
+body.home-koushi .dark,
+body.home-koushi .cta,
+body.home-koushi .gf{background:#f6f6f5!important;color:#1a1a1a!important}
