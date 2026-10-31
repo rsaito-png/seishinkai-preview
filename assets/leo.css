@@ -1,0 +1,55 @@
+/* レオ /leo/ だけ。案02「見開き絵本」。他ページからは読まない。 */
+body.leo-book{background:#f3f7f1}
+body.leo-book .skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:80;text-decoration:none}
+body.leo-book .skip:focus{top:8px}
+body.leo-book .book{color:#163226;font-family:"Zen Maru Gothic","Noto Sans JP",sans-serif;font-size:1.12rem;line-height:1.85;font-weight:400}
+body.leo-book .book h1,
+body.leo-book .book h2,
+body.leo-book .book .evalh{
+  font-family:"Zen Maru Gothic","Noto Sans JP",sans-serif!important;
+  letter-spacing:0!important;
+}
+body.leo-book .spread{display:flex;min-height:calc(100svh - 60px);background:#f3f7f1}
+body.leo-book .spread .pic,
+body.leo-book .spread .txt{width:50%}
+body.leo-book .spread img{width:100%;height:calc(100svh - 60px);object-fit:cover}
+body.leo-book .txt{padding:10vh 6vw;display:flex;flex-direction:column;justify-content:center}
+body.leo-book .txt p{margin:0 0 .95rem}
+body.leo-book .txt p:last-child{margin-bottom:0}
+body.leo-book .spread.cover{background:#e5f2e4}
+body.leo-book .spread.flip{background:#fffdf8}
+body.leo-book .spread.soft{background:#e7f0ea}
+body.leo-book .role{margin:0;font-size:1.05rem}
+body.leo-book .book h1{font-size:clamp(4rem,8vw,7rem)!important;line-height:1!important;margin:.2rem 0!important;font-weight:900!important}
+body.leo-book .lead{font-size:clamp(1.4rem,2.6vw,2rem);margin:.4rem 0 0!important}
+body.leo-book .book h2{font-size:1.7rem!important;font-weight:700!important;margin:0 0 .4rem!important;line-height:1.4!important}
+body.leo-book .pic.dayori{display:flex;align-items:center;justify-content:center;background:#e7f0ea}
+body.leo-book .pic.dayori img{object-fit:contain;width:100%;height:auto;max-height:calc(100svh - 60px);aspect-ratio:3/2;background:#e7f0ea}
+body.leo-book .fab{display:none}
+body.leo-book .spread.solo{display:block}
+body.leo-book .spread.solo .txt{width:auto;max-width:40rem;margin:0 auto}
+body.leo-book .end{padding:8vh 8vw 4rem;background:#163226;color:#f3f7f1}
+body.leo-book .end p{margin:0 0 .8rem}
+body.leo-book .end a{color:inherit;text-decoration:underline;text-underline-offset:.18em}
+body.leo-book .evalh{font-size:1.35rem;font-weight:700;margin:0 0 .7rem}
+body.leo-book .evals a{display:inline-block;margin:.35rem .9rem .35rem 0}
+body.leo-book .end h2{font-size:clamp(2rem,5vw,3rem)!important;font-weight:900!important;margin:1.6rem 0 .6rem!important}
+body.leo-book :focus-visible{outline:3px solid #c4492c;outline-offset:3px}
+@media(min-width:900px){
+  body.leo-book .spread{min-height:calc(100svh - 68px)}
+  body.leo-book .spread img{height:calc(100svh - 68px)}
+  body.leo-book .pic.dayori img{max-height:calc(100svh - 68px)}
+}
+@media(max-width:760px){
+  body.leo-book .spread,
+  body.leo-book .spread.flip{flex-direction:column;min-height:0}
+  body.leo-book .spread .pic,
+  body.leo-book .spread .txt{width:100%}
+  body.leo-book .spread img{height:62vw;min-height:220px}
+  body.leo-book .pic.dayori img{height:auto;min-height:0;max-height:none;aspect-ratio:3/2}
+  body.leo-book .txt{padding:1.6rem 6vw 2.2rem}
+  body.leo-book .book h1{font-size:clamp(3.2rem,16vw,4.6rem)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  body.leo-book .spread{scroll-behavior:auto}
+}
