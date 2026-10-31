@@ -263,7 +263,7 @@ h2{font-size:1.6rem}
 DESIGNS.append({
 "n": 14,
 "name": "森の徒歩",
-"aim": "写真が左右の端からはみ出し、緑の中を歩いて読む",
+"aim": "森の写真と文章を左右に振り、緑の中を歩いて読む",
 "swatch": "#10241c",
 "ink": "#e4efd8",
 "thumb": "forest_work.jpg",
