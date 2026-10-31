@@ -23,7 +23,7 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。','karate_sit'),
 ('agent','エージェントコンサル','business/agent-consulting/','AIエージェント導入','Grok Botを、事業所の職員にします。',None),
 ('sct','実施者養成研修','business/stress-check-training/','ストレスチェック実施者養成研修','歯科医師・看護師・精神保健福祉士・公認心理師の方のための実施者養成研修です。','karate_sit'),
-('training','研修','business/training/','児童指導員研修・合気道研修','体を使って支援を学ぶ研修を、土日に行います。','karate_bow')]
+('training','研修','business/training/','児童指導員研修・合気道護身術','児童指導員研修と、合気道護身術の安全確保講習を行います。','karate_bow')]
 def _docmeta(url):
     """name (# line) and first sentence of リード文 from content/<slug>.md, if present"""
     if not CONTENT: return None
@@ -475,9 +475,9 @@ PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,deco=Tru
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
 
 PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',photo='karate_bow',short=True,type='Service',
- title='研修｜児童指導員研修・合気道研修｜三重県四日市市 星心会',
- desc='児童指導員研修と合気道研修を行います。整体・合気道・マッサージなど、子どもと関わる仕事に役立つボディワークを中心に、オーダーメイドで土日に実施します。',
- cat='児童指導員研修・合気道研修',copy=['体を使って、','支援を学びます。'],sub='オーダーメイドで、土日に開催します。',acc='子どもと関わる事業所・法人向け',
+ title='研修｜児童指導員研修・合気道護身術｜三重県四日市市 星心会',
+ desc='児童指導員研修と、福祉・介護従事者やご家族向けの合気道護身術「安全確保講習」を行います。',
+ cat='児童指導員研修・合気道護身術',copy=['体を使って、','支援を学びます。'],sub='オーダーメイドで、土日に開催します。',acc='子どもと関わる事業所・法人向け',
  what_h='2つの<br>研修',what=[('児童指導員研修','','野口整体、合気道、各種マッサージなど、子どもと関わる仕事に役立つボディワークです。マクロビオティック調理法なども希望に応じて行います。'),('合気道研修','','内容は準備中です。'),('オーダーメイド','','テーマと人数に合わせて組み立てます。'),('講師','','代表または外部講師が担当します。')],
  gal=[('karate_studio','道場'),('karate_class','稽古'),('karate_sit','座学')],
  flow=[["CONSULT","相談","テーマ・人数・日程を確認します。"],["DESIGN","設計","内容を組み立てます。"],["RUN","実施","土日に実施します。"]],
