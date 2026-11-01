@@ -1,0 +1,153 @@
+/* 金斗雲の題の飾り見本だけ。本番の書体と二重罫は変えない。 */
+/* --rule は本番では .menu の中だけ。一覧の罫でも同じ紫灰を使う。 */
+body.page-kintoun{--rule:#8a7d96}
+
+body.page-kintoun .bar,
+body.page-kintoun .sheet{
+  width:min(840px,100%);
+  margin:0 auto;
+  font-family:"Noto Sans JP",sans-serif;
+  color:#3c3546;
+}
+body.page-kintoun .bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:.75rem;
+  padding:.85rem 1.15rem .7rem;
+  font-size:.88rem;
+  letter-spacing:.06em;
+  line-height:1.5;
+}
+body.page-kintoun .bar .which{
+  margin:0;
+  flex:1;
+  text-align:center;
+}
+body.page-kintoun .bar .which b{
+  font-weight:600;
+  margin-right:.35em;
+}
+body.page-kintoun .bar a{
+  color:#6d5d7c;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+  white-space:nowrap;
+}
+body.page-kintoun .bar a:focus-visible,
+body.page-kintoun .index a:focus-visible{
+  outline:3px solid #6d5d7c;
+  outline-offset:3px;
+}
+body.page-kintoun .stage .menu{padding-top:.35rem}
+
+/* 1 左右の印。題の字はそのまま、両脇に小さな菱形。 */
+body.page-kintoun.deco-01 .menu > header h1{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:.42em;
+}
+body.page-kintoun.deco-01 .mark{
+  width:.15em;
+  height:.15em;
+  background:var(--rule);
+  transform:rotate(45deg);
+  flex:none;
+}
+
+/* 2 短い一文。ページにある「自宅から始めます」を題の直下へ。 */
+body.page-kintoun.deco-02 .catch{
+  margin:.02rem 0 .28rem;
+  font-size:clamp(1.02rem,2.8vw,1.16rem);
+  letter-spacing:.16em;
+  line-height:1.6;
+}
+
+/* 3 大きめの肩書き。訪問支援を題のすぐ上に。 */
+body.page-kintoun.deco-03 .menu .role{
+  margin:0 0 .12rem;
+  font-size:clamp(1.4rem,4vw,1.8rem);
+  font-weight:600;
+  letter-spacing:.28em;
+  line-height:1.3;
+}
+body.page-kintoun.deco-03 .menu > header h1{margin-top:0}
+
+/* 4 細い枠。二重罫の内側に、1本の矩形。 */
+body.page-kintoun.deco-04 .menu > header{
+  padding-top:1.2rem;
+  padding-bottom:1.2rem;
+}
+body.page-kintoun.deco-04 .frame{
+  border:1px solid var(--rule);
+  margin:0;
+  padding:.75rem .95rem .55rem;
+}
+
+/* 一覧 */
+body.page-kintoun .sheet{padding:1.5rem 0 3rem}
+body.page-kintoun .sheet .kicker{
+  margin:0;
+  padding:0 1.15rem;
+  font-size:.82rem;
+  letter-spacing:.16em;
+}
+body.page-kintoun .sheet h1{
+  margin:.25rem 0 .55rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif!important;
+  font-weight:600!important;
+  font-size:1.65rem;
+  letter-spacing:.08em!important;
+  line-height:1.4;
+}
+body.page-kintoun .sheet .note{
+  margin:0 0 1.15rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  line-height:1.75;
+}
+body.page-kintoun .index{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:3px double var(--rule);
+}
+body.page-kintoun .index a{
+  display:block;
+  padding:.95rem 1.15rem .85rem;
+  border-bottom:1px solid var(--rule);
+  color:#3c3546;
+  text-decoration:none;
+}
+body.page-kintoun .index a:hover{color:#6d5d7c}
+body.page-kintoun .index .num{
+  font-weight:600;
+  margin-right:.45em;
+}
+body.page-kintoun .index .name{
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-weight:600;
+  font-size:1.2rem;
+  letter-spacing:.08em;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+}
+body.page-kintoun .index .desc{
+  display:block;
+  margin-top:.22rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:.98rem;
+  line-height:1.65;
+  color:#5c5368;
+}
+@media(max-width:700px){
+  body.page-kintoun .bar,
+  body.page-kintoun .sheet .kicker,
+  body.page-kintoun .sheet h1,
+  body.page-kintoun .sheet .note{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun .bar{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun .index a{padding-left:1rem;padding-right:1rem}
+}
