@@ -170,6 +170,8 @@ def service_page(d):
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
     if path=='chamu/':
         chamu_page(d,rel,ld); return
+    if path=='kintoun/':
+        kintoun_page(d,rel,ld); return
     o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
     if path=='leo/':
         # 案02「見開き絵本」。共通ヘッダー／フッターはそのまま。FAQの見えるUIは出さない。
@@ -682,6 +684,73 @@ def chamu_page(d,rel,ld):
     o+=f'<section class="sign" id="contact"><h2>{esc(d.get("cta_h") or "相談する")}</h2>'
     o+=f'<p><a href="{line}">{esc(CHROME.get("line_label") or "LINE")}</a></p>'
     # JSON-LDのtelephoneは本文の重複ではない。手紙の末尾に番号を一度だけ出す。
+    if _plain(tel) not in _plain(o[o.rfind('<article'):]):
+        o+=f'<p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
+    o+=(d.get('cta_note') or '')+'</section></article></main>'
+    o+=footer(rel); write(d['path'],o)
+def kintoun_page(d,rel,ld):
+    """茶夢と同じ喫茶メニュー。色は薄い紫灰。写真は既存のまま、傾けない。FAQはJSON-LDのみ。"""
+    blocks=OLD.get(d['path']) or []
+    seq=[]; seen=set()
+    def add(src,alt):
+        src=_re.sub(r'\.(?:jpg|jpeg|png|webp)$','',str(src),flags=_re.I)
+        if not src or src in seen: return
+        seen.add(src); seq.append((src,alt or ''))
+    for g,a in d.get('gal') or []: add(g,a)
+    for t,v in blocks:
+        if t=='img':
+            src,alt=v; add(src,alt)
+    pi=0
+    def dish():
+        nonlocal pi
+        if pi>=len(seq): return ''
+        src,alt=seq[pi]; pi+=1
+        lazy=' loading="lazy"' if pi>1 else ''
+        return f'<figure class="dish"><img src="{rel}img/{src}.jpg" alt="{esc(alt)}"{lazy}></figure>'
+    def paras(html_s):
+        parts=[x.strip() for x in _re.split(r'<br\s*/?>', html_s or '') if x.strip()]
+        return ''.join(f'<p>{x}</p>' for x in parts)
+    def emit(t,v):
+        if t=='h': return f'<h2>{v}</h2>'
+        if t in ('p','note'): return paras(v)
+        if t=='ul': return ''.join(paras(x) for x in v)
+        if t=='dl':
+            return ''.join(f'<p class="fact"><span class="k">{a}</span>{b}</p>' for a,b in v)
+        return ''
+    groups=[]; cur=[]
+    for b in blocks:
+        if b[0]=='img': continue
+        if b[0]=='h' and cur:
+            groups.append(cur); cur=[b]
+        else: cur.append(b)
+    if cur: groups.append(cur)
+    extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
+           f'\n<link rel="stylesheet" href="{rel}assets/kintoun.css?v=20261101a">')
+    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-kintoun')+header(rel)
+    o+='<main id="main"><article class="menu"><header>'
+    cat=(d.get('cat') or '').strip()
+    if cat: o+=f'<p class="role">{esc(cat)}</p>'
+    o+=f'<h1>{esc(d["name"])}</h1>'
+    for x in d.get('copy') or []:
+        x=(x or '').strip()
+        if x: o+=f'<p class="lead">{esc(x)}</p>'
+    o+='</header>'
+    o+=dish()
+    o+=paras(d.get('sub') or '')
+    for g in groups:
+        for b in g: o+=emit(b[0],b[1])
+        o+=dish()
+    for k,v in d.get('info') or []:
+        if any(x in _plain(k) for x in ('料金表','金額')): continue
+        bp=_plain(v)
+        if len(bp)>=6 and bp in _plain(o): continue
+        o+=f'<p class="fact"><span class="k">{k}</span>{v}</p>'
+    while pi<len(seq): o+=dish()
+    if d.get('rel'):
+        o+=''.join(f'<p class="more"><a href="{rel}{u}">{esc(n)}</a></p>' for n,u in d['rel'])
+    tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    o+=f'<section class="sign" id="contact"><h2>{esc(d.get("cta_h") or "相談する")}</h2>'
+    o+=f'<p><a href="{line}">{esc(CHROME.get("line_label") or "LINE")}</a></p>'
     if _plain(tel) not in _plain(o[o.rfind('<article'):]):
         o+=f'<p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
     o+=(d.get('cta_note') or '')+'</section></article></main>'
