@@ -1,0 +1,190 @@
+/* 金斗雲の文字装飾の見本だけ。本番の書体と二重罫は変えない。 */
+/* --rule は本番では .menu の中だけ。一覧の罫でも同じ紫灰を使う。 */
+body.page-kintoun{--rule:#8a7d96}
+
+body.page-kintoun .bar,
+body.page-kintoun .sheet{
+  width:min(840px,100%);
+  margin:0 auto;
+  font-family:"Noto Sans JP",sans-serif;
+  color:#3c3546;
+}
+body.page-kintoun .bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:.75rem;
+  padding:.85rem 1.15rem .7rem;
+  font-size:.88rem;
+  letter-spacing:.06em;
+  line-height:1.5;
+}
+body.page-kintoun .bar .which{
+  margin:0;
+  flex:1;
+  text-align:center;
+}
+body.page-kintoun .bar .which b{
+  font-weight:600;
+  margin-right:.35em;
+}
+body.page-kintoun .bar a{
+  color:#6d5d7c;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+  white-space:nowrap;
+}
+body.page-kintoun .bar a:focus-visible,
+body.page-kintoun .index a:focus-visible{
+  outline:3px solid #6d5d7c;
+  outline-offset:3px;
+}
+body.page-kintoun .stage .menu{padding-top:.35rem}
+
+/* 1 白抜き。中は紙の色、輪郭だけ紫灰の墨。太さは字の大きさに追従させる。 */
+body.page-kintoun.deco-01 .menu > header h1{
+  color:#e6e0ea;
+  -webkit-text-fill-color:#e6e0ea;
+  -webkit-text-stroke:.055em #3c3546;
+  paint-order:stroke fill;
+  letter-spacing:.1em!important;
+}
+
+/* 2 広い字間と、小さな中点。 */
+body.page-kintoun.deco-02 .menu > header h1{
+  display:flex;
+  align-items:center;
+  flex-wrap:nowrap;
+  gap:.58em;
+  letter-spacing:.02em!important;
+  line-height:1;
+}
+body.page-kintoun.deco-02 .sep{
+  flex:none;
+  font-size:.4em;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:0;
+  color:#3c3546;
+  transform:translateY(-.04em);
+}
+
+/* 3 一文字ずつの細い升。題全体を囲む枠ではない。 */
+body.page-kintoun.deco-03 .menu > header h1{
+  display:flex;
+  align-items:center;
+  flex-wrap:nowrap;
+  gap:.34em;
+  margin-top:.28rem;
+  margin-bottom:.35rem;
+  font-size:clamp(2.15rem,8vw,3.35rem);
+  letter-spacing:0!important;
+  line-height:1;
+}
+body.page-kintoun.deco-03 .menu > header h1 span{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:1.38em;
+  height:1.38em;
+  border:1px solid #6d5d7c;
+  line-height:1;
+}
+
+/* 4 縦書き。二重罫は上下のまま、中の組みを縦にする。 */
+body.page-kintoun.deco-04 .menu > header{
+  display:flex;
+  flex-direction:row-reverse;
+  justify-content:center;
+  align-items:flex-start;
+  gap:1.35rem;
+  padding-top:1.15rem;
+  padding-bottom:1.2rem;
+}
+body.page-kintoun.deco-04 .menu > header h1,
+body.page-kintoun.deco-04 .menu > header .lead{
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  /* Klee One の vert が「、」を別の字に差し替えるため、縦組みの置換を切る */
+  font-feature-settings:"vert" 0,"vrt2" 0;
+  margin:0;
+}
+body.page-kintoun.deco-04 .menu > header h1{
+  font-size:clamp(2.7rem,10vw,3.9rem);
+  letter-spacing:.42em!important;
+  line-height:1;
+}
+body.page-kintoun.deco-04 .menu > header .lead{
+  letter-spacing:.2em;
+  line-height:1.2;
+  margin:0;
+}
+
+/* 一覧 */
+body.page-kintoun .sheet{padding:1.5rem 0 3rem}
+body.page-kintoun .sheet .kicker{
+  margin:0;
+  padding:0 1.15rem;
+  font-size:.82rem;
+  letter-spacing:.16em;
+}
+body.page-kintoun .sheet h1{
+  margin:.25rem 0 .55rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif!important;
+  font-weight:600!important;
+  font-size:1.65rem;
+  letter-spacing:.08em!important;
+  line-height:1.4;
+}
+body.page-kintoun .sheet .note{
+  margin:0 0 1.15rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  line-height:1.75;
+}
+body.page-kintoun .index{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:3px double var(--rule);
+}
+body.page-kintoun .index a{
+  display:block;
+  padding:.95rem 1.15rem .85rem;
+  border-bottom:1px solid var(--rule);
+  color:#3c3546;
+  text-decoration:none;
+}
+body.page-kintoun .index a:hover{color:#6d5d7c}
+body.page-kintoun .index .num{
+  font-weight:600;
+  margin-right:.45em;
+}
+body.page-kintoun .index .name{
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-weight:600;
+  font-size:1.2rem;
+  letter-spacing:.08em;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+}
+body.page-kintoun .index .desc{
+  display:block;
+  margin-top:.22rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:.98rem;
+  line-height:1.65;
+  color:#5c5368;
+}
+@media(max-width:700px){
+  body.page-kintoun .bar,
+  body.page-kintoun .sheet .kicker,
+  body.page-kintoun .sheet h1,
+  body.page-kintoun .sheet .note{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun .bar{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun .index a{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun.deco-04 .menu > header{gap:.9rem}
+}
