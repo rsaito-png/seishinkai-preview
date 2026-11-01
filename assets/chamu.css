@@ -11,6 +11,8 @@ body.page-chamu .gf,
 body.page-chamu .fab{font-family:"Inter","Noto Sans JP",sans-serif}
 
 body.page-chamu .menu{
+  --inset:1.15rem;
+  --band:#e2ccab;
   width:min(840px,100%);
   margin:0 auto;
   padding:1.15rem 0 2.2rem;
@@ -25,9 +27,20 @@ body.page-chamu .menu > header,
 body.page-chamu .menu > p,
 body.page-chamu .menu > h2,
 body.page-chamu .menu > .sign{
-  padding-left:1.15rem;
-  padding-right:1.15rem;
+  padding-left:var(--inset);
+  padding-right:var(--inset);
 }
+body.page-chamu .menu > header,
+body.page-chamu .menu > h2,
+body.page-chamu .menu > .when,
+body.page-chamu .menu > .place,
+body.page-chamu .menu .sign h2{
+  background:var(--band);
+}
+body.page-chamu .menu > header{padding-top:.95rem;padding-bottom:.7rem}
+body.page-chamu .menu > h2{padding-top:.48rem;padding-bottom:.42rem}
+body.page-chamu .menu > .when,
+body.page-chamu .menu > .place{padding-top:.4rem;padding-bottom:.34rem}
 body.page-chamu .menu p{margin:0 0 .55rem;text-wrap:pretty}
 body.page-chamu .menu h1,
 body.page-chamu .menu h2{
@@ -86,13 +99,13 @@ body.page-chamu .menu a{
 }
 body.page-chamu .menu .more{margin:.2rem 0}
 body.page-chamu .menu .sign{margin-top:1.2rem;padding-bottom:.4rem}
-body.page-chamu .menu .sign h2{font-size:1.55rem;margin:.2rem 0 .35rem}
+body.page-chamu .menu .sign h2{
+  font-size:1.55rem;
+  margin:.55rem calc(var(--inset) * -1) .45rem;
+  padding:.48rem var(--inset) .42rem;
+}
 body.page-chamu .menu a:focus-visible{outline:3px solid #8a4520;outline-offset:3px}
 @media(max-width:700px){
-  body.page-chamu .menu{padding-top:.85rem}
-  body.page-chamu .menu > header,
-  body.page-chamu .menu > p,
-  body.page-chamu .menu > h2,
-  body.page-chamu .menu > .sign{padding-left:1rem;padding-right:1rem}
+  body.page-chamu .menu{--inset:1rem;padding-top:.85rem}
   body.page-chamu .menu .dish{margin:.55rem 0 .7rem}
 }
