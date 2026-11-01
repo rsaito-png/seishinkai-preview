@@ -31,8 +31,8 @@ body.page-kintoun .menu > .sign{
   padding-right:var(--inset);
 }
 body.page-kintoun .menu > header{
-  border-top:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);
+  border-top:3px double var(--rule);
+  border-bottom:3px double var(--rule);
   padding-top:.85rem;
   padding-bottom:.65rem;
 }
