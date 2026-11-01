@@ -1,0 +1,181 @@
+/* 金斗雲の文字装飾 v2。題の字だけを変える。二重罫と紙は本番のまま。 */
+
+body.page-kintoun{--rule:#8a7d96;--ink:#3c3546}
+
+body.page-kintoun .bar,
+body.page-kintoun .sheet{
+  width:min(840px,100%);
+  margin:0 auto;
+  font-family:"Noto Sans JP",sans-serif;
+  color:var(--ink);
+}
+body.page-kintoun .bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.75rem;
+  padding:.45rem 1.15rem;
+  font-size:.95rem;
+  letter-spacing:.04em;
+  line-height:1.4;
+}
+body.page-kintoun .bar .which{
+  margin:0;
+  flex:1;
+  text-align:center;
+}
+body.page-kintoun .bar .which b{
+  font-weight:600;
+  margin-right:.35em;
+}
+body.page-kintoun .bar a{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  color:#6d5d7c;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+  white-space:nowrap;
+}
+body.page-kintoun .bar a:focus-visible,
+body.page-kintoun .index a:focus-visible{
+  outline:3px solid #6d5d7c;
+  outline-offset:3px;
+}
+body.page-kintoun .stage .menu{padding-top:.35rem}
+
+/* 題に共通。本文の Klee はそのまま。palt は字面を削るので、題では切る。 */
+body.page-kintoun .menu > header h1{
+  font-family:"Noto Serif JP","Noto Sans JP",serif!important;
+  font-synthesis:none;
+  font-feature-settings:"palt" 0;
+  text-wrap:balance;
+  color:var(--ink);
+}
+
+/* 1 彫りの字。黒みの強い明朝と、三字の空きだけ。 */
+body.page-kintoun.deco-01 .menu > header h1{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:flex-end;
+  justify-content:flex-start;
+  font-weight:900!important;
+  font-size:clamp(3.45rem,14vw,5.4rem);
+  letter-spacing:0!important;
+  line-height:1;
+  margin:.2rem 0 .28rem;
+}
+body.page-kintoun.deco-01 .menu > header h1 .ch{
+  display:block;
+  line-height:1;
+}
+/* 字面の外側で測って、金−斗と斗−雲の空きが揃うところ。 */
+body.page-kintoun.deco-01 .menu > header h1 .ch:nth-child(1){margin-right:.1em}
+body.page-kintoun.deco-01 .menu > header h1 .ch:nth-child(2){margin-right:.1em}
+
+/* 2 塗った字に、外側だけ細い縁。中抜きにはしない。 */
+body.page-kintoun.deco-02 .menu > header h1{
+  font-weight:800!important;
+  font-size:clamp(3.15rem,12.5vw,4.85rem);
+  letter-spacing:.12em!important;
+  line-height:1.12;
+  margin:.28rem 0 .3rem;
+  -webkit-text-fill-color:var(--ink);
+  -webkit-text-stroke:.05em #6d5d7c;
+  paint-order:stroke fill;
+}
+
+/* 3 ふりがな。読みが字の上に乗り、題の層になる。 */
+body.page-kintoun.deco-03 .menu > header{padding-top:1.05rem}
+body.page-kintoun.deco-03 .menu > header h1{
+  font-weight:700!important;
+  font-size:clamp(3rem,12vw,4.6rem);
+  letter-spacing:0!important;
+  line-height:1;
+  margin:.15rem 0 .22rem;
+}
+body.page-kintoun.deco-03 .menu > header h1 ruby{
+  ruby-position:over;
+  ruby-align:center;
+}
+body.page-kintoun.deco-03 .menu > header h1 ruby + ruby{margin-left:.18em}
+body.page-kintoun.deco-03 .menu > header h1 rt{
+  font-family:"Noto Serif JP","Noto Sans JP",serif;
+  font-weight:500;
+  font-size:max(14px,.34em);
+  letter-spacing:.14em;
+  line-height:1;
+  color:#4a4156;
+}
+
+/* 4 線の強弱。横画が細く、縦画が太い見出し明朝。 */
+body.page-kintoun.deco-04 .menu > header h1{
+  font-family:"Kaisei Tokumin","Noto Serif JP",serif!important;
+  font-weight:800!important;
+  font-size:clamp(3.35rem,13.5vw,5.2rem);
+  letter-spacing:.08em!important;
+  line-height:1.02;
+  margin:.22rem 0 .26rem;
+}
+
+/* 一覧 */
+body.page-kintoun .sheet{padding:1.6rem 0 3rem}
+body.page-kintoun .sheet h1{
+  margin:0 0 .6rem;
+  padding:0 1.15rem;
+  font-family:"Noto Serif JP","Noto Sans JP",serif!important;
+  font-weight:700!important;
+  font-size:clamp(1.55rem,4vw,1.85rem);
+  letter-spacing:.06em!important;
+  line-height:1.35;
+  font-feature-settings:"palt" 0;
+}
+body.page-kintoun .sheet .note{
+  margin:0 0 1.2rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  line-height:1.75;
+  text-wrap:pretty;
+}
+body.page-kintoun .index{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:3px double var(--rule);
+}
+body.page-kintoun .index a{
+  display:block;
+  padding:1rem 1.15rem .9rem;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+  text-decoration:none;
+}
+body.page-kintoun .index a:hover{color:#6d5d7c}
+body.page-kintoun .index .num{
+  font-family:"Noto Serif JP",serif;
+  font-weight:700;
+  margin-right:.45em;
+}
+body.page-kintoun .index .name{
+  font-family:"Noto Serif JP","Noto Sans JP",serif;
+  font-weight:700;
+  font-size:1.22rem;
+  letter-spacing:.08em;
+  text-decoration:underline;
+  text-underline-offset:.18em;
+}
+body.page-kintoun .index .desc{
+  display:block;
+  margin-top:.28rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  line-height:1.65;
+  color:#5c5368;
+}
+@media(max-width:700px){
+  body.page-kintoun .bar,
+  body.page-kintoun .sheet h1,
+  body.page-kintoun .sheet .note{padding-left:1rem;padding-right:1rem}
+  body.page-kintoun .index a{padding-left:1rem;padding-right:1rem}
+}
