@@ -1,0 +1,69 @@
+/* 見本ページだけ。本番の金斗雲は変えない。題の上下は二重罫。 */
+
+body.page-kintoun .sheet{
+  width:min(840px,100%);
+  margin:0 auto;
+  padding:1rem 0 2.5rem;
+}
+body.page-kintoun .intro{
+  margin:0 0 1.2rem;
+  padding:0 1.15rem;
+  font-family:"Klee One","Noto Sans JP",sans-serif;
+  font-size:.95rem;
+  line-height:1.7;
+}
+body.page-kintoun .sample{margin:0 0 1.6rem}
+body.page-kintoun .label{
+  margin:0 0 .45rem;
+  padding:0 1.15rem;
+  font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  font-weight:900;
+  letter-spacing:.04em;
+  color:#3c3546;
+}
+body.page-kintoun .label b{
+  display:inline-block;
+  margin-right:.45rem;
+  font-size:1.15rem;
+}
+body.page-kintoun .menu{padding-top:0}
+body.page-kintoun .menu > header{
+  border-top:3px double var(--rule);
+  border-bottom:3px double var(--rule);
+}
+
+/* 1 ゴシックで太く */
+body.page-kintoun .menu > header.v1 h1{
+  font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif!important;
+  font-weight:900!important;
+  font-size:clamp(2.5rem,11vw,3.8rem)!important;
+  letter-spacing:.08em!important;
+  line-height:1.15;
+}
+/* 2 手書き風 */
+body.page-kintoun .menu > header.v2 h1{
+  font-family:"Yomogi","Klee One",sans-serif!important;
+  font-weight:400!important;
+  font-size:clamp(2.7rem,12vw,4.2rem)!important;
+  letter-spacing:.06em!important;
+  line-height:1.25;
+}
+/* 3 小さめの見出し体 */
+body.page-kintoun .menu > header.v3 h1{
+  font-family:"Shippori Mincho","Noto Serif JP",serif!important;
+  font-weight:600!important;
+  font-size:clamp(1.7rem,6.4vw,2.15rem)!important;
+  letter-spacing:.2em!important;
+  line-height:1.4;
+  margin:.35rem 0 .25rem;
+}
+/* 4 茶夢の題と同じ（Klee One・同じ大きさ） */
+body.page-kintoun .menu > header.v4 h1{
+  font-family:"Klee One","Noto Sans JP",sans-serif!important;
+  font-weight:600!important;
+  font-size:clamp(2.7rem,11vw,4.2rem)!important;
+  letter-spacing:.03em!important;
+  line-height:1.3;
+  margin:.15rem 0 .2rem;
+}
