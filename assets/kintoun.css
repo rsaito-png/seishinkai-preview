@@ -62,6 +62,20 @@ body.page-kintoun .menu h1{
   font-size:clamp(2.7rem,11vw,4.2rem);
   margin:.15rem 0 .2rem;
 }
+/* 題だけ。案4 線の強弱。横画が細く、縦画が太い見出し明朝。二重罫とリードはそのまま。見本の deco は触らない。 */
+body.page-kintoun:not([class*="deco-"]) .menu > header h1{
+  font-family:"Kaisei Tokumin","Noto Serif JP",serif!important;
+  font-weight:800!important;
+  font-synthesis:none;
+  font-feature-settings:"palt" 0;
+  font-size:clamp(3.35rem,13.5vw,5.2rem);
+  letter-spacing:.08em!important;
+  line-height:1.02;
+  margin:.22rem 0 .26rem;
+  text-wrap:balance;
+  white-space:nowrap;
+  color:#3c3546;
+}
 body.page-kintoun .menu .lead{
   font-size:clamp(1.12rem,3.4vw,1.35rem);
   line-height:1.65;
