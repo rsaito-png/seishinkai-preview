@@ -725,7 +725,8 @@ def kintoun_page(d,rel,ld):
         else: cur.append(b)
     if cur: groups.append(cur)
     extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
-           f'\n<link rel="stylesheet" href="{rel}assets/kintoun.css?v=20261101b">')
+           '\n<link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet">'
+           f'\n<link rel="stylesheet" href="{rel}assets/kintoun.css?v=20261101c">')
     o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-kintoun')+header(rel)
     o+='<main id="main"><article class="menu"><header>'
     cat=(d.get('cat') or '').strip()
