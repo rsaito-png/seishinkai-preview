@@ -601,7 +601,7 @@ def _scrub_chamu(s):
 def _plain(s):
     return _re.sub(r'[\s　]','',_re.sub(r'<[^>]+>','',s or ''))
 def chamu_page(d,rel,ld):
-    """案22「季節の便り」。写真は既存パスのまま、手紙の紙に挟む。FAQはJSON-LDのみ。"""
+    """喫茶メニュー。写真は既存パスのまま、傾けずに縦一列で大きく置く。FAQはJSON-LDのみ。"""
     if '生活介護事業所です' in (d.get('desc') or ''): d['desc']=_scrub_chamu(d['desc'])
     blocks=OLD.get(d['path']) or []
     pool=[]
@@ -625,9 +625,8 @@ def chamu_page(d,rel,ld):
         nonlocal pi
         if pi>=len(seq): return ''
         src,alt=seq[pi]; pi+=1
-        cls='abcde'[(pi-1)%5]
         lazy=' loading="lazy"' if pi>1 else ''
-        return f'<figure class="tuck {cls}"><img src="{rel}img/{src}.jpg" alt="{esc(alt)}"{lazy}></figure>'
+        return f'<figure class="dish"><img src="{rel}img/{src}.jpg" alt="{esc(alt)}"{lazy}></figure>'
     def paras(html_s):
         parts=[x.strip() for x in _re.split(r'<br\s*/?>',_scrub_chamu(html_s or '')) if x.strip()]
         return ''.join(f'<p>{x}</p>' for x in parts)
@@ -655,9 +654,9 @@ def chamu_page(d,rel,ld):
         elif mode=='pre': pre.append(b)
         else: post.append(b)
     extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
-           f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261031c">')
+           f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261101a">')
     o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-chamu')+header(rel)
-    o+='<main id="main"><article class="tegami"><header><p class="to">みなさまへ</p>'
+    o+='<main id="main"><article class="menu"><header>'
     cat=_scrub_chamu((d.get('cat') or '').strip())
     if cat: o+=f'<p class="role">{esc(cat)}</p>'
     o+=f'<h1>{esc(d["name"])}</h1>'
