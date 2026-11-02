@@ -19,309 +19,317 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/site.css?v=20261102_custom">
 <style>
-/* RYDEEN専用のプレミアム・デザインスタイル */
+/* 洗練されたモダン・ミニマルテックデザイン */
 :root {
-  --ry-primary: #0284c7;
-  --ry-accent: #0ea5e9;
-  --ry-dark: #090d16;
-  --ry-card-bg: #ffffff;
-  --ry-border: #e2e8f0;
-  --ry-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+  --ry-bg: #0c0f17;
+  --ry-card: #151a26;
+  --ry-text: #f8fafc;
+  --ry-sub: #94a3b8;
+  --ry-line: rgba(255, 255, 255, 0.08);
+  --ry-accent: #38bdf8;
+  --ry-btn: #ffffff;
 }
 
-/* ヒーローセクションの刷新 */
+body.aud-self {
+  background: var(--ry-bg);
+  color: var(--ry-text);
+}
+
+/* ヒーローセクション：洗練されたミニマルな余白とタイポグラフィ */
 .ry-hero {
   position: relative;
-  background: radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.2) 0%, transparent 45%),
-              radial-gradient(circle at 10% 80%, rgba(2, 132, 199, 0.15) 0%, transparent 40%),
-              linear-gradient(145deg, #090d16 0%, #0f172a 100%);
-  color: #ffffff;
-  padding: 80px 24px 70px;
+  background: var(--ry-bg);
+  padding: 64px 20px 56px;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--ry-line);
 }
+
 .ry-hero-inner {
-  max-width: 1040px;
+  max-width: 680px;
   margin: 0 auto;
-  position: relative;
-  z-index: 2;
 }
+
+/* ロゴ & バッジ */
 .ry-badge-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 28px;
 }
+
 .ry-logo {
-  width: 90px;
-  height: 90px;
-  border-radius: 24px;
-  box-shadow: 0 0 30px rgba(14, 165, 233, 0.4), 0 12px 24px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--ry-line);
 }
+
 .ry-tag {
   display: inline-block;
-  background: rgba(14, 165, 233, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  color: #7dd3fc;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 4px 16px;
-  border-radius: 9999px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  color: var(--ry-sub);
+  border: 1px solid var(--ry-line);
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
 }
+
+/* メイン見出し：美しく引き締まったフォント */
 .ry-hero h1 {
-  font-size: clamp(30px, 5.2vw, 48px);
-  font-weight: 800;
-  line-height: 1.25;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-  margin-bottom: 16px;
-}
-.ry-lead {
-  font-size: clamp(22px, 3.5vw, 32px);
+  font-size: clamp(24px, 5.5vw, 36px);
   font-weight: 700;
-  color: #38bdf8;
+  line-height: 1.35;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  word-break: auto-phrase; /* 自然な折り返し */
+}
+
+.ry-lead {
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 600;
+  color: var(--ry-accent);
   margin-bottom: 20px;
   letter-spacing: 0.02em;
 }
+
+/* 本文：1文字落ちを防ぎ、上品なグレーで読ませる */
 .ry-desc {
-  font-size: 16px;
-  line-height: 2;
-  color: #cbd5e1;
-  max-width: 720px;
-  letter-spacing: 0.02em;
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--ry-sub);
+  word-break: auto-phrase;
+  letter-spacing: 0.03em;
+  margin-bottom: 28px;
 }
+
 .ry-status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 24px;
-  background: #059669;
-  color: #ffffff;
-  font-size: 13.5px;
-  font-weight: 700;
-  padding: 7px 20px;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 6px 14px;
   border-radius: 9999px;
-  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
 }
 
-/* メインコンテンツ・グリッド */
+/* メインコンテナ */
 .ry-container {
-  max-width: 1040px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 80px 24px;
+  padding: 56px 20px 80px;
 }
+
 .ry-sec-title {
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
+
 .ry-sec-title .en {
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  color: var(--ry-primary);
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ry-accent);
+  font-weight: 600;
 }
+
 .ry-sec-title h2 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #0f172a;
-  margin-top: 6px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 4px;
   letter-spacing: -0.01em;
 }
 
-/* 4つの実務（インタラクティブカード） */
+/* 4つの実務：洗練されたダークカード */
 .ry-works-box {
-  background: #0f172a;
-  color: #f8fafc;
-  border-radius: 20px;
-  padding: 48px 36px;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-  margin-bottom: 60px;
-}
-.ry-works-intro {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #cbd5e1;
-  margin-bottom: 28px;
-}
-.chips-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 14px;
-}
-.chips-grid button {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  padding: 20px 18px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-align: center;
-}
-.chips-grid button:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-.chips-grid button.on {
-  background: var(--ry-primary);
-  border-color: var(--ry-accent);
-  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
-}
-.ry-ans-box {
-  margin-top: 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border-left: 4px solid var(--ry-accent);
-  padding: 22px 26px;
-  border-radius: 0 12px 12px 0;
-  font-size: 16px;
-  line-height: 1.9;
-  color: #f1f5f9;
-  min-height: 5em;
+  background: var(--ry-card);
+  border: 1px solid var(--ry-line);
+  border-radius: 16px;
+  padding: 24px 20px;
+  margin-bottom: 56px;
 }
 
-/* 進め方（ステップカード） */
-.ry-step-card {
-  background: #ffffff;
-  border: 1px solid var(--ry-border);
-  border-radius: 18px;
-  padding: 40px 36px;
-  box-shadow: var(--ry-shadow);
-  display: flex;
-  flex-direction: column;
-  min-height: 290px;
+.ry-works-intro {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ry-sub);
+  margin-bottom: 20px;
 }
+
+.chips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.chips-grid button {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--ry-line);
+  color: #e2e8f0;
+  padding: 14px 10px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chips-grid button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.chips-grid button.on {
+  background: #ffffff;
+  color: #0c0f17;
+  border-color: #ffffff;
+  font-weight: 700;
+}
+
+.ry-ans-box {
+  margin-top: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--ry-line);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #e2e8f0;
+  min-height: 4.5em;
+}
+
+/* ステップカード */
+.ry-step-card {
+  background: var(--ry-card);
+  border: 1px solid var(--ry-line);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: none;
+}
+
 .ry-step-num {
   font-family: 'Inter', sans-serif;
-  font-size: 46px;
-  font-weight: 800;
-  color: var(--ry-primary);
-  line-height: 1;
-}
-.ry-step-num small {
-  font-size: 16px;
-  color: #64748b;
-  margin-left: 6px;
-}
-.ry-step-badge {
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: #64748b;
+  font-size: 36px;
   font-weight: 700;
-  margin-top: 14px;
+  color: var(--ry-accent);
 }
+
+.ry-step-num small {
+  font-size: 14px;
+  color: var(--ry-sub);
+}
+
+.ry-step-badge {
+  font-size: 11px;
+  color: var(--ry-sub);
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+}
+
 .ry-step-card h3 {
-  font-size: 24px;
-  font-weight: 800;
-  margin: 4px 0 14px;
-  color: #0f172a;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0 10px;
 }
+
 .ry-step-card p {
-  font-size: 16px;
-  color: #334155;
-  line-height: 1.85;
-  flex: 1;
+  font-size: 14px;
+  color: var(--ry-sub);
+  line-height: 1.8;
 }
 
 /* 基本情報テーブル */
 .ry-info-card {
-  background: #ffffff;
-  border: 1px solid var(--ry-border);
-  border-radius: 18px;
-  padding: 16px 36px;
-  box-shadow: var(--ry-shadow);
+  background: var(--ry-card);
+  border: 1px solid var(--ry-line);
+  border-radius: 16px;
+  padding: 10px 20px;
 }
+
 dl.ry-info {
   display: grid;
-  grid-template-columns: 8em 1fr;
-  font-size: 15.5px;
+  grid-template-columns: 6.5em 1fr;
+  font-size: 13.5px;
 }
+
 dl.ry-info dt, dl.ry-info dd {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--ry-border);
-  line-height: 1.75;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ry-line);
+  line-height: 1.65;
 }
+
 dl.ry-info dt:last-of-type, dl.ry-info dd:last-of-type {
   border-bottom: none;
 }
+
 dl.ry-info dt {
-  font-weight: 700;
-  color: #64748b;
-}
-dl.ry-info dd {
-  color: #0f172a;
+  color: var(--ry-sub);
   font-weight: 500;
 }
 
-/* 見学申し込み CTA */
+dl.ry-info dd {
+  color: #f1f5f9;
+}
+
+/* CTAエリア */
 .ry-cta {
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-  border-top: 1px solid var(--ry-border);
-  border-bottom: 1px solid var(--ry-border);
-  padding: 80px 24px;
+  background: #111520;
+  border-top: 1px solid var(--ry-line);
+  padding: 64px 20px;
   text-align: center;
 }
+
 .ry-cta h2 {
-  font-size: 34px;
-  font-weight: 800;
-  color: #0f172a;
-  margin-top: 8px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
 }
+
 .ry-cta-btns {
   display: flex;
-  gap: 16px;
-  max-width: 440px;
-  margin: 32px auto 0;
+  gap: 12px;
+  max-width: 380px;
+  margin: 24px auto 0;
 }
+
 .ry-btn-line {
-  flex: 1;
   background: #06c755;
   color: #ffffff;
-  padding: 16px 0;
-  border-radius: 12px;
+  padding: 14px 0;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 16px;
-  box-shadow: 0 6px 18px rgba(6, 199, 85, 0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 14.5px;
 }
-.ry-btn-line:hover {
-  background: #05ad4a;
-  transform: translateY(-2px);
-}
+
 .ry-btn-tel {
-  flex: 1;
-  background: #ffffff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  padding: 16px 0;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ry-line);
+  color: #ffffff;
+  padding: 14px 0;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 14.5px;
 }
-.ry-btn-tel:hover {
-  border-color: var(--ry-primary);
-  color: var(--ry-primary);
-  transform: translateY(-2px);
-}
+
 .ry-tel-num {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: #0f172a;
+  color: #ffffff;
+  font-size: 20px;
 }
-.ry-tel-num:hover {
-  color: var(--ry-primary);
+
+/* フローティング相談ボタン（FAB）：色浮きを解消し黒背景に馴染むデザインに */
+.fab {
+  background: #ffffff !important;
+  color: #0c0f17 !important;
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+  padding: 11px 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
 }
 </style>
 </head>
