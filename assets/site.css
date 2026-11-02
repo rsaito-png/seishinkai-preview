@@ -290,3 +290,8 @@ dd.who .bio{grid-area:bio}
 .stph{width:100%;height:auto}
 /* Audience captions: break on the middots instead of a leftover character. */
 .aud small{word-break:keep-all}
+/* Homepage footer has five groups and no privacy link. Other pages keep the 4-column grid. */
+@media(min-width:900px){
+  .gf .in:not(:has(a[href$="privacy/"])){grid-template-columns:minmax(300px,1.8fr) repeat(4,minmax(0,1fr))}
+  .gf .in:not(:has(a[href$="privacy/"])) .cp{grid-column:1 / -1}
+}
