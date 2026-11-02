@@ -295,3 +295,128 @@ dd.who .bio{grid-area:bio}
   .gf .in:not(:has(a[href$="privacy/"])){grid-template-columns:minmax(300px,1.8fr) repeat(4,minmax(0,1fr))}
   .gf .in:not(:has(a[href$="privacy/"])) .cp{grid-column:1 / -1}
 }
+
+/* =========================================================
+   Audience Theme Customization (#self, #family, #parents, #partners, #entry)
+   ========================================================= */
+
+/* 1. ご本人 (#self) - Sage Green */
+#self {
+  background: linear-gradient(180deg, #f3f7f4 0%, #ffffff 100%);
+  border-top: 1px solid #d5e2d8;
+}
+#self .h .en,
+#self .sc .ct {
+  color: #3b7a57;
+}
+#self .sc {
+  border-top-color: #3b7a57;
+}
+#self .sc:hover .nm {
+  color: #3b7a57;
+}
+#self .btn,
+#self .go {
+  background: #3b7a57;
+  color: #fff;
+}
+#self .btn:hover,
+#self .go:hover {
+  background: #2d5e43;
+}
+
+/* 2. ご家族 (#family) - Amber / Warm Orange */
+#family {
+  background: linear-gradient(180deg, #fdf8f3 0%, #ffffff 100%);
+  border-top: 1px solid #fae6d6;
+}
+#family .h .en,
+#family .sc .ct {
+  color: #c26d2d;
+}
+#family .sc {
+  border-top-color: #c26d2d;
+}
+#family .sc:hover .nm {
+  color: #c26d2d;
+}
+#family .btn,
+#family .go {
+  background: #c26d2d;
+  color: #fff;
+}
+#family .btn:hover,
+#family .go:hover {
+  background: #a3551f;
+}
+
+/* 3. 保護者 (#parents) - Sky Blue */
+#parents {
+  background: linear-gradient(180deg, #f2f8fb 0%, #ffffff 100%);
+  border-top: 1px solid #d4e8f1;
+}
+#parents .h .en,
+#parents .sc .ct {
+  color: #1e7399;
+}
+#parents .sc {
+  border-top-color: #1e7399;
+}
+#parents .sc:hover .nm {
+  color: #1e7399;
+}
+#parents .btn,
+#parents .go {
+  background: #1e7399;
+  color: #fff;
+}
+#parents .btn:hover,
+#parents .go:hover {
+  background: #165875;
+}
+
+/* 4. 企業・支援機関 (#partners) - Indigo Navy */
+#partners {
+  background: linear-gradient(180deg, #f2f5f9 0%, #ffffff 100%);
+  border-top: 1px solid #d2dbe6;
+}
+#partners .h .en,
+#partners .sc .ct {
+  color: #2b4365;
+}
+#partners .sc {
+  border-top-color: #2b4365;
+}
+#partners .sc:hover .nm {
+  color: #2b4365;
+}
+#partners .btn,
+#partners .go {
+  background: #2b4365;
+  color: #fff;
+}
+#partners .btn:hover,
+#partners .go:hover {
+  background: #1e3049;
+}
+
+/* 5. #entry ナビゲーションのテーマ色ホバー */
+#entry .aud a {
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+#entry .aud a[href*="#self"]:hover {
+  border-top-color: #3b7a57;
+  color: #3b7a57;
+}
+#entry .aud a[href*="#family"]:hover {
+  border-top-color: #c26d2d;
+  color: #c26d2d;
+}
+#entry .aud a[href*="#parents"]:hover {
+  border-top-color: #1e7399;
+  color: #1e7399;
+}
+#entry .aud a[href*="#partners"]:hover {
+  border-top-color: #2b4365;
+  color: #2b4365;
+}
