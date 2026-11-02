@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>サンプル｜デジタル庁デザインシステム準拠トップ｜星心会</title>
+<link rel="icon" href="https://psr-seishinkai.org/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue-50:#e8f1fe;--blue-900:#0017c1;--blue-1000:#00118f;
+  --white:#fff;--gray-50:#f2f2f2;--gray-100:#e6e6e6;--gray-200:#ccc;--gray-420:#949494;
+  --gray-536:#767676;--gray-700:#4d4d4d;--gray-800:#333;--gray-900:#1a1a1a;
+  --yellow-300:#ffd43d;
+  --c-self:#197a4b;--c-family:#c74700;--c-parents:#0066be;--c-partners:#0017c1;
+  --r:8px;--w:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Noto Sans JP",sans-serif;font-size:16px;line-height:1.7;color:var(--gray-900);background:var(--white);letter-spacing:.02em}
+img{max-width:100%;display:block}
+a{color:var(--blue-900);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--blue-1000);text-decoration-thickness:3px}
+:focus-visible{outline:4px solid var(--yellow-300);outline-offset:2px;box-shadow:0 0 0 2px var(--gray-900)}
+ul{list-style:none}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:8px;top:-100px;background:var(--white);color:var(--blue-900);padding:8px 16px;border-radius:var(--r);z-index:100}
+.skip:focus{top:8px}
+.notice{background:var(--blue-50);border-bottom:1px solid var(--gray-200);font-size:14px;padding:8px 0}
+.notice p{line-height:1.6}
+header.site{background:var(--white);border-bottom:1px solid var(--gray-200)}
+.hd{display:flex;align-items:center;gap:24px;min-height:72px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--gray-900);text-decoration:none;font-weight:700}
+.logo img{width:36px;height:36px}
+.logo small{display:block;font-size:12px;font-weight:400;color:var(--gray-700);line-height:1.3}
+.gnav{margin-left:auto}
+.gnav ul{display:flex;gap:4px;flex-wrap:wrap}
+.gnav a{display:block;padding:8px 12px;color:var(--gray-900);text-decoration:none;border-radius:var(--r)}
+.gnav a:hover{text-decoration:underline;background:var(--gray-50);color:var(--gray-900)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:var(--r);font-weight:700;text-decoration:none;border:1px solid transparent}
+.btn-primary{background:var(--blue-900);color:var(--white)}
+.btn-primary:hover{background:var(--blue-1000);color:var(--white);text-decoration:underline}
+.btn-secondary{background:var(--white);color:var(--blue-900);border-color:var(--blue-900)}
+.btn-secondary:hover{background:var(--blue-50);color:var(--blue-1000)}
+.hero{background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+.hero-in{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding:64px 24px}
+.hero h1{font-size:48px;line-height:1.4;font-weight:700}
+.hero .lead{font-size:18px;margin-top:16px;color:var(--gray-800)}
+.hero .acts{display:flex;gap:16px;flex-wrap:wrap;margin-top:32px;align-items:center}
+.hero .tel{font-size:16px}
+.hero .tel b{font-size:24px;display:block;line-height:1.4}
+.hero .tel a{color:var(--gray-900)}
+.hero figure img{border-radius:var(--r);aspect-ratio:4/3;object-fit:cover;width:100%;border:1px solid var(--gray-200)}
+.hero figcaption{font-size:14px;color:var(--gray-700);margin-top:8px}
+.access-line{font-size:14px;color:var(--gray-700);margin-top:16px}
+main section{padding:64px 0}
+h2{font-size:32px;line-height:1.4;font-weight:700}
+h3{font-size:20px;line-height:1.5;font-weight:700}
+.sec-lead{margin-top:12px;color:var(--gray-800);max-width:44em}
+.label{font-size:14px;color:var(--gray-700);display:block;margin-bottom:4px}
+.entry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+.entry{display:block;border:1px solid var(--gray-200);border-left-width:6px;border-radius:var(--r);padding:20px;text-decoration:none;color:var(--gray-900);background:var(--white)}
+.entry:hover{background:var(--gray-50);color:var(--gray-900)}
+.entry:hover h3{text-decoration:underline}
+.entry h3{color:var(--blue-900)}
+.entry p{font-size:16px;color:var(--gray-800);margin-top:4px}
+.aud{border-top:1px solid var(--gray-200)}
+.aud-head{border-left:6px solid var(--accent);padding-left:16px}
+.svc{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
+.svc li{border:1px solid var(--gray-200);border-radius:var(--r);background:var(--white)}
+.svc a{display:block;padding:20px 24px;text-decoration:none;color:var(--gray-900);height:100%}
+.svc a:hover{background:var(--gray-50);color:var(--gray-900)}
+.svc a:hover .t{text-decoration:underline}
+.svc .t{font-size:20px;font-weight:700;color:var(--blue-900);line-height:1.5}
+.chip{display:inline-block;font-size:14px;line-height:1.5;padding:2px 8px;border:1px solid var(--gray-420);border-radius:4px;color:var(--gray-800);background:var(--gray-50);margin-bottom:8px}
+.svc p{margin-top:4px;color:var(--gray-800)}
+.wip{color:var(--gray-700);font-size:14px}
+.cta-band{background:var(--blue-50);border-top:1px solid var(--gray-200)}
+.cta-band .acts{display:flex;gap:16px;flex-wrap:wrap;margin-top:24px}
+.access{background:var(--gray-50);border-top:1px solid var(--gray-200)}
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:24px}
+.access dl{display:grid;grid-template-columns:7em 1fr;border-top:1px solid var(--gray-200)}
+.access dt,.access dd{padding:12px 0;border-bottom:1px solid var(--gray-200)}
+.access dt{font-weight:700}
+.access img{border-radius:var(--r);border:1px solid var(--gray-200);aspect-ratio:16/10;object-fit:cover;width:100%}
+footer.site{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:40px 0;font-size:14px;color:var(--gray-800)}
+footer ul{display:flex;flex-wrap:wrap;gap:8px 24px;margin:16px 0}
+footer a{color:var(--gray-900)}
+@media(max-width:900px){
+  .hero-in,.access-grid{grid-template-columns:1fr;gap:32px;padding-top:40px;padding-bottom:40px}
+  .entry-grid{grid-template-columns:1fr 1fr}
+  .gnav{display:none}
+}
+@media(max-width:600px){
+  .hero h1{font-size:36px}
+  h2{font-size:28px}
+  .entry-grid,.svc{grid-template-columns:1fr}
+  .hd .btn{padding:8px 16px;min-height:44px;margin-left:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">本文へ</a>
+<div class="notice"><div class="wrap"><p>これはデザインサンプルです。本番トップではありません。<a href="https://design.digital.go.jp/">デジタル庁デザインシステム</a>に沿って作成しています。</p></div></div>
+
+<header class="site">
+  <div class="wrap hd">
+    <a class="logo" href="/"><img src="https://psr-seishinkai.org/img/mark_black.svg" alt=""><span>星心会<small>一般社団法人 心理社会的リハビリテーション・星心会</small></span></a>
+    <nav class="gnav" aria-label="グローバルナビゲーション">
+      <ul>
+        <li><a href="#self">ご本人</a></li>
+        <li><a href="#family">ご家族</a></li>
+        <li><a href="#parents">保護者</a></li>
+        <li><a href="#partners">企業・支援機関</a></li>
+        <li><a href="/about/">法人について</a></li>
+        <li><a href="/access/">アクセス</a></li>
+        <li><a href="/faq/">よくある質問</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary" href="/contact/">相談する</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <h1>環境調整という、<br>メンタルヘルスケア</h1>
+        <p class="lead">暮らす場所、働く場所、家族との関係。人を変えるのではなく、まわりの環境を整えることで、こころの回復を支えます。</p>
+        <div class="acts">
+          <a class="btn btn-primary" href="/contact/">相談する</a>
+          <p class="tel">お電話でのご相談<b><a href="tel:0593150697">059-315-0697</a></b></p>
+        </div>
+        <p class="access-line">名古屋西ICから車で約30分 ／ 三岐線 山城駅から徒歩5分 ／ 四日市駅から三岐バス「団地下」</p>
+      </div>
+      <figure>
+        <img src="https://psr-seishinkai.org/img/hero_top.jpg" alt="星心会の事業所周辺の風景">
+      </figure>
+    </div>
+  </div>
+
+  <section aria-labelledby="entry-h">
+    <div class="wrap">
+      <h2 id="entry-h">どなたの相談ですか。</h2>
+      <p class="sec-lead">診断も、通院歴も、手続きの知識も要りません。</p>
+      <div class="entry-grid">
+        <a class="entry" href="#self" style="border-left-color:var(--c-self)"><h3>ご本人</h3><p>働きたい、暮らしを整えたい方</p></a>
+        <a class="entry" href="#family" style="border-left-color:var(--c-family)"><h3>ご家族</h3><p>家族のことで悩んでいる方</p></a>
+        <a class="entry" href="#parents" style="border-left-color:var(--c-parents)"><h3>保護者</h3><p>お子さんの発達が気になる方</p></a>
+        <a class="entry" href="#partners" style="border-left-color:var(--c-partners)"><h3>企業・支援機関</h3><p>雇用や職場の健康に取り組む方</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="self" class="aud" style="--accent:var(--c-self)" aria-labelledby="self-h">
+    <div class="wrap">
+      <div class="aud-head"><span class="label">ご本人の方へ</span><h2 id="self-h">ご本人</h2></div>
+      <p class="sec-lead">自分のペースで働く、仲間と過ごす、生活を立て直す。いまの状態に合った場所を選べます。</p>
+      <ul class="svc">
+        <li><a href="/suishodama/"><span class="chip">就労継続支援B型</span><span class="t">水晶玉</span><p>体調に合わせて通いながら、作業と工賃で働く力を取り戻す。</p></a></li>
+        <li><a href="/shichirin/"><span class="chip">当事者の会</span><span class="t">しちりんの会</span><p>同じ経験をもつ仲間と、気軽に話せる集まり。</p></a></li>
+        <li><a href="/rydeen/"><span class="chip">就労支援</span><span class="t">RYDEEN</span><p>一般就労を目指して、仕事の準備と実践を重ねる。</p></a></li>
+        <li><a href="/ryozanpaku/"><span class="chip">住まいの支援</span><span class="t">梁山泊</span><p>地域で暮らすための住まいと、日々の生活の支え。</p></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="family" class="aud" style="--accent:var(--c-family)" aria-labelledby="family-h">
+    <div class="wrap">
+      <div class="aud-head"><span class="label">ご家族の方へ</span><h2 id="family-h">ご家族</h2></div>
+      <p class="sec-lead">ご家族だけで抱えこまないために。家での暮らしと、家族の休息を支えます。</p>
+      <ul class="svc">
+        <li><a href="/kintoun/"><span class="chip">居宅介護</span><span class="t">金斗雲</span><p>ご自宅に伺い、家事や身のまわりのことをお手伝い。</p></a></li>
+        <li><a href="/chamu/"><span class="chip">家族の居場所</span><span class="t">茶夢</span><p>ご家族がひと息つき、話せる場所。</p></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="parents" class="aud" style="--accent:var(--c-parents)" aria-labelledby="parents-h">
+    <div class="wrap">
+      <div class="aud-head"><span class="label">保護者の方へ</span><h2 id="parents-h">保護者</h2></div>
+      <p class="sec-lead">お子さんの発達について、療育・子育て・検査の三つの面から一緒に考えます。</p>
+      <ul class="svc">
+        <li><a href="/leo/"><span class="chip">児童発達支援・放課後等デイサービス</span><span class="t">レオ</span><p>一人ひとりの特性に合わせた療育と、手づくりの昼食。</p></a></li>
+        <li><a href="/leo/parent-training/"><span class="chip">保護者向けプログラム</span><span class="t">ペアレント・トレーニング</span><p>毎日の関わり方を、具体的な方法で学ぶ。</p></a></li>
+        <li><a href="/leo/assessment/"><span class="chip">検査</span><span class="t">発達検査</span><p>お子さんの得意と苦手を知り、支援につなげる。</p></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="partners" class="aud" style="--accent:var(--c-partners)" aria-labelledby="partners-h">
+    <div class="wrap">
+      <div class="aud-head"><span class="label">企業・支援機関の方へ</span><h2 id="partners-h">企業・支援機関</h2></div>
+      <p class="sec-lead">障害者雇用の定着から職場のメンタルヘルスまで、現場の環境調整を支援します。<a href="/business/">法人向けサービス一覧</a></p>
+      <ul class="svc">
+        <li><a href="/business/employment/"><span class="chip">雇用支援</span><span class="t">雇用定着支援</span><p>採用後の職場定着を、本人と職場の両面から支える。</p></a></li>
+        <li><a href="/business/stress-check/"><span class="chip">メンタルヘルス</span><span class="t">ストレスチェック</span><p>実施から集団分析、職場改善までを一貫して。</p></a></li>
+        <li><a href="/business/training/"><span class="chip">研修</span><span class="t">研修・講座</span><p>職場向けのメンタルヘルス研修。<span class="wip">（一部準備中）</span></p></a></li>
+        <li><a href="/business/agent-consulting/"><span class="chip">コンサルティング</span><span class="t">支援機関向けコンサルティング</span><p>支援現場の仕組みづくりを伴走。<span class="wip">（準備中）</span></p></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-labelledby="cta-h">
+    <div class="wrap">
+      <h2 id="cta-h">まずは、ご相談ください</h2>
+      <p class="sec-lead">どの窓口に当てはまるか分からなくても大丈夫です。内容をうかがって、合う事業所をご案内します。</p>
+      <div class="acts">
+        <a class="btn btn-primary" href="/contact/">相談フォームへ進む</a>
+        <a class="btn btn-secondary" href="/contact/#line">LINEで相談する</a>
+        <a class="btn btn-secondary" href="tel:0593150697">電話する 059-315-0697</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="access" aria-labelledby="access-h">
+    <div class="wrap">
+      <h2 id="access-h">アクセス・お問い合わせ</h2>
+      <div class="access-grid">
+        <dl>
+          <dt>法人名</dt><dd>一般社団法人 心理社会的リハビリテーション・星心会</dd>
+          <dt>所在地</dt><dd>三重県四日市市（詳しくは<a href="/access/">アクセスページ</a>）</dd>
+          <dt>電車</dt><dd>三岐線 山城駅から徒歩5分</dd>
+          <dt>バス</dt><dd>四日市駅から三岐バス「団地下」</dd>
+          <dt>車</dt><dd>名古屋西ICから約30分</dd>
+          <dt>電話</dt><dd><a href="tel:0593150697">059-315-0697</a></dd>
+        </dl>
+        <figure><img src="https://psr-seishinkai.org/img/yamashiro_st.jpg" alt="三岐線 山城駅"></figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><b>一般社団法人 心理社会的リハビリテーション・星心会</b></p>
+    <ul>
+      <li><a href="/about/">法人について</a></li>
+      <li><a href="/access/">アクセス</a></li>
+      <li><a href="/faq/">よくある質問</a></li>
+      <li><a href="/contact/">お問い合わせ</a></li>
+      <li><a href="https://www.instagram.com/psr_seishinkai/">Instagram</a></li>
+      <li><a href="https://www.threads.com/@psr_seishinkai">Threads</a></li>
+      <li><a href="https://x.com/gcbfhq">X</a></li>
+    </ul>
+    <p>&copy; 星心会</p>
+  </div>
+</footer>
+</body>
+</html>
