@@ -4,6 +4,16 @@ import os as _o
 OUT=_o.environ.get('OUT','/workspace/site_v9'); CONTENT=_o.environ.get('CONTENT',''); DUMP=_o.environ.get('DUMP','')
 import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; BASE='https://www.psr-seishinkai.org'
 ORG='一般社団法人 心理社会的リハビリテーション・星心会'; TEL='059-315-0697'
+GA_ID='G-XVX8LZ4DXC'
+# 公式の GA4 gtag。head() の f-string に直書きすると波括弧が壊れるので、ここを唯一の定義にする。
+GA_SNIPPET=f'''<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){{dataLayer.push(arguments);}}
+gtag('js', new Date());
+gtag('config', '{GA_ID}');
+</script>'''
 ADDR='〒512-8048 三重県四日市市山城町59-4'
 SNS=[('X','https://x.com/gcbfhq'),('Instagram','https://www.instagram.com/psr_seishinkai/'),('Threads','https://www.threads.com/@psr_seishinkai')]
 ICON={'X':'<svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg>',
@@ -110,6 +120,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel}assets/site.css?v=20261102f">{extra}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
+{GA_SNIPPET}
 </head>
 <body{(' class="'+body_class+'"') if body_class else ''}>
 '''
