@@ -285,3 +285,8 @@ dd.who .bio{grid-area:bio}
   .prose.old p{font-size:19px}
   .prose.old img,.prose.old img.pin{max-width:360px}
 }
+
+/* Station photo: width/height attributes otherwise lock a 1201px-tall box. */
+.stph{width:100%;height:auto}
+/* Audience captions: break on the middots instead of a leftover character. */
+.aud small{word-break:keep-all}
