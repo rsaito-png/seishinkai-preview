@@ -287,7 +287,10 @@ def service_page(d):
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
     o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>
 <div class="row"><a class="w" href="{line}">{html.escape(CHROME.get('line_label') or 'LINE')}</a><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
-    o+=footer(rel); write(path,o)
+    o+=footer(rel)
+    # RYDEEN は承認済みの index.html を正とする。ここから書き戻すと、手置きの配色と構成が消える。
+    if path=='rydeen/' and os.path.isfile(os.path.join(OUT,'rydeen','index.html')): return
+    write(path,o)
 
 def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub=''):
     rel=relof(path); o=head(rel,title,desc,path,ld)+header(rel)
