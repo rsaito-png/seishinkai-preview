@@ -1,0 +1,35 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#f5b942}
+body{background:#f2f2ef;color:#161616;font-family:"Kaisei Tokumin",serif;line-height:1.85}
+.back{position:absolute;z-index:2;top:.7rem;right:.8rem;color:#161616}
+header{padding:4vh 4vw 0}
+h1{margin:0;font-weight:800;font-size:clamp(7rem,34vw,20rem);line-height:.78;letter-spacing:-.06em;color:#161616}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+h1{background:url(../../../img/panda.jpg) center 60%/cover no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+}
+.role{margin:0 0 -.5rem;font-size:1.05rem;color:#161616}
+.lead{color:#161616;font-size:clamp(1.3rem,3vw,2rem);margin:0 0 1rem;max-width:16em}
+.copy{width:min(40rem,88vw);margin:0 auto 2rem;font-size:1.12rem;padding-bottom:2rem}
+.copy img{width:100%;height:auto;margin:1rem 0}
+.place{font-size:1.6rem}
+a{text-decoration:underline;text-underline-offset:.18em;color:#161616}
+.evals a{display:inline-block;margin:.3rem .7rem .3rem 0}
+h2{font-size:1.5rem}
