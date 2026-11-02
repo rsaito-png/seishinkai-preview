@@ -636,3 +636,130 @@ body.aud-partners .cta .o:hover {
 body.aud-partners .lst a:after {
   color: #2b4365;
 }
+
+/* =========================================================
+   下層の本文タイポ（2026-11-02）
+   スイス調のフラット上書き（!important）より後ろ・より詳細に書く。
+   トップ（#self）と茶夢・金斗雲・レオ絵本のレイアウトには当てない。
+   中見出し: 左アクセント + 下線。肩書き: ピル。本文: 行間2 / #374151。
+   読み幅は 800px。
+   ========================================================= */
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) {
+  --sub-accent: #1f2937;
+}
+body[class*="aud-"]:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) {
+  --sub-accent: var(--hi);
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(
+  .h h2,
+  .hin .copy,
+  .prose h2,
+  .prose h3,
+  section.blk > h2,
+  section.blk > h3
+) {
+  display: block !important;
+  width: fit-content;
+  max-width: 100%;
+  border-left: 4px solid var(--sub-accent) !important;
+  border-bottom: 2px solid var(--sub-accent) !important;
+  padding: 0.06em 0.15em 0.28em 0.5em !important;
+  margin-top: 0.4em !important;
+  margin-bottom: 0.6em !important;
+  text-wrap: balance;
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(
+  .h h2,
+  .prose h2,
+  .prose h3,
+  section.blk > h2,
+  section.blk > h3
+):first-child {
+  margin-top: 0 !important;
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(
+  .svc,
+  .tag,
+  .badge,
+  .lead,
+  .role,
+  .hin .acc
+):not(:empty) {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 100%;
+  background: #f3f4f6 !important;
+  background: color-mix(in srgb, var(--sub-accent) 14%, #fff) !important;
+  color: var(--sub-accent) !important;
+  border: 1px solid var(--sub-accent) !important;
+  border-color: color-mix(in srgb, var(--sub-accent) 48%, #fff) !important;
+  border-radius: 999px !important;
+  padding: 0.28em 0.95em !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(
+  .hin .sub,
+  .prose p,
+  .prose li,
+  .intro,
+  .ans,
+  .card p,
+  dl.info dd,
+  details p,
+  .lst li,
+  .h p,
+  section.blk p:not(.big30):not(.nm):not(.ct):not(.en),
+  blockquote,
+  blockquote div
+) {
+  line-height: 2 !important;
+  color: #374151 !important;
+}
+
+/* 写真ヒーローと装飾ヒーローの白文字は残す。明るい type ヒーローの本文色は指定値のまま。 */
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(.hero:not(.type), .hero:has(h1.deco)) .hin .sub {
+  color: #fff !important;
+}
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) .hero.type:not(:has(h1.deco)) .hin .sub {
+  opacity: 1 !important;
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) :is(
+  .hin,
+  .hero > .acc,
+  section.blk:not(:has(.cards)),
+  .rel
+) {
+  max-width: 800px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) section.blk:has(.cards) :is(.h p, .prose, .prose p) {
+  max-width: 800px;
+}
+
+/* 2カラムは見出しが1字だけ落ちない幅まで広げ、本文列は 800px で止める。 */
+@media (min-width: 900px) {
+  body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) section.blk.wide:not(:has(.cards)) {
+    grid-template-columns: max-content minmax(0, 800px);
+    gap: 28px 40px;
+    align-items: start;
+    max-width: min(1120px, 100%) !important;
+  }
+  body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) section.blk.wide .h p {
+    max-width: 16em;
+  }
+  body:not(:has(#self)):not(.page-chamu):not(.page-kintoun):not(.leo-book) section.blk.wide > :not(.h) {
+    max-width: 800px;
+  }
+}
