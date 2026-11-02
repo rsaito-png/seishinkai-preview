@@ -190,6 +190,7 @@ def service_page(d):
     path=d['path']
     # RYDEEN は承認済みの手置き HTML を正とする。ビルドで書き戻すと Gemini 案が消える。
     if path=='rydeen/' and os.path.isfile(os.path.join(OUT,'rydeen','index.html')): return
+    if path=='leo/' and os.path.isfile(os.path.join(OUT,'leo','index.html')): return
     if path in DOCMETA and DOCMETA[path][0]: d['name']=DOCMETA[path][0]
     if under_construction(path):
         construction_page(path, d.get('name')); return
