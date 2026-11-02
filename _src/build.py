@@ -58,12 +58,38 @@ AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕�
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
 ('parents','お子さまの保護者','FOR PARENTS','落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。',['leo','parent','assess'],'落ち着かない・かんしゃく・発達が気になる'),
 ('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','sct','agent','training'],'職場定着・ストレスチェック・研修')]
+# 下層の body に足す対象者クラス。見た目のCSSはまだ足さない。トップの4セクションと同じ印。
+# content 先頭の audience: を優先し、無いページはパスで決める（/business/ のように原稿が無いページを含む）。
+_AUD_OK={'self','family','parents','partners'}
+def _norm_aud(v):
+    s=(v or '').strip().lower()
+    if s.startswith('aud-'): s=s[4:]
+    return s if s in _AUD_OK else ''
+def aud_slug(path, explicit=None):
+    s=_norm_aud(explicit)
+    if s: return s
+    p=(path or '').strip().strip('/')
+    if p in ('rydeen','ryozanpaku','shichirin','suishodama'): return 'self'
+    if p in ('chamu','kintoun'): return 'family'
+    if p=='leo' or p.startswith('leo/'): return 'parents'
+    if p=='business' or p.startswith('business/'): return 'partners'
+    return ''
+def aud_class(path, explicit=None):
+    s=aud_slug(path, explicit)
+    return 'aud-'+s if s else ''
+def join_cls(*parts):
+    out=[]
+    for p in parts:
+        for c in str(p or '').split():
+            if c not in out: out.append(c)
+    return ' '.join(out)
 def esc(s): return html.escape(s)
 def P(t): return f'<span class="ph">要確認：{t}</span>'
 PH=set()
 def ph(t): PH.add(t); return P(t)
 
-def head(rel,title,desc,path,ld=None,extra='',body_class=''):
+def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
+    body_class=join_cls(body_class, aud_class(path, aud))
     graph=[{"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
       "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
       "areaServed":["四日市市","三重県","名古屋市","愛知県"],"sameAs":[u for _,u in SNS],"logo":BASE+"/img/logo_black.svg"}]
@@ -161,6 +187,8 @@ def service_page(d):
         if first and not d.get('keep_desc'): d['desc']=first
         d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
     apply_page_misc(d)
+    slug=aud_slug(path, d.get('body_aud'))
+    if slug: d['body_aud']=slug
     global CUR; CUR=d
     if path in CP and not ovr:
         have=' '.join(q for q,a in d['faq'])
@@ -172,11 +200,16 @@ def service_page(d):
         chamu_page(d,rel,ld); return
     if path=='kintoun/':
         kintoun_page(d,rel,ld); return
-    o=head(rel,d['title'],d['desc'],path,ld)+header(rel)
+    o=head(rel,d['title'],d['desc'],path,ld,aud=d.get('body_aud'))+header(rel)
     if path=='leo/':
         # 案02「見開き絵本」。共通ヘッダー／フッターはそのまま。FAQの見えるUIは出さない。
-        o=o.replace('<body>','<body class="leo-book">',1)
-        o=o.replace('<body class="leo-book">','<body class="leo-book">\n<a class="skip" href="#book">本文へ</a>',1)
+        # leo-book は残し、対象者クラスは後ろに足す。
+        def _leo_body(m):
+            return '<body class="'+join_cls('leo-book', m.group(1))+'">\n<a class="skip" href="#book">本文へ</a>'
+        if '<body class="' in o:
+            o=_re.sub(r'<body class="([^"]*)">', _leo_body, o, count=1)
+        else:
+            o=o.replace('<body>','<body class="leo-book">\n<a class="skip" href="#book">本文へ</a>',1)
         o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="'+rel+'assets/leo.css?v=20261031b">\n</head>',1)
         o+=leo_book_html(d,rel)+footer(rel); write(path,o); return
     if d.get('ink'):
@@ -657,7 +690,7 @@ def chamu_page(d,rel,ld):
         else: post.append(b)
     extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
            f'\n<link rel="stylesheet" href="{rel}assets/chamu.css?v=20261101c">')
-    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-chamu')+header(rel)
+    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-chamu',aud=d.get('body_aud'))+header(rel)
     o+='<main id="main"><article class="menu"><header>'
     cat=_scrub_chamu((d.get('cat') or '').strip())
     if cat: o+=f'<p class="role">{esc(cat)}</p>'
@@ -727,7 +760,7 @@ def kintoun_page(d,rel,ld):
     extra=('\n<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">'
            '\n<link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet">'
            f'\n<link rel="stylesheet" href="{rel}assets/kintoun.css?v=20261101c">')
-    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-kintoun')+header(rel)
+    o=head(rel,d['title'],d['desc'],d['path'],ld,extra=extra,body_class='page-kintoun',aud=d.get('body_aud'))+header(rel)
     o+='<main id="main"><article class="menu"><header>'
     cat=(d.get('cat') or '').strip()
     if cat: o+=f'<p class="role">{esc(cat)}</p>'
@@ -976,6 +1009,8 @@ def top():
     o=o.replace('>アクセスを見る</a>',f'>{html.escape(acc_btn)}</a>',1)
     o=o.replace('<h2>相談する</h2>',f'<h2>{html.escape(ct_h)}</h2>',1)
     o=o.replace('どの事業か決まっていなくてもかまいません。',ct_p,1)
+    # トップは承認済みの index.html を正とする。ここから書き戻すと、手置きの配色と構成が消える。
+    if os.path.isfile(os.path.join(OUT,'index.html')): return
     o+=footer(rel); write('',o)
 top()
 
