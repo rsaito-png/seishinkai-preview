@@ -1009,6 +1009,8 @@ def top():
     o=o.replace('>アクセスを見る</a>',f'>{html.escape(acc_btn)}</a>',1)
     o=o.replace('<h2>相談する</h2>',f'<h2>{html.escape(ct_h)}</h2>',1)
     o=o.replace('どの事業か決まっていなくてもかまいません。',ct_p,1)
+    # トップは承認済みの index.html を正とする。ここから書き戻すと、手置きの配色と構成が消える。
+    if os.path.isfile(os.path.join(OUT,'index.html')): return
     o+=footer(rel); write('',o)
 top()
 
