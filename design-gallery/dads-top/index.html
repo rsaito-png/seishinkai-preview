@@ -122,6 +122,33 @@ footer a{color:var(--gray-900)}
 footer.site{background:var(--gray-800);color:var(--white);border-top:none}
 footer.site a{color:var(--white)}
 footer.site :focus-visible{box-shadow:0 0 0 2px var(--white)}
+
+/* ---- header/footer v3 ---- */
+header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--gray-200)}
+.hd{min-height:80px;gap:32px}
+.logo{gap:14px}
+.logo img{width:44px;height:44px}
+.logo span{font-size:22px;letter-spacing:.08em;line-height:1.2}
+.logo small{font-size:12px;letter-spacing:.02em;margin-top:2px}
+.gnav ul{gap:0}
+.gnav a{padding:28px 14px;border-radius:0;font-weight:700;font-size:15px;color:var(--gray-800);border-bottom:3px solid transparent}
+.gnav a:hover{background:none;color:var(--blue-900);border-bottom-color:var(--blue-900);text-decoration:none}
+.hd .btn{padding:10px 22px}
+footer.site{background:var(--blue-1000);color:var(--white);padding:0;font-size:15px}
+footer.site a{color:var(--white);text-decoration:none}
+footer.site a:hover{text-decoration:underline}
+.ft-top{display:grid;grid-template-columns:1.3fr 2fr;gap:48px;padding:56px 0 40px}
+.ft-brand .nm{font-size:24px;font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:12px}
+.ft-brand .nm img{width:40px;height:40px}
+.ft-brand p{margin-top:12px;color:var(--blue-100);line-height:1.8}
+.ft-brand .tel{font-size:24px;font-weight:700;color:var(--white);display:block;margin-top:8px}
+.ft-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.ft-cols h2{font-size:14px;font-weight:700;color:var(--blue-100);padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.25);margin-bottom:12px;line-height:1.5}
+.ft-cols ul{display:block;margin:0}
+.ft-cols li{margin:6px 0}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.2);padding:20px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:14px;color:var(--blue-100)}
+.ft-bottom ul{display:flex;gap:20px;margin:0}
+@media(max-width:900px){.ft-top{grid-template-columns:1fr}.ft-cols{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -259,17 +286,23 @@ footer.site :focus-visible{box-shadow:0 0 0 2px var(--white)}
 
 <footer class="site">
   <div class="wrap">
-    <p><b>一般社団法人 心理社会的リハビリテーション・星心会</b></p>
-    <ul>
-      <li><a href="/about/">法人について</a></li>
-      <li><a href="/access/">アクセス</a></li>
-      <li><a href="/faq/">よくある質問</a></li>
-      <li><a href="/contact/">お問い合わせ</a></li>
-      <li><a href="https://www.instagram.com/psr_seishinkai/">Instagram</a></li>
-      <li><a href="https://www.threads.com/@psr_seishinkai">Threads</a></li>
-      <li><a href="https://x.com/gcbfhq">X</a></li>
-    </ul>
-    <p>&copy; 星心会</p>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="nm"><img src="https://psr-seishinkai.org/img/mark_white.svg" alt="">星心会</div>
+        <p>一般社団法人 心理社会的リハビリテーション・星心会<br>〒512-8048 三重県四日市市山城町59-4<br>名古屋西ICより車で約30分／山城駅徒歩5分</p>
+        <a class="tel" href="tel:0593150697">059-315-0697</a>
+      </div>
+      <nav class="ft-cols" aria-label="フッターナビゲーション">
+        <div><h2>ご本人</h2><ul><li><a href="/suishodama/">水晶玉</a></li><li><a href="/shichirin/">しちりんの会</a></li><li><a href="/rydeen/">RYDEEN</a></li><li><a href="/ryozanpaku/">梁山泊</a></li></ul></div>
+        <div><h2>ご家族</h2><ul><li><a href="/kintoun/">金斗雲</a></li><li><a href="/chamu/">茶夢</a></li></ul><h2 style="margin-top:20px">保護者</h2><ul><li><a href="/leo/">レオ</a></li><li><a href="/leo/parent-training/">ペアレントトレーニング</a></li><li><a href="/leo/assessment/">発達検査</a></li></ul></div>
+        <div><h2>企業・支援機関</h2><ul><li><a href="/business/employment/">雇用定着サポート</a></li><li><a href="/business/stress-check/">ストレスチェック</a></li><li><a href="/business/stress-check-training/">実施者養成研修</a></li><li><a href="/business/agent-consulting/">エージェントコンサル</a></li><li><a href="/business/training/">研修</a></li></ul></div>
+        <div><h2>星心会について</h2><ul><li><a href="/about/">法人について</a></li><li><a href="/access/">アクセス</a></li><li><a href="/faq/">よくある質問</a></li><li><a href="/contact/">お問い合わせ</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="ft-bottom">
+      <p>&copy; 星心会 一般社団法人 心理社会的リハビリテーション・星心会</p>
+      <ul><li><a href="https://www.instagram.com/psr_seishinkai/">Instagram</a></li><li><a href="https://www.threads.com/@psr_seishinkai">Threads</a></li><li><a href="https://x.com/gcbfhq">X</a></li></ul>
+    </div>
   </div>
 </footer>
 </body>
