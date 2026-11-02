@@ -420,3 +420,219 @@ dd.who .bio{grid-area:bio}
   border-top-color: #2b4365;
   color: #2b4365;
 }
+/* =========================================================
+   下層ページ 対象者別テーマ（差分CSS）
+   ========================================================= */
+
+/* --- 1. ご本人 (#self) : セージグリーン #3b7a57 --- */
+body.aud-self {
+  --hi: #3b7a57;
+}
+body.aud-self .hero.type {
+  background: linear-gradient(180deg, #f3f7f4 0%, #ffffff 100%);
+  border-bottom-color: #3b7a57;
+}
+body.aud-self .hero:has(h1.deco) {
+  border-bottom-color: #3b7a57;
+}
+body.aud-self .hero:has(h1.deco)::before {
+  background: #3b7a57;
+}
+body.aud-self .hero:has(h1.deco) .en,
+body.aud-self .h .en,
+body.aud-self .rel .en,
+body.aud-self .cta .en,
+body.aud-self .gf h5 {
+  color: #3b7a57;
+}
+body.aud-self .hin h1.deco {
+  border-left-color: #3b7a57;
+}
+body.aud-self .hin h1.deco::after {
+  background: #3b7a57;
+}
+body.aud-self .ans {
+  border-left-color: #3b7a57;
+}
+body.aud-self .chips button.on,
+body.aud-self .badge,
+body.aud-self .fab {
+  background: #3b7a57;
+  border-color: #3b7a57;
+}
+body.aud-self .chips button:hover {
+  border-color: #3b7a57;
+}
+body.aud-self .btn:hover,
+body.aud-self .go:hover,
+body.aud-self .cta .w,
+body.aud-self .gh .cta-btn {
+  background: #3b7a57;
+}
+body.aud-self .gh .cta-btn:hover {
+  background: #2d5e43;
+}
+body.aud-self .card .num,
+body.aud-self details summary::after,
+body.aud-self .lst a:after {
+  color: #3b7a57;
+}
+body.aud-self .steps .sbar i.on {
+  background: #3b7a57;
+}
+body.aud-self .cta .o:hover,
+body.aud-self .gh nav a:hover,
+body.aud-self .gf a:hover {
+  color: #3b7a57;
+  border-color: #3b7a57;
+}
+body.aud-self .tag {
+  border-color: #3b7a57;
+  color: #3b7a57;
+}
+
+/* --- 2. ご家族 (#family) : 琥珀・橙 #c26d2d --- */
+/* 喫茶メニュー風の紙色・書体を壊さず、アクセントのみ適用 */
+body.aud-family {
+  --hi: #c26d2d;
+}
+body.aud-family .gh .cta-btn {
+  background: #c26d2d;
+}
+body.aud-family .gh .cta-btn:hover {
+  background: #a3551f;
+}
+body.aud-family .gh nav a:hover,
+body.aud-family .gf a:hover {
+  color: #c26d2d;
+}
+body.aud-family .gf h5 {
+  color: #c26d2d;
+}
+body.aud-family .fab {
+  background: #c26d2d;
+}
+body.aud-family .menu .stamp {
+  color: #c26d2d !important;
+}
+body.aud-family .menu a {
+  color: #a3551f;
+}
+body.aud-family .menu a:focus-visible {
+  outline-color: #c26d2d !important;
+}
+body.aud-family .menu .sign h2 {
+  color: #c26d2d;
+  border-bottom-color: #c26d2d;
+}
+
+/* --- 3. 保護者 (#parents) : 空色 #1e7399 --- */
+body.aud-parents {
+  --hi: #1e7399;
+}
+body.aud-parents .gh .cta-btn {
+  background: #1e7399;
+}
+body.aud-parents .gh .cta-btn:hover {
+  background: #165875;
+}
+body.aud-parents .gh nav a:hover,
+body.aud-parents .gf a:hover {
+  color: #1e7399;
+}
+body.aud-parents .gf h5 {
+  color: #1e7399;
+}
+body.aud-parents .fab {
+  background: #1e7399;
+}
+/* 絵本風ページ（/leo/）の最小限アクセント */
+body.aud-parents.leo-book .book h1 {
+  color: #165875;
+}
+body.aud-parents.leo-book .spread.cover {
+  background: linear-gradient(180deg, #eef6f9 0%, #e5f2e4 100%);
+}
+body.aud-parents.leo-book .end {
+  border-top: 4px solid #1e7399;
+}
+body.aud-parents.leo-book .evalh {
+  color: #8bcbe8;
+}
+body.aud-parents.leo-book :focus-visible {
+  outline-color: #1e7399 !important;
+}
+/* site.css 部品で組まれた下層（/assessment/・/parent-training/） */
+body.aud-parents:not(.leo-book) .hero.type {
+  background: linear-gradient(180deg, #f2f8fb 0%, #ffffff 100%);
+  border-bottom-color: #1e7399;
+}
+body.aud-parents:not(.leo-book) .h .en,
+body.aud-parents:not(.leo-book) .cta .en,
+body.aud-parents:not(.leo-book) .rel .en {
+  color: #1e7399;
+}
+body.aud-parents:not(.leo-book) .btn:hover,
+body.aud-parents:not(.leo-book) .go:hover,
+body.aud-parents:not(.leo-book) .cta .w {
+  background: #1e7399;
+}
+body.aud-parents:not(.leo-book) .card .num,
+body.aud-parents:not(.leo-book) details summary::after,
+body.aud-parents:not(.leo-book) .lst a:after {
+  color: #1e7399;
+}
+body.aud-parents:not(.leo-book) .badge {
+  background: #1e7399;
+}
+
+/* --- 4. 企業・支援機関 (#partners) : 藍・ネイビー #2b4365 --- */
+body.aud-partners {
+  --hi: #2b4365;
+}
+body.aud-partners .hero.short {
+  border-bottom: 4px solid #2b4365;
+}
+body.aud-partners .hero.type {
+  background: linear-gradient(180deg, #f2f5f9 0%, #ffffff 100%);
+  border-bottom-color: #2b4365;
+}
+body.aud-partners .h .en,
+body.aud-partners .rel .en,
+body.aud-partners .cta .en,
+body.aud-partners .gf h5 {
+  color: #2b4365;
+}
+body.aud-partners .sc {
+  border-top-color: #2b4365;
+}
+body.aud-partners .sc .ct {
+  color: #2b4365;
+}
+body.aud-partners .sc:hover .nm {
+  color: #2b4365;
+}
+body.aud-partners .sc .th.t b {
+  color: #2b4365;
+}
+body.aud-partners .btn:hover,
+body.aud-partners .go:hover,
+body.aud-partners .cta .w,
+body.aud-partners .gh .cta-btn,
+body.aud-partners .fab {
+  background: #2b4365;
+}
+body.aud-partners .gh .cta-btn:hover {
+  background: #1e3049;
+}
+body.aud-partners .gh nav a:hover,
+body.aud-partners .gf a:hover {
+  color: #2b4365;
+}
+body.aud-partners .cta .o:hover {
+  border-color: #2b4365;
+  color: #2b4365;
+}
+body.aud-partners .lst a:after {
+  color: #2b4365;
+}
