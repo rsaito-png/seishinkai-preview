@@ -174,8 +174,24 @@ COMMON=[('診断がなくてもいいですか？','かまいません。診断�
 ('いくらかかりますか？','公的制度を使います。所得に応じた負担上限があり、多くは自己負担なしか低額です。金額は初回連絡でお示しします。'),
 ('家族に知られずに相談できますか？','できます。連絡方法は本人の指定に従います。')]
 CP={'suishodama/','rydeen/','chamu/','leo/','kintoun/','ryozanpaku/'}
+def under_construction(path):
+    """企業・支援機関（/business/）は公開準備が整うまで工事中。戻すときは False を返す。"""
+    p=(path or '').strip().strip('/')
+    return p=='business' or p.startswith('business/')
+def construction_page(path, name):
+    """ヘッダー／フッターはそのまま、本文だけ工事中にする。文言とレイアウトは全ページ共通。"""
+    rel=relof(path); name=name or '企業・支援機関の方へ'
+    title=name+'｜工事中｜星心会'
+    desc='このページはただいま準備中です。公開までしばらくお待ちください。'
+    o=head(rel,title,desc,path,aud='partners')+header(rel)
+    o+=f'''<section class="hero short type"><div class="hin"><p class="en">UNDER CONSTRUCTION</p><h1>工事中</h1><p class="sub">{esc(name)}</p><p class="sub" style="max-width:26em;line-height:1.9;margin-top:16px">このページはただいま準備中です。<br>公開までしばらくお待ちください。</p><a class="go" href="{rel}">トップへ戻る</a></div></section>'''
+    o+=footer(rel); write(path,o)
 def service_page(d):
-    path=d['path']; rel=relof(path); d['_old']=path in OLD; ovr=False
+    path=d['path']
+    if path in DOCMETA and DOCMETA[path][0]: d['name']=DOCMETA[path][0]
+    if under_construction(path):
+        construction_page(path, d.get('name')); return
+    rel=relof(path); d['_old']=path in OLD; ovr=False
     cf=CONTENT and _o.path.join(CONTENT,CI.slug(path)+'.md')
     if cf and _o.path.exists(cf) and not DUMP:
         r=CI.parse_page(open(cf,errors='ignore').read(),d,ph); ovr=True
@@ -1014,12 +1030,8 @@ def top():
     o+=footer(rel); write('',o)
 top()
 
-# ---------- business index ----------
-def biz(rel):
-    ks=AUD[3][4]
-    s='<section class="blk" style="max-width:1040px"><div class="h"><span class="en">FOR PARTNERS</span><h2>企業・支援機関の方へ</h2><p>企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。精神保健の現場で積んだ実務を、職場と住まいの両方で提供します。</p></div><div class="cards">'+''.join(card(k,rel) for k in ks)+'</div></section>'
-    return s+partners(rel)
-simple_page('business/','企業・支援機関の方へ｜雇用定着サポート・ストレスチェック・AIエージェント・研修｜星心会','企業、JEED、ハローワーク、労働局の方へ。雇用定着サポート、メンタルピアレジデンス・梁山泊、職場ストレスチェック、エージェントコンサル、研修を提供します。三重県四日市市の星心会です。','企業・支援機関の方へ','FOR PARTNERS',biz,photo='karate_class')
+# ---------- business index（工事中。本文のカードは出さない） ----------
+construction_page('business/','企業・支援機関の方へ')
 
 # ---------- about ----------
 def about(rel): return f'''<section class="blk wide"><div class="h"><span class="en">PHILOSOPHY</span><h2>理念</h2></div><div>
