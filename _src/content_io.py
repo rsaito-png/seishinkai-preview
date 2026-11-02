@@ -28,6 +28,18 @@ def md2h(lines,path='',ph=None):
         out.append(s)
     return '<br>'.join(out)
 def para(lines): return '\n\n'.join(lines)
+def frontmatter(md):
+    """Leading --- block. audience is the body-class slug (self/family/parents/partners)."""
+    md=(md or '').replace('\r\n','\n').replace('\r','\n')
+    m=re.match(r'^---[ \t]*\n(.*?)\n---[ \t]*(?:\n|$)',md,re.S)
+    if not m: return {}
+    out={}
+    for ln in m.group(1).split('\n'):
+        ln=ln.strip()
+        if not ln or ln.startswith('#') or ':' not in ln: continue
+        k,v=ln.split(':',1)
+        out[k.strip().lower()]=v.strip().strip('"').strip("'")
+    return out
 def page_md(d,old_blocks=None):
     p=d['path']; o=[f'# {d["name"]}',NOTE,'## 見出し',para(d['copy']),'## リード文',para(h2md(d['sub'],p)),'## 本文']
     if old_blocks:
@@ -48,7 +60,10 @@ def page_md(d,old_blocks=None):
     for k,v in d['info']: o+=['### '+k,para(h2md(v,p))]
     o.append('## よくある質問')
     for q,a in d['faq']: o+=['### '+q,para(h2md(a,p))]
-    return '\n\n'.join(o)+'\n'
+    aud=(d.get('body_aud') or '').strip()
+    if aud.startswith('aud-'): aud=aud[4:]
+    head=('---\naudience: '+aud+'\n---\n\n') if aud else ''
+    return head+'\n\n'.join(o)+'\n'
 def clean(md):
     md=md.replace('\r','')
     md=re.sub(r'\\([\\`*_{}\[\]()#+\-.!>~|<])',r'\1',md)
@@ -266,6 +281,8 @@ def _cards_by_key(cards):
     return by
 def parse_page(md,d,ph):
     p=d['path'];g=h2groups(md);r={}
+    aud=frontmatter(md).get('audience')
+    if aud: r['body_aud']=aud
     pre=[];seen=False
     for x in md.splitlines():
         x=x.strip()
