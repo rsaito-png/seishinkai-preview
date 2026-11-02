@@ -215,6 +215,8 @@ def service_page(d):
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
     if path=='chamu/':
+        # 茶夢は承認済みの手置き HTML を正とする
+        if os.path.isfile(os.path.join(OUT,'chamu','index.html')): return
         chamu_page(d,rel,ld); return
     if path=='kintoun/':
         kintoun_page(d,rel,ld); return
