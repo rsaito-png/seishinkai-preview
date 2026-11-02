@@ -100,6 +100,28 @@ footer a{color:var(--gray-900)}
   .entry-grid,.svc{grid-template-columns:1fr}
   .hd .btn{padding:8px 16px;min-height:44px;margin-left:auto}
 }
+
+/* ---- background layers (v2) ---- */
+:root{--blue-100:#d9e6ff;--blue-200:#c5d7fb;--green-50:#e6f5ec;--orange-50:#ffeee2;--lightblue-50:#f0f9ff;}
+.hero{background:var(--blue-50);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;right:-120px;top:-140px;width:520px;height:520px;border-radius:50%;background:var(--blue-100);opacity:.6;pointer-events:none}
+.hero::after{content:"";position:absolute;left:-80px;bottom:-160px;width:320px;height:320px;border-radius:50%;background:var(--white);opacity:.55;pointer-events:none}
+.hero-in{position:relative;z-index:1}
+.hero figure{background:var(--white);padding:8px;border-radius:12px;border:1px solid var(--blue-200)}
+.hero figure img{border:none}
+.entry-sec{background:var(--gray-50)}
+.aud{background:var(--tint);border-top:none}
+.aud-head{background:var(--white);border:1px solid var(--gray-200);border-left:6px solid var(--accent);border-radius:var(--r);padding:16px 20px}
+.aud .label{color:var(--accent);font-weight:700}
+.svc li{border-top:4px solid var(--accent)}
+.cta-band{background:var(--blue-100);border-top:none}
+.cta-band h2{color:var(--blue-1000)}
+.access{background:var(--gray-50)}
+.access dl{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--r);padding:0 20px}
+.access dd:last-of-type,.access dt:last-of-type{border-bottom:none}
+footer.site{background:var(--gray-800);color:var(--white);border-top:none}
+footer.site a{color:var(--white)}
+footer.site :focus-visible{box-shadow:0 0 0 2px var(--white)}
 </style>
 </head>
 <body>
@@ -129,7 +151,7 @@ footer a{color:var(--gray-900)}
     <div class="wrap hero-in">
       <div>
         <h1>環境調整という、<br>メンタルヘルスケア</h1>
-        <p class="lead">暮らす場所、働く場所、家族との関係。人を変えるのではなく、まわりの環境を整えることで、こころの回復を支えます。</p>
+        <p class="lead">三重県四日市市で、ご本人・ご家族・保護者・企業の相談を受けています。</p>
         <div class="acts">
           <a class="btn btn-primary" href="/contact/">相談する</a>
           <p class="tel">お電話でのご相談<b><a href="tel:0593150697">059-315-0697</a></b></p>
@@ -142,64 +164,65 @@ footer a{color:var(--gray-900)}
     </div>
   </div>
 
-  <section aria-labelledby="entry-h">
+  <section class="entry-sec" aria-labelledby="entry-h">
     <div class="wrap">
       <h2 id="entry-h">どなたの相談ですか。</h2>
-      <p class="sec-lead">診断も、通院歴も、手続きの知識も要りません。</p>
+      <p class="sec-lead">診断も、通院歴も、手続きの知識も要りません。書類と手続きはこちらで進めます。</p>
       <div class="entry-grid">
-        <a class="entry" href="#self" style="border-left-color:var(--c-self)"><h3>ご本人</h3><p>働きたい、暮らしを整えたい方</p></a>
-        <a class="entry" href="#family" style="border-left-color:var(--c-family)"><h3>ご家族</h3><p>家族のことで悩んでいる方</p></a>
-        <a class="entry" href="#parents" style="border-left-color:var(--c-parents)"><h3>保護者</h3><p>お子さんの発達が気になる方</p></a>
-        <a class="entry" href="#partners" style="border-left-color:var(--c-partners)"><h3>企業・支援機関</h3><p>雇用や職場の健康に取り組む方</p></a>
+        <a class="entry" href="#self" style="border-left-color:var(--c-self)"><h3>ご本人</h3><p>眠れない・仕事が続かない・親元を出たい</p></a>
+        <a class="entry" href="#family" style="border-left-color:var(--c-family)"><h3>ご家族</h3><p>家族が家から出ない・日中の行き場がない</p></a>
+        <a class="entry" href="#parents" style="border-left-color:var(--c-parents)"><h3>保護者</h3><p>落ち着きがない・かんしゃく・発達の悩み</p></a>
+        <a class="entry" href="#partners" style="border-left-color:var(--c-partners)"><h3>企業・支援機関</h3><p>雇用定着・ストレスチェック・社内研修</p></a>
       </div>
     </div>
   </section>
 
-  <section id="self" class="aud" style="--accent:var(--c-self)" aria-labelledby="self-h">
+  <section id="self" class="aud" style="--accent:var(--c-self);--tint:var(--green-50)" aria-labelledby="self-h">
     <div class="wrap">
       <div class="aud-head"><span class="label">ご本人の方へ</span><h2 id="self-h">ご本人</h2></div>
-      <p class="sec-lead">自分のペースで働く、仲間と過ごす、生活を立て直す。いまの状態に合った場所を選べます。</p>
+      <p class="sec-lead">眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。</p>
       <ul class="svc">
-        <li><a href="/suishodama/"><span class="chip">就労継続支援B型</span><span class="t">水晶玉</span><p>体調に合わせて通いながら、作業と工賃で働く力を取り戻す。</p></a></li>
-        <li><a href="/shichirin/"><span class="chip">当事者の会</span><span class="t">しちりんの会</span><p>同じ経験をもつ仲間と、気軽に話せる集まり。</p></a></li>
-        <li><a href="/rydeen/"><span class="chip">就労支援</span><span class="t">RYDEEN</span><p>一般就労を目指して、仕事の準備と実践を重ねる。</p></a></li>
-        <li><a href="/ryozanpaku/"><span class="chip">住まいの支援</span><span class="t">梁山泊</span><p>地域で暮らすための住まいと、日々の生活の支え。</p></a></li>
+        <li><a href="/suishodama/"><span class="chip">メンタルヘルスコーディネート</span><span class="t">環境調整支援 水晶玉</span><p>心の不調・家庭環境・就労環境・人間関係を整えます。</p></a></li>
+        <li><a href="/shichirin/"><span class="chip">自費参加・手続き不要</span><span class="t">しちりんの会</span><p>火を囲めば黙っていても心がゆるみます。</p></a></li>
+        <li><a href="/rydeen/"><span class="chip">B型事業所｜PCで働く</span><span class="t">次世代労働研究所 RYDEEN</span><p>SNS運用代行、システム構築、AIを使った事務作業。</p></a></li>
+        <li><a href="/ryozanpaku/"><span class="chip">メンタルピアレジデンス</span><span class="t">自立支援寮 梁山泊</span><p>働き続けるための住まい。親元を出る第一歩の拠点にも。</p></a></li>
       </ul>
     </div>
   </section>
 
-  <section id="family" class="aud" style="--accent:var(--c-family)" aria-labelledby="family-h">
+  <section id="family" class="aud" style="--accent:var(--c-family);--tint:var(--orange-50)" aria-labelledby="family-h">
     <div class="wrap">
       <div class="aud-head"><span class="label">ご家族の方へ</span><h2 id="family-h">ご家族</h2></div>
-      <p class="sec-lead">ご家族だけで抱えこまないために。家での暮らしと、家族の休息を支えます。</p>
+      <p class="sec-lead">家族が家から出ない、日中の行き場がない。ご本人が動けなくても、ご家族からのご相談で始められます。</p>
       <ul class="svc">
-        <li><a href="/kintoun/"><span class="chip">居宅介護</span><span class="t">金斗雲</span><p>ご自宅に伺い、家事や身のまわりのことをお手伝い。</p></a></li>
-        <li><a href="/chamu/"><span class="chip">家族の居場所</span><span class="t">茶夢</span><p>ご家族がひと息つき、話せる場所。</p></a></li>
+        <li><a href="/kintoun/"><span class="chip">訪問・アウトリーチ</span><span class="t">訪問支援 金斗雲</span><p>家から出られない、窓口まで行くのが難しい方へ直接訪問します。</p></a></li>
+        <li><a href="/chamu/"><span class="chip">日中の居場所</span><span class="t">生活介護事業所 茶夢</span><p>料理・喫茶・読書・アートなどを通じて、静かに穏やかに過ごします。</p></a></li>
       </ul>
     </div>
   </section>
 
-  <section id="parents" class="aud" style="--accent:var(--c-parents)" aria-labelledby="parents-h">
+  <section id="parents" class="aud" style="--accent:var(--c-parents);--tint:var(--lightblue-50)" aria-labelledby="parents-h">
     <div class="wrap">
       <div class="aud-head"><span class="label">保護者の方へ</span><h2 id="parents-h">保護者</h2></div>
-      <p class="sec-lead">お子さんの発達について、療育・子育て・検査の三つの面から一緒に考えます。</p>
+      <p class="sec-lead">落ち着きがない、かんしゃくが多い、集団生活が苦手なお子さまの保護者の方へ。</p>
       <ul class="svc">
-        <li><a href="/leo/"><span class="chip">児童発達支援・放課後等デイサービス</span><span class="t">レオ</span><p>一人ひとりの特性に合わせた療育と、手づくりの昼食。</p></a></li>
-        <li><a href="/leo/parent-training/"><span class="chip">保護者向けプログラム</span><span class="t">ペアレント・トレーニング</span><p>毎日の関わり方を、具体的な方法で学ぶ。</p></a></li>
-        <li><a href="/leo/assessment/"><span class="chip">検査</span><span class="t">発達検査</span><p>お子さんの得意と苦手を知り、支援につなげる。</p></a></li>
+        <li><a href="/leo/"><span class="chip">子どもの情緒</span><span class="t">児発・放デイ レオ</span><p>すべての基礎となる「情緒」の安定を丁寧に図ります。</p></a></li>
+        <li><a href="/leo/parent-training/"><span class="chip">保護者向けプログラム</span><span class="t">ペアレントトレーニング</span><p>アドラー心理学に基づく親御さんのための伴走支援講座です。</p></a></li>
+        <li><a href="/leo/assessment/"><span class="chip">WISC-V・新版K式</span><span class="t">発達検査</span><p>検査して点数を出すだけで終わりにせず、その後の生活環境につなげます。</p></a></li>
       </ul>
     </div>
   </section>
 
-  <section id="partners" class="aud" style="--accent:var(--c-partners)" aria-labelledby="partners-h">
+  <section id="partners" class="aud" style="--accent:var(--c-partners);--tint:var(--blue-50)" aria-labelledby="partners-h">
     <div class="wrap">
       <div class="aud-head"><span class="label">企業・支援機関の方へ</span><h2 id="partners-h">企業・支援機関</h2></div>
-      <p class="sec-lead">障害者雇用の定着から職場のメンタルヘルスまで、現場の環境調整を支援します。<a href="/business/">法人向けサービス一覧</a></p>
+      <p class="sec-lead">職場におけるメンタルヘルス対策や障害者雇用定着の支援を行います。<a href="/business/">法人向けサービス一覧</a></p>
       <ul class="svc">
-        <li><a href="/business/employment/"><span class="chip">雇用支援</span><span class="t">雇用定着支援</span><p>採用後の職場定着を、本人と職場の両面から支える。</p></a></li>
-        <li><a href="/business/stress-check/"><span class="chip">メンタルヘルス</span><span class="t">ストレスチェック</span><p>実施から集団分析、職場改善までを一貫して。</p></a></li>
-        <li><a href="/business/training/"><span class="chip">研修</span><span class="t">研修・講座</span><p>職場向けのメンタルヘルス研修。<span class="wip">（一部準備中）</span></p></a></li>
-        <li><a href="/business/agent-consulting/"><span class="chip">コンサルティング</span><span class="t">支援機関向けコンサルティング</span><p>支援現場の仕組みづくりを伴走。<span class="wip">（準備中）</span></p></a></li>
+        <li><a href="/business/employment/"><span class="chip">職場定着支援</span><span class="t">雇用定着サポート</span><p>メンタルヘルスの実務家が、社員一人ひとりを継続的に担当します。</p></a></li>
+        <li><a href="/business/stress-check/"><span class="chip">アドラー心理学×ラインケア</span><span class="t">ストレスチェック</span><p>形骸化させず、組織のメンタルヘルス改善に直結させるラインケア。</p></a></li>
+        <li><a href="/business/stress-check-training/"><span class="chip">法定研修</span><span class="t">実施者養成研修</span><p>歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。</p></a></li>
+        <li><a href="/business/agent-consulting/"><span class="chip">AIエージェント導入</span><span class="t">エージェントコンサル</span><p>現場の事務・書類作成や広報を大幅に効率化するAI伴走。</p></a></li>
+        <li><a href="/business/training/"><span class="chip">指導員研修・合気道護身術</span><span class="t">研修</span><p>施設や企業の課題に合わせたオーダーメイド研修を実施します。</p></a></li>
       </ul>
     </div>
   </section>
@@ -207,7 +230,7 @@ footer a{color:var(--gray-900)}
   <section class="cta-band" aria-labelledby="cta-h">
     <div class="wrap">
       <h2 id="cta-h">まずは、ご相談ください</h2>
-      <p class="sec-lead">どの窓口に当てはまるか分からなくても大丈夫です。内容をうかがって、合う事業所をご案内します。</p>
+      <p class="sec-lead">どの事業に相談すべきか決まっていなくても大丈夫です。</p>
       <div class="acts">
         <a class="btn btn-primary" href="/contact/">相談フォームへ進む</a>
         <a class="btn btn-secondary" href="/contact/#line">LINEで相談する</a>
@@ -222,7 +245,7 @@ footer a{color:var(--gray-900)}
       <div class="access-grid">
         <dl>
           <dt>法人名</dt><dd>一般社団法人 心理社会的リハビリテーション・星心会</dd>
-          <dt>所在地</dt><dd>三重県四日市市（詳しくは<a href="/access/">アクセスページ</a>）</dd>
+          <dt>所在地</dt><dd>〒512-8048 三重県四日市市山城町59-4（<a href="/access/">アクセスの詳細</a>）</dd>
           <dt>電車</dt><dd>三岐線 山城駅から徒歩5分</dd>
           <dt>バス</dt><dd>四日市駅から三岐バス「団地下」</dd>
           <dt>車</dt><dd>名古屋西ICから約30分</dd>
