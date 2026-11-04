@@ -1,6 +1,3 @@
-# TEST PHASE: block all crawlers. At launch replace with:
-# User-agent: *
-# Allow: /
-# Sitemap: https://www.psr-seishinkai.org/sitemap.xml
 User-agent: *
-Disallow: /
+Allow: /
+Sitemap: https://www.psr-seishinkai.org/sitemap.xml

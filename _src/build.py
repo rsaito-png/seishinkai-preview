@@ -108,8 +108,6 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<!-- TEST PHASE: remove the next line at launch -->
-<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
@@ -1112,12 +1110,12 @@ open(OUT+'/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<url
 # ---------- 404 (absolute-free: uses JS to find base) ----------
 o=head('/seishinkai-preview/','ページが見つかりません｜星心会','','404.html')
 o=o.replace('<link rel="canonical" href="'+BASE+'/404.html">','')
-o=o.replace('<meta charset="utf-8">','<meta charset="utf-8">'+'''<script>/* 404 is served at any depth: rewrite relative links to site root */document.write('<base href="'+(location.pathname.startsWith('/seishinkai-preview/')?'/seishinkai-preview/':'/')+'">')</script>''',1)
+o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">'+'''<script>/* 404 is served at any depth: rewrite relative links to site root */document.write('<base href="'+(location.pathname.startsWith('/seishinkai-preview/')?'/seishinkai-preview/':'/')+'">')</script>''',1)
 o=o.replace('href="/seishinkai-preview/','href="')
 write('404.html',o+header('')+'<section class="blk" style="text-align:center;min-height:60svh"><p class="en" style="color:var(--hi)">404</p><h1 style="font-weight:600;font-size:30px;letter-spacing:.14em;margin:10px 0 20px">ページが見つかりません</h1><a class="btn" href="./">トップへ</a> <a class="btn" href="contact/" style="background:var(--hi)">相談する</a></section>'+footer(''))
 
 # ---------- robots / llms ----------
-open(OUT+'/robots.txt','w').write('# TEST PHASE: block all crawlers. At launch replace with:\n# User-agent: *\n# Allow: /\n# Sitemap: '+BASE+'/sitemap.xml\nUser-agent: *\nDisallow: /\n')
+open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n')
 L=f'''# 星心会（{ORG}）
 > 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。
 
