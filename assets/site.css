@@ -84,6 +84,21 @@ body.open .drawer { opacity: 1; pointer-events: auto; }
 .hlogo img { width: 28px; height: 28px; }
 .hin .en { color: #86efac; font-size: 12px; letter-spacing: 0.15em; }
 .copy { font-size: clamp(32px, 5.5vw, 52px); font-weight: 700; line-height: 1.35; margin-top: 14px; }
+.hero .hin h1.copy {
+  color: #fff !important;
+  font-size: clamp(32px, 5.5vw, 52px) !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin: 14px 0 0 !important;
+}
+.hero .hin h1.copy .where {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em;
+  color: #e2e8f0;
+}
 .acc {
   background: rgba(15,23,42,0.6); backdrop-filter: blur(8px);
   border-top: 1px solid rgba(255,255,255,0.12);
