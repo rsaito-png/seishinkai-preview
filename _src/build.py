@@ -1128,7 +1128,8 @@ def guide(rel):
 </div></div>
 <p class="src">出典：<a href="{Y}" target="_blank" rel="noopener">四日市市</a>／<a href="{K}" target="_blank" rel="noopener">菰野町</a>／三重県「市町窓口」（2026年11月確認）</p>
 <h2>② 受給者証が届くまで</h2>
-<div class="gsteps"><div class="st"><b>相談・申請</b>市町の窓口へ</div><div class="st"><b>計画案</b>相談支援事業所が作成</div><div class="st"><b>提出</b>計画案を市町へ</div><div class="st"><b>支給決定</b>受給者証が届く</div><div class="st hi"><b>契約・利用</b>事業所と契約</div></div>
+<div class="gsteps"><div class="st"><b>相談・申請</b>市町の窓口へ</div><div class="st"><b>計画案</b>相談支援事業所（水晶玉）が作成</div><div class="st"><b>提出</b>計画案を市町へ</div><div class="st"><b>支給決定</b>受給者証が届く</div><div class="st hi"><b>契約・利用</b>事業所と契約</div></div>
+<div class="help" style="margin-top:18px"><b>申請・計画案づくり・窓口の手続きは、星心会の相談支援事業所「水晶玉」が代行・サポートします。</b><br><a href="{rel}suishodama/">水晶玉について</a></div>
 <p class="src">大人のサービスでは、種類により障害支援区分の認定が入ります。くわしい流れは窓口でご確認ください。</p>
 <h2>③ 子どもと大人のちがい</h2>
 <table class="cmp"><tr><th></th><th class="k">子ども（18歳未満）</th><th class="a">大人（18歳以上）</th></tr>
@@ -1144,12 +1145,12 @@ def guide(rel):
 <a class="adl" href="{rel}chamu/"><b>茶夢</b><small>生活介護・日中の居場所</small><span class="u">障害福祉サービス受給者証</span></a>
 <a class="adl" href="{rel}rydeen/"><b>RYDEEN</b><small>就労継続支援B型・PCで働く</small><span class="u">障害福祉サービス受給者証</span></a>
 <a class="adl" href="{rel}kintoun/"><b>金斗雲</b><small>居宅介護・訪問</small><span class="u">障害福祉サービス受給者証</span></a>
-<a class="any" href="{rel}suishodama/"><b>水晶玉</b><small>どこに相談すればいいか迷ったら</small><span class="u">全事業の入口</span></a>
+<a class="any" href="{rel}suishodama/"><b>水晶玉</b><small>受給者証の申請・計画・窓口手続きを代行</small><span class="u">迷ったらまずここ</span></a>
 <a class="any" href="{rel}leo/assessment/"><b>発達検査・ペアトレ</b><small>受給者証なし・自費</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}ryozanpaku/"><b>梁山泊</b><small>住まい（家賃 月8万円）</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}shichirin/"><b>しちりんの会</b><small>自費参加 3,000円</small><span class="u">手続き不要</span></a>
 </div>
-<div class="help">手続きがわからなくても大丈夫。星心会が案内します。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/#line">LINE</a></div>
+<div class="help">手続きがわからなくても大丈夫。水晶玉が申請から代行します。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/#line">LINE</a></div>
 </div>"""
 simple_page('guide/jukyushasho/','受給者証ガイド｜子ども・大人の申請窓口（四日市市・菰野町）｜星心会','福祉サービスに必要な受給者証を図解。18歳未満は通所受給者証、18歳以上は障害福祉サービス受給者証。四日市市・菰野町の窓口と流れ、星心会のどの事業所で使えるかをまとめました。','受給者証ガイド','GUIDE',guide)
 NEWS=[('2026-11-01','就労継続支援B型 RYDEEN が開所しました','rydeen-open','三重県四日市市山城町59-4に、就労継続支援B型「次世代労働研究所 RYDEEN」を開所しました。SNS運用代行、システム構築、AIを使った事務を、AIエージェントを使って実務として行います。工賃の実績は準備中です。見学・体験は電話またはLINEで受け付けています。','rydeen/'),
