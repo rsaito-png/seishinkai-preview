@@ -2,7 +2,7 @@ import re as _re
 import os, json, html, shutil
 import os as _o
 OUT=_o.environ.get('OUT','/workspace/site_v9'); CONTENT=_o.environ.get('CONTENT',''); DUMP=_o.environ.get('DUMP','')
-import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; BASE='https://www.psr-seishinkai.org'
+import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; BASE='https://psr-seishinkai.org'
 ORG='一般社団法人 心理社会的リハビリテーション・星心会'; TEL='059-315-0697'
 GA_ID='G-XVX8LZ4DXC'
 # 公式の GA4 gtag。head() の f-string に直書きすると波括弧が壊れるので、ここを唯一の定義にする。
