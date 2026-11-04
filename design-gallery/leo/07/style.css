@@ -1,0 +1,43 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#d94a4a}
+body{background:#e7eef3;color:#243038;font-family:"Klee One",sans-serif;font-size:1.15rem;line-height:1.85}
+.sketch{padding:6vh 6vw 2rem}
+.back{color:#243038}
+.cover h1,.note,.sign h2{font-family:Yomogi,cursive}
+h1{font-size:clamp(3.5rem,10vw,6.5rem);margin:.2rem 0;font-weight:400;transform:rotate(-2deg)}
+.lead{font-size:clamp(1.3rem,3vw,1.8rem);max-width:16em}
+.note{max-width:36rem;background:rgba(255,255,255,.45);padding:.2rem .4rem}
+.n1{transform:rotate(-0.6deg)}
+.n2{transform:rotate(0.8deg);margin-left:8vw}
+.n3{margin-left:4vw}
+.tape{display:inline-block;background:#f7f7f4;padding:.7rem .7rem 1.4rem;box-shadow:0 10px 24px rgba(36,48,56,.12);margin:1.2rem 0}
+.tape img{width:min(78vw,560px);height:auto}
+.t1{transform:rotate(-2.5deg)}
+.t2{transform:rotate(2deg);margin-left:10vw}
+.t3{transform:rotate(-1deg)}
+.t4{transform:rotate(1.4deg);margin-left:6vw}
+.tape::before{content:"";display:block;width:4.2rem;height:.9rem;margin:-1.15rem auto .4rem;background:rgba(214,168,92,.72);transform:rotate(-2deg)}
+.big{font-size:1.6rem}
+.evals a,.sign a,.note a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.25rem .6rem .25rem 0}
+.sign{margin-top:2rem}
+.sign h2{font-size:2rem;font-weight:400}
+@media(max-width:700px){.t2,.t4,.n2{margin-left:0}}

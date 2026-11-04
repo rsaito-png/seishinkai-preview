@@ -1,0 +1,34 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#c2410c}
+body{background:#d5e4ee;color:#10283a;font-family:"BIZ UDPGothic",sans-serif;font-size:1.05rem;line-height:1.75}
+.elev{padding:4vh 5vw 2rem}
+.back{color:#10283a}
+h1{font-weight:700;font-size:clamp(3rem,8vw,5.5rem);letter-spacing:.14em;margin:.2rem 0}
+.lead{font-size:clamp(1.2rem,2.4vw,1.6rem);max-width:24em}
+.front img{width:100%;max-height:78vh;object-fit:cover;object-position:50% 40%}
+.dim{width:100%;height:28px;stroke:#10283a;fill:none;stroke-width:1.5}
+.front figcaption{font-size:clamp(1.3rem,3vw,1.9rem);margin-top:.3rem}
+.notes{max-width:42rem;margin:1.5rem 0}
+.inset{width:min(100%,640px);margin:1rem 0 1rem auto}
+.inset img{width:100%;height:auto}
+a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.3rem .7rem .3rem 0}
+h2{font-size:1.35rem;margin:1rem 0 .3rem}

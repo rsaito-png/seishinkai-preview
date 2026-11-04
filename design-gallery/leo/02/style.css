@@ -1,0 +1,43 @@
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus,#e2a100);outline-offset:3px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;color:#111;padding:.4rem .7rem;z-index:40}
+.skip:focus{top:8px}
+.pager{display:flex;justify-content:space-between;gap:1rem;padding:1.4rem 6vw 2.4rem;font-size:1rem}
+.pager a{text-decoration:underline;text-underline-offset:.2em}
+.pager span{opacity:.35}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+:root{--focus:#c4492c}
+body{margin:0;background:#f3f7f1;color:#163226;font-family:"Zen Maru Gothic",sans-serif;font-size:1.12rem;line-height:1.85}
+.back{position:absolute;z-index:2;top:.8rem;left:.8rem;background:#163226;color:#f3f7f1;text-decoration:none;padding:.3rem .65rem;border-radius:999px}
+.spread{display:flex;min-height:100svh;background:#f3f7f1}
+.spread .pic,.spread .txt{width:50%}
+.spread img{width:100%;height:100svh;object-fit:cover}
+.txt{padding:10vh 6vw;display:flex;flex-direction:column;justify-content:center}
+.cover{background:#e5f2e4}
+h1{font-size:clamp(4rem,8vw,7rem);line-height:1;margin:.2rem 0;font-weight:900}
+.role{margin:0;font-size:1.05rem}
+.lead{font-size:clamp(1.4rem,2.6vw,2rem);margin:.4rem 0 0}
+.flip{flex-direction:row-reverse;background:#fffdf8}
+.flip.soft{background:#e7f0ea}
+h2{font-size:1.7rem;margin:0 0 .4rem}
+.end{padding:8vh 8vw 4rem;background:#163226;color:#f3f7f1}
+.end a{text-decoration:underline;text-underline-offset:.18em}
+.evals a{display:inline-block;margin:.4rem .9rem .4rem 0}
+.end h2{font-size:clamp(2rem,5vw,3rem)}
+@media(max-width:760px){
+  .spread,.flip{flex-direction:column}
+  .spread .pic,.spread .txt{width:100%}
+  .spread img{height:62vw;min-height:220px}
+  .txt{padding:1.6rem 6vw 2rem}
+}
