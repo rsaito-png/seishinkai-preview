@@ -38,10 +38,10 @@
 
 ## その他
 - [企業・支援機関の方へ](https://psr-seishinkai.org/business/)
+- [お知らせ](https://psr-seishinkai.org/news/)
+- [受給者証ガイド](https://psr-seishinkai.org/guide/jukyushasho/)
+- [名古屋からのアクセス](https://psr-seishinkai.org/access/nagoya/)
 - [星心会について](https://psr-seishinkai.org/about/)
-- [アクセス](https://psr-seishinkai.org/access/)
-- [よくある質問](https://psr-seishinkai.org/faq/)
-- [相談する](https://psr-seishinkai.org/contact/)
 
 ## SNS
 - X: https://x.com/gcbfhq
