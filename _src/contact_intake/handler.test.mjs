@@ -219,6 +219,18 @@ test("missing store, bad origin, and mock mode do not count", async () => {
   assert.equal(shouldCountLead(mocked.result.body), false);
 });
 
+test("public inbox wrappers are invoker and private owner checks stay definer", () => {
+  const sql = readFileSync(path.join(root, "supabase/functions/site-contact-intake/schema.sql"), "utf8");
+  const publicFns = sql.split(/create or replace function public\./).slice(1);
+  assert.equal(publicFns.length, 5);
+  for (const fn of publicFns) {
+    assert.match(fn, /security invoker/);
+    assert.equal(/security definer/.test(fn.split(/create or replace function /)[0]), false);
+  }
+  assert.match(sql, /function site_contact\.is_owner\(\)[\s\S]*security definer/);
+  assert.match(sql, /revoke all on table site_contact\.inquiries from public, anon, authenticated/);
+});
+
 test("public page keeps the form disabled and does not treat form_submit as a lead", () => {
   const html = readFileSync(path.join(root, "contact/index.html"), "utf8");
   const config = readFileSync(path.join(root, "assets/contact-config.js"), "utf8");

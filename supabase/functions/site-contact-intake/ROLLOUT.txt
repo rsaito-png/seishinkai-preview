@@ -18,6 +18,9 @@ Unread mark: the 会長ページ tile on the portal home, badge text 新着 N.
 N counts normal-lane rows with read_at null. Sales quarantine is excluded.
 Server check is auth.users.email = rsaito@psr-seishinkai.org.
 That is the Auth account email, not user_metadata and not the shared 事務 role.
+Public RPC wrappers are security invoker. The private functions they call are
+security definer and reject every session that is not that account.
+API roles have no grants on the tables.
 Schema: supabase/functions/site-contact-intake/schema.sql
 anon cannot execute the inbox functions. authenticated can call them, and the
 function raises 42501 unless the JWT user is that account. The table is not in

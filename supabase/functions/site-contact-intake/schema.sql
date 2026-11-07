@@ -83,7 +83,8 @@ as $$
   );
 $$;
 
-revoke all on function site_contact.is_owner() from public, anon, authenticated;
+revoke all on function site_contact.is_owner() from public, anon;
+grant execute on function site_contact.is_owner() to authenticated;
 
 create or replace function site_contact.rows_for(p_lane text)
 returns jsonb
@@ -119,7 +120,8 @@ begin
   ), '[]'::jsonb);
 end $$;
 
-revoke all on function site_contact.rows_for(text) from public, anon, authenticated;
+revoke all on function site_contact.rows_for(text) from public, anon;
+grant execute on function site_contact.rows_for(text) to authenticated;
 
 create or replace function site_contact.unread_count()
 returns integer
@@ -138,7 +140,8 @@ begin
   );
 end $$;
 
-revoke all on function site_contact.unread_count() from public, anon, authenticated;
+revoke all on function site_contact.unread_count() from public, anon;
+grant execute on function site_contact.unread_count() to authenticated;
 
 create or replace function site_contact.mark_read(p_id uuid)
 returns jsonb
@@ -158,7 +161,8 @@ begin
   return row_json;
 end $$;
 
-revoke all on function site_contact.mark_read(uuid) from public, anon, authenticated;
+revoke all on function site_contact.mark_read(uuid) from public, anon;
+grant execute on function site_contact.mark_read(uuid) to authenticated;
 
 create or replace function site_contact.restore(p_id uuid)
 returns jsonb
@@ -180,19 +184,23 @@ begin
   return row_json;
 end $$;
 
-revoke all on function site_contact.restore(uuid) from public, anon, authenticated;
+revoke all on function site_contact.restore(uuid) from public, anon;
+grant execute on function site_contact.restore(uuid) to authenticated;
+
+grant usage on schema site_contact to authenticated;
+revoke all on table site_contact.inquiries from public, anon, authenticated;
+revoke all on table site_contact.rate_buckets from public, anon, authenticated;
 
 -- Owner check: auth.uid() matched to auth.users.email, not user_metadata and not staff role.
 -- Tables stay in site_contact with RLS forced and no policies, and API roles have no table grants.
--- The public wrappers are security definer only so they can call the private functions.
--- Each private function returns forbidden unless is_owner() is true.
--- anon cannot execute the wrappers. A staff JWT can execute them and still receives forbidden.
--- Exposed wrappers. security definer so authenticated does not need usage on site_contact.
+-- Private functions are security definer and refuse every caller who is not the owner.
+-- Public wrappers are security invoker. They do not bypass RLS themselves.
+-- anon cannot execute them. A signed-in staff JWT can call them and still receives forbidden.
 create or replace function public.site_contact_is_owner()
 returns boolean
 language sql
 stable
-security definer
+security invoker
 set search_path = ''
 as $$ select site_contact.is_owner() $$;
 
@@ -200,7 +208,7 @@ create or replace function public.site_contact_inbox(p_lane text)
 returns jsonb
 language sql
 stable
-security definer
+security invoker
 set search_path = ''
 as $$ select site_contact.rows_for(p_lane) $$;
 
@@ -208,7 +216,7 @@ create or replace function public.site_contact_unread_count()
 returns integer
 language sql
 stable
-security definer
+security invoker
 set search_path = ''
 as $$ select site_contact.unread_count() $$;
 
@@ -216,7 +224,7 @@ create or replace function public.site_contact_mark_read(p_id uuid)
 returns jsonb
 language sql
 volatile
-security definer
+security invoker
 set search_path = ''
 as $$ select site_contact.mark_read(p_id) $$;
 
@@ -224,7 +232,7 @@ create or replace function public.site_contact_restore(p_id uuid)
 returns jsonb
 language sql
 volatile
-security definer
+security invoker
 set search_path = ''
 as $$ select site_contact.restore(p_id) $$;
 
