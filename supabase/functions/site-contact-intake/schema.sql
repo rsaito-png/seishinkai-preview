@@ -182,6 +182,11 @@ end $$;
 
 revoke all on function site_contact.restore(uuid) from public, anon, authenticated;
 
+-- Owner check: auth.uid() matched to auth.users.email, not user_metadata and not staff role.
+-- Tables stay in site_contact with RLS forced and no policies, and API roles have no table grants.
+-- The public wrappers are security definer only so they can call the private functions.
+-- Each private function returns forbidden unless is_owner() is true.
+-- anon cannot execute the wrappers. A staff JWT can execute them and still receives forbidden.
 -- Exposed wrappers. security definer so authenticated does not need usage on site_contact.
 create or replace function public.site_contact_is_owner()
 returns boolean

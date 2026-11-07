@@ -31,7 +31,7 @@ test("clear sales pitch is quarantined and is not an unread lead", async () => {
     idempotency_key: "00000000-0000-4000-8000-0000000000a1",
     opened_at: Date.now() - 10_000,
     company_url: "",
-  }, { now: Date.now(), ip: "203.0.113.9", pepper: "p", store, suppressLead: false });
+  }, { now: Date.now(), CONTACT_INTAKE_ENABLED: "true", store, suppressLead: false });
   assert.equal(result.body.stored, true);
   assert.equal(result.body.lead_event, false);
   assert.equal(shouldCountLead(result.body), false);

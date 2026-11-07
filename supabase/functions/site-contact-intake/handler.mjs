@@ -1,6 +1,5 @@
 import {
   LIMITS,
-  clientIp,
   dwellError,
   jstStamp,
   publicResult,
@@ -13,6 +12,11 @@ const ALLOWED_ORIGINS = new Set([
   "https://psr-seishinkai.org",
   "https://www.psr-seishinkai.org",
 ]);
+
+// Fail closed. Only the exact string "true" opens intake. "1", "TRUE", and unset stay shut.
+export function intakeEnabled(env) {
+  return !!env && env.CONTACT_INTAKE_ENABLED === "true";
+}
 
 function empty(extra) {
   return {
@@ -38,19 +42,17 @@ function view(row, extra) {
   };
 }
 
-async function hashes(value, ip, pepper, now) {
+async function hashes(value, now) {
   const emailHash = await sha256Hex(value.email);
   const contentHash = await sha256Hex(value.body);
-  const ipHash = await sha256Hex(String(pepper || "site-contact-v1") + "\n" + ip);
   const day = jstStamp(now, false);
   const hour = jstStamp(now, true);
   return {
     emailHash,
     contentHash,
-    ipHash,
     dedupe_key: emailHash + ":" + contentHash + ":" + day,
+    // No per-IP bucket. Supabase does not document a trusted client IP for Edge Functions.
     rate: [
-      { bucket: "ip:" + ipHash + ":" + hour, limit: LIMITS.ipPerHour },
       { bucket: "em:" + emailHash + ":" + day, limit: LIMITS.emailPerDay },
       { bucket: "all:" + hour, limit: LIMITS.globalPerHour },
     ],
@@ -58,7 +60,7 @@ async function hashes(value, ip, pepper, now) {
 }
 
 export async function acceptIntake(input, ctx) {
-  if (!ctx.store) return publicResult(503, empty({ code: "not_configured" }));
+  if (!intakeEnabled(ctx) || !ctx.store) return publicResult(503, empty({ code: "not_configured" }));
   const validated = validateIntake(input);
   if (!validated.ok) {
     return publicResult(400, empty({ code: validated.spam ? "rejected" : "invalid", fields: validated.spam ? undefined : validated.errors }));
@@ -67,8 +69,7 @@ export async function acceptIntake(input, ctx) {
   const timing = dwellError(value.opened_at, ctx.now);
   if (timing) return publicResult(400, empty({ code: "rejected" }));
 
-  const ip = ctx.ip || "unknown";
-  const hashed = await hashes(value, ip, ctx.pepper, ctx.now);
+  const hashed = await hashes(value, ctx.now);
   let outcome;
   try {
     outcome = await ctx.store.transaction(async (tx) => {
@@ -89,7 +90,7 @@ export async function acceptIntake(input, ctx) {
         body: value.body,
         email_hash: hashed.emailHash,
         content_hash: hashed.contentHash,
-        ip_hash: hashed.ipHash,
+        ip_hash: "unavailable",
         lane: screen.lane,
         review: screen.review,
         sales_reason: screen.sales_reason,
@@ -136,6 +137,7 @@ export async function handleRequest(req, deps) {
   const send = (result) => new Response(JSON.stringify(result.body), { status: result.status, headers });
 
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers });
+  if (!intakeEnabled(deps.env)) return send(publicResult(503, empty({ code: "not_configured" })));
   if (req.method !== "POST") return send(publicResult(405, empty({ code: "method" })));
   if (origin && !ALLOWED_ORIGINS.has(origin)) return send(publicResult(403, empty({ code: "origin" })));
 
@@ -158,7 +160,7 @@ export async function handleRequest(req, deps) {
   }
   const result = await acceptIntake(input, {
     now: Date.now(),
-    ip: clientIp(req.headers),
+    CONTACT_INTAKE_ENABLED: "true",
     pepper: deps.env.CONTACT_IP_PEPPER || "",
     store: deps.store,
     suppressLead: false,

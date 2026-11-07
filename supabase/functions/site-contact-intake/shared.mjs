@@ -114,13 +114,10 @@ export async function sha256Hex(text) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export function clientIp(headers) {
-  const xff = String(headers.get("x-forwarded-for") || "");
-  const parts = xff.split(",").map((s) => s.trim()).filter(Boolean);
-  if (parts.length) return parts[parts.length - 1].slice(0, 80);
-  const real = String(headers.get("x-real-ip") || "").trim();
-  return (real || "unknown").slice(0, 80);
-}
+// Supabase documents Sb-Forwarded-For only for Auth rate limits, and only when the
+// caller sends a secret key. Edge Function examples read x-forwarded-for, but no
+// official page says the platform strips a caller-supplied value. Do not use that
+// header, x-real-ip, or the gateway socket address as a visitor identity.
 
 export function publicResult(status, body) {
   return { status, body };

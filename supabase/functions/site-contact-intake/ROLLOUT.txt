@@ -1,32 +1,69 @@
-Contact intake rollout. No email is sent. No mail provider, domain, or DNS change is required.
+Contact intake rollout. No email is sent.
+
+The public function is fail-closed. It stores a row only when the Edge Function
+secret CONTACT_INTAKE_ENABLED is exactly the four letters true. Any other value,
+including unset, "1", "TRUE", or "True", returns HTTP 503 with
+{"ok":false,"stored":false,"lead_event":false,"code":"not_configured"}
+and does not open a database connection, classify the text, or count a lead.
+The browser switch in assets/contact-config.js does not open the API by itself.
+A direct POST to the function URL is refused by this server gate.
 
 Database region of project zvrardoyxocmqhvyddnf is ap-northeast-1 (Tokyo) for Postgres.
 That region does not by itself keep every Supabase log, auth event, or edge invocation inside Japan.
-Edge Functions on hosted Supabase can run outside the database region. Do not put inquiry text in logs.
+Do not put inquiry text in logs.
 
-Owner inbox, after this portal change is on main and Pages has built:
+Owner inbox, after the portal commit is published (it is not on GitHub yet):
   https://rsaito-png.github.io/portal/#chair/inquiries
-The page is the existing 会長ページ. The new section is 「ウェブサイトからの問い合わせ」.
-The unread count is a badge on the 会長ページ tile on the portal home.
-Both the page and the badge call owner-only database functions. The check is
-auth.users.email = rsaito@psr-seishinkai.org (the Auth account, not user_metadata
-and not the shared 事務 role). Staff cannot read the table through the Data API.
+Unread mark: the 会長ページ tile on the portal home, badge text 新着 N.
+N counts normal-lane rows with read_at null. Sales quarantine is excluded.
+Server check is auth.users.email = rsaito@psr-seishinkai.org.
+That is the Auth account email, not user_metadata and not the shared 事務 role.
+Schema: supabase/functions/site-contact-intake/schema.sql
+anon cannot execute the inbox functions. authenticated can call them, and the
+function raises 42501 unless the JWT user is that account. The table is not in
+the Data API schemas, RLS is forced with no policies, and API roles have no
+table grants. Do not add site_contact to exposed schemas.
 
-1. Apply supabase/functions/site-contact-intake/schema.sql on zvrardoyxocmqhvyddnf.
-   Do not add schema site_contact to exposed Data API schemas.
-2. Deploy function site-contact-intake with verify_jwt false.
-   Files: index.ts, handler.mjs, shared.mjs, classify.mjs, pg_store.mjs.
-   It uses SUPABASE_DB_URL. It does not call any mail API.
-3. Publish the portal commit that adds contact_inbox.js.
-4. Only then set assets/contact-config.js:
-   enabled: true
-   endpoint: "https://zvrardoyxocmqhvyddnf.supabase.co/functions/v1/site-contact-intake"
+Rate limits that are actually enforced, in the database transaction:
+  same email address: 5 accepted intakes per Japan calendar day
+  whole function: 30 accepted intakes per Japan hour
+Supabase documents Sb-Forwarded-For only for Auth rate limits, and only on a
+request that uses a secret key (https://supabase.com/docs/guides/auth/rate-limits).
+Edge Function examples read x-forwarded-for, and no official page says the
+platform overwrites a caller-supplied value. This function does not use
+x-forwarded-for, x-real-ip, or the gateway connection address as a visitor id.
+Those headers are not a per-person limit. The global cap is the abuse ceiling.
+A missing Origin header is not treated as authentication. Disallowed browser
+origins are still rejected when intake is enabled. Validation, the honeypot,
+the minimum fill time, and the size limit still apply.
 
-Sales pitches are stored, not deleted, in lane sales. They are omitted from the
-unread badge. The owner can restore one from the quarantine on the same page.
+Enable, in this order, and only after the portal page is actually on
+https://rsaito-png.github.io/portal/contact_inbox.js :
+  1. Deploy the function with verify_jwt false. Files from this commit:
+     supabase/functions/site-contact-intake/index.ts
+     supabase/functions/site-contact-intake/handler.mjs
+     supabase/functions/site-contact-intake/shared.mjs
+     supabase/functions/site-contact-intake/classify.mjs
+     supabase/functions/site-contact-intake/pg_store.mjs
+     Leave CONTACT_INTAKE_ENABLED unset for that deploy. POST stays 503.
+  2. Schema is already applied. Re-apply schema.sql only if the functions are missing.
+  3. supabase secrets set CONTACT_INTAKE_ENABLED=true --project-ref zvrardoyxocmqhvyddnf
+     The value must be lowercase true. Secrets are read on each request.
+     Optional: CONTACT_IP_PEPPER is unused for rate limits.
+  4. Set assets/contact-config.js enabled to true and endpoint to
+     https://zvrardoyxocmqhvyddnf.supabase.co/functions/v1/site-contact-intake
+     then publish the static site.
+
+Disable without deleting rows:
+  supabase secrets set CONTACT_INTAKE_ENABLED=false --project-ref zvrardoyxocmqhvyddnf
+  or unset that secret. The next request returns 503 and does not use the database.
+  Also set assets/contact-config.js enabled back to false so the button stays disabled.
+
+Sales pitches are stored in lane sales, not deleted, and are omitted from the
+unread badge. The owner restores one from the quarantine on the same page.
 Ambiguous messages stay in the normal list with review needs-review.
 
 GA4: do not use automatic form_submit as a key event. Count only
-contact_inquiry_accepted, and only when the server stored a normal (not sales,
-not duplicate, not test) inquiry. Turn off Form interactions in the data stream
-and in Google tag automatic event detection.
+contact_inquiry_accepted after the server stored a normal, non-duplicate,
+non-test inquiry. Turn off Form interactions in the data stream and in
+Google tag automatic event detection.

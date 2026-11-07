@@ -32,8 +32,7 @@ function payload(n, extra = {}) {
 async function accept(store, input, extra = {}) {
   const result = await acceptIntake(input, {
     now: Date.now(),
-    ip: extra.ip || "203.0.113.10",
-    pepper: "test-pepper",
+    CONTACT_INTAKE_ENABLED: "true",
     store,
     suppressLead: extra.suppressLead === true,
   });
@@ -106,40 +105,30 @@ test("same idempotency key or same content does not create another lead or email
   assert.equal(store.rows.length, 1);
 });
 
-test("rate limits hold for one address, one mailbox, and the whole site", async () => {
+test("rate limits hold for one mailbox and the whole site, not a forwarded IP", async () => {
   const store = createMemoryStore();
   for (let i = 0; i < 5; i++) {
-    const { result } = await accept(store, payload(20 + i, { email: `p${i}@example.com`, body: "ip " + i }), { ip: "203.0.113.20" });
-    assert.equal(result.status, 200, result.body.code);
-  }
-  const blocked = await accept(store, payload(30, { email: "fresh@example.com", body: "ip blocked" }), { ip: "203.0.113.20" });
-  assert.equal(blocked.result.status, 429);
-  assert.equal(blocked.result.body.lead_event, false);
-  const otherIp = await accept(store, payload(31, { email: "other@example.com", body: "other ip" }), { ip: "203.0.113.21" });
-  assert.equal(otherIp.result.status, 200);
-
-  for (let i = 0; i < 5; i++) {
-    const { result } = await accept(store, payload(40 + i, { email: "same@example.com", body: "box " + i }), { ip: "198.51.100." + i });
+    const { result } = await accept(store, payload(40 + i, { email: "same@example.com", body: "box " + i }));
     assert.equal(result.status, 200);
   }
-  const box = await accept(store, payload(49, { email: "same@example.com", body: "box last" }), { ip: "198.51.100.99" });
+  const box = await accept(store, payload(49, { email: "same@example.com", body: "box last" }));
   assert.equal(box.result.status, 429);
   assert.equal(shouldCountLead(box.result.body), false);
 
   const globalStore = createMemoryStore();
   for (let i = 0; i < 30; i++) {
-    const { result } = await accept(globalStore, payload(100 + i, { email: `g${i}@example.com`, body: "all " + i }), { ip: "192.0.2." + i });
+    const { result } = await accept(globalStore, payload(100 + i, { email: `g${i}@example.com`, body: "all " + i }));
     assert.equal(result.status, 200);
   }
-  const globalBlock = await accept(globalStore, payload(140, { email: "g-extra@example.com", body: "all extra" }), { ip: "192.0.2.200" });
+  const globalBlock = await accept(globalStore, payload(140, { email: "g-extra@example.com", body: "all extra" }));
   assert.equal(globalBlock.result.status, 429);
   assert.equal(globalBlock.result.body.stored, false);
 });
 
-test("parallel requests cannot pass the address limit", async () => {
+test("parallel requests cannot pass the mailbox limit", async () => {
   const store = createMemoryStore();
   const results = await Promise.all(Array.from({ length: 8 }, (_, i) =>
-    accept(store, payload(60 + i, { email: `c${i}@example.com`, body: "conc " + i }), { ip: "203.0.113.40" })));
+    accept(store, payload(60 + i, { email: "same-parallel@example.com", body: "conc " + i }))));
   const saved = results.filter((item) => item.result.body.stored);
   const limited = results.filter((item) => item.result.status === 429);
   assert.equal(saved.length, 5);
@@ -148,16 +137,16 @@ test("parallel requests cannot pass the address limit", async () => {
   assert.equal(store.rows.length, 5);
 });
 
-test("client-supplied address fields do not reset the server rate bucket", async () => {
+test("forwarded IP headers do not reset the mailbox limit", async () => {
   const store = createMemoryStore();
-  const env = { CONTACT_IP_PEPPER: "pepper" };
+  const env = { CONTACT_INTAKE_ENABLED: "true" };
   const seen = [];
   const fetchImpl = async (url) => {
     seen.push(String(url));
     return { ok: true, status: 200 };
   };
   async function post(n, headers, extra = {}) {
-    const input = payload(70 + n, { email: `h${n}@example.com`, body: "hdr " + n, ip: "1.2.3.4", ip_hash: "nope", suppressLead: true, test: true, ...extra });
+    const input = payload(70 + n, { email: "one@example.com", body: "hdr " + n, ip: "1.2.3.4", ip_hash: "nope", suppressLead: true, test: true, ...extra });
     return handleRequest(new Request("https://psr-seishinkai.org/functions/v1/site-contact-intake", {
       method: "POST",
       headers: { "content-type": "application/json", origin: "https://psr-seishinkai.org", ...headers },
@@ -178,6 +167,30 @@ test("client-supplied address fields do not reset the server rate bucket", async
   assert.equal(JSON.stringify(body).includes("@"), false);
 });
 
+test("disabled intake returns 503 and does not store, classify, or count", async () => {
+  const store = createMemoryStore();
+  let used = false;
+  store.transaction = async () => { used = true; throw new Error("store called"); };
+  const sales = payload(90, { body: "株式会社サンプルの営業です。SEO対策のご提案をさせてください。資料を送付させていただきます。" });
+  for (const flag of [undefined, "", "false", "1", "TRUE", "True", " true"]) {
+    const env = {};
+    if (flag !== undefined) env.CONTACT_INTAKE_ENABLED = flag;
+    const response = await handleRequest(new Request("https://psr-seishinkai.org/functions/v1/site-contact-intake", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-forwarded-for": "203.0.113.10" },
+      body: JSON.stringify(sales),
+    }), { env, fetch: async () => { throw new Error("fetch"); }, store });
+    const body = await response.json();
+    assert.equal(response.status, 503, String(flag));
+    assert.equal(body.code, "not_configured");
+    assert.equal(body.stored, false);
+    assert.equal(body.lead_event, false);
+    assert.equal(shouldCountLead(body), false);
+  }
+  assert.equal(used, false);
+  assert.equal(store.rows.length, 0);
+});
+
 test("missing store, bad origin, and mock mode do not count", async () => {
   let called = false;
   const off = await handleRequest(new Request("https://example.test/", {
@@ -194,7 +207,7 @@ test("missing store, bad origin, and mock mode do not count", async () => {
     method: "POST",
     headers: { "content-type": "application/json", origin: "https://evil.example" },
     body: JSON.stringify(payload(81)),
-  }), { env: {}, fetch: async () => { called = true; return { ok: true }; }, store });
+  }), { env: { CONTACT_INTAKE_ENABLED: "true" }, fetch: async () => { called = true; return { ok: true }; }, store });
   assert.equal(evil.status, 403);
   assert.equal(called, false);
   assert.equal(store.rows.length, 0);
