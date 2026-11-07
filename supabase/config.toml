@@ -1,0 +1,6 @@
+# Only this public function. Do not replace the portal repository's config.toml with this file.
+# verify_jwt is false because a visitor has no user JWT. The function rejects unconfigured
+# requests before it stores anything, and rate limits in Postgres after it is enabled.
+
+[functions.site-contact-intake]
+verify_jwt = false

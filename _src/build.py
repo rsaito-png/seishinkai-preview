@@ -1166,16 +1166,50 @@ def nagoya(rel): return f'''<section class="blk wide prose"><p>星心会の本�
 simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICから車で約30分｜星心会（三重県四日市市）','名古屋から星心会（三重県四日市市山城町）へは、名古屋西ICから車で約30分。三岐線山城駅から徒歩5分。名古屋在住の方が利用できる事業も紹介します。','名古屋からのアクセス','FROM NAGOYA',nagoya)
 
 # ---------- contact ----------
-def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">公式LINE</h2><p>いちばん早い方法です。要点だけでかまいません。</p></div>
-<a class="btn" href="#line" style="background:#06c755;width:100%;text-align:center">LINEで相談する</a><p style="margin-top:8px">{ph('公式LINEのURL')}</p></section>
+# contact/index.html は手編集。原稿ビルドで仮フォームや偽の LINE リンクを戻さない。
+# rydeen/ と leo/ と同じく、ファイルがあるときは書き戻さない。
+_CONTACT_OPTIONS=['決まっていない','環境調整支援　水晶玉','しちりんの会','B型事業所　次世代労働研究所　RYDEEN','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
+def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">公式LINE</h2><p>公式LINEのURLは、確認できるまで掲載していません。電話、または下のフォームをご利用ください。</p></div></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）　受付 {ph('受付日・時間')}</p>
 <ul class="lst" style="margin-top:20px"><li><b>水晶玉</b><a href="tel:07032919626" style="display:inline">070-3291-9626</a></li><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
-<section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div><form class="form" onsubmit="return false">
-<label>相談したい事業</label><select><option>決まっていない</option>{''.join(f'<option>{s[1]}</option>' for s in SVCS)}</select>
-<label>お名前</label><input type="text"><label>メールアドレス</label><input type="email"><label>内容（要点のみ）</label><textarea></textarea>
-<button class="btn" type="submit" disabled style="margin-top:18px;width:100%">送信</button><p style="margin-top:8px">{ph('フォーム送信先（未設定のため送信不可）')}</p>
+<section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
+<style>.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
+<form id="contact-intake" class="form" method="post" action="/contact/" onsubmit="return false" novalidate>
+<label for="contact-service">相談したい事業</label><select id="contact-service" name="service">{''.join(f'<option>{html.escape(s)}</option>' for s in _CONTACT_OPTIONS)}</select>
+<label for="contact-name">お名前</label><input id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+<label for="contact-email">メールアドレス</label><input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+<label for="contact-body">内容（要点のみ）</label><textarea id="contact-body" name="body" maxlength="2000" required></textarea>
+<div class="hp" aria-hidden="true"><label for="company_url">Company</label><input id="company_url" name="company_url" type="text" tabindex="-1" autocomplete="off" value=""></div>
+<button class="btn" type="submit" disabled style="margin-top:18px;width:100%">送信</button>
+<p id="contact-status" role="status" style="margin-top:8px">送信は停止しています。受付メールの設定が終わるまで、このフォームからは送れません。お電話 <a href="tel:0593150697">059-315-0697</a> をご利用ください。</p>
+<p id="contact-error" role="alert" style="margin-top:8px"></p>
 <p style="font-size:12px;color:var(--soft);margin-top:8px"><a href="{rel}privacy/">プライバシーポリシー</a>が適用されます。</p></form></section>'''
-simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）','星心会への相談は、公式LINE、電話059-315-0697、相談フォームで受け付けます。','相談する','CONTACT',contact)
+def _finish_contact_page():
+    fp=os.path.join(OUT,'contact','index.html')
+    if os.path.isfile(fp):
+        print('contact: preserved hand-edited page')
+        return
+    simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）','星心会への相談は、電話059-315-0697、または相談フォームで受け付けます。公式LINEのURLは公開していません。','相談する','CONTACT',contact)
+    rel='../'
+    o=open(fp,encoding='utf-8').read()
+    stopper='''<script>
+/* Stop GA4 enhanced form_submit on this form. Register before gtag.js.
+   A lead is contact_inquiry_accepted only after the server stores the inquiry. */
+document.addEventListener('submit', function (e) {
+  var f = e.target;
+  if (!f || f.id !== 'contact-intake') return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  f.dispatchEvent(new CustomEvent('contact-intake-submit'));
+}, true);
+</script>
+'''
+    o=o.replace('<!-- Google tag (gtag.js) -->', stopper+'<!-- Google tag (gtag.js) -->', 1)
+    o=o.replace(f'<script src="{rel}assets/site.js"></script>', f'<script src="{rel}assets/contact-config.js"></script>\n<script type="module" src="{rel}assets/contact-intake.mjs"></script>\n<script src="{rel}assets/site.js"></script>', 1)
+    o=o.replace(f'href="{rel}assets/site.css?v=20261102f"', f'href="{rel}assets/site.css?v=20261107a"', 1)
+    open(fp,'w',encoding='utf-8').write(o)
+_finish_contact_page()
 
 # ---------- privacy ----------
 def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法人」）は、相談・問い合わせ等で取得した個人情報を、次のとおり取り扱います。</p>
