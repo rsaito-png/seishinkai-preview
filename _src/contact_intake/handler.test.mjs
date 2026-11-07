@@ -7,8 +7,7 @@ import test from "node:test";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { createMemoryStore } from "./memory_store.mjs";
-import { acceptIntake, handleRequest, retryNotifications } from "../../supabase/functions/site-contact-intake/handler.mjs";
-import { RECIPIENT, SUBJECT, buildNotice, createMailer } from "../../supabase/functions/site-contact-intake/notice.mjs";
+import { acceptIntake, handleRequest } from "../../supabase/functions/site-contact-intake/handler.mjs";
 import { SERVICES, shouldCountLead } from "../../supabase/functions/site-contact-intake/shared.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -30,117 +29,30 @@ function payload(n, extra = {}) {
   };
 }
 
-function mailOk() {
-  const sent = [];
-  return {
-    sent,
-    async send(message) {
-      sent.push(message);
-    },
-  };
-}
-
 async function accept(store, input, extra = {}) {
-  const mail = extra.mail || mailOk();
   const result = await acceptIntake(input, {
     now: Date.now(),
     ip: extra.ip || "203.0.113.10",
     pepper: "test-pepper",
-    mailer: extra.mailer || mail.send,
     store,
     suppressLead: extra.suppressLead === true,
   });
-  return { result, mail };
+  return { result };
 }
 
-test("saved inquiry is notified once and counted once", async () => {
+test("saved inquiry is counted once and is not emailed", async () => {
   const store = createMemoryStore();
-  const { result, mail } = await accept(store, payload(1, { body: "要点です。" }));
+  const { result } = await accept(store, payload(1, { body: "見学したいです。家族の相談です。" }));
   assert.equal(result.status, 200);
   assert.equal(result.body.stored, true);
-  assert.equal(result.body.notified, true);
-  assert.equal(result.body.notification, "sent");
   assert.equal(result.body.lead_event, true);
   assert.equal(result.body.duplicate, false);
-  assert.equal(result.body.test, false);
-  assert.equal(mail.sent.length, 1);
-  assert.equal(mail.sent[0].to, RECIPIENT);
-  assert.equal(mail.sent[0].subject, SUBJECT);
-  assert.equal(mail.sent[0].text.includes("Bcc:"), false);
-  assert.equal(mail.sent[0].text.includes("山田太郎"), true);
-  assert.equal(mail.sent[0].text.includes("taro@example.com"), true);
-  assert.equal(mail.sent[0].text.includes("要点です。"), true);
+  assert.equal(result.body.notified, undefined);
   assert.equal(JSON.stringify(result.body).includes("taro@example.com"), false);
   assert.equal(JSON.stringify(result.body).includes("山田太郎"), false);
   assert.equal(store.rows.length, 1);
-  assert.equal(store.rows[0].notification_status, "sent");
+  assert.equal(store.rows[0].lane, "normal");
   assert.equal(shouldCountLead(result.body), true);
-  assert.equal(store.rows[0].email, "taro@example.com");
-});
-
-test("notice text is fixed and cannot add a header", () => {
-  const text = buildNotice({
-    id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
-    created_at: "2026-11-07T00:00:00.000Z",
-    service: "決まっていない",
-    name: "山田太郎",
-    email: "taro@example.com",
-    body: "要点です。",
-  }).text;
-  assert.equal(text, [
-    "星心会ウェブサイトの相談フォームから新しい問い合わせです。",
-    "このメールは受付通知です。送信者への自動返信ではありません。",
-    "",
-    "受付番号: aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
-    "受付時刻: 2026-11-07T00:00:00.000Z",
-    "相談したい事業: 決まっていない",
-    "お名前: 山田太郎",
-    "メールアドレス: taro@example.com",
-    "",
-    "内容:",
-    "要点です。",
-    "",
-    "返信は、上のメールアドレスへ直接お願いします。",
-  ].join("\n"));
-  assert.throws(() => buildNotice({
-    id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
-    created_at: "2026-11-07T00:00:00.000Z",
-    service: "決まっていない",
-    name: "山田\r\nBcc: evil@example.com",
-    email: "taro@example.com",
-    body: "要点です。",
-  }), /header_rejected/);
-});
-
-test("persisted inquiry stays retryable when notification fails and is not counted twice", async () => {
-  const store = createMemoryStore();
-  let calls = 0;
-  const mailer = async (message) => {
-    calls += 1;
-    if (calls === 1) {
-      const error = new Error("mail_http_502");
-      error.code = "mail_http_502";
-      throw error;
-    }
-    assert.equal(message.to, RECIPIENT);
-  };
-  const first = await accept(store, payload(2), { mailer });
-  assert.equal(first.result.body.stored, true);
-  assert.equal(first.result.body.notified, false);
-  assert.equal(first.result.body.notification, "failed");
-  assert.equal(first.result.body.lead_event, true);
-  assert.equal(shouldCountLead(first.result.body), true);
-  assert.equal(store.rows[0].notification_status, "failed");
-  assert.equal(store.rows[0].notification_error, "mail_http_502");
-  const retry = await retryNotifications({ mailer, store });
-  assert.equal(retry.status, 200);
-  assert.equal(retry.body.lead_event, false);
-  assert.equal(retry.body.results[0].lead_event, false);
-  assert.equal(retry.body.results[0].notification, "sent");
-  assert.equal(shouldCountLead(retry.body), false);
-  assert.equal(store.rows[0].notification_status, "sent");
-  assert.equal(calls, 2);
-  assert.equal(store.rows.length, 1);
 });
 
 test("persistence failure stores nothing and sends nothing", async () => {
@@ -150,13 +62,11 @@ test("persistence failure stores nothing and sends nothing", async () => {
     error.code = "persist";
     throw error;
   };
-  const mail = mailOk();
-  const { result } = await accept(store, payload(3), { mail });
+  const { result } = await accept(store, payload(3));
   assert.equal(result.status, 500);
   assert.equal(result.body.stored, false);
   assert.equal(result.body.lead_event, false);
   assert.equal(result.body.code, "persist");
-  assert.equal(mail.sent.length, 0);
   assert.equal(shouldCountLead(result.body), false);
 });
 
@@ -173,11 +83,10 @@ test("validation, injection, honeypot, and timing do not store or count", async 
     payload(11, { idempotency_key: "not-a-uuid" }),
   ];
   for (const input of cases) {
-    const { result, mail } = await accept(store, input);
+    const { result } = await accept(store, input);
     assert.equal(result.body.stored, false);
     assert.equal(result.body.lead_event, false);
     assert.equal(shouldCountLead(result.body), false);
-    assert.equal(mail.sent.length, 0);
   }
   assert.equal(store.rows.length, 0);
 });
@@ -195,7 +104,6 @@ test("same idempotency key or same content does not create another lead or email
   assert.equal(shouldCountLead(replay.result.body), false);
   assert.equal(shouldCountLead(duplicate.result.body), false);
   assert.equal(store.rows.length, 1);
-  assert.equal(first.mail.sent.length + replay.mail.sent.length + duplicate.mail.sent.length, 1);
 });
 
 test("rate limits hold for one address, one mailbox, and the whole site", async () => {
@@ -207,7 +115,6 @@ test("rate limits hold for one address, one mailbox, and the whole site", async 
   const blocked = await accept(store, payload(30, { email: "fresh@example.com", body: "ip blocked" }), { ip: "203.0.113.20" });
   assert.equal(blocked.result.status, 429);
   assert.equal(blocked.result.body.lead_event, false);
-  assert.equal(blocked.mail.sent.length, 0);
   const otherIp = await accept(store, payload(31, { email: "other@example.com", body: "other ip" }), { ip: "203.0.113.21" });
   assert.equal(otherIp.result.status, 200);
 
@@ -243,17 +150,10 @@ test("parallel requests cannot pass the address limit", async () => {
 
 test("client-supplied address fields do not reset the server rate bucket", async () => {
   const store = createMemoryStore();
-  const env = {
-    CONTACT_INTAKE_ENABLED: "1",
-    CONTACT_MAIL_TRANSPORT: "https-json",
-    CONTACT_MAIL_URL: "https://mail.example.test/send",
-    CONTACT_MAIL_TOKEN: "test-token",
-    CONTACT_MAIL_FROM: "sender@example.com",
-    CONTACT_IP_PEPPER: "pepper",
-  };
+  const env = { CONTACT_IP_PEPPER: "pepper" };
   const seen = [];
-  const fetchImpl = async (url, init) => {
-    seen.push({ url, body: JSON.parse(init.body), authorization: init.headers.authorization });
+  const fetchImpl = async (url) => {
+    seen.push(String(url));
     return { ok: true, status: 200 };
   };
   async function post(n, headers, extra = {}) {
@@ -274,49 +174,36 @@ test("client-supplied address fields do not reset the server rate bucket", async
   const body = await blocked.json();
   assert.equal(body.lead_event, false);
   assert.equal(body.stored, false);
-  assert.equal(seen.length, 5);
-  assert.equal(seen[0].body.to, RECIPIENT);
-  assert.equal(seen[0].body.from, "sender@example.com");
-  assert.equal(seen[0].body.subject, SUBJECT);
-  assert.equal(Object.keys(seen[0].body).sort().join(), "from,subject,text,to");
-  assert.equal(seen[0].body.text.includes("taro@example.com"), false);
-  assert.equal(seen[0].body.text.includes("h0@example.com"), true);
-  assert.equal(JSON.stringify(body).includes("test-token"), false);
+  assert.equal(seen.length, 0);
+  assert.equal(JSON.stringify(body).includes("@"), false);
 });
 
-test("unconfigured transport, bad origin, and mock mode do not count", async () => {
-  const store = createMemoryStore();
+test("missing store, bad origin, and mock mode do not count", async () => {
   let called = false;
   const off = await handleRequest(new Request("https://example.test/", {
     method: "POST",
     headers: { "content-type": "application/json", origin: "https://psr-seishinkai.org" },
     body: JSON.stringify(payload(80)),
-  }), { env: {}, fetch: async () => { called = true; return { ok: true }; }, store });
+  }), { env: {}, fetch: async () => { called = true; return { ok: true }; }, store: null });
   assert.equal(off.status, 503);
   assert.equal((await off.json()).lead_event, false);
   assert.equal(called, false);
-  assert.equal(store.rows.length, 0);
 
+  const store = createMemoryStore();
   const evil = await handleRequest(new Request("https://example.test/", {
     method: "POST",
     headers: { "content-type": "application/json", origin: "https://evil.example" },
     body: JSON.stringify(payload(81)),
-  }), {
-    env: { CONTACT_INTAKE_ENABLED: "1", CONTACT_MAIL_TRANSPORT: "https-json", CONTACT_MAIL_URL: "https://mail.example.test/send", CONTACT_MAIL_TOKEN: "t", CONTACT_MAIL_FROM: "sender@example.com" },
-    fetch: async () => { called = true; return { ok: true }; },
-    store,
-  });
+  }), { env: {}, fetch: async () => { called = true; return { ok: true }; }, store });
   assert.equal(evil.status, 403);
   assert.equal(called, false);
+  assert.equal(store.rows.length, 0);
 
   const mocked = await accept(store, payload(82), { suppressLead: true });
   assert.equal(mocked.result.body.stored, true);
   assert.equal(mocked.result.body.test, true);
   assert.equal(mocked.result.body.lead_event, false);
   assert.equal(shouldCountLead(mocked.result.body), false);
-  assert.equal((await retryNotifications({ mailer: async () => { throw new Error("should not send"); }, store })).body.results.length, 0);
-  assert.equal(createMailer({ CONTACT_INTAKE_ENABLED: "1" }, async () => ({ ok: true })), null);
-  assert.equal(createMailer({ CONTACT_INTAKE_ENABLED: "1", CONTACT_MAIL_TRANSPORT: "https-json", CONTACT_MAIL_URL: "https://mail.example.test/send", CONTACT_MAIL_TOKEN: "t", CONTACT_MAIL_FROM: "bad\nfrom@example.com" }, async () => ({ ok: true })), null);
 });
 
 test("public page keeps the form disabled and does not treat form_submit as a lead", () => {
@@ -335,7 +222,7 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   assert.match(config, /endpoint:\s*""/);
   assert.equal(browser.includes("contact_inquiry_accepted"), true);
   assert.equal(browser.includes("form_submit"), false);
-  assert.equal(browser.includes(RECIPIENT), false);
+  assert.equal(browser.includes("メールでお知らせ"), false);
   const options = [...html.matchAll(/<option>([^<]*)<\/option>/g)].map((m) => m[1]);
   assert.deepEqual(options, SERVICES);
 });

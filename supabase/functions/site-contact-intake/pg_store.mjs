@@ -45,10 +45,10 @@ function txApi(sql) {
         const rows = await sql`
           insert into site_contact.inquiries (
             idempotency_key, dedupe_key, service, name, email, body,
-            email_hash, content_hash, ip_hash, notification_status, lead_eligible, test
+            email_hash, content_hash, ip_hash, lane, review, sales_reason, lead_eligible, test
           ) values (
             ${row.idempotency_key}, ${row.dedupe_key}, ${row.service}, ${row.name}, ${row.email}, ${row.body},
-            ${row.email_hash}, ${row.content_hash}, ${row.ip_hash}, 'pending', ${row.lead_eligible}, ${row.test}
+            ${row.email_hash}, ${row.content_hash}, ${row.ip_hash}, ${row.lane}, ${row.review}, ${row.sales_reason}, ${row.lead_eligible}, ${row.test}
           ) returning *`;
         return rows[0];
       } catch (error) {
@@ -62,28 +62,6 @@ export function createPgStore(sql) {
   return {
     transaction(fn) {
       return sql.begin(async (tx) => fn(txApi(tx)));
-    },
-    async mark(id, patch) {
-      const status = patch.notification_status;
-      const error = patch.notification_error ?? null;
-      const rows = await sql`
-        update site_contact.inquiries
-        set notification_status = ${status},
-            notification_error = ${error},
-            notification_attempts = notification_attempts + 1,
-            notified_at = case when ${status} = 'sent' then now() else notified_at end
-        where id = ${id}
-        returning *`;
-      return rows[0] || null;
-    },
-    async listRetryable(limit) {
-      return sql`
-        select * from site_contact.inquiries
-        where test = false
-          and notification_status in ('pending', 'failed')
-          and notification_attempts < 8
-        order by created_at
-        limit ${limit}`;
     },
     async getByIdempotency(key) {
       const rows = await sql`select * from site_contact.inquiries where idempotency_key = ${key} limit 1`;

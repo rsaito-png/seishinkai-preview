@@ -7,7 +7,7 @@ import {
   sha256Hex,
   validateIntake,
 } from "./shared.mjs";
-import { buildNotice, createMailer, safeMailCode } from "./notice.mjs";
+import { classifyInquiry } from "./classify.mjs";
 
 const ALLOWED_ORIGINS = new Set([
   "https://psr-seishinkai.org",
@@ -32,8 +32,6 @@ function view(row, extra) {
     ok: true,
     stored: true,
     duplicate: extra.duplicate === true,
-    notified: row.notification_status === "sent",
-    notification: row.notification_status,
     lead_event: extra.lead_event === true,
     test: row.test === true,
     reference: String(row.id).slice(0, 8),
@@ -59,29 +57,8 @@ async function hashes(value, ip, pepper, now) {
   };
 }
 
-async function notify(row, ctx) {
-  const message = buildNotice(row);
-  try {
-    await ctx.mailer(message);
-  } catch (error) {
-    const code = safeMailCode(error);
-    try {
-      await ctx.store.mark(row.id, { notification_status: "failed", notification_error: code });
-    } catch {
-      /* the row stays pending and can be retried */
-    }
-    return { ...row, notification_status: "failed", notification_error: code };
-  }
-  try {
-    await ctx.store.mark(row.id, { notification_status: "sent", notification_error: null });
-  } catch {
-    return { ...row, notification_status: "sent" };
-  }
-  return { ...row, notification_status: "sent" };
-}
-
 export async function acceptIntake(input, ctx) {
-  if (!ctx.mailer) return publicResult(503, empty({ code: "not_configured" }));
+  if (!ctx.store) return publicResult(503, empty({ code: "not_configured" }));
   const validated = validateIntake(input);
   if (!validated.ok) {
     return publicResult(400, empty({ code: validated.spam ? "rejected" : "invalid", fields: validated.spam ? undefined : validated.errors }));
@@ -102,6 +79,7 @@ export async function acceptIntake(input, ctx) {
       if (duplicate) return { kind: "duplicate", row: duplicate };
       const allowed = await tx.consumeRate(hashed.rate);
       if (!allowed) return { kind: "limited" };
+      const screen = classifyInquiry(value);
       const row = await tx.insert({
         idempotency_key: value.idempotency_key,
         dedupe_key: hashed.dedupe_key,
@@ -112,8 +90,11 @@ export async function acceptIntake(input, ctx) {
         email_hash: hashed.emailHash,
         content_hash: hashed.contentHash,
         ip_hash: hashed.ipHash,
-        notification_status: "pending",
-        lead_eligible: ctx.suppressLead !== true,
+        lane: screen.lane,
+        review: screen.review,
+        sales_reason: screen.sales_reason,
+        read_at: null,
+        lead_eligible: ctx.suppressLead !== true && screen.lane === "normal",
         test: ctx.suppressLead === true,
       });
       return { kind: "created", row };
@@ -135,26 +116,8 @@ export async function acceptIntake(input, ctx) {
   }
   if (outcome.kind === "limited") return publicResult(429, empty({ code: "rate_limited" }));
 
-  const saved = await notify(outcome.row, ctx);
+  const saved = outcome.row;
   return publicResult(200, view(saved, { duplicate: false, lead_event: saved.lead_eligible === true && saved.test !== true }));
-}
-
-export async function retryNotifications(ctx) {
-  if (!ctx.mailer) return publicResult(503, { ok: false, code: "not_configured", lead_event: false, results: [] });
-  const rows = await ctx.store.listRetryable(20);
-  const results = [];
-  for (const row of rows) {
-    const saved = await notify(row, ctx);
-    results.push({ reference: String(saved.id).slice(0, 8), notification: saved.notification_status, lead_event: false });
-  }
-  return publicResult(200, { ok: true, code: "retry", lead_event: false, results });
-}
-
-function secretOk(given, expected) {
-  if (!given || !expected || given.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < given.length; i++) diff |= given.charCodeAt(i) ^ expected.charCodeAt(i);
-  return diff === 0;
 }
 
 export async function handleRequest(req, deps) {
@@ -175,17 +138,6 @@ export async function handleRequest(req, deps) {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers });
   if (req.method !== "POST") return send(publicResult(405, empty({ code: "method" })));
   if (origin && !ALLOWED_ORIGINS.has(origin)) return send(publicResult(403, empty({ code: "origin" })));
-
-  const retryHeader = req.headers.get("x-contact-retry-secret");
-  if (retryHeader != null) {
-    if (!secretOk(retryHeader, deps.env.CONTACT_RETRY_SECRET || "")) {
-      return send(publicResult(401, empty({ code: "unauthorized" })));
-    }
-    return send(await retryNotifications({
-      mailer: createMailer(deps.env, deps.fetch),
-      store: deps.store,
-    }));
-  }
 
   const declared = Number(req.headers.get("content-length") || 0);
   if (declared > LIMITS.json) return send(publicResult(413, empty({ code: "too_large" })));
@@ -208,7 +160,6 @@ export async function handleRequest(req, deps) {
     now: Date.now(),
     ip: clientIp(req.headers),
     pepper: deps.env.CONTACT_IP_PEPPER || "",
-    mailer: createMailer(deps.env, deps.fetch),
     store: deps.store,
     suppressLead: false,
   });

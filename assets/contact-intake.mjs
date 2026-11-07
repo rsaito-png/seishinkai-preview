@@ -12,7 +12,7 @@ const COPY = {
   rate_limited: "送信が集中しています。時間をおいて、もう一度お試しください。入力内容は残しています。",
   persist: "送信できませんでした。入力内容は残しています。時間をおいて再度お試しください。",
   network: "送信できませんでした。入力内容は残しています。通信を確認して、もう一度お試しください。",
-  stopped: "送信は停止しています。受付メールの設定が終わるまで、このフォームからは送れません。",
+  stopped: "送信は停止しています。受付の準備が終わるまで、このフォームからは送れません。",
 };
 
 function fieldMessage(fields) {
@@ -34,8 +34,7 @@ function messageFor(body) {
 function successText(body) {
   const ref = body.reference ? "受付番号 " + body.reference + "。" : "";
   if (body.duplicate) return "同じ内容はすでに受け付けています。" + ref + "重複としては数えません。";
-  if (body.notified === true) return "受け付けました。担当へメールでお知らせしました。" + ref;
-  return "受け付けました。" + ref + "メール通知はまだ完了していません。お急ぎのときは 059-315-0697 へお電話ください。";
+  return "受け付けました。" + ref + "内容は保存されました。";
 }
 
 function readConfig() {
@@ -130,7 +129,7 @@ export function installContactIntake(doc = document) {
       if (shouldCountLead(body) && typeof window.gtag === "function") {
         window.gtag("event", "contact_inquiry_accepted", { method: "server_receipt", form_id: "contact-intake" });
       }
-      if (body.notified === true || body.duplicate === true) {
+      if (body.stored === true) {
         idem = crypto.randomUUID();
         storageSet("seishinkai-contact-idem", idem);
       }
@@ -147,7 +146,10 @@ export function installContactIntake(doc = document) {
   }
 
   form.addEventListener("contact-intake-submit", onSubmit);
-  if (!readConfig().enabled && button) button.disabled = true;
+  if (readConfig().enabled) {
+    if (button) button.disabled = false;
+    if (status && status.textContent.includes("停止")) status.textContent = "送信すると内容が保存されます。メールは送りません。";
+  } else if (button) button.disabled = true;
 }
 
 function dwellErrorSafe(opened) {

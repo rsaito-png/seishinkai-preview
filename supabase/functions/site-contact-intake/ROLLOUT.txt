@@ -1,99 +1,32 @@
-Contact intake rollout. Status of the code in this commit: NOT LIVE.
+Contact intake rollout. No email is sent. No mail provider, domain, or DNS change is required.
 
-The public form stays disabled (button disabled, endpoint empty, server returns
-not_configured and stores nothing) until every step below is done.
+Database region of project zvrardoyxocmqhvyddnf is ap-northeast-1 (Tokyo) for Postgres.
+That region does not by itself keep every Supabase log, auth event, or edge invocation inside Japan.
+Edge Functions on hosted Supabase can run outside the database region. Do not put inquiry text in logs.
 
-Do not send a test inquiry through the public form. Do not email a real person
-except the one approved recipient, and only after a separate decision to send.
+Owner inbox, after this portal change is on main and Pages has built:
+  https://rsaito-png.github.io/portal/#chair/inquiries
+The page is the existing 会長ページ. The new section is 「ウェブサイトからの問い合わせ」.
+The unread count is a badge on the 会長ページ tile on the portal home.
+Both the page and the badge call owner-only database functions. The check is
+auth.users.email = rsaito@psr-seishinkai.org (the Auth account, not user_metadata
+and not the shared 事務 role). Staff cannot read the table through the Data API.
 
-Verified project
-  Supabase project ref: zvrardoyxocmqhvyddnf
-  Region: ap-northeast-1
-  This is the only project visible to the connected Supabase account.
-  The portal repository (rsaito-png/portal) uses the same ref.
-  Do not create a second project.
-
-What was inspected and is not used
-  notify-chat and notify_queue send to Google Chat staff spaces.
-  That path is for staff events. It is not the inquiry mailbox.
-  Vault secret names present: notify_secret, sui_service_key.
-  No Resend, SMTP, SendGrid, or other transactional mail secret exists.
-  Auth recovery copy in the portal says custom SMTP is not set yet.
-  No sender identity was invented. CONTACT_MAIL_FROM must be a verified
-  address you already control. The recipient is fixed in notice.mjs as
-  rsaito@psr-seishinkai.org. The function refuses any other To.
-
-1. Apply the migration yourself (review the SQL first)
-   File: supabase/functions/site-contact-intake/schema.sql
-   It creates schema site_contact, tables inquiries and rate_buckets,
-   enables and forces RLS, and grants nothing to anon or authenticated.
-   Do not add site_contact to the Data API exposed schemas.
-   Do not add a SELECT policy.
-
-2. Deploy the function with verify_jwt false
-   Directory: supabase/functions/site-contact-intake/
-   Entrypoint: index.ts
-   Files that must ship together: index.ts, handler.mjs, shared.mjs,
-   notice.mjs, pg_store.mjs.
-   The function reads SUPABASE_DB_URL, which hosted Edge Functions provide.
-   Confirm the gateway setting verify_jwt is false (supabase/config.toml
-   in this website repo). A visitor has no JWT.
-
-3. Set secrets in the Supabase function environment. Do not commit them.
-   CONTACT_INTAKE_ENABLED=1
-   CONTACT_MAIL_TRANSPORT=https-json
-   CONTACT_MAIL_URL=https://...     existing mail API you already use
-   CONTACT_MAIL_TOKEN=...           bearer token for that API
-   CONTACT_MAIL_FROM=...            verified sender, no newlines
-   CONTACT_RETRY_SECRET=...         long random string for the retry call
-   CONTACT_IP_PEPPER=...            optional; hashes IP addresses before storage
-
-   https-json is only a slot. This repository does not call a provider
-   until those values exist. The POST body is JSON:
-   {"to":"rsaito@psr-seishinkai.org","from":"<CONTACT_MAIL_FROM>","subject":"【星心会】ウェブサイトからの相談","text":"<notice>"}
-   There is no Cc, Bcc, or reply to the person who submitted the form.
-
-   If you do not already have an HTTPS mail API and a verified From,
-   stop here. Leave the public switch off.
-
-4. Retry failed notifications (does not create another lead)
-   POST the function with header x-contact-retry-secret set to the secret.
-   Schedule that call from pg_cron only after the secret is in Vault under
-   the name contact_retry_secret. Read it at call time. Do not put the
-   secret in SQL text. The cron should not run until step 3 is done.
-   Rows with notification_status pending or failed stay in
-   site_contact.inquiries. sent is a separate state. A failed send is not
-   reported as notified.
-
-5. Only then edit assets/contact-config.js
+1. Apply supabase/functions/site-contact-intake/schema.sql on zvrardoyxocmqhvyddnf.
+   Do not add schema site_contact to exposed Data API schemas.
+2. Deploy function site-contact-intake with verify_jwt false.
+   Files: index.ts, handler.mjs, shared.mjs, classify.mjs, pg_store.mjs.
+   It uses SUPABASE_DB_URL. It does not call any mail API.
+3. Publish the portal commit that adds contact_inbox.js.
+4. Only then set assets/contact-config.js:
    enabled: true
    endpoint: "https://zvrardoyxocmqhvyddnf.supabase.co/functions/v1/site-contact-intake"
-   Deploy the static file. Until this edit, the button on /contact/ stays disabled.
 
-6. GA4 admin (required; code cannot turn this off by itself)
-   Property for G-XVX8LZ4DXC.
-   Admin > Data collection and modification > Data streams > the web stream.
-   Enhanced measurement > turn off Form interactions.
-   Also open the Google tag settings > Manage automatic event detection >
-   turn off Form interactions, or Google Ads can still receive form_submit.
-   Do not mark the automatic event form_submit as a key event.
-   Mark only the custom event contact_inquiry_accepted.
-   That event is sent from the browser only after the JSON says
-   stored and lead_event, and it carries method=server_receipt and
-   form_id=contact-intake. It has no name, email, or message.
-   A duplicate, a rejection, a rate limit, a storage error, or a mock
-   does not set lead_event.
+Sales pitches are stored, not deleted, in lane sales. They are omitted from the
+unread badge. The owner can restore one from the quarantine on the same page.
+Ambiguous messages stay in the normal list with review needs-review.
 
-7. Check the live HTML without submitting
-   The submit button is disabled.
-   assets/contact-config.js has enabled false and an empty endpoint
-   until step 5.
-   There is no LINE URL. The old href="#line" button is gone.
-   id="line" remains so older links to /contact/#line land on the note
-   that no official LINE URL is published.
-
-Build
-  _src/build.py skips contact/index.html when that file already exists,
-  same idea as the hand-kept RYDEEN and Leo pages. A content rebuild
-  must not put back the disabled placeholder form or the fake LINE button.
-  If contact/index.html is absent, the generator writes the safe form.
+GA4: do not use automatic form_submit as a key event. Count only
+contact_inquiry_accepted, and only when the server stored a normal (not sales,
+not duplicate, not test) inquiry. Turn off Form interactions in the data stream
+and in Google tag automatic event detection.

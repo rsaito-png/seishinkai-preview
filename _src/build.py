@@ -1181,7 +1181,7 @@ def contact(rel): return f'''<section class="blk"><div class="h"><span class="en
 <label for="contact-body">内容（要点のみ）</label><textarea id="contact-body" name="body" maxlength="2000" required></textarea>
 <div class="hp" aria-hidden="true"><label for="company_url">Company</label><input id="company_url" name="company_url" type="text" tabindex="-1" autocomplete="off" value=""></div>
 <button class="btn" type="submit" disabled style="margin-top:18px;width:100%">送信</button>
-<p id="contact-status" role="status" style="margin-top:8px">送信は停止しています。受付メールの設定が終わるまで、このフォームからは送れません。お電話 <a href="tel:0593150697">059-315-0697</a> をご利用ください。</p>
+<p id="contact-status" role="status" style="margin-top:8px">送信は停止しています。受付の準備が終わるまで、このフォームからは送れません。お電話 <a href="tel:0593150697">059-315-0697</a> をご利用ください。</p>
 <p id="contact-error" role="alert" style="margin-top:8px"></p>
 <p style="font-size:12px;color:var(--soft);margin-top:8px"><a href="{rel}privacy/">プライバシーポリシー</a>が適用されます。</p></form></section>'''
 def _finish_contact_page():
