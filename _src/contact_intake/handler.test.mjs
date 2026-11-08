@@ -243,11 +243,19 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   assert.equal(html.includes("gtag('event', 'form_submit'"), false);
   assert.equal(html.includes("contact-intake-submit"), true);
   assert.equal(html.includes("送信は停止しています"), true);
+  assert.equal(html.includes("東京のデータベースに保存します"), true);
+  assert.equal(html.includes("国外で行われる可能性があります"), true);
+  assert.equal(html.includes("通知メールや自動返信はありません"), true);
+  assert.equal(html.includes("国内で処理"), false);
+  assert.equal(html.includes("自動返信します"), false);
   assert.match(config, /enabled:\s*false/);
   assert.match(config, /endpoint:\s*""/);
   assert.equal(browser.includes("contact_inquiry_accepted"), true);
   assert.equal(browser.includes("form_submit"), false);
   assert.equal(browser.includes("メールでお知らせ"), false);
+  assert.equal(browser.includes("通知メールは送りません"), true);
+  assert.equal(browser.includes("国外で行われる可能性があります"), true);
+  assert.equal(browser.includes("国内で処理"), false);
   const options = [...html.matchAll(/<option>([^<]*)<\/option>/g)].map((m) => m[1]);
   assert.deepEqual(options, SERVICES);
 });
@@ -269,6 +277,8 @@ test("content rebuild preserves a hand-edited contact page and can still generat
   assert.equal(generated.includes("type=\"submit\" disabled"), true);
   assert.equal(generated.includes("contact-intake-submit"), true);
   assert.equal(generated.includes("contact-config.js"), true);
+  assert.equal(generated.includes("通知メールや自動返信はありません"), true);
+  assert.equal(generated.includes("国内で処理"), false);
   await rm(dir, { recursive: true });
 });
 

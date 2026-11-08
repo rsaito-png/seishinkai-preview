@@ -12,8 +12,14 @@ Database region of project zvrardoyxocmqhvyddnf is ap-northeast-1 (Tokyo) for Po
 That region does not by itself keep every Supabase log, auth event, or edge invocation inside Japan.
 Do not put inquiry text in logs.
 
-Owner inbox, after the portal commit is published (it is not on GitHub yet):
+Owner inbox, published:
   https://rsaito-png.github.io/portal/#chair/inquiries
+Inquiry rows are stored in the Tokyo database (ap-northeast-1). Edge processing
+may run outside Japan. The public contact and privacy pages say that, and they
+say this form sends no notification mail and no automatic reply. That acceptance
+is for this inquiry form only. Do not describe domestic processing as guaranteed.
+Do not send mail. The owner inbox, the normal-lane unread badge, and sales
+quarantine with restore stay as they are.
 Unread mark: the 会長ページ tile on the portal home, badge text 新着 N.
 N counts normal-lane rows with read_at null. Sales quarantine is excluded.
 Server check is auth.users.email = rsaito@psr-seishinkai.org.
@@ -50,10 +56,14 @@ https://rsaito-png.github.io/portal/contact_inbox.js :
      supabase/functions/site-contact-intake/pg_store.mjs
      Leave CONTACT_INTAKE_ENABLED unset for that deploy. POST stays 503.
   2. Schema is already applied. Re-apply schema.sql only if the functions are missing.
-  3. supabase secrets set CONTACT_INTAKE_ENABLED=true --project-ref zvrardoyxocmqhvyddnf
-     The value must be lowercase true. Secrets are read on each request.
+  3. The project owner sets CONTACT_INTAKE_ENABLED to the lowercase value true
+     in the Dashboard, on the documented secrets page for this project:
+     https://supabase.com/dashboard/project/zvrardoyxocmqhvyddnf/functions/secrets
+     This agent has no secret-write tool and must not look for another credential.
+     The value is read on each request. No redeploy is required for the secret.
      Optional: CONTACT_IP_PEPPER is unused for rate limits.
-  4. Set assets/contact-config.js enabled to true and endpoint to
+     Leave assets/contact-config.js enabled false until that setting is confirmed.
+  4. After that confirmation, set assets/contact-config.js enabled to true and endpoint to
      https://zvrardoyxocmqhvyddnf.supabase.co/functions/v1/site-contact-intake
      then publish the static site.
 

@@ -34,7 +34,7 @@ function messageFor(body) {
 function successText(body) {
   const ref = body.reference ? "受付番号 " + body.reference + "。" : "";
   if (body.duplicate) return "同じ内容はすでに受け付けています。" + ref + "重複としては数えません。";
-  return "受け付けました。" + ref + "内容は保存されました。";
+  return "受け付けました。" + ref + "内容は東京のデータベースに保存されました。通知メールは送りません。";
 }
 
 function readConfig() {
@@ -148,7 +148,7 @@ export function installContactIntake(doc = document) {
   form.addEventListener("contact-intake-submit", onSubmit);
   if (readConfig().enabled) {
     if (button) button.disabled = false;
-    if (status && status.textContent.includes("停止")) status.textContent = "送信すると内容が保存されます。メールは送りません。";
+    if (status && status.textContent.includes("停止")) status.textContent = "送信すると、内容は東京のデータベースに保存されます。受付の処理は国外で行われる可能性があります。メールは送りません。";
   } else if (button) button.disabled = true;
 }
 

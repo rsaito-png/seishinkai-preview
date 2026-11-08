@@ -1173,6 +1173,7 @@ def contact(rel): return f'''<section class="blk"><div class="h"><span class="en
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）　受付 {ph('受付日・時間')}</p>
 <ul class="lst" style="margin-top:20px"><li><b>水晶玉</b><a href="tel:07032919626" style="display:inline">070-3291-9626</a></li><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
+<p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>
 <style>.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
 <form id="contact-intake" class="form" method="post" action="/contact/" onsubmit="return false" novalidate>
 <label for="contact-service">相談したい事業</label><select id="contact-service" name="service">{''.join(f'<option>{html.escape(s)}</option>' for s in _CONTACT_OPTIONS)}</select>
@@ -1213,6 +1214,7 @@ _finish_contact_page()
 
 # ---------- privacy ----------
 def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法人」）は、相談・問い合わせ等で取得した個人情報を、次のとおり取り扱います。</p>
+<p><b>相談フォーム</b><br>ウェブサイトの相談フォームに書かれた内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。このフォームから通知メールや自動返信は送りません。</p>
 <p><b>1. 利用目的</b><br>相談・問い合わせへの回答、サービスの提供と連絡のために利用します。</p><p><b>2. 第三者提供</b><br>法令に基づく場合を除き、本人の同意なく第三者に提供しません。</p>
 <p><b>3. 管理</b><br>漏えい・滅失を防ぐため、適切に管理します。</p><p><b>4. 開示・訂正・削除</b><br>本人からの求めに応じ、法令に従って対応します。</p>
 <p><b>5. アクセス解析</b><br>本サイトでは、アクセス解析ツールを使用する場合があります。{ph('使用ツール')}</p><p><b>6. 窓口</b><br>{ORG}　{ADDR}　TEL {TEL}</p><p>{ph('プライバシーポリシー全文の確認')}</p></section>'''
