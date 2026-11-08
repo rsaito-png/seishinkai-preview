@@ -1,5 +1,5 @@
 # Markdown <-> page data for Google Docs editing
-import re,os,posixpath
+import html,re,os,posixpath
 BASE='https://www.psr-seishinkai.org'
 NOTE='ここを書き換えると、サイトに反映されます'
 def slug(path): return path.strip('/').replace('/','-') or 'top'
@@ -347,6 +347,15 @@ def parse_page(md,d,ph):
     r['info_h']=next((k for k in g if k.startswith('対象・費用')),None)
     r['info']=[(t,f(ls)) for lv,t,ls in next((v for k,v in g.items() if k.startswith('対象・費用')),[]) if lv==3]  # removed section => hide
     if 'よくある質問' in g: r['faq']=[(md2h([t],p,ph),f(ls)) for lv,t,ls in g['よくある質問'] if lv==3]
+    for key,sec in g.items():
+        if '個別フォローアップ' in _norm_h(key):
+            bits=[]
+            for lv,t,ls in sec:
+                body=f(lines(ls))
+                if lv==3:
+                    bits.append('<h3>'+html.escape(t)+'</h3>')
+                if body: bits.append('<p>'+body+'</p>')
+            if bits: r['followup']=''.join(bits)
     misc=_misc_block(g,'ページのその他の表示')
     if misc is not None: r['misc']=misc
     return r

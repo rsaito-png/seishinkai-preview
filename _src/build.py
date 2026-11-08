@@ -192,8 +192,10 @@ SEO={
  'leo/assessment/':('発達検査 レオ｜三重県四日市市｜星心会','検査して終わりにはしません。WISC-Vと新版K式の発達検査を、三重県四日市市あさけが丘のレオで行います。'),
 }
 def under_construction(path):
-    """企業・支援機関（/business/）は公開準備が整うまで工事中。戻すときは False を返す。"""
+    """企業・支援機関（/business/）は公開準備が整うまで工事中。戻すときは False を返す。
+    実施者養成研修だけは公開ページとして出す。"""
     p=(path or '').strip().strip('/')
+    if p=='business/stress-check-training': return False
     return p=='business' or p.startswith('business/')
 def construction_page(path, name):
     """ヘッダー／フッターはそのまま、本文だけ工事中にする。文言とレイアウトは全ページ共通。"""
@@ -238,8 +240,11 @@ def service_page(d):
         d.update(r)
     if path in DOCMETA:
         h1,first=DOCMETA[path]
-        d['name']=h1; d['title']=h1+'｜星心会'; d['cat']=d.pop('_pre','')
-        if first and not d.get('keep_desc'): d['desc']=first
+        d['name']=h1
+        d.pop('_pre','')
+        if not d.get('keep_desc'):
+            d['title']=h1+'｜星心会'
+            if first: d['desc']=first
         d['rel']=[(SV[k][1] if (k:=next((x[0] for x in SVCS if x[2]==u),None)) else n,u) for n,u in d.get('rel',[])]
     apply_page_misc(d)
     # 検索用の title / description。本文の見出し（name）は変えない。原稿の先頭文で上書きされたあとに戻す。
@@ -318,6 +323,8 @@ def service_page(d):
             return f'<dd>{v}</dd>'
         o+='<section class="blk wide" id="info"><div class="h"><span class="en">INFORMATION</span><h2>'+(d.get("info_h") or "対象・費用・場所")+'</h2></div><dl class="info">'+''.join(f'<dt>{k}</dt>{_dd(k,v)}' for k,v in d['info'])+'</dl></section>'
     if SHOW_FAQ: o+='<section class="blk wide" id="faq" style="padding-top:0"><div class="h"><span class="en">FAQ</span><h2>よくある質問</h2></div><div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in d['faq'])+'</div></section>'
+    if d.get('followup'):
+        o+=f'''<section class="blk wide" id="follow-up"><div class="h"><span class="en">FOLLOW-UP</span><h2>個別フォローアップ研修</h2></div><div class="prose" style="font-size:15px;line-height:1.9">{d["followup"]}</div></section>'''
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
     tel=d.get('tel',TEL); line=f'{rel}contact/#line'
     B=_bt(o.split('<p class="acc">')[1].split('</section>',1)[1].split('class="rel"')[0]) if '<p class="acc">' in o else ''
