@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="robots" content="noindex">
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>就労継続支援B型 RYDEEN｜三重県四日市市｜星心会</title>
+<meta name="description" content="SNS運用代行、システム構築、AIを使った事務。就労継続支援B型のRYDEENは、PCやネットに親しむ方の通所の場です。三重県四日市市山城町。">
+
+<meta property="og:title" content="就労継続支援B型 RYDEEN｜三重県四日市市｜星心会">
+<meta property="og:description" content="SNS運用代行、システム構築、AIを使った事務。就労継続支援B型のRYDEENは、PCやネットに親しむ方の通所の場です。三重県四日市市山城町。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.psr-seishinkai.org/img/hero_top.jpg">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../img/favicon.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=20261102_custom">
+<style>
+/* ========================================================
+   RYDEEN プレミアム・モダンデザイン（明るく立体的な先進スタイル）
+   ======================================================== */
+:root {
+  --ry-blue: #0284c7;
+  --ry-cyan: #06b6d4;
+  --ry-ink: #0f172a;
+  --ry-sub: #475569;
+  --ry-bg: #f8fafc;
+  --ry-card: #ffffff;
+  --ry-border: #e2e8f0;
+  --ry-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --ry-shadow-lg: 0 20px 35px -10px rgba(2, 132, 199, 0.15);
+}
+
+body.aud-self {
+  background: var(--ry-bg) !important;
+  color: var(--ry-ink) !important;
+}
+
+
+/* ========================================================
+   RYDEEN ヒーローエリア：先進テック・リッチスタイル
+   ======================================================== */
+.ry-hero {
+  position: relative;
+  /* 深い宇宙空間のようなダークネイビーと、極小グリッドメッシュ */
+  background-color: #070a13 !important;
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.25) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
+  color: #ffffff !important;
+  padding: 56px 20px 64px !important;
+  border-bottom: 2px solid rgba(14, 165, 233, 0.3) !important;
+  overflow: hidden;
+}
+
+/* 背景にふわっと浮かぶ光のオーブ（先進感の演出） */
+.ry-hero::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -10%;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.ry-hero-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* 上部ロゴ・バッジエリア */
+.ry-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.ry-logo {
+  width: 76px;
+  height: 76px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.45), 0 10px 20px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: #000;
+}
+
+.ry-tag {
+  display: inline-block;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  letter-spacing: 0.06em;
+}
+
+/* サービス名見出し（不自然な改行を防止） */
+.ry-hero h1 {
+  font-size: clamp(23px, 5.5vw, 32px) !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 24px !important;
+  word-break: keep-all; /* 単語の途中での不自然な改行を防止 */
+  overflow-wrap: break-word;
+}
+
+/* キャッチコピー：鮮烈なグラデーション＋大文字タイポグラフィ */
+.ry-lead {
+  font-size: clamp(24px, 6vw, 34px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25 !important;
+  margin-bottom: 20px !important;
+  background: linear-gradient(135deg, #ffffff 20%, #38bdf8 70%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
+}
+
+/* 本文テキスト：すっきり読みやすくカード風に一段落置く */
+.ry-desc {
+  font-size: 14.5px !important;
+  line-height: 2 !important;
+  color: #94a3b8 !important;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #38bdf8;
+  padding: 16px 18px !important;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 28px !important;
+  backdrop-filter: blur(8px);
+}
+
+/* 開所ステータスバッジ */
+.ry-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #e0f2fe;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+}
+
+.ry-status::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+/* メインコンテンツエリア */
+.ry-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+.ry-sec-title {
+  margin-bottom: 20px;
+}
+
+.ry-sec-title .en {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--ry-blue);
+  text-transform: uppercase;
+}
+
+.ry-sec-title h2 {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  color: var(--ry-ink) !important;
+  margin-top: 4px;
+}
+
+/* 4つの実務：白×立体的カードデザイン */
+.ry-works-box {
+  background: #ffffff !important;
+  border: 1px solid var(--ry-border) !important;
+  border-radius: 20px !important;
+  padding: 28px 20px !important;
+  box-shadow: var(--ry-shadow) !important;
+  margin-bottom: 48px !important;
+}
+
+.ry-works-intro {
+  font-size: 15px !important;
+  color: var(--ry-ink) !important;
+  font-weight: 600 !important;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.chips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.chips-grid button {
+  background: #f8fafc !important;
+  border: 2px solid var(--ry-border) !important;
+  color: var(--ry-ink) !important;
+  padding: 16px 10px !important;
+  border-radius: 12px !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.chips-grid button:hover {
+  border-color: var(--ry-blue) !important;
+  transform: translateY(-2px);
+}
+
+.chips-grid button.on {
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  border-color: #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+.ry-ans-box {
+  margin-top: 20px !important;
+  background: #f0f9ff !important;
+  border: 1px solid #bae6fd !important;
+  border-left: 5px solid var(--ry-blue) !important;
+  padding: 20px !important;
+  border-radius: 12px !important;
+  font-size: 14.5px !important;
+  line-height: 1.85 !important;
+  color: #0c4a6e !important;
+  font-weight: 500 !important;
+  min-height: 5em;
+}
+
+/* 進め方（ステップカード） */
+.steps .sbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.sbar i {
+  height: 5px;
+  flex: 1;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  transition: 0.3s;
+}
+.sbar i.on {
+  background: var(--ry-blue);
+}
+
+.ry-step-card {
+  background: #ffffff !important;
+  border: 1px solid var(--ry-border) !important;
+  border-radius: 20px !important;
+  padding: 32px 24px !important;
+  box-shadow: var(--ry-shadow) !important;
+  min-height: 280px;
+}
+
+.ry-step-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 42px !important;
+  font-weight: 800 !important;
+  color: var(--ry-blue) !important;
+  line-height: 1;
+}
+
+.ry-step-num small {
+  font-size: 15px;
+  color: #94a3b8;
+  margin-left: 6px;
+}
+
+.ry-step-badge {
+  font-size: 11px;
+  color: var(--ry-blue);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-top: 10px;
+}
+
+.ry-step-card h3 {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--ry-ink) !important;
+  margin: 6px 0 10px !important;
+}
+
+.ry-step-card p {
+  font-size: 15px !important;
+  color: var(--ry-sub) !important;
+  line-height: 1.8 !important;
+}
+
+/* 基本情報テーブル */
+.ry-info-card {
+  background: #ffffff !important;
+  border: 1px solid var(--ry-border) !important;
+  border-radius: 20px !important;
+  padding: 8px 24px !important;
+  box-shadow: var(--ry-shadow) !important;
+}
+
+dl.ry-info dt, dl.ry-info dd {
+  padding: 18px 0 !important;
+  border-bottom: 1px solid var(--ry-border) !important;
+  font-size: 14.5px !important;
+}
+
+dl.ry-info dt {
+  color: #64748b !important;
+  font-weight: 700 !important;
+}
+
+dl.ry-info dd {
+  color: var(--ry-ink) !important;
+  font-weight: 500 !important;
+}
+
+/* CTAエリア */
+.ry-cta {
+  background: #ffffff !important;
+  border-top: 1px solid var(--ry-border) !important;
+  padding: 64px 20px !important;
+  text-align: center;
+}
+
+.ry-cta h2 {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: var(--ry-ink) !important;
+}
+
+.ry-cta-btns {
+  display: flex;
+  gap: 14px;
+  max-width: 400px;
+  margin: 28px auto 0;
+}
+
+.ry-btn-line {
+  background: #06c755 !important;
+  box-shadow: 0 4px 16px rgba(6, 199, 85, 0.3) !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+}
+
+.ry-btn-tel {
+  background: #ffffff !important;
+  color: var(--ry-ink) !important;
+  border: 2px solid var(--ry-border) !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+}
+
+.ry-btn-tel:hover {
+  border-color: var(--ry-blue) !important;
+  color: var(--ry-blue) !important;
+}
+
+.ry-tel-num {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  color: var(--ry-ink) !important;
+}
+
+/* フローティング相談ボタン */
+.fab {
+  background: var(--ry-blue) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.4) !important;
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XVX8LZ4DXC"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XVX8LZ4DXC');
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.psr-seishinkai.org/#org", "name": "一般社団法人 心理社会的リハビリテーション・星心会", "alternateName": "星心会", "url": "https://www.psr-seishinkai.org/", "telephone": "059-315-0697", "address": {"@type": "PostalAddress", "postalCode": "512-8048", "addressCountry": "JP", "addressRegion": "三重県", "addressLocality": "四日市市", "streetAddress": "山城町59-4"}, "areaServed": ["四日市市", "三重県", "名古屋市", "愛知県"], "sameAs": ["https://x.com/gcbfhq", "https://www.instagram.com/psr_seishinkai/", "https://www.threads.com/@psr_seishinkai"], "logo": "https://www.psr-seishinkai.org/img/logo_black.svg"}, {"@type": "LocalBusiness", "name": "RYDEEN", "description": "SNS運用代行、システム構築、AIを使った事務。就労継続支援B型のRYDEENは、PCやネットに親しむ方の通所の場です。三重県四日市市山城町。", "parentOrganization": {"@id": "https://www.psr-seishinkai.org/#org"}, "telephone": "059-315-0697", "url": "https://www.psr-seishinkai.org/rydeen/", "address": {"@type": "PostalAddress", "postalCode": "512-8048", "addressCountry": "JP", "addressRegion": "三重県", "addressLocality": "四日市市", "streetAddress": "山城町59-4"}}]}</script>
+<!--enh:css--><style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}</style><!--/enh:css--><!--enh:faqld--><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "いつ開所しましたか？", "acceptedAnswer": {"@type": "Answer", "text": "2026年11月1日に開所しました。"}}, {"@type": "Question", "name": "PCはどの程度使えればいいですか？", "acceptedAnswer": {"@type": "Answer", "text": "得意な方も、これから得意にしたい方も対象です。見学・体験で作業内容を確認し、担当を決めます。"}}, {"@type": "Question", "name": "どんな作業をしますか？", "acceptedAnswer": {"@type": "Answer", "text": "SNS運用代行、システム構築、AIを使った事務です。AIエージェントへの自然な会話文による指示で進めます。"}}, {"@type": "Question", "name": "工賃はいくらですか？", "acceptedAnswer": {"@type": "Answer", "text": "開所したばかりのため、工賃の実績は準備中です。実績が出しだい公開します。"}}, {"@type": "Question", "name": "名古屋から通えますか？", "acceptedAnswer": {"@type": "Answer", "text": "通えます。名古屋西ICから車で約30分、三岐線 山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。"}}]}</script><!--/enh:faqld--></head>
+<body class="aud-self">
+
+<header class="gh">
+  <a class="logo" href="../"><img src="../img/mark_black.svg" alt="星心会 ロゴ"><span>星心会</span></a>
+  <nav>
+    <a href="../#self">ご本人</a>
+    <a href="../#family">ご家族</a>
+    <a href="../#parents">保護者</a>
+    <a href="../#partners">企業・支援機関</a>
+    <a href="../access/">アクセス</a>
+    <div class="sns">
+      <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
+      <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg></a>
+      <a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.3-.1c-.2-3.3-2-5.1-5-5.2h-.1c-1.8 0-3.3.8-4.2 2.2l1.6 1.1c.7-1 1.7-1.2 2.6-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.7-.2-2.6-.1-2.6.1-4.3 1.7-4.2 3.8.1 1.1.6 2 1.5 2.6.8.5 1.8.8 2.8.7 1.4-.1 2.4-.6 3.2-1.5.6-.7.9-1.6 1.1-2.7.7.4 1.2.9 1.4 1.6.5 1.1.5 2.9-1 4.4-1.3 1.3-2.9 1.9-5.3 1.9-2.6 0-4.6-.9-5.9-2.5C5.2 17.1 4.5 14.8 4.5 12s.7-5.1 1.9-6.6C7.7 3.8 9.7 3 12.3 3c2.7 0 4.7.8 6 2.5.7.8 1.2 1.8 1.5 3l1.9-.5c-.4-1.5-1-2.7-1.9-3.8C18.2 2.1 15.7 1 12.3 1h-.1C8.9 1 6.4 2.1 4.7 4.2 3.2 6.1 2.5 8.7 2.5 12s.7 5.9 2.2 7.8c1.7 2.1 4.2 3.2 7.5 3.2h.1c2.9 0 5-.8 6.7-2.5 2.3-2.3 2.2-5.1 1.4-6.9-.5-1.2-1.6-2.2-2.7-2.5zm-5 4.9c-1.1.1-2.3-.4-2.4-1.5 0-.8.6-1.7 2.4-1.8h.6c.7 0 1.3.1 1.9.2-.2 2.7-1.5 3-2.5 3.1z"/></svg></a>
+    </div>
+  </nav>
+  <a class="cta-btn" href="../contact/">相談する</a>
+  <button class="menu-btn" aria-label="メニュー"><i></i><i></i></button>
+</header>
+
+<div class="drawer">
+  <h4>ご本人</h4>
+  <a href="../suishodama/">水晶玉<small>メンタルヘルスコーディネート</small></a>
+  <a href="../shichirin/">しちりんの会<small>自費参加</small></a>
+  <a href="../rydeen/">RYDEEN<small>PCで働く</small></a>
+  <a href="../ryozanpaku/">梁山泊<small>メンタルピアレジデンス</small></a>
+  <h4>ご家族</h4>
+  <a href="../kintoun/">金斗雲<small>訪問</small></a>
+  <a href="../chamu/">茶夢<small>日中の居場所</small></a>
+  <h4>お子さまの保護者</h4>
+  <a href="../leo/">レオ<small>子どもの情緒</small></a>
+  <a href="../leo/parent-training/">ペアレントトレーニング<small>保護者向け</small></a>
+  <a href="../leo/assessment/">発達検査<small>WISC-V・新版K式</small></a>
+  <h4>企業・支援機関</h4>
+  <a href="../business/employment/">雇用定着サポート<small>職場定着</small></a>
+  <a href="../business/stress-check/">ストレスチェック<small>ラインケア</small></a>
+  <a href="../business/stress-check-training/">ストレスチェック研修<small>実施者養成</small></a>
+  <a href="../business/agent-consulting/">エージェントコンサル<small>AI導入</small></a>
+  <a href="../business/training/">研修<small>児童指導員・護身術</small></a>
+  <h4>INFO</h4>
+  <a href="../about/">星心会について</a>
+  <a href="../access/">アクセス</a>
+  <a href="../faq/">よくある質問</a>
+  <a href="../contact/">相談する</a>
+</div>
+
+<!-- 刷新されたヒーローセクション -->
+<section class="ry-hero">
+  <div class="ry-hero-inner">
+    <div class="ry-badge-wrap">
+      <img class="ry-logo" src="../img/rydeen_logo.webp" alt="RYDEEN ロゴ" width="90" height="90">
+      <div>
+        <span class="ry-tag">就労継続支援B型事業所</span>
+        <p style="font-size:12px;letter-spacing:0.18em;color:#7dd3fc;margin-top:6px;font-weight:700">RYDEEN · YOKKAICHI</p>
+      </div>
+    </div>
+    <h1>次世代労働研究所 RYDEEN（ライディーン）</h1>
+    <p class="ry-lead">AIエージェントで独立</p>
+    <p class="ry-desc">
+      SNS運用代行、システム構築、AIを使った事務作業。<br>
+      練習のための作業ではなく、現場の実務を担います。<br>
+      最新のAIエージェントを利用者さんに持たせて運用します。<br>
+      障害年金 ＋ 副業で自活できる未来を目指すB型事業所です。
+    </p>
+    <div>
+      <span class="ry-status">● 2026年11月1日 開所</span>
+    </div>
+  </div>
+</section>
+
+<!-- 4つの実務（インタラクティブ操作カード） -->
+<main class="ry-container">
+  <div class="ry-sec-title">
+    <span class="en">WHAT WE DO</span>
+    <h2>4つの実務</h2>
+    <p style="color:#64748b;font-size:15px;margin-top:6px">ボタンを押すと、具体的な実務内容を確認できます。</p>
+  </div>
+
+  <div class="ry-works-box">
+    <p class="ry-works-intro">難しそうに見えますが、すべてAIへの自然な会話文による指示でできることです。</p>
+    <div class="chips chips-grid">
+      <button data-a="企業・店舗のSNSを、投稿の企画から作成・予約まで請け負います。クライアントとの打ち合わせから参画します。">SNS運用代行</button>
+      <button data-a="クライアントに必要なシステムをゼロから作ります。AIをコーディングの相棒として使うため、プログラミング未経験でも構築が可能です。">システム構築</button>
+      <button data-a="AIを道具として使い、文書作成やデータ整理をこなします。使い方は現場で実践しながら覚えます。">AI事務</button>
+      <button data-a="その他、AI活用によるマネタイズを日々研究して実践していきます！あなたのアイデアが即、カタチに。スタッフ主導ではなく、むしろあなたが主体となって考えてください。">副業マネタイズ</button>
+    </div>
+    <div class="ans ry-ans-box" style="white-space:pre-line">ボタンを押すと詳しい作業内容が表示されます。</div>
+  </div>
+
+  <!-- 進め方（ステップ案内） -->
+  <div class="ry-sec-title">
+    <span class="en">PROCESS</span>
+    <h2>進め方</h2>
+    <p style="color:#64748b;font-size:15px;margin-top:6px">ボタンを押してステップを確認できます。</p>
+  </div>
+
+  <div class="steps" data-cta="../contact/" style="margin-bottom:60px">
+    <script type="application/json">[["VISIT", "見学", "作業内容と職場の環境を実際にご確認いただきます。"], ["TRIAL", "体験", "実際の作業を体験し、適性を確認。通所ペースと担当業務を相談して決めます。"], ["CONTRACT", "手続き", "書類作成と受給者証などの申請手続きはこちらで進めます。難しい知識は一切不要です。"], ["WORK", "通所", "担当業務を持ち、実務として納品を始めます。"]]</script>
+    <div class="sbar"></div>
+    <div class="card ry-step-card">
+      <div class="num ry-step-num"></div>
+      <div class="k ry-step-badge"></div>
+      <h3></h3>
+      <p></p>
+      <div class="ctl">
+        <button class="ghost prev">もどる</button>
+        <button class="btn next" style="background:var(--ry-primary);color:#fff;border-radius:8px;padding:12px 28px;border:none;cursor:pointer;font-weight:700">次へ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 対象・費用・場所 -->
+  <div class="ry-sec-title">
+    <span class="en">INFORMATION</span>
+    <h2>対象・費用・場所</h2>
+  </div>
+
+  <div class="ry-info-card">
+    <dl class="info ry-info">
+      <dt>対象</dt>
+      <dd>PC作業が得意な方、またはこれから得意にしたい方（普段からSNSやネットに親しんでいる方）</dd>
+      <dt>場所</dt>
+      <dd>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分 ／ 四日市駅から三岐バス「団地下」下車</dd>
+      <dt>開所日</dt>
+      <dd>2026年11月1日</dd>
+      <dt>通い方</dt>
+      <dd>通所（在宅不可・送迎なし）</dd>
+      <dt>利用時間</dt>
+      <dd>平日 11:00 ～ 14:00</dd>
+      <dt>費用</dt>
+      <dd>就労継続支援B型の公的利用につき原則無料（所得区分に応じ自己負担上限あり）</dd>
+      <dt>お申し込み</dt>
+      <dd>見学予約はお電話、または公式LINEより承ります。</dd>
+    </dl>
+  </div>
+
+  <!-- 関連事業リンク -->
+  <div class="rel" style="padding:48px 0 0">
+    <span class="en" style="color:var(--ry-primary);font-size:12px;font-weight:700;letter-spacing:0.12em">RELATED SERVICES</span>
+    <div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px">
+      <a class="btn" style="background:#fff;border:1px solid #cbd5e1;color:#0f172a;text-align:center;padding:16px;border-radius:10px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.04)" href="../ryozanpaku/">自立支援寮 梁山泊 →</a>
+      <a class="btn" style="background:#fff;border:1px solid #cbd5e1;color:#0f172a;text-align:center;padding:16px;border-radius:10px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.04)" href="../suishodama/">環境調整支援 水晶玉 →</a>
+    </div>
+  </div>
+</main>
+
+<!-- お問い合わせ CTA -->
+<!--enh:open--><section class="enh"><span class="en">NEWS</span><h2>2026年11月1日に開所しました</h2><p>就労継続支援B型 RYDEENは、2026年11月1日に三重県四日市市山城町59-4で開所しました。</p><h3>主な作業</h3><ul><li><b>SNS運用代行</b>：企業・店舗のSNSを、投稿の企画から作成・予約まで請け負います。</li><li><b>システム構築</b>：クライアントに必要なシステムをゼロから作ります。</li><li><b>AI事務</b>：AIを道具として使い、文書作成やデータ整理をします。</li></ul><h3>工賃</h3><p>開所したばかりのため、工賃の実績は準備中です。実績が出しだい公開します。</p><p><a href="../news/">お知らせ一覧</a></p></section><!--/enh:open--><!--enh:faq--><section class="enh" id="faq"><span class="en">FAQ</span><h2>よくある質問</h2><h3>いつ開所しましたか？</h3><p>2026年11月1日に開所しました。</p><h3>PCはどの程度使えればいいですか？</h3><p>得意な方も、これから得意にしたい方も対象です。見学・体験で作業内容を確認し、担当を決めます。</p><h3>どんな作業をしますか？</h3><p>SNS運用代行、システム構築、AIを使った事務です。AIエージェントへの自然な会話文による指示で進めます。</p><h3>工賃はいくらですか？</h3><p>開所したばかりのため、工賃の実績は準備中です。実績が出しだい公開します。</p><h3>名古屋から通えますか？</h3><p>通えます。名古屋西ICから車で約30分、三岐線 山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。</p></section><!--/enh:faq--><section class="cta ry-cta" id="contact">
+  <p class="en" style="color:var(--ry-primary);font-weight:700;letter-spacing:0.12em">CONTACT</p>
+  <h2>見学・体験を申し込む</h2>
+  <p style="color:#64748b;margin-top:8px;font-size:15px">診断や詳しい知識がなくても、まずはお気軽にご相談ください。</p>
+  <div class="row ry-cta-btns">
+    <a class="w ry-btn-line" href="../contact/#line">LINEで相談</a>
+    <a class="o ry-btn-tel" href="tel:0593150697">お電話で相談</a>
+  </div>
+  <a class="tnum ry-tel-num" href="tel:0593150697">TEL：059-315-0697</a>
+</section>
+
+<footer class="gf">
+  <div class="in">
+    <div>
+      <a class="logo" href="../"><img src="../img/mark_black.svg" alt="星心会"><span>星心会</span></a>
+      <p style="margin-top:12px;font-size:13px;line-height:1.8;color:#64748b">一般社団法人 心理社会的リハビリテーション・星心会<br>〒512-8048 三重県四日市市山城町59-4<br>TEL <a href="tel:0593150697">059-315-0697</a><br>名古屋西ICより車で約30分／三岐線 山城駅徒歩5分</p>
+    </div>
+    <div>
+      <h5>ご本人</h5>
+      <ul>
+        <li><a href="../suishodama/">水晶玉</a></li>
+        <li><a href="../shichirin/">しちりんの会</a></li>
+        <li><a href="../rydeen/">RYDEEN</a></li>
+        <li><a href="../ryozanpaku/">梁山泊</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>ご家族</h5>
+      <ul>
+        <li><a href="../kintoun/">金斗雲</a></li>
+        <li><a href="../chamu/">茶夢</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>お子さまの保護者</h5>
+      <ul>
+        <li><a href="../leo/">レオ</a></li>
+        <li><a href="../leo/parent-training/">ペアレントトレーニング</a></li>
+        <li><a href="../leo/assessment/">発達検査</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>企業・支援機関</h5>
+      <ul>
+        <li><a href="../business/employment/">雇用定着サポート</a></li>
+        <li><a href="../business/stress-check/">ストレスチェック</a></li>
+        <li><a href="../business/stress-check-training/">実施者養成研修</a></li>
+        <li><a href="../business/agent-consulting/">エージェントコンサル</a></li>
+        <li><a href="../business/training/">研修</a></li>
+      </ul>
+    </div>
+    <p class="cp">© 星心会 一般社団法人 心理社会的リハビリテーション・星心会</p>
+  </div>
+</footer>
+
+<a class="fab" href="../contact/">相談する</a>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -20,9 +20,7 @@ ICON={'X':'<svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3
 'Instagram':'<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>',
 'Threads':'<svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.3-.1c-.2-3.3-2-5.1-5-5.2h-.1c-1.8 0-3.3.8-4.2 2.2l1.6 1.1c.7-1 1.7-1.2 2.6-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.7-.2-2.6-.1-2.6.1-4.3 1.7-4.2 3.8.1 1.1.6 2 1.5 2.6.8.5 1.8.8 2.8.7 1.4-.1 2.4-.6 3.2-1.5.6-.7.9-1.6 1.1-2.7.7.4 1.2.9 1.4 1.6.5 1.1.5 2.9-1 4.4-1.3 1.3-2.9 1.9-5.3 1.9-2.6 0-4.6-.9-5.9-2.5C5.2 17.1 4.5 14.8 4.5 12s.7-5.1 1.9-6.6C7.7 3.8 9.7 3 12.3 3c2.7 0 4.7.8 6 2.5.7.8 1.2 1.8 1.5 3l1.9-.5c-.4-1.5-1-2.7-1.9-3.8C18.2 2.1 15.7 1 12.3 1h-.1C8.9 1 6.4 2.1 4.7 4.2 3.2 6.1 2.5 8.7 2.5 12s.7 5.9 2.2 7.8c1.7 2.1 4.2 3.2 7.5 3.2h.1c2.9 0 5-.8 6.7-2.5 2.3-2.3 2.2-5.1 1.4-6.9-.5-1.2-1.6-2.2-2.7-2.5zm-5 4.9c-1.1.1-2.3-.4-2.4-1.5 0-.8.6-1.7 2.4-1.8h.6c.7 0 1.3.1 1.9.2-.2 2.7-1.5 3-2.5 3.1z"/></svg>'}
 SVCS=[ # key,name,url,cat,line,thumb
-('suishodama','水晶玉','suishodama/','メンタルヘルスコーディネート（環境調整）','眠れない、気分の波がある。原因の環境から手を打ちます。','consult'),
 ('shichirin','しちりんの会','shichirin/','自費参加｜手続き不要','七輪で火を起こし、焼いて食べます。手続きも診断も要りません。','fish'),
-('rydeen','RYDEEN','rydeen/','PCで働く｜2026年11月1日開所','仕事が続かない人が、PCの実務で働く職場です。',None),
 ('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。','homemeal'),
 ('chamu','茶夢','chamu/','統合失調症・自閉症の方のための日中の居場所','料理・喫茶・読書・アートで、日中を安全に過ごす場所です。','counter'),
 ('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。',None),
@@ -64,7 +62,7 @@ for _i,_s in enumerate(SVCS):
 SV={s[0]:s for s in SVCS}
 CHROME={}
 CUR={}
-AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['suishodama','shichirin','rydeen','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
+AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['shichirin','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
 ('parents','お子さまの保護者','FOR PARENTS','落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。',['leo','parent','assess'],'落ち着かない・かんしゃく・発達が気になる'),
 ('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','sct','agent','training'],'職場定着・ストレスチェック・研修')]
@@ -79,7 +77,7 @@ def aud_slug(path, explicit=None):
     s=_norm_aud(explicit)
     if s: return s
     p=(path or '').strip().strip('/')
-    if p in ('rydeen','ryozanpaku','shichirin','suishodama'): return 'self'
+    if p in ('ryozanpaku','shichirin'): return 'self'
     if p in ('chamu','kintoun'): return 'family'
     if p=='leo' or p.startswith('leo/'): return 'parents'
     if p=='business' or p.startswith('business/'): return 'partners'
@@ -182,12 +180,10 @@ COMMON=[('診断がなくてもいいですか？','かまいません。診断�
 ('手続きが難しそうです。','書類と手続きはこちらで進めます。知識は要りません。'),
 ('いくらかかりますか？','公的制度を使います。所得に応じた負担上限があり、多くは自己負担なしか低額です。金額は初回連絡でお示しします。'),
 ('家族に知られずに相談できますか？','できます。連絡方法は本人の指定に従います。')]
-CP={'suishodama/','rydeen/','chamu/','leo/','kintoun/','ryozanpaku/'}
+CP={'chamu/','leo/','kintoun/','ryozanpaku/'}
 # 事業ページの <title> と meta description。事業種別・地域・対象を機械が読めるようにする。本文は変えない。
 SEO={
  'kintoun/':('居宅介護 金斗雲｜三重県四日市市｜星心会','家から出られない、窓口に行けない。金斗雲は、外に出にくい方とそのご家族のための居宅介護（訪問支援）です。出向くのは四日市市と菰野町を中心とした三重県内です。'),
- 'suishodama/':('環境調整支援 水晶玉｜三重県四日市市｜星心会','心の不調・家庭環境・就労環境・人間関係。水晶玉は、その環境を評価し設計し手配するメンタルヘルスコーディネート（環境調整）です。三重県四日市市山城町です。'),
- 'rydeen/':('就労継続支援B型 RYDEEN｜三重県四日市市｜星心会','SNS運用代行、システム構築、AIを使った事務。就労継続支援B型のRYDEENは、PCやネットに親しむ方の通所の場です。三重県四日市市山城町。'),
  'leo/':('児童発達支援・放課後等デイサービス レオ｜三重県四日市市｜星心会','情緒を整え、落ち着きを取り戻すことを目指す療育。児童発達支援・放課後等デイサービスのレオは、発達が気になる満1歳から18歳までが対象です。三重県四日市市あさけが丘。'),
  'chamu/':('生活介護 茶夢｜三重県四日市市｜星心会','統合失調症・自閉症の方のための日中の居場所。生活介護事業所の茶夢は、料理・喫茶・読書・アートで静かに過ごす場です。短時間利用可。三重県四日市市あさけが丘。'),
  'ryozanpaku/':('メンタルピアレジデンス 梁山泊｜三重県四日市市｜星心会','メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。'),
@@ -208,11 +204,29 @@ def construction_page(path, name):
     o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">',1)
     o+=f'''<section class="hero short type"><div class="hin"><p class="en">UNDER CONSTRUCTION</p><h1>工事中</h1><p class="sub">{esc(name)}</p><p class="sub" style="max-width:26em;line-height:1.9;margin-top:16px">このページはただいま準備中です。<br>公開までしばらくお待ちください。</p><a class="go" href="{rel}">トップへ戻る</a></div></section>'''
     o+=footer(rel); write(path,o)
+def write_paused(path, name):
+    rel=relof(path)
+    title=name+'は休止しています｜星心会'
+    desc=name+'は休止しています。現在、利用の申し込みは受け付けていません。'
+    o=head(rel,title,desc,path)
+    o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">',1)
+    o+=header(rel)
+    o+=f'''<section class="hero short type" style="min-height:42svh"><div class="hin"><p class="en">PAUSED</p><h1 class="long">{esc(name)}は休止しています</h1>
+<p class="sub" style="max-width:28em;line-height:1.9;margin-top:16px">現在、この事業の利用申し込みは受け付けていません。</p>
+<p class="sub" style="margin-top:18px"><a class="go" href="{rel}contact/">相談フォーム</a></p>
+<p class="sub"><a href="tel:0593150697">059-315-0697</a></p>
+<p class="sub"><a href="{rel}">トップへ戻る</a></p></div></section>'''
+    o+=footer(rel)
+    write(path,o)
+
 def service_page(d):
     path=d['path']
-    # RYDEEN は承認済みの手置き HTML を正とする。ビルドで書き戻すと Gemini 案が消える。
-    if path=='rydeen/' and os.path.isfile(os.path.join(OUT,'rydeen','index.html')): return
+    if path=='suishodama/':
+        write_paused(path,'水晶玉'); return
+    if path=='rydeen/':
+        write_paused(path,'RYDEEN（ライディーン）'); return
     if path=='leo/' and os.path.isfile(os.path.join(OUT,'leo','index.html')): return
+    if path=='chamu/' and os.path.isfile(os.path.join(OUT,'chamu','index.html')): return
     if path in DOCMETA and DOCMETA[path][0]: d['name']=DOCMETA[path][0]
     if under_construction(path):
         construction_page(path, d.get('name')); return
@@ -440,7 +454,7 @@ PAGES.append(dict(path='shichirin/',name='しちりんの会',en='SHICHIRIN',pho
  flow=[["APPLY","申し込み","LINEまたは電話で参加希望をお伝えください。"],["DATE","日程の連絡","開催日と集合場所をご連絡します。開催は不定期の土曜日です。"],["DAY","当日","11:00から、火を起こし、焼いて、食べます。"]],
  info=[('種別','自費参加'),('日時','不定期土曜日 11:00〜'),('場所','三重県菰野町田光'),('参加費','食材費込み 3,000円'),('手続き','不要。診断も不要'),('申し込み','LINEまたは電話')],
  faq=[('手続きは必要ですか？','不要です。自費参加で、診断も要りません。'),('眠れないだけでも参加していいですか？','参加できます。理由は問いません。'),('費用は？','食材費込み3,000円です。'),('次の開催日は？','不定期の土曜日です。申し込み時にご案内します。'),('名古屋から参加できますか？','参加できます。会場は三重県菰野町田光です。詳しい場所は申し込み後にご案内します。'),('一人で参加してもいいですか？','参加できます。')],
- rel=[('RYDEEN','rydeen/'),('梁山泊','ryozanpaku/')],cta_h='参加を申し込む'))
+ rel=[('梁山泊','ryozanpaku/'),('相談する','contact/')],cta_h='参加を申し込む'))
 
 def leo_extra(rel):
     b=_slot('parents'); h4=b.get('h4') or []
@@ -493,7 +507,7 @@ PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',big='金',
  gal=[('kitchen_prep','台所の下ごしらえ'),('clothes','古着屋へ'),('snackwalk','街歩き'),('storefront','街の店先')],
  flow=[["CONTACT","相談","本人でも家族でも、電話またはLINEでご連絡ください。"],["VISIT","訪問","まず話を聞きます。無理に外へ出そうとはしません。"],["PLAN","計画","必要な支援を決めます。"+TEJUN],["SUPPORT","支援開始","定期的に訪問し、生活と外出の範囲を少しずつ広げます。"]],
  info=[('対象','外に出にくい方、そのご家族'),('訪問地域','四日市市・菰野町など三重県内 '+ph('実施地域の詳細')),('事業所','三重県三重郡菰野町田光1801-165'),('担当','精神保健福祉士などの有資格者'),('費用','公的制度の利用可。所得に応じた負担上限あり。手続きはこちらで代行'),('申し込み','電話またはLINE')],
- faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋の方は水晶玉にご相談ください。'),('家庭の環境ごと見直したい場合は？','家庭や職場の環境を整える<a href="../suishodama/" style="display:inline;color:var(--hi)">水晶玉</a>で、ご家族からの相談を受け付けます。')],
+ faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。'),('家庭の環境ごと見直したい場合は？','ご家族からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。')],
  rel=[('茶夢','chamu/'),('ご家族の方へ','#family')],cta_h='相談する'))
 
 PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
@@ -504,7 +518,7 @@ PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,ex
  flow=[["CONTACT","問い合わせ","電話またはLINEで、今の仕事と住まいの状況を要点だけお伝えください。"],["VISIT","見学・面談","建物と暮らし方を確認し、入居の条件を説明します。"],["MOVE","入居","通勤と生活のリズムを組み立てます。"],["KEEP","定着","崩れの兆しは早めに拾い、環境を調整します。職場・紹介元との連携窓口は本部が一本で受けます。"]],
  info=[('正式名称','メンタルピアレジデンス・梁山泊'),('対象','仕事を続けたい、心の波を抱える社会人／親元を出たい人 '+ph('入居条件')),('場所','三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分'),('費用','家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）'),('申し込み','電話 059-315-0697 またはLINE')],
  faq=[('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。紹介・連携の窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),('親に知られずに相談できますか？','対応します。連絡方法は本人の指定に従います。'),('費用は？','家賃は月8万円です。ほかに費用はかかりません。'),('名古屋から移り住めますか？','移り住めます。名古屋西ICから車で約30分です。')],
- rel=[('水晶玉','suishodama/'),('しちりんの会','shichirin/')],cta_h='見学を申し込む'))
+ rel=[('しちりんの会','shichirin/'),('相談する','contact/')],cta_h='見学を申し込む'))
 
 BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('stress-check-training','ストレスチェック実施者養成研修','PRACTITIONER TRAINING','実施者になるための研修を、オンラインで行います。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','Grok Botを、事業所の職員にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
 PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',photo='karate_sit',short=True,type='Service',
@@ -1077,7 +1091,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">REPRESENTATIVE</span><h2>代表</h2></div><div class="prose"><p><b>齊藤 蓮</b>（さいとう・れん）<br>公認心理師／精神保健福祉士／第二種衛生管理者／農福連携技術支援者（農林水産省認定）</p>
 <p>1984年、三重県津市生まれです。早稲田大学第一文学部東洋哲学専修を卒業後、毎日新聞グループに入社しました。東京での6年間の企業勤務を経て精神保健福祉士に転身し、精神科デイケアに6年間勤務したのち、2022年に独立開業しました。現在、同朋大学大学院でメンタルヘルスのリハビリテーションを研究しています。</p></div></section>
-<section class="blk wide" style="padding-top:0"><div class="h"><span class="en">STAFF</span><h2>専門職</h2></div><dl class="info"><dt>加藤 幸弘</dt><dd>公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務。<a href="{rel}leo/parent-training/" style="display:inline;color:var(--hi)">ペアレントトレーニング</a>とレオの職員研修を担当。</dd><dt>あんどう</dt><dd>公認心理師（滋賀大学教育学部卒業）。<a href="{rel}leo/assessment/" style="display:inline;color:var(--hi)">発達検査</a>を担当。</dd><dt>各事業所</dt><dd>水晶玉：相談支援専門員、精神保健福祉士など／金斗雲：介護福祉士、看護師など／茶夢：有資格者が対応</dd></dl></section>'''
+<section class="blk wide" style="padding-top:0"><div class="h"><span class="en">STAFF</span><h2>専門職</h2></div><dl class="info"><dt>加藤 幸弘</dt><dd>公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務。<a href="{rel}leo/parent-training/" style="display:inline;color:var(--hi)">ペアレントトレーニング</a>とレオの職員研修を担当。</dd><dt>あんどう</dt><dd>公認心理師（滋賀大学教育学部卒業）。<a href="{rel}leo/assessment/" style="display:inline;color:var(--hi)">発達検査</a>を担当。</dd><dt>各事業所</dt><dd>金斗雲：介護福祉士、看護師など／茶夢：有資格者が対応</dd></dl></section>'''
 simple_page('about/','星心会について｜理念・法人概要・代表｜三重県四日市市','一般社団法人 心理社会的リハビリテーション・星心会の理念「まず、情緒の安定です。」と、法人概要、代表プロフィールを掲載しています。三重県四日市市山城町。','星心会について','ABOUT',about,photo='walker')
 
 # ---------- access ----------
@@ -1085,7 +1099,7 @@ MAP='https://www.google.com/maps/search/?api=1&query='
 def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px">
 <ul class="lst" style="margin-top:22px"><li><b>車</b>名古屋西ICから約30分です。</li><li><b>電車</b>三岐鉄道三岐線「山城」駅から徒歩5分です。</li><li><b>バス</b>四日市駅から三岐バスで「団地下」下車です。</li></ul><p style="margin-top:14px"><a href="{rel}access/nagoya/" style="display:inline;color:var(--hi)">名古屋方面からの行き方 →</a></p></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">LOCATIONS</span><h2>拠点</h2></div><ul class="lst">
-<li><b>本部・水晶玉・RYDEEN・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
+<li><b>本部・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>茶夢・レオ</b>〒512-8055 三重県四日市市あさけが丘2-1-42（山城駅から徒歩12分）<br><a href="{MAP}三重県四日市市あさけが丘2-1-42" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>金斗雲</b>三重県三重郡菰野町田光1801-165</li><li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
 <section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="w" href="{rel}contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
@@ -1094,13 +1108,13 @@ simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐�
 # ---------- faq ----------
 FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は一般の賃貸住居で、家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。'),
 ('診断がなくても相談できますか？','できます。診断の有無は問いません。'),('家族から相談してもいいですか？','受け付けます。本人が動けない状態でも、家族からの相談で始められます。'),
-NAGOYA,('どこに相談すればいいかわかりません。','水晶玉が全事業の入口です。どの事業か決まっていなくても、059-315-0697へご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。'),
-('病院に通っていないと使えませんか？','使えます。通院の有無を前提にしていません。生活と環境の側から組み立てます。'),('人間関係に疲れています。どこに相談すればいいですか？','水晶玉で環境を整えるか、しちりんの会に参加してください。住まいごと変えたい方は梁山泊をご覧ください。')]
+NAGOYA,('どこに相談すればいいかわかりません。','どの事業か決まっていなくても、059-315-0697、または相談フォームへご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。'),
+('病院に通っていないと使えませんか？','使えます。通院の有無を前提にしていません。生活と環境の側から組み立てます。'),('人間関係に疲れています。どこに相談すればいいですか？','しちりんの会に参加するか、住まいごと変えたい方は梁山泊をご覧ください。')]
 FAQ_CATS=[('全体・はじめての方','common',FAQ),
 ('子ども（レオ・発達検査・ペアレントトレーニング）','kids',[('レオは何歳から利用できますか？','満1歳から18歳までです。小学校入学前は児童発達支援、小学生以降は放課後等デイサービスとして利用します。'),('受給者証はどこで申請しますか？','お住まいの市町です。四日市市はこども発達支援課（059-354-8064）、菰野町は子ども家庭課 発達支援係（059-391-1226）です。詳しくは<a href="{r}guide/jukyushasho/" style="display:inline;color:var(--hi)">受給者証ガイド</a>をご覧ください。'),('発達検査の料金は？','WISC-V（小1〜高2）・新版K式（未就学児）とも各25,000円（税込）です。事前面談、検査、結果報告書、フィードバック面談を含みます。'),('ペアレントトレーニングの費用は？','レオの利用者とそのご家族は無料、それ以外の方は1回4,000円です。水曜午前の予約制です。')]),
-('働く・日中の居場所（RYDEEN・茶夢）','work',[('RYDEENはいつ開所しましたか？','2026年11月1日に開所しました。SNS運用代行、システム構築、AIを使った事務を行う就労継続支援B型です。'),('RYDEENの工賃は？','開所したばかりのため、実績は準備中です。'),('茶夢の営業時間は？','平日11時〜15時です。短時間からの利用もできます。'),('人と話すのが苦手でも茶夢を利用できますか？','できます。少人数で活動しており、話さずに過ごすことも前提にしています。')]),
+('日中の居場所（茶夢）','work',[('茶夢の営業時間は？','平日11時〜15時です。短時間からの利用もできます。'),('人と話すのが苦手でも茶夢を利用できますか？','できます。少人数で活動しており、話さずに過ごすことも前提にしています。')]),
 ('住まい・訪問（梁山泊・金斗雲）','home',[('梁山泊の費用は？','家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。'),('金斗雲はどこまで訪問しますか？','四日市市・菰野町を中心とした三重県内です。'),('家族が家から出られません。','金斗雲で、ご家族からの相談を受け付けます。無理に外へ連れ出すことはしません。')]),
-('環境調整・自費の会（水晶玉・しちりんの会）','env',[('水晶玉の受付時間は？','平日8:30〜17:30です。'),('しちりんの会の費用は？','食材費込み3,000円です。手続きも診断も要りません。')])]
+('自費の会（しちりんの会）','env',[('しちりんの会の費用は？','食材費込み3,000円です。手続きも診断も要りません。')])]
 FAQ_ALL=[(q,a.replace('{r}','')) for _,_,l in FAQ_CATS for q,a in l]
 def faqb(rel):
     o='<section class="blk"><ul class="lst" style="margin-bottom:24px">'+''.join(f'<li><a href="#{k}"><span>{t}</span></a></li>' for t,k,_ in FAQ_CATS)+'</ul>'
@@ -1129,8 +1143,8 @@ def guide(rel):
 </div></div>
 <p class="src">出典：<a href="{Y}" target="_blank" rel="noopener">四日市市</a>／<a href="{K}" target="_blank" rel="noopener">菰野町</a>／三重県「市町窓口」（2026年11月確認）</p>
 <h2>② 受給者証が届くまで</h2>
-<div class="gsteps"><div class="st"><b>相談・申請</b>市町の窓口へ</div><div class="st"><b>計画案</b>相談支援事業所（水晶玉）が作成</div><div class="st"><b>提出</b>計画案を市町へ</div><div class="st"><b>支給決定</b>受給者証が届く</div><div class="st hi"><b>契約・利用</b>事業所と契約</div></div>
-<div class="help" style="margin-top:18px"><b>申請・計画案づくり・窓口の手続きは、星心会の相談支援事業所「水晶玉」が代行・サポートします。</b><br><a href="{rel}suishodama/">水晶玉について</a></div>
+<div class="gsteps"><div class="st"><b>相談・申請</b>市町の窓口へ</div><div class="st"><b>計画案</b>相談支援事業所が作成</div><div class="st"><b>提出</b>計画案を市町へ</div><div class="st"><b>支給決定</b>受給者証が届く</div><div class="st hi"><b>契約・利用</b>事業所と契約</div></div>
+<div class="help" style="margin-top:18px">手続きで迷ったときは、電話または<a href="{rel}contact/">相談フォーム</a>へご連絡ください。</div>
 <p class="src">大人のサービスでは、種類により障害支援区分の認定が入ります。くわしい流れは窓口でご確認ください。</p>
 <h2>③ 子どもと大人のちがい</h2>
 <table class="cmp"><tr><th></th><th class="k">子ども（18歳未満）</th><th class="a">大人（18歳以上）</th></tr>
@@ -1144,34 +1158,31 @@ def guide(rel):
 <div class="map">
 <a class="kid" href="{rel}leo/"><b>レオ</b><small>児童発達支援・放課後等デイサービス</small><span class="u">通所受給者証</span></a>
 <a class="adl" href="{rel}chamu/"><b>茶夢</b><small>生活介護・日中の居場所</small><span class="u">障害福祉サービス受給者証</span></a>
-<a class="adl" href="{rel}rydeen/"><b>RYDEEN</b><small>就労継続支援B型・PCで働く</small><span class="u">障害福祉サービス受給者証</span></a>
 <a class="adl" href="{rel}kintoun/"><b>金斗雲</b><small>居宅介護・訪問</small><span class="u">障害福祉サービス受給者証</span></a>
-<a class="any" href="{rel}suishodama/"><b>水晶玉</b><small>受給者証の申請・計画・窓口手続きを代行</small><span class="u">迷ったらまずここ</span></a>
 <a class="any" href="{rel}leo/assessment/"><b>発達検査・ペアトレ</b><small>受給者証なし・自費</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}ryozanpaku/"><b>梁山泊</b><small>住まい（家賃 月8万円）</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}shichirin/"><b>しちりんの会</b><small>自費参加 3,000円</small><span class="u">手続き不要</span></a>
 </div>
-<div class="help">手続きがわからなくても大丈夫。水晶玉が申請から代行します。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/#line">LINE</a></div>
+<div class="help">手続きがわからないときは、電話または相談フォームへご連絡ください。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/">相談フォーム</a></div>
 </div>"""
 simple_page('guide/jukyushasho/','受給者証ガイド｜子ども・大人の申請窓口（四日市市・菰野町）｜星心会','福祉サービスに必要な受給者証を図解。18歳未満は通所受給者証、18歳以上は障害福祉サービス受給者証。四日市市・菰野町の窓口と流れ、星心会のどの事業所で使えるかをまとめました。','受給者証ガイド','GUIDE',guide)
-NEWS=[('2026-11-01','就労継続支援B型 RYDEEN が開所しました','rydeen-open','三重県四日市市山城町59-4に、就労継続支援B型「次世代労働研究所 RYDEEN」を開所しました。SNS運用代行、システム構築、AIを使った事務を、AIエージェントを使って実務として行います。工賃の実績は準備中です。見学・体験は電話またはLINEで受け付けています。','rydeen/'),
-('2026-11-04','受給者証ガイドを公開しました','guide','児童発達支援・放課後等デイサービスを使うための通所受給者証について、四日市市・菰野町の窓口と流れをまとめたページを公開しました。','guide/jukyushasho/')]
+NEWS=[('2026-11-04','受給者証ガイドを公開しました','guide','児童発達支援・放課後等デイサービスを使うための通所受給者証について、四日市市・菰野町の窓口と流れをまとめたページを公開しました。','guide/jukyushasho/')]
 def news(rel): return '<section class="blk wide">'+''.join(f'<article id="{k}" style="margin:0 0 40px"><p style="font-size:13px;opacity:.7">{d}</p><h2 style="font-size:20px;margin:4px 0 10px">{t}</h2><p>{b}</p><p><a href="{rel}{u}" style="display:inline;color:var(--hi)">詳しく見る →</a></p></article>' for d,t,k,b,u in NEWS)+'</section>'
-simple_page('news/','お知らせ｜星心会（三重県四日市市）','星心会からのお知らせです。開所情報や新しいページの公開などをお伝えします。','お知らせ','NEWS',news,ld=[{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":i+1,"name":t,"url":BASE+"/news/#"+k} for i,(d,t,k,b,u) in enumerate(NEWS)]}])
+simple_page('news/','お知らせ｜星心会（三重県四日市市）','星心会からのお知らせです。','お知らせ','NEWS',news,ld=[{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":i+1,"name":t,"url":BASE+"/news/#"+k} for i,(d,t,k,b,u) in enumerate(NEWS)]}])
 def nagoya(rel): return f'''<section class="blk wide prose"><p>星心会の本部（三重県四日市市山城町59-4）は、名古屋から車で約30分です。名古屋にお住まいの方の相談も受け付けています。</p>
 <h2 style="font-size:20px;margin:30px 0 10px">車で</h2><p>名古屋西ICから約30分です。</p>
-<h2 style="font-size:20px;margin:30px 0 10px">電車・バスで</h2><ul class="lst"><li>三岐鉄道三岐線「山城」駅から徒歩5分（本部・水晶玉・RYDEEN・梁山泊）</li><li>同駅から徒歩12分（茶夢・レオ／四日市市あさけが丘2-1-42）</li><li>四日市駅から三岐バスで「団地下」下車</li></ul><p>名古屋から近鉄・JRで四日市方面へ出て、三岐線またはバスに乗り継ぎます。運行時刻は各交通機関でご確認ください。</p>
-<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}suishodama/"><span>水晶玉</span></a>　環境調整の相談。名古屋の方の窓口です。</li><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋から移り住むこともできます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}rydeen/"><span>RYDEEN</span></a>　山城駅から徒歩5分。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li></ul>
+<h2 style="font-size:20px;margin:30px 0 10px">電車・バスで</h2><ul class="lst"><li>三岐鉄道三岐線「山城」駅から徒歩5分（本部・梁山泊）</li><li>同駅から徒歩12分（茶夢・レオ／四日市市あさけが丘2-1-42）</li><li>四日市駅から三岐バスで「団地下」下車</li></ul><p>名古屋から近鉄・JRで四日市方面へ出て、三岐線またはバスに乗り継ぎます。運行時刻は各交通機関でご確認ください。</p>
+<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋から移り住むこともできます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li></ul>
 <p>公的制度を使う事業は、お住まいの市区町村によって使える制度が異なります。初回連絡時に確認し、手続きはこちらで進めます。金斗雲の訪問は三重県内のみです。</p><p><a href="{rel}access/" style="display:inline;color:var(--hi)">アクセス全体を見る</a>　／　相談 059-315-0697</p></section>'''
 simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICから車で約30分｜星心会（三重県四日市市）','名古屋から星心会（三重県四日市市山城町）へは、名古屋西ICから車で約30分。三岐線山城駅から徒歩5分。名古屋在住の方が利用できる事業も紹介します。','名古屋からのアクセス','FROM NAGOYA',nagoya)
 
 # ---------- contact ----------
 # contact/index.html は手編集。原稿ビルドで仮フォームや偽の LINE リンクを戻さない。
-# rydeen/ と leo/ と同じく、ファイルがあるときは書き戻さない。
-_CONTACT_OPTIONS=['決まっていない','環境調整支援　水晶玉','しちりんの会','B型事業所　次世代労働研究所　RYDEEN','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
+# contact/index.html は手編集。ファイルがあるときは書き戻さない。
+_CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
 def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">公式LINE</h2><p>公式LINEのURLは、確認できるまで掲載していません。電話、または下のフォームをご利用ください。</p></div></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）　受付 {ph('受付日・時間')}</p>
-<ul class="lst" style="margin-top:20px"><li><b>水晶玉</b><a href="tel:07032919626" style="display:inline">070-3291-9626</a></li><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
+<ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
 <p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>
 <style>.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
@@ -1238,11 +1249,11 @@ o=o.replace('href="/seishinkai-preview/','href="')
 write('404.html',o+header('')+'<section class="blk" style="text-align:center;min-height:60svh"><p class="en" style="color:var(--hi)">404</p><h1 style="font-weight:600;font-size:30px;letter-spacing:.14em;margin:10px 0 20px">ページが見つかりません</h1><a class="btn" href="./">トップへ</a> <a class="btn" href="contact/" style="background:var(--hi)">相談する</a></section>'+footer(''))
 
 # ---------- robots / llms ----------
-open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n')
+open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /design-gallery/\nDisallow: /suishodama/\nDisallow: /rydeen/\nSitemap: '+BASE+'/sitemap.xml\n')
 L=f'''# 星心会（{ORG}）
 > 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。
 
-眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。全事業の相談窓口は水晶玉です。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
+眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。相談は電話またはフォームで受け付けます。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
 
 '''
 for _,lab,en,lead,ks,_h in AUD:
@@ -1260,7 +1271,7 @@ open(OUT+'/llms.txt','w').write(L)
 
 # ---------- redirect stubs ----------
 RED=[('aboutus/','about/'),('dormitory/','ryozanpaku/'),('retreat/','kintoun/'),('kissa/','chamu/'),('j/privacy/','privacy/'),
-('当事者様/','suishodama/'),('当事者様/無料お役立ちai/','suishodama/'),('保護者様/','leo/'),('保護者様/子どもの情緒安定-児発-放デイ/','leo/'),('保護者様/ペアレントトレーニング/','leo/parent-training/'),
+('当事者様/','contact/'),('当事者様/無料お役立ちai/','contact/'),('保護者様/','leo/'),('保護者様/子どもの情緒安定-児発-放デイ/','leo/'),('保護者様/ペアレントトレーニング/','leo/parent-training/'),
 ('保護者様/発達検査/','leo/assessment/'),('保護者様/無料-お子様の学習支援ai/','leo/'),('企業様/','business/'),('企業様/職場ストレスチェック/','business/stress-check/'),('企業様/障害者雇用サポート/','business/employment/'),
 ('福祉-教育-医療関係者様/','business/'),('福祉-教育-医療関係者様/aiコンサル/','business/agent-consulting/'),('福祉-教育-医療関係者様/児童指導員-研修/','business/training/'),('福祉-教育-医療関係者様/消防コンサル/','business/')]
 for old,new in RED:

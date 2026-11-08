@@ -116,4 +116,4 @@ audience: family
 
 ### 家庭の環境ごと見直したい場合は？
 
-家庭や職場の環境を整える[水晶玉](https://www.psr-seishinkai.org/suishodama/)で、ご家族からの相談を受け付けます。
+ご家族からの相談は、電話または[相談フォーム](https://psr-seishinkai.org/contact/)で受け付けます。
