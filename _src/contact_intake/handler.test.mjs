@@ -286,8 +286,8 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   assert.equal(html.includes("通知メールや自動返信はありません"), true);
   assert.equal(html.includes("国内で処理"), false);
   assert.equal(html.includes("自動返信します"), false);
-  assert.match(config, /enabled:\s*false/);
-  assert.match(config, /endpoint:\s*""/);
+  assert.match(config, /enabled:\s*true/);
+  assert.match(config, /endpoint:\s*"https:\/\/zvrardoyxocmqhvyddnf\.supabase\.co\/functions\/v1\/site-contact-intake"/);
   assert.equal(browser.includes("contact_inquiry_accepted"), true);
   assert.equal(browser.includes("form_submit"), false);
   assert.equal(browser.includes("メールでお知らせ"), false);
