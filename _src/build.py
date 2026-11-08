@@ -221,6 +221,89 @@ def write_paused(path, name):
     o+=footer(rel)
     write(path,o)
 
+def _sct_parts(fragment):
+    return [_re.sub(r'^-\s*','',p.strip()) for p in _re.split(r'<br\s*/?>', fragment or '') if p.strip()]
+def _sct_bits(fragment):
+    return ''.join(f'<p>{p}</p>' for p in _sct_parts(fragment))
+
+def sct_page(d, rel, ld):
+    """実施者養成研修だけ、科目と任意研修を最初から読める静的なページにする。"""
+    style='''<style>
+body.sct-page .gh .logo,body.sct-page .gh .logo span{white-space:nowrap}
+body.sct-page .gh .logo{flex:0 0 auto}
+body.sct-page .fab{display:none}
+.sct{background:var(--bg);color:var(--ink)}
+.sct-wrap{max-width:960px;margin:0 auto;padding:40px 28px 72px}
+.sct-kicker{font-size:13px;letter-spacing:.12em;color:var(--hi);margin:0 0 12px}
+.sct h1{font-weight:600;font-size:clamp(1.45rem,3.2vw,2.25rem);line-height:1.45;letter-spacing:.02em}
+.sct h1 .ln{white-space:nowrap}
+.sct-lead{margin:18px 0 0;font-size:1.05rem;line-height:1.85;color:var(--ink-light)}
+.sct-paths{display:flex;gap:48px;margin:52px 0 8px}
+.sct-paths article{flex:1;min-width:0}
+.sct-kind{margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:var(--hi)}
+.sct-paths h2{margin:0 0 12px;font-size:1.28rem;font-weight:600;line-height:1.45;letter-spacing:.04em}
+.sct-paths p{margin:0 0 .8em;line-height:1.85}
+.sct-fee{margin:18px 0 0;font-size:1.7rem;font-weight:600;letter-spacing:.02em;line-height:1.25}
+.sct-fee span{display:block;margin-top:6px;font-size:.92rem;font-weight:400;letter-spacing:.03em;color:var(--soft);line-height:1.6}
+.sct-go{display:inline-block;margin-top:8px;color:var(--hi);font-weight:600;border-bottom:1px solid currentColor;line-height:1.6}
+.sct-block{margin-top:64px}
+.sct-block h2{margin:0 0 16px;font-size:1.35rem;font-weight:600;line-height:1.45;letter-spacing:.05em}
+.sct-block h3{margin:28px 0 8px;font-size:1.05rem;font-weight:600;line-height:1.55}
+.sct-block p,.sct-block li{line-height:1.9}
+.sct-block p{margin:0 0 .85em}
+.sct-block ol{margin:0;padding-left:1.25em}
+.sct-block li{margin:0 0 .8em}
+.sct-block a{color:var(--hi);border-bottom:1px solid currentColor}
+.sct-refs{margin:0;padding:0;list-style:none}
+.sct-refs li{margin:0 0 .7em}
+@media(max-width:700px){
+ body.sct-page .gh{gap:8px;padding-left:12px;padding-right:12px}
+ body.sct-page .gh .cta-btn{height:36px;padding:0 12px;font-size:13px}
+ .sct-wrap{padding:28px 20px 48px}
+ .sct-paths{flex-direction:column;gap:32px;margin-top:32px}
+ .sct-block{margin-top:44px}
+ .sct h1{font-size:1.45rem}
+ .sct h1 .ln{display:block}
+}
+</style>'''
+    o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
+    o=o.replace('<body class="aud-partners">','<body class="aud-partners sct-page">',1)
+    o=o.replace('<body>','<body class="sct-page">',1)
+    o=o.replace('</head>',style+'</head>',1)
+    subjects=''.join(f'<h3>{html.escape(n)}</h3>{_sct_bits(a)}' for n,s,a in d.get('what') or [])
+    steps=''.join(f'<li><b>{html.escape(t)}</b><br>{"<br>".join(_sct_parts(x))}</li>' for en,t,x in d.get('flow') or [])
+    facts=''.join(f'<h3>{html.escape(k)}</h3>{_sct_bits(v)}' for k,v in d.get('info') or [])
+    faqs=''.join(f'<h3>{q}</h3>{_sct_bits(a)}' for q,a in d.get('faq') or [])
+    follow=_re.sub(r'<br\s*/?>', '</p><p>', d.get('followup') or '')
+    o+=f'''<main class="sct"><div class="sct-wrap">
+<p class="sct-kicker">労働安全衛生法に基づく実施者養成研修</p>
+<h1><span class="ln">ストレスチェック</span><span class="ln">実施者養成研修</span></h1>
+<p class="sct-lead">{d.get("sub") or ""}</p>
+<div class="sct-paths">
+<article>
+<p class="sct-kind">法定の養成研修</p>
+<h2>実施者になるための3科目</h2>
+<p>歯科医師、看護師、精神保健福祉士、公認心理師の方が対象です。Google Meetで、リアルタイムに受講します。合計5時間です。</p>
+<p class="sct-fee">12,800円<span>税込・3科目一括。科目1の免除が承認された場合は10,800円（税込）</span></p>
+<p><a class="sct-go" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>
+</article>
+<article>
+<p class="sct-kind">任意の実務研修</p>
+<h2>個別フォローアップ研修</h2>
+<p>法定の実施者養成研修とは別です。資格の付与や、法定の修了にはあたりません。</p>
+<p class="sct-fee">30,000円<span>個別・90分×2コマ（計3時間）</span></p>
+<p><a class="sct-go" href="#follow-up">内容を見る</a></p>
+</article>
+</div>
+<section class="sct-block" id="subjects"><h2>三つの科目</h2><p>科目は3つで、合計5時間です。</p>{subjects}</section>
+<section class="sct-block" id="apply"><h2>申し込みの流れ</h2><ol>{steps}</ol></section>
+<section class="sct-block" id="facts"><h2>受講の条件</h2>{facts}</section>
+<section class="sct-block" id="faq"><h2>よくある質問</h2>{faqs}</section>
+<section class="sct-block" id="follow-up"><h2>個別フォローアップ研修</h2>{follow}</section>
+</div></main>'''
+    o+=footer(rel)
+    write(d['path'], o)
+
 def service_page(d):
     path=d['path']
     if path=='suishodama/':
@@ -259,6 +342,8 @@ def service_page(d):
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
+    if path=='business/stress-check-training/':
+        sct_page(d, rel, ld); return
     if path=='chamu/':
         # 茶夢は承認済みの手置き HTML を正とする
         if os.path.isfile(os.path.join(OUT,'chamu','index.html')): return
