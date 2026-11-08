@@ -227,80 +227,100 @@ def _sct_bits(fragment):
     return ''.join(f'<p>{p}</p>' for p in _sct_parts(fragment))
 
 def sct_page(d, rel, ld):
-    """実施者養成研修だけ、科目と任意研修を最初から読める静的なページにする。"""
+    """実施者養成研修。相談のイラストと、その部屋の黄・赤で組む。"""
     style='''<style>
+body.sct-page{background:#fff8ec;color:#241910}
 body.sct-page .gh .logo,body.sct-page .gh .logo span{white-space:nowrap}
 body.sct-page .gh .logo{flex:0 0 auto}
 body.sct-page .fab{display:none}
-.sct{background:var(--bg);color:var(--ink)}
-.sct-wrap{max-width:960px;margin:0 auto;padding:40px 28px 72px}
-.sct-kicker{font-size:13px;letter-spacing:.12em;color:var(--hi);margin:0 0 12px}
-.sct h1{font-weight:600;font-size:clamp(1.45rem,3.2vw,2.25rem);line-height:1.45;letter-spacing:.02em}
-.sct h1 .ln{white-space:nowrap}
-.sct-lead{margin:18px 0 0;font-size:1.05rem;line-height:1.85;color:var(--ink-light)}
-.sct-paths{display:flex;gap:48px;margin:52px 0 8px}
-.sct-paths article{flex:1;min-width:0}
-.sct-kind{margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:var(--hi)}
-.sct-paths h2{margin:0 0 12px;font-size:1.28rem;font-weight:600;line-height:1.45;letter-spacing:.04em}
-.sct-paths p{margin:0 0 .8em;line-height:1.85}
-.sct-fee{margin:18px 0 0;font-size:1.7rem;font-weight:600;letter-spacing:.02em;line-height:1.25}
-.sct-fee span{display:block;margin-top:6px;font-size:.92rem;font-weight:400;letter-spacing:.03em;color:var(--soft);line-height:1.6}
-.sct-go{display:inline-block;margin-top:8px;color:var(--hi);font-weight:600;border-bottom:1px solid currentColor;line-height:1.6}
-.sct-block{margin-top:64px}
-.sct-block h2{margin:0 0 16px;font-size:1.35rem;font-weight:600;line-height:1.45;letter-spacing:.05em}
-.sct-block h3{margin:28px 0 8px;font-size:1.05rem;font-weight:600;line-height:1.55}
-.sct-block p,.sct-block li{line-height:1.9}
-.sct-block p{margin:0 0 .85em}
-.sct-block ol{margin:0;padding-left:1.25em}
-.sct-block li{margin:0 0 .8em}
-.sct-block a{color:var(--hi);border-bottom:1px solid currentColor}
-.sct-refs{margin:0;padding:0;list-style:none}
-.sct-refs li{margin:0 0 .7em}
+.sct-stage{background:#f2cb4d;color:#241910}
+.sct-split{max-width:1180px;margin:0 auto;padding:28px 32px 32px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"copy fig" "main opt";column-gap:40px;row-gap:0;align-items:start}
+.sct-copy{grid-area:copy;padding-bottom:20px}
+.sct-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.14em;color:#9a3412}
+.sct h1{margin:0;font-weight:700;font-size:clamp(1.7rem,3.4vw,2.75rem);line-height:1.18;letter-spacing:.01em}
+.sct h1 .ln{display:block;white-space:nowrap}
+.sct-lead{margin:16px 0 0;font-size:1.05rem;line-height:1.75;max-width:28em}
+.sct-fig{grid-area:fig;margin:0}
+.sct-fig img{display:block;width:100%;height:auto}
+.sct-main{grid-area:main;padding:8px 0 4px}
+.sct-opt{grid-area:opt;background:#b93812;color:#fff7ea;padding:22px 22px 24px}
+.sct-rate-k{margin:0;font-size:13px;font-weight:700;letter-spacing:.12em}
+.sct-main .sct-rate-k{color:#9a3412}
+.sct-rate-n{margin:6px 0 0;font-weight:700;font-size:clamp(2.4rem,4.6vw,3.6rem);line-height:1;letter-spacing:-.03em}
+.sct-rate-d{margin:12px 0 0;font-size:.98rem;line-height:1.7;max-width:36em}
+.sct-go{display:inline-block;margin-top:14px;font-weight:700;border-bottom:2px solid currentColor;line-height:1.4}
+.sct-nw{white-space:nowrap}
+.sct-main .sct-go{color:#241910}
+.sct-opt .sct-go{color:#fff7ea}
+.sct-body{max-width:1080px;margin:0 auto;padding:40px 32px 88px}
+.sct-body>.sct-sec:first-child{margin-top:0}
+.sct-sec{margin-top:76px}
+.sct-sec h2{margin:0 0 12px;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.3;letter-spacing:.02em}
+.sct-sec>.sct-leadish{margin:0 0 8px;color:#5c4a38}
+.sct-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 16px;margin-top:32px}
+.sct-idx{margin:0;font-size:2.4rem;font-weight:700;line-height:.95;color:#b93812}
+.sct-item h3{margin:4px 0 8px;font-size:1.15rem;font-weight:700;line-height:1.45}
+.sct-item p,.sct-sec p,.sct-sec li{line-height:1.9}
+.sct-item p,.sct-sec p{margin:0 0 .8em}
+.sct-facts h3{margin:28px 0 6px;font-size:1rem;font-weight:700;color:#9a3412;letter-spacing:.06em}
+.sct-sec a{color:var(--hi);border-bottom:1px solid currentColor}
+.sct-follow{background:#f2cb4d}
+.sct-follow-in{max-width:1080px;margin:0 auto;padding:56px 32px 64px}
+.sct-follow h2{margin:0 0 16px;font-size:clamp(1.7rem,3vw,2.3rem);font-weight:700;line-height:1.25}
+.sct-follow h3{margin:28px 0 8px;font-size:1.1rem;font-weight:700}
+.sct-follow p{margin:0 0 .85em;line-height:1.9}
+.sct-follow a{color:#9a3412;font-weight:700;border-bottom:2px solid currentColor}
 @media(max-width:700px){
  body.sct-page .gh{gap:8px;padding-left:12px;padding-right:12px}
  body.sct-page .gh .cta-btn{height:36px;padding:0 12px;font-size:13px}
- .sct-wrap{padding:28px 20px 48px}
- .sct-paths{flex-direction:column;gap:32px;margin-top:32px}
- .sct-block{margin-top:44px}
- .sct h1{font-size:1.45rem}
- .sct h1 .ln{display:block}
+ .sct-split{grid-template-columns:1fr;grid-template-areas:"copy" "fig" "main" "opt";padding:22px 20px 24px;row-gap:18px}
+ .sct-copy{padding-bottom:0}
+ .sct-body,.sct-follow-in{padding-left:20px;padding-right:20px}
+ .sct-body{padding-top:40px}
+ .sct-item{grid-template-columns:42px minmax(0,1fr);gap:2px 12px}
+ .sct-idx{font-size:1.8rem}
+ .sct h1{font-size:1.7rem}
 }
 </style>'''
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
     o=o.replace('<body class="aud-partners">','<body class="aud-partners sct-page">',1)
     o=o.replace('<body>','<body class="sct-page">',1)
-    o=o.replace('</head>',style+'</head>',1)
-    subjects=''.join(f'<h3>{html.escape(n)}</h3>{_sct_bits(a)}' for n,s,a in d.get('what') or [])
-    steps=''.join(f'<li><b>{html.escape(t)}</b><br>{"<br>".join(_sct_parts(x))}</li>' for en,t,x in d.get('flow') or [])
+    o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">'+style+'</head>',1)
+    g=(d.get('gal') or [('sct_soudan','相談の様子のイラスト')])[0]
+    subjects=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(n)}</h3>{_sct_bits(a)}</div></article>' for i,(n,s,a) in enumerate(d.get('what') or [],1))
+    steps=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(t)}</h3>{_sct_bits(x)}</div></article>' for i,(en,t,x) in enumerate(d.get('flow') or [],1))
     facts=''.join(f'<h3>{html.escape(k)}</h3>{_sct_bits(v)}' for k,v in d.get('info') or [])
     faqs=''.join(f'<h3>{q}</h3>{_sct_bits(a)}' for q,a in d.get('faq') or [])
     follow=_re.sub(r'<br\s*/?>', '</p><p>', d.get('followup') or '')
-    o+=f'''<main class="sct"><div class="sct-wrap">
+    o+=f'''<main class="sct">
+<section class="sct-stage"><div class="sct-split">
+<div class="sct-copy">
 <p class="sct-kicker">労働安全衛生法に基づく実施者養成研修</p>
 <h1><span class="ln">ストレスチェック</span><span class="ln">実施者養成研修</span></h1>
 <p class="sct-lead">{d.get("sub") or ""}</p>
-<div class="sct-paths">
-<article>
-<p class="sct-kind">法定の養成研修</p>
-<h2>実施者になるための3科目</h2>
-<p>歯科医師、看護師、精神保健福祉士、公認心理師の方が対象です。Google Meetで、リアルタイムに受講します。合計5時間です。</p>
-<p class="sct-fee">12,800円<span>税込・3科目一括。科目1の免除が承認された場合は10,800円（税込）</span></p>
-<p><a class="sct-go" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>
-</article>
-<article>
-<p class="sct-kind">任意の実務研修</p>
-<h2>個別フォローアップ研修</h2>
-<p>法定の実施者養成研修とは別です。資格の付与や、法定の修了にはあたりません。</p>
-<p class="sct-fee">30,000円<span>個別・90分×2コマ（計3時間）</span></p>
-<p><a class="sct-go" href="#follow-up">内容を見る</a></p>
-</article>
 </div>
-<section class="sct-block" id="subjects"><h2>三つの科目</h2><p>科目は3つで、合計5時間です。</p>{subjects}</section>
-<section class="sct-block" id="apply"><h2>申し込みの流れ</h2><ol>{steps}</ol></section>
-<section class="sct-block" id="facts"><h2>受講の条件</h2>{facts}</section>
-<section class="sct-block" id="faq"><h2>よくある質問</h2>{faqs}</section>
-<section class="sct-block" id="follow-up"><h2>個別フォローアップ研修</h2>{follow}</section>
-</div></main>'''
+<figure class="sct-fig"><img src="{rel}img/{html.escape(g[0])}.jpg" alt="{html.escape(g[1])}" width="1024" height="572"></figure>
+<div class="sct-main">
+<p class="sct-rate-k">法定の養成研修</p>
+<p class="sct-rate-n">12,800円</p>
+<p class="sct-rate-d">税込・3科目一括・合計5時間。<br>Google Meetでリアルタイムに受講します。<br>科目1の免除が承認された場合は<span class="sct-nw">10,800円（税込）です。</span></p>
+<p><a class="sct-go" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>
+</div>
+<div class="sct-opt">
+<p class="sct-rate-k">任意の実務研修</p>
+<p class="sct-rate-n">30,000円</p>
+<p class="sct-rate-d">個別・90分×2コマ（計3時間）。<br>法定の実施者養成研修とは別です。<br>資格の付与や、法定の修了にはあたりません。</p>
+<p><a class="sct-go" href="#follow-up">内容を見る</a></p>
+</div>
+</div></section>
+<div class="sct-body">
+<section class="sct-sec" id="subjects"><h2>三つの科目</h2><p class="sct-leadish">科目は3つで、合計5時間です。</p>{subjects}</section>
+<section class="sct-sec" id="apply"><h2>申し込みの流れ</h2>{steps}</section>
+<section class="sct-sec sct-facts" id="facts"><h2>受講の条件</h2>{facts}</section>
+<section class="sct-sec" id="faq"><h2>よくある質問</h2>{faqs}</section>
+</div>
+<section class="sct-follow" id="follow-up"><div class="sct-follow-in"><h2>個別フォローアップ研修</h2>{follow}</div></section>
+</main>'''
     o+=footer(rel)
     write(d['path'], o)
 
