@@ -26,12 +26,12 @@ SVCS=[ # key,name,url,cat,line,thumb
 ('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。',None),
 ('leo','レオ','leo/','子どもの情緒','おもちゃ、武道、庭いじり。遊びの中で情緒を整えます。','panda'),
 ('parent','ペアレントトレーニング','leo/parent-training/','保護者向けプログラム','子どもを変える前に、親の関わり方を変えます。','pt-classroom'),
-('assess','発達検査','leo/assessment/','WISC-V・新版K式','特性を数値で掴み、支援に直結させます。','record'),
+('assess','発達検査','leo/assessment/','WISC-V・新版K式','特性を数値で掴み、支援に直結させます。',None),
 ('employment','雇用定着サポート','business/employment/','専任担当による職場定着','メンタル不調・発達特性のある社員に専任の担当者をつけます。',None),
-('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。','karate_sit'),
+('stress','ストレスチェック','business/stress-check/','アドラー心理学×ラインケア','実施して終わらせず、組織を変える材料にします。',None),
 ('agent','エージェントコンサル','business/agent-consulting/','AIエージェント導入','Grok Botを、事業所の職員にします。',None),
-('sct','実施者養成研修','business/stress-check-training/','ストレスチェック実施者養成研修','歯科医師・看護師・精神保健福祉士・公認心理師の方のための実施者養成研修です。','karate_sit'),
-('training','研修','business/training/','児童指導員研修・合気道護身術','児童指導員研修と、合気道護身術の安全確保講習を行います。','karate_bow')]
+('sct','実施者養成研修','business/stress-check-training/','ストレスチェック実施者養成研修','歯科医師・看護師・精神保健福祉士・公認心理師の方のための実施者養成研修です。',None),
+('training','研修','business/training/','児童指導員研修・合気道護身術','児童指導員研修と、合気道護身術の安全確保講習を行います。',None)]
 def _docmeta(url):
     """name (# line) and first sentence of リード文 from content/<slug>.md, if present"""
     if not CONTENT: return None
@@ -338,6 +338,7 @@ def service_page(d):
     if path=='rydeen/':
         write_paused(path,'RYDEEN（ライディーン）'); return
     if path=='leo/' and os.path.isfile(os.path.join(OUT,'leo','index.html')): return
+    if path=='leo/assessment/' and os.path.isfile(os.path.join(OUT,'leo','assessment','index.html')): return
     if path=='chamu/' and os.path.isfile(os.path.join(OUT,'chamu','index.html')): return
     if path in DOCMETA and DOCMETA[path][0]: d['name']=DOCMETA[path][0]
     if under_construction(path):
@@ -389,7 +390,10 @@ def service_page(d):
             o=o.replace('<body>','<body class="leo-book">\n<a class="skip" href="#book">本文へ</a>',1)
         o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="'+rel+'assets/leo.css?v=20261031b">\n</head>',1)
         o+=leo_book_html(d,rel)+footer(rel); write(path,o); return
-    if d.get('ink'):
+    if path=='leo/assessment/':
+        o=o.replace('</head>','<style>.assess-plain{min-height:0;background:#f8fafc;color:#1e293b}.assess-plain::after{content:none}.assess-plain .en{color:#2e7d32}.assess-plain h1{color:#1e293b!important}.assess-plain .copy,.assess-plain .sub,.assess-plain .acc{color:#334155}</style></head>',1)
+        o+='<section class="hero short assess-plain">'
+    elif d.get('ink'):
         o+=f'<section class="hero type"><div class="bg" style="background:#fff"></div>'
     elif d.get('photo'):
         o+=f'<section class="hero{" short" if d.get("short") else ""}"><div class="bg" style="background-image:url({rel}img/{d["photo"]}.jpg);background-position:{d.get("pos","50% 50%")}"></div>'
@@ -585,7 +589,7 @@ def leo_extra(rel):
     h=_soft(b.get('title') or '保護者向けプログラム')
     return f'''<section class="blk"><div class="h"><span class="en">FOR PARENTS</span><h2>{h}</h2></div>
 <div class="cards" style="grid-template-columns:1fr 1fr"><a class="sc" href="{rel}leo/parent-training/"><div class="th" style="background-image:url({rel}img/pt-classroom.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">{n1}</p><p class="ln">{l1}</p></div></a>
-<a class="sc" href="{rel}leo/assessment/"><div class="th" style="background-image:url({rel}img/jigsaw.jpg)"></div><div class="bd"><p class="nm" style="font-size:17px">{n2}</p><p class="ln">{l2}</p></div></a></div></section>'''
+<a class="sc" href="{rel}leo/assessment/"><div class="bd"><p class="nm" style="font-size:17px">{n2}</p><p class="ln">{l2}</p></div></a></div></section>'''
 PAGES.append(dict(path='leo/',name='レオ',en='LEO',photo='panda',pos='50% 60%',addr_ld=ASAKE,tel='070-6967-0011',
  title='レオ｜子どもが落ち着かない保護者へ｜おもちゃ・武道・庭いじり｜三重県四日市市あさけが丘',
  desc='子どもが落ち着かない、かんしゃくが多い。レオは、遊びと体で子どもの情緒を整える場所です。おもちゃ、武道・ヨガ、庭いじり、手作りの和食を用意しています。ペアレントトレーニングと発達検査も行います。三重県四日市市あさけが丘、名古屋西ICから車で約30分です。',
@@ -607,7 +611,7 @@ PAGES.append(dict(path='leo/parent-training/',name='ペアレントトレーニ�
  faq=[('レオを利用していなくても相談できますか？','相談できます。1回4,000円です。'),('どんなことを相談できますか？','子育てのこと、学校とのかかわり、家族関係、特別支援教育の進学相談などをお聴きします。'),('発達検査と組み合わせられますか？','組み合わせられます。')],
  rel=[('発達検査','leo/assessment/'),('レオ','leo/')],cta_h='相談を予約する'))
 
-PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',photo='record',pos='50% 50%',short=True,type='Service',
+PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',short=True,type='Service',
  title='発達検査（WISC-V・新版K式）｜25,000円・検査から支援へ直結｜三重県四日市市 レオ',
  desc='WISC-V（小1〜高2）と新版K式発達検査（未就学児）を行います。事前面談・検査・報告書・フィードバック面談込みで各25,000円（税込）です。結果は日々の支援と学習指導に直結させます。三重県四日市市。',
  cat='WISC-V・新版K式｜公認心理師が実施',copy=['特性を数値で掴み、','支援に直結させます。'],sub='検査して終わりにはしません。<br>結果を、日々の学習指導に反映します。',acc='レオ（四日市市あさけが丘）で実施',
@@ -640,7 +644,7 @@ PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,ex
  rel=[('しちりんの会','shichirin/'),('相談する','contact/')],cta_h='見学を申し込む'))
 
 BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('stress-check-training','ストレスチェック実施者養成研修','PRACTITIONER TRAINING','実施者になるための研修を、オンラインで行います。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','Grok Botを、事業所の職員にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
-PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',photo='karate_sit',short=True,type='Service',
+PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',short=True,type='Service',
  title='職場ストレスチェック｜アドラー心理学×ラインケア支援｜三重県四日市市 星心会',
  desc='ストレスチェックを、組織が変わるきっかけにします。管理職研修・アドラー流個別面談・ラインケア定着支援まで一社完結で行います。三重県四日市市、名古屋から30分です。',
  cat='企業・法人向け',copy=['実施して終わらせず、','組織を変える材料にします。'],sub='アドラー心理学 × ラインケア支援です。',acc='三重・愛知の企業・法人向け',
@@ -697,12 +701,12 @@ PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,deco=Tru
  what_h='3つの<br>科目',what=[],flow=[],info=[],faq=[],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
 
-PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',photo='karate_bow',short=True,type='Service',
+PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',short=True,type='Service',
  title='研修｜児童指導員研修・合気道護身術｜三重県四日市市 星心会',
  desc='児童指導員研修と、福祉・介護従事者やご家族向けの合気道護身術「安全確保講習」を行います。',
  cat='児童指導員研修・合気道護身術',copy=['体を使って、','支援を学びます。'],sub='オーダーメイドで、土日に開催します。',acc='子どもと関わる事業所・法人向け',
  what_h='2つの<br>研修',what=[('児童指導員研修','','野口整体、合気道、各種マッサージなど、子どもと関わる仕事に役立つボディワークです。マクロビオティック調理法なども希望に応じて行います。'),('合気道研修','','内容は準備中です。'),('オーダーメイド','','テーマと人数に合わせて組み立てます。'),('講師','','代表または外部講師が担当します。')],
- gal=[('karate_studio','道場'),('karate_class','稽古'),('karate_sit','座学')],
+ gal=[],
  flow=[["CONSULT","相談","テーマ・人数・日程を確認します。"],["DESIGN","設計","内容を組み立てます。"],["RUN","実施","土日に実施します。"]],
  info=[('開催','土日'),('形式','オーダーメイド'),('料金','お志 '+ph('料金表記の確認')),('合気道研修',ph('内容・日程・料金'))],
  faq=[('内容は選べますか？','希望に応じて組み立てます。'),('合気道の経験がなくても参加できますか？',ph('合気道研修の参加条件'))],
@@ -1110,7 +1114,12 @@ for d in PAGES: service_page(d)
 # ---------- TOP ----------
 def card(k,rel=''):
     _,n,u,c,l,t=SV[k]
-    th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>' if t else f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","kintoun":"KINTOUN","employment":"EMPLOY","agent":"AI"}.get(k,n)}</b></div>'
+    if k in ('assess','employment','stress','agent','sct','training'):
+        th=''
+    elif t:
+        th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>'
+    else:
+        th=f'<div class="th t"><b>{ {"ryozanpaku":"RYOZAN","kintoun":"KINTOUN"}.get(k,n)}</b></div>'
     if k=='suishodama': th=f'<div class="th t" style="background:#f5f5f3"><img src="{rel}img/suisho_mark_ink.svg" alt="水晶玉 ロゴ" style="width:60%;max-width:130px"></div>'
     if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
@@ -1177,7 +1186,7 @@ def top():
 '''
     o+='''<div class="dark"><section class="blk wide"><div class="h"><span class="en">ACCESS</span><h2>名古屋から<br>30分です。</h2></div><div>
 <p class="big30">名古屋西IC<br>から車で <em>30</em>分</p>
-<img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px"><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
+<img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:20%;height:auto;display:block;margin-top:24px"><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
 <a class="go" href="access/" style="margin-top:28px">アクセスを見る</a></div></section></div>
 <section class="cta" id="contact"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><p style="font-size:13px;opacity:.7;margin-top:8px">どの事業か決まっていなくてもかまいません。</p>
 <div class="row"><a class="w" href="contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
@@ -1215,7 +1224,7 @@ simple_page('about/','星心会について｜理念・法人概要・代表｜�
 
 # ---------- access ----------
 MAP='https://www.google.com/maps/search/?api=1&query='
-def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:100%;height:auto;display:block;margin-top:24px">
+def access(rel): return f'''<section class="blk wide"><div class="h"><span class="en">FROM NAGOYA</span></div><div><p class="big30">名古屋西IC<br>から車で <em>30</em>分</p><img class="stph" src="{rel}img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:20%;height:auto;display:block;margin-top:24px">
 <ul class="lst" style="margin-top:22px"><li><b>車</b>名古屋西ICから約30分です。</li><li><b>電車</b>三岐鉄道三岐線「山城」駅から徒歩5分です。</li><li><b>バス</b>四日市駅から三岐バスで「団地下」下車です。</li></ul><p style="margin-top:14px"><a href="{rel}access/nagoya/" style="display:inline;color:var(--hi)">名古屋方面からの行き方 →</a></p></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">LOCATIONS</span><h2>拠点</h2></div><ul class="lst">
 <li><b>本部・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
