@@ -13,9 +13,12 @@ const ALLOWED_ORIGINS = new Set([
   "https://www.psr-seishinkai.org",
 ]);
 
-// Fail closed. Only the exact string "true" opens intake. "1", "TRUE", and unset stay shut.
+// Fail closed. The non-secret deploy switch must be exactly true.
+// CONTACT_INTAKE_ENABLED "true", "1", "TRUE", or unset does not open intake.
+// The exact string "false" is an emergency stop and wins over the deploy switch.
 export function intakeEnabled(env) {
-  return !!env && env.CONTACT_INTAKE_ENABLED === "true";
+  if (!env || env.CONTACT_INTAKE_ENABLED === "false") return false;
+  return env.INTAKE_DEPLOY_ENABLED === true;
 }
 
 function empty(extra) {
@@ -160,7 +163,8 @@ export async function handleRequest(req, deps) {
   }
   const result = await acceptIntake(input, {
     now: Date.now(),
-    CONTACT_INTAKE_ENABLED: "true",
+    INTAKE_DEPLOY_ENABLED: deps.env.INTAKE_DEPLOY_ENABLED === true,
+    CONTACT_INTAKE_ENABLED: deps.env.CONTACT_INTAKE_ENABLED || "",
     pepper: deps.env.CONTACT_IP_PEPPER || "",
     store: deps.store,
     suppressLead: false,

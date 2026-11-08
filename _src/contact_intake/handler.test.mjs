@@ -32,7 +32,7 @@ function payload(n, extra = {}) {
 async function accept(store, input, extra = {}) {
   const result = await acceptIntake(input, {
     now: Date.now(),
-    CONTACT_INTAKE_ENABLED: "true",
+    INTAKE_DEPLOY_ENABLED: true,
     store,
     suppressLead: extra.suppressLead === true,
   });
@@ -139,7 +139,7 @@ test("parallel requests cannot pass the mailbox limit", async () => {
 
 test("forwarded IP headers do not reset the mailbox limit", async () => {
   const store = createMemoryStore();
-  const env = { CONTACT_INTAKE_ENABLED: "true" };
+  const env = { INTAKE_DEPLOY_ENABLED: true };
   const seen = [];
   const fetchImpl = async (url) => {
     seen.push(String(url));
@@ -191,6 +191,44 @@ test("disabled intake returns 503 and does not store, classify, or count", async
   assert.equal(store.rows.length, 0);
 });
 
+test("deploy switch opens invalid requests and emergency false stays closed", async () => {
+  const store = createMemoryStore();
+  let used = false;
+  const original = store.transaction.bind(store);
+  store.transaction = async (...args) => {
+    used = true;
+    return original(...args);
+  };
+  const invalid = payload(91, { email: "not-an-email" });
+  const opened = await handleRequest(new Request("https://psr-seishinkai.org/functions/v1/site-contact-intake", {
+    method: "POST",
+    headers: { "content-type": "application/json", origin: "https://psr-seishinkai.org" },
+    body: JSON.stringify(invalid),
+  }), { env: { INTAKE_DEPLOY_ENABLED: true, CONTACT_INTAKE_ENABLED: "TRUE" }, fetch: async () => { throw new Error("fetch"); }, store });
+  const openedBody = await opened.json();
+  assert.equal(opened.status, 400);
+  assert.equal(openedBody.stored, false);
+  assert.equal(openedBody.lead_event, false);
+  assert.equal(used, false);
+
+  for (const env of [
+    { INTAKE_DEPLOY_ENABLED: true, CONTACT_INTAKE_ENABLED: "false" },
+    { INTAKE_DEPLOY_ENABLED: false, CONTACT_INTAKE_ENABLED: "true" },
+    { INTAKE_DEPLOY_ENABLED: "true", CONTACT_INTAKE_ENABLED: "true" },
+  ]) {
+    const response = await handleRequest(new Request("https://psr-seishinkai.org/functions/v1/site-contact-intake", {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "https://psr-seishinkai.org" },
+      body: JSON.stringify(payload(92)),
+    }), { env, fetch: async () => { throw new Error("fetch"); }, store });
+    const body = await response.json();
+    assert.equal(response.status, 503);
+    assert.equal(body.code, "not_configured");
+    assert.equal(body.stored, false);
+  }
+  assert.equal(store.rows.length, 0);
+});
+
 test("missing store, bad origin, and mock mode do not count", async () => {
   let called = false;
   const off = await handleRequest(new Request("https://example.test/", {
@@ -207,7 +245,7 @@ test("missing store, bad origin, and mock mode do not count", async () => {
     method: "POST",
     headers: { "content-type": "application/json", origin: "https://evil.example" },
     body: JSON.stringify(payload(81)),
-  }), { env: { CONTACT_INTAKE_ENABLED: "true" }, fetch: async () => { called = true; return { ok: true }; }, store });
+  }), { env: { INTAKE_DEPLOY_ENABLED: true }, fetch: async () => { called = true; return { ok: true }; }, store });
   assert.equal(evil.status, 403);
   assert.equal(called, false);
   assert.equal(store.rows.length, 0);
