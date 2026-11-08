@@ -236,9 +236,11 @@ body.sct-page .fab{display:none}
 .sct-stage{background:#f2cb4d;color:#241910}
 .sct-split{max-width:1180px;margin:0 auto;padding:28px 32px 32px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"copy fig" "main opt";column-gap:40px;row-gap:0;align-items:start}
 .sct-copy{grid-area:copy;padding-bottom:20px}
-.sct-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.14em;color:#9a3412}
-.sct h1{margin:0;font-weight:700;font-size:clamp(1.7rem,3.4vw,2.75rem);line-height:1.18;letter-spacing:.01em}
+.sct-kicker{margin:0 0 12px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:13px;font-weight:500;letter-spacing:.18em;color:#9a3412}
+.sct h1{position:relative;margin:0;padding-left:22px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-weight:700;font-size:clamp(1.9rem,3.6vw,3.05rem);line-height:1.2;letter-spacing:.04em}
+.sct h1::before{content:"";position:absolute;left:0;top:.32em;width:14px;height:14px;background:linear-gradient(#b93812,#b93812) center/14px 3px no-repeat,linear-gradient(#b93812,#b93812) center/3px 14px no-repeat}
 .sct h1 .ln{display:block;white-space:nowrap}
+.sct h1 .ln.sct-title-b{display:inline-block;margin-top:.12em;padding-bottom:.5em;background-image:radial-gradient(circle,#9a3412 2.2px,transparent 2.35px);background-size:9px 12px;background-repeat:repeat-x;background-position:left bottom}
 .sct-lead{margin:16px 0 0;font-size:1.05rem;line-height:1.75;max-width:28em}
 .sct-fig{grid-area:fig;margin:0}
 .sct-fig img{display:block;width:100%;height:auto}
@@ -255,19 +257,21 @@ body.sct-page .fab{display:none}
 .sct-body{max-width:1080px;margin:0 auto;padding:40px 32px 88px}
 .sct-body>.sct-sec:first-child{margin-top:0}
 .sct-sec{margin-top:76px}
-.sct-sec h2{margin:0 0 12px;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.3;letter-spacing:.02em}
+.sct-sec h2,.sct-follow h2{font-family:"Kaisei Decol","Noto Sans JP",serif;font-weight:700;letter-spacing:.08em}
+.sct-sec h2{margin:0 0 14px;font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.35}
+.sct-sec h2::before,.sct-follow h2::before{content:"";display:block;width:2.4em;height:10px;margin:0 0 .35em;background-image:radial-gradient(circle,#b93812 2.1px,transparent 2.25px);background-size:8px 10px;background-repeat:repeat-x}
 .sct-sec>.sct-leadish{margin:0 0 8px;color:#5c4a38}
 .sct-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 16px;margin-top:32px}
-.sct-idx{margin:0;font-size:2.4rem;font-weight:700;line-height:.95;color:#b93812}
-.sct-item h3{margin:4px 0 8px;font-size:1.15rem;font-weight:700;line-height:1.45}
+.sct-idx{margin:0;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:2.5rem;font-weight:700;line-height:.9;color:#b93812}
+.sct-item h3{margin:6px 0 8px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:1.2rem;font-weight:700;line-height:1.5;letter-spacing:.04em}
 .sct-item p,.sct-sec p,.sct-sec li{line-height:1.9}
 .sct-item p,.sct-sec p{margin:0 0 .8em}
-.sct-facts h3{margin:28px 0 6px;font-size:1rem;font-weight:700;color:#9a3412;letter-spacing:.06em}
+.sct-facts h3{margin:28px 0 6px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:1.12rem;font-weight:700;color:#9a3412;letter-spacing:.08em}
 .sct-sec a{color:var(--hi);border-bottom:1px solid currentColor}
 .sct-follow{background:#f2cb4d}
 .sct-follow-in{max-width:1080px;margin:0 auto;padding:56px 32px 64px}
-.sct-follow h2{margin:0 0 16px;font-size:clamp(1.7rem,3vw,2.3rem);font-weight:700;line-height:1.25}
-.sct-follow h3{margin:28px 0 8px;font-size:1.1rem;font-weight:700}
+.sct-follow h2{margin:0 0 16px;font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.35}
+.sct-follow h3{margin:28px 0 8px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:1.2rem;font-weight:700;letter-spacing:.04em;line-height:1.5}
 .sct-follow p{margin:0 0 .85em;line-height:1.9}
 .sct-follow a{color:#9a3412;font-weight:700;border-bottom:2px solid currentColor}
 @media(max-width:700px){
@@ -279,13 +283,16 @@ body.sct-page .fab{display:none}
  .sct-body{padding-top:40px}
  .sct-item{grid-template-columns:42px minmax(0,1fr);gap:2px 12px}
  .sct-idx{font-size:1.8rem}
- .sct h1{font-size:1.7rem}
+ .sct h1{font-size:1.85rem;padding-left:18px}
+ .sct h1::before{top:.28em;width:12px;height:12px;background:linear-gradient(#b93812,#b93812) center/12px 3px no-repeat,linear-gradient(#b93812,#b93812) center/3px 12px no-repeat}
+ .sct-sec h2,.sct-follow h2{letter-spacing:.05em}
+ .sct-follow h2{font-size:1.65rem}
 }
 </style>'''
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
     o=o.replace('<body class="aud-partners">','<body class="aud-partners sct-page">',1)
     o=o.replace('<body>','<body class="sct-page">',1)
-    o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">'+style+'</head>',1)
+    o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">'+style+'</head>',1)
     g=(d.get('gal') or [('sct_soudan','相談の様子のイラスト')])[0]
     subjects=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(n)}</h3>{_sct_bits(a)}</div></article>' for i,(n,s,a) in enumerate(d.get('what') or [],1))
     steps=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(t)}</h3>{_sct_bits(x)}</div></article>' for i,(en,t,x) in enumerate(d.get('flow') or [],1))
@@ -296,7 +303,7 @@ body.sct-page .fab{display:none}
 <section class="sct-stage"><div class="sct-split">
 <div class="sct-copy">
 <p class="sct-kicker">労働安全衛生法に基づく実施者養成研修</p>
-<h1><span class="ln">ストレスチェック</span><span class="ln">実施者養成研修</span></h1>
+<h1><span class="ln">ストレスチェック</span><span class="ln sct-title-b">実施者養成研修</span></h1>
 <p class="sct-lead">{d.get("sub") or ""}</p>
 </div>
 <figure class="sct-fig"><img src="{rel}img/{html.escape(g[0])}.jpg" alt="{html.escape(g[1])}" width="1024" height="572"></figure>
