@@ -2,472 +2,22 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）</title>
 <meta name="description" content="星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。">
-
 <link rel="canonical" href="https://www.psr-seishinkai.org/">
 <meta property="og:title" content="星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）">
 <meta property="og:description" content="星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.psr-seishinkai.org/">
 <meta property="og:image" content="https://www.psr-seishinkai.org/img/hero_top.jpg">
-<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="img/favicon.png" sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" href="https://www.psr-seishinkai.org/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://www.psr-seishinkai.org/img/favicon.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="https://www.psr-seishinkai.org/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  /* ==========================================================================
-     ベース設定（補完CSS）
-     ========================================================================== */
-  :root {
-    --text-main: #333333;
-    --text-soft: #666666;
-    --bg-main: #f9fafb;
-    --bg-card: #ffffff;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --border: #e5e7eb;
-  }
-  
-  body {
-    font-family: 'Inter', 'Noto Sans JP', sans-serif;
-    color: var(--text-main);
-    background-color: var(--bg-main);
-    margin: 0;
-    padding-top: 72px; /* ヘッダーの高さ拡大に合わせて調整 */
-    line-height: 1.6;
-    word-wrap: break-word;
-  }
-  
-  a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* ==========================================================================
-     ヘッダー周り (.gh)
-     ========================================================================== */
-  .gh {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 72px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    z-index: 1000;
-  }
-  .gh .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    line-height: 1.2;
-  }
-  .gh .logo img { 
-    width: 44px; 
-    height: 44px; 
-    flex-shrink: 0;
-  }
-  .gh .logo .logo-text {
-    display: flex;
-    flex-direction: column;
-  }
-  .gh .logo .logo-corp {
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: var(--text-soft);
-    letter-spacing: 0.02em;
-  }
-  .gh .logo .logo-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-main);
-    letter-spacing: 0.05em;
-  }
-  
-  .gh nav { display: none; } /* モバイル非表示 */
-  .gh nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
-  .gh nav a:hover { color: var(--primary); }
-  .sns { display: flex; gap: 12px; align-items: center; }
-  .sns svg { width: 20px; height: 20px; fill: var(--text-soft); }
-  
-  .gh .cta-btn {
-    background: var(--primary);
-    color: #ffffff;
-    padding: 8px 20px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-left: auto;
-    margin-right: 16px;
-  }
-  .gh .cta-btn:hover { background: var(--primary-hover); }
-  
-  .menu-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    width: 24px; height: 24px;
-    display: flex; flex-direction: column; justify-content: center; gap: 4px;
-  }
-  .menu-btn i { display: block; width: 100%; height: 2px; background: var(--text-main); }
-
-  @media (min-width: 1024px) {
-    .gh nav { display: flex; gap: 24px; align-items: center; }
-    .gh .cta-btn { margin-left: 24px; margin-right: 0; }
-    .menu-btn { display: none; }
-  }
-
-
-  /* モバイルメニュー */
-  .drawer {
-    display: block;
-    position: fixed;
-    top: 72px;
-    inset-inline: 0;
-    bottom: 0;
-    background: #ffffff;
-    z-index: 999;
-    overflow-y: auto;
-    padding: 16px 24px 48px;
-    border-top: 1px solid var(--border);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  body.open { overflow: hidden; }
-  body.open .drawer { opacity: 1; pointer-events: auto; transform: none; }
-  .drawer a {
-    display: block;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text-main);
-  }
-  .drawer a:hover { color: var(--primary); }
-  .drawer .sns { margin-top: 20px; gap: 16px; }
-  .drawer .sns a { border: 0; padding: 0; display: inline-flex; }
-  .drawer .sns svg { width: 22px; height: 22px; fill: var(--text-soft); }
-  .drawer .cta-btn {
-    display: inline-block;
-    margin-top: 24px;
-    background: var(--primary);
-    color: #ffffff;
-    padding: 12px 24px;
-    border-radius: 999px;
-    font-weight: 600;
-    text-align: center;
-    border: 0;
-  }
-  @media (min-width: 1024px) {
-    .drawer { display: none !important; }
-  }
-
-
-  /* ==========================================================================
-     ヒーローエリア (.hero)
-     ========================================================================== */
-  .hero {
-    position: relative;
-    height: 70vh;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-    overflow: hidden;
-  }
-  .hero .bg {
-    position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-    filter: brightness(0.4); /* 背景を暗くしてテキストを読みやすく */
-  }
-  .hero .hin {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
-  }
-  .hero .hlogo { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 10px; 
-    margin-bottom: 24px; 
-  }
-  .hero .hlogo img { 
-    width: 68px; 
-    height: 68px; 
-  }
-  .hero .hlogo .hero-corp {
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    opacity: 0.9;
-  }
-  .hero .hlogo .hero-name {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
-  .hero .en { font-size: 0.85rem; letter-spacing: 0.2em; opacity: 0.8; margin-bottom: 16px; }
-  .hero .copy { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 700; line-height: 1.4; display: flex; flex-direction: column; gap: 8px; margin: 0; }
-  .hero .copy .where { font-size: 1rem; font-weight: 400; opacity: 0.9; margin-top: 10px; }
-  .hero .acc {
-    position: absolute; bottom: 24px; z-index: 2;
-    font-size: 0.8rem; background: rgba(0,0,0,0.6);
-    padding: 8px 16px; border-radius: 20px;
-    width: 90%; max-width: 600px;
-  }
-
-  /* ==========================================================================
-     共通セクション (.blk)
-     ========================================================================== */
-  .blk {
-    padding: 80px 24px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .blk .h { text-align: center; margin-bottom: 48px; }
-  .blk .h .en { display: block; font-size: 0.8rem; font-weight: 600; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 8px; }
-  .blk h2 { font-size: 2rem; font-weight: 700; margin: 0 0 16px; }
-  .blk p { color: var(--text-soft); }
-
-  /* ==========================================================================
-     どなたの相談ですか？ (.aud)
-     ========================================================================== */
-  .aud { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 600px) { .aud { grid-template-columns: repeat(2, 1fr); } }
-  .aud a {
-    background: var(--bg-card);
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    border: 1px solid var(--border);
-    display: flex; flex-direction: column;
-    font-weight: 700; font-size: 1.1rem;
-  }
-  .aud a:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: #cbd5e1; }
-  .aud a small {
-    font-weight: 400; font-size: 0.85rem;
-    color: var(--text-soft); margin-top: 8px;
-  }
-
-  /* ==========================================================================
-     お知らせ (.enh-news)
-     ========================================================================== */
-  .enh-news {
-    max-width: 880px; margin: 0 auto 40px; padding: 24px 32px;
-    background: #ffffff; border-radius: 12px;
-    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-  }
-  .enh-news h2 { font-size: 1.1rem; margin: 0; font-weight: 700; }
-  .enh-news a { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: underline; }
-
-  /* ==========================================================================
-     カードコンポーネント (.cards, .sc)
-     ========================================================================== */
-  .cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 768px) { .cards { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } }
-  .sc {
-    background: var(--bg-card);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05);
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 16px;
-    gap: 16px;
-    transition: all 0.3s ease;
-  }
-  .sc:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); border-color: #cbd5e1; }
-  .sc .th {
-    width: 100px;
-    height: 100px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background-size: cover; background-position: center;
-    background-color: #f8fafc;
-    display: flex; align-items: center; justify-content: center;
-  }
-  @media (min-width: 640px) {
-    .sc { gap: 24px; padding: 20px; }
-    .sc .th { width: 120px; height: 120px; border-radius: 10px; }
-  }
-  .sc .th img { max-width: 80%; max-height: 80%; object-fit: contain; } /* 金斗雲ロゴ等用 */
-  .sc .bd { display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
-  .sc .nm { font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
-  .sc .ct {
-    font-size: 0.75rem; font-weight: 600;
-    background: #f8fafc; color: #475569;
-    padding: 4px 8px; border-radius: 6px;
-    display: inline-block; align-self: flex-start;
-    margin-bottom: 8px;
-    border: 1px solid #e2e8f0;
-  }
-  .sc .ln { font-size: 0.9rem; color: var(--text-soft); margin: 0; line-height: 1.5; }
-
-  /* ==========================================================================
-     リスト型カードコンポーネント (.list-cards, .lc) - 画像なし用
-     ========================================================================== */
-  .list-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 768px) { .list-cards { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } }
-  .lc {
-    background: var(--bg-card);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05);
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  .lc:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
-    border-color: #cbd5e1;
-  }
-  .lc .bd {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
-  }
-  .lc .nm { font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
-  .lc .ct {
-    font-size: 0.75rem; font-weight: 600;
-    background: #f8fafc; color: #475569;
-    padding: 4px 8px; border-radius: 6px;
-    display: inline-block; align-self: flex-start;
-    margin-bottom: 8px;
-    border: 1px solid #e2e8f0;
-  }
-  .lc .ln { font-size: 0.9rem; color: var(--text-soft); margin: 0; line-height: 1.5; }
-
-  .btn { display: inline-block; background: var(--text-main); color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-align: center; transition: background 0.3s; }
-  .btn:hover { background: #000; }
-
-  /* ==========================================================================
-     ダークセクション (.dark) - アクセスエリア
-     ========================================================================== */
-  .dark { background: #1e293b; color: #f8fafc; padding: 40px 0; margin-top: 40px; }
-  .dark .blk { padding: 60px 24px; }
-  .dark .h .en { color: #94a3b8; }
-  .dark p { color: #cbd5e1; }
-  .dark .big30 { font-size: 1.2rem; text-align: center; margin: 0 0 32px; }
-  .dark .big30 em { font-size: 2.5rem; font-style: normal; font-weight: 700; color: #ffffff; padding: 0 6px; }
-
-  /* アクセス情報の2カラムレイアウト */
-  .dark .access-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-  @media (min-width: 640px) {
-    .dark .access-box {
-      flex-direction: row;
-      align-items: center;
-      padding: 28px 32px;
-      gap: 32px;
-    }
-  }
-
-  .dark .stph-wrap {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 200px;
-  }
-  .dark .stph {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    display: block;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
-
-  .dark .lst {
-    margin: 0;
-    padding-left: 20px;
-    line-height: 1.8;
-    color: #e2e8f0;
-    font-size: 0.95rem;
-  }
-  .dark .go { display: block; width: fit-content; margin: 32px auto 0; background: #334155; color: #fff; padding: 12px 32px; border-radius: 8px; border: 1px solid #475569; font-weight: 600; }
-  .dark .go:hover { background: #475569; }
-
-  /* ==========================================================================
-     CTAセクション (.cta)
-     ========================================================================== */
-  .cta { text-align: center; padding: 80px 24px; background: #eff6ff; margin: 40px 24px; border-radius: 24px; max-width: 1000px; margin-left: auto; margin-right: auto; }
-  .cta .en { font-weight: 600; color: var(--primary); letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 8px; display: block; }
-  .cta h2 { font-size: 2rem; font-weight: 700; margin: 0; }
-  .cta .row { display: flex; justify-content: center; gap: 16px; margin: 32px 0; flex-wrap: wrap; }
-  .cta .w, .cta .o { padding: 16px 32px; border-radius: 999px; font-weight: 700; min-width: 220px; display: inline-block; }
-  .cta .w { background: #06c755; color: white; } /* LINE Color */
-  .cta .w:hover { filter: brightness(1.1); }
-  .cta .o { background: #ffffff; border: 2px solid var(--text-main); color: var(--text-main); }
-  .cta .o:hover { background: var(--text-main); color: #fff; }
-  .cta .tnum { display: inline-block; font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
-
-  /* ==========================================================================
-     フッター (.gf)
-     ========================================================================== */
-  .gf { background: #111827; color: #9ca3af; padding: 80px 24px 24px; font-size: 0.9rem; }
-  .gf .in { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
-  @media (min-width: 768px) { .gf .in { grid-template-columns: 2fr 1fr 1fr 1fr 1fr; } }
-  .gf .logo { color: #ffffff; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .gf .logo img { width: 32px; height: 32px; border-radius: 4px; }
-  .gf h5 { color: #ffffff; margin: 0 0 16px; font-size: 1rem; font-weight: 600; }
-  .gf ul { list-style: none; padding: 0; margin: 0; }
-  .gf ul li { margin-bottom: 12px; }
-  .gf a:hover { color: #ffffff; text-decoration: underline; }
-  .gf .cp { grid-column: 1 / -1; text-align: center; margin-top: 48px; border-top: 1px solid #374151; padding-top: 24px; font-size: 0.8rem; }
-
-  /* ==========================================================================
-     フローティングアクションボタン (.fab)
-     ========================================================================== */
-  .fab {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--primary); color: #ffffff;
-    padding: 16px 28px; border-radius: 999px;
-    font-weight: 700; font-size: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
-    z-index: 100; transition: transform 0.2s;
-  }
-  .fab:hover { transform: scale(1.05); }
-</style>
-
-
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.psr-seishinkai.org/#org", "name": "一般社団法人 心理社会的リハビリテーション・星心会", "alternateName": "星心会", "url": "https://www.psr-seishinkai.org/", "telephone": "059-315-0697", "address": {"@type": "PostalAddress", "postalCode": "512-8048", "addressCountry": "JP", "addressRegion": "三重県", "addressLocality": "四日市市", "streetAddress": "山城町59-4"}, "areaServed": ["四日市市", "三重県", "名古屋市", "愛知県"], "sameAs": ["https://x.com/gcbfhq", "https://www.instagram.com/psr_seishinkai/", "https://www.threads.com/@psr_seishinkai"], "logo": "https://www.psr-seishinkai.org/img/logo_black.svg"}]}</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVX8LZ4DXC"></script>
 <script>
@@ -477,14 +27,761 @@ gtag('js', new Date());
 gtag('config', 'G-XVX8LZ4DXC');
 </script>
 
+<style>
+:root {
+  --primary: #1f6f78;
+  --primary-light: #e8f4f5;
+  --primary-dark: #144e54;
+  --accent: #c96b4b;
+  --accent-light: #faede8;
+  --text-main: #2b3334;
+  --text-soft: #5e6c6e;
+  --bg-page: #f6f9f9;
+  --bg-white: #ffffff;
+  --border: #e1e9ea;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 2px 8px rgba(31, 111, 120, 0.05);
+  --shadow-md: 0 8px 24px rgba(31, 111, 120, 0.08);
+  --shadow-hover: 0 12px 30px rgba(31, 111, 120, 0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-page);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+
+/* Header */
+.gh {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+}
+.gh .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.gh .logo img {
+  height: 44px;
+  width: auto;
+}
+.gh .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+.gh .logo-text .corp {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-soft);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.gh .logo-text .brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.gh nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.gh nav a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: color .2s;
+}
+.gh nav a:hover {
+  color: var(--primary);
+}
+.gh .sns {
+  display: flex;
+  gap: 12px;
+  margin-left: 8px;
+  padding-left: 18px;
+  border-left: 1px solid var(--border);
+}
+.gh .sns a svg {
+  width: 17px;
+  height: 17px;
+  fill: var(--text-soft);
+  transition: fill .2s;
+}
+.gh .sns a:hover svg {
+  fill: var(--primary);
+}
+.cta-btn {
+  background: var(--accent);
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 22px;
+  border-radius: 999px;
+  box-shadow: 0 3px 12px rgba(201, 107, 75, 0.28);
+  transition: transform .2s, background .2s;
+}
+.cta-btn:hover {
+  background: #b55c3c;
+  transform: translateY(-1px);
+}
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.menu-btn i {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-main);
+  border-radius: 1px;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 580px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+.hero .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+.hero .bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 78, 84, 0.72) 0%, rgba(15, 45, 49, 0.88) 100%);
+}
+.hero .hin {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  padding: 40px 24px;
+}
+.hero .hlogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.hero .hlogo img {
+  height: 68px;
+  width: auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+.hero .hlogo .hero-corp {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  opacity: 0.9;
+  font-weight: 500;
+}
+.hero .hlogo .hero-brand {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+.hero .en {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: #a8d5db;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.hero .copy {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.hero .copy span {
+  display: inline-block;
+}
+.hero .where {
+  display: inline-block;
+  font-size: 14px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(4px);
+  padding: 5px 16px;
+  border-radius: 999px;
+  margin-top: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.hero .acc {
+  position: relative;
+  z-index: 2;
+  font-size: 13px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(15, 45, 49, 0.65);
+  backdrop-filter: blur(8px);
+  padding: 10px 24px;
+  border-radius: 999px;
+  margin: 10px 20px 24px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Sections */
+.blk {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+.blk .h {
+  text-align: center;
+  margin-bottom: 44px;
+}
+.blk .h .en {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 6px;
+}
+.blk .h h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
+.blk .h h2::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.blk .h p {
+  color: var(--text-soft);
+  font-size: 15px;
+  margin-top: 14px;
+}
+
+/* Entry Navigation */
+#entry .aud {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+#entry .aud a {
+  background: var(--bg-white);
+  padding: 22px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+#entry .aud a small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-soft);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+#entry .aud a:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-top-color: var(--accent);
+}
+
+/* Card Lists */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.sc {
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  gap: 18px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.sc:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(31, 111, 120, 0.3);
+}
+.sc .th {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-sm);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sc .th.t img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+.sc .bd {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.sc .ct {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 3px 9px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.sc .nm {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.sc .ln {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Text List Cards */
+.lc {
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.lc:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(31, 111, 120, 0.3);
+}
+.lc .ct {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 3px 9px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.lc .nm {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.lc .ln {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+/* Button */
+.btn-wrap {
+  text-align: center;
+  margin-top: 36px;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--bg-white);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all .2s;
+}
+.btn:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Access Section */
+.dark {
+  background: linear-gradient(135deg, #144e54 0%, #1f6f78 100%);
+  color: #fff;
+  padding: 80px 24px;
+}
+.dark .blk {
+  padding: 0;
+  max-width: 820px;
+}
+.dark .h .en {
+  color: #a8d5db;
+}
+.dark .big30 {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.dark .big30 em {
+  font-style: normal;
+  font-size: 38px;
+  color: #ffc97a;
+  margin: 0 4px;
+}
+.access-box {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  backdrop-filter: blur(6px);
+}
+.access-box .stph {
+  width: 180px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.access-box .lst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+}
+.access-box .lst li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+.access-box .lst li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: #ffc97a;
+  border-radius: 50%;
+}
+.go-wrap {
+  text-align: center;
+  margin-top: 32px;
+}
+.dark .go {
+  display: inline-block;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: all .2s;
+}
+.dark .go:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: #fff;
+}
+
+/* Contact Section */
+.cta {
+  background: var(--bg-white);
+  padding: 70px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.cta .en {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.cta h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+.cta p {
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+.cta .row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cta .w {
+  background: #06c755;
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 4px 14px rgba(6, 199, 85, 0.28);
+  transition: transform .2s;
+}
+.cta .o {
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 4px 14px rgba(31, 111, 120, 0.28);
+  transition: transform .2s;
+}
+.cta .w:hover, .cta .o:hover {
+  transform: translateY(-2px);
+}
+.cta .tnum {
+  display: block;
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-top: 18px;
+  font-weight: 500;
+}
+
+/* Footer */
+.gf {
+  background: #192223;
+  color: #9aa7a8;
+  padding: 60px 24px 30px;
+  font-size: 13px;
+}
+.gf .in {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+  gap: 32px;
+}
+.gf .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+.gf .logo img {
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+.gf .logo-text .corp {
+  font-size: 10px;
+  color: #8da1a3;
+  display: block;
+}
+.gf .logo-text .brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+}
+.gf p {
+  line-height: 1.7;
+}
+.gf a {
+  color: inherit;
+  transition: color .2s;
+}
+.gf a:hover {
+  color: #fff;
+}
+.gf h5 {
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.gf ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gf .cp {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-top: 30px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  color: #6c7c7d;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(201, 107, 75, 0.4);
+  z-index: 999;
+  transition: transform .2s;
+}
+.fab:hover {
+  transform: translateY(-2px);
+}
+
+.drawer {
+  display: none;
+  position: fixed;
+  top: 72px;
+  inset-inline: 0;
+  bottom: 0;
+  background: var(--bg-white);
+  z-index: 999;
+  overflow-y: auto;
+  padding: 8px 24px 48px;
+  border-top: 1px solid var(--border);
+}
+body.open { overflow: hidden; }
+body.open .drawer { display: block; }
+.drawer a {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.drawer a:hover { color: var(--primary); }
+.drawer .sns {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 8px;
+}
+.drawer .sns a {
+  border: 0;
+  padding: 0;
+  display: inline-flex;
+}
+.drawer .sns svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-soft);
+}
+.drawer .cta-btn {
+  display: inline-block;
+  margin-top: 24px;
+  text-align: center;
+  border: 0;
+}
+@media (min-width: 901px) {
+  body.open .drawer { display: none; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .gh nav, .gh .cta-btn { display: none; }
+  .menu-btn { display: flex; }
+  .gf .in {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero .copy { font-size: 1.6rem; }
+  .hero { min-height: 480px; }
+  .cards { grid-template-columns: 1fr; }
+  .access-box { flex-direction: column; align-items: flex-start; }
+  .access-box .stph { width: 100%; height: 160px; }
+  .gf .in { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
+
 <header class="gh">
   <a class="logo" href="/">
     <img src="https://www.psr-seishinkai.org/img/mark_black.svg" alt="星心会 ロゴ">
     <div class="logo-text">
-      <span class="logo-corp">一般社団法人 心理社会的リハビリテーション</span>
-      <span class="logo-name">星心会</span>
+      <span class="corp">一般社団法人 心理社会的リハビリテーション</span>
+      <span class="brand-name">星心会</span>
     </div>
   </a>
   <nav>
@@ -492,43 +789,39 @@ gtag('config', 'G-XVX8LZ4DXC');
     <a href="#family">ご家族</a>
     <a href="#parents">保護者</a>
     <a href="#partners">企業・支援機関</a>
-    <a href="#access">アクセス</a>
+    <a href="access/">アクセス</a>
     <div class="sns">
-      <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
-      <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg></a>
+      <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
+      </a>
+      <a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener" aria-label="Threads">
+        <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.335-1.272-8.186-3.709C2.239 17.917 1.76 14.791 1.76 11.2 1.76 7.618 2.597 4.764 4.249 2.7 5.962.563 8.572-.002 12.016 0h.015c3.554 0 6.233.586 8.01 1.8 1.348.919 2.261 2.247 2.724 3.95l-2.909.782c-.328-1.206-.948-2.096-1.843-2.646C16.8 3.125 14.863 2.78 12.03 2.78c-2.738 0-4.743.435-5.96 1.947-1.22 1.516-1.838 3.784-1.838 6.741 0 2.956.368 5.485 1.758 6.995 1.391 1.51 3.518 2.28 6.136 2.28 2.618 0 4.417-.676 5.35-2.012.784-1.123 1.056-2.527 1.056-4.526h-6.52v-2.78h9.43v.81c0 2.632-.453 4.76-1.348 6.326-1.42 2.484-4.103 3.679-7.989 3.679z"/></svg>
+      </a>
     </div>
   </nav>
-  <a class="cta-btn" href="#contact">相談する</a>
-  <button class="menu-btn" type="button" aria-label="メニュー" aria-controls="mobile-menu" aria-expanded="false"><i></i><i></i><i></i></button>
+  <a class="cta-btn" href="contact/">相談する</a>
+  <button class="menu-btn" type="button" aria-label="メニュー" aria-controls="mobile-menu" aria-expanded="false"><i></i><i></i></button>
 </header>
 
-<div class="drawer" id="mobile-menu" hidden>
-  <a href="#self">ご本人</a>
-  <a href="#family">ご家族</a>
-  <a href="#parents">保護者</a>
-  <a href="#partners">企業・支援機関</a>
-  <a href="#access">アクセス</a>
-  <a class="cta-btn" href="#contact">相談する</a>
-  <div class="sns">
-    <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
-    <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg></a>
-  </div>
-</div>
-
 <section class="hero">
-  <div class="bg" style="background-image:url('https://www.psr-seishinkai.org/img/hero_top.jpg');"></div>
+  <div class="bg" style="background-image:url(https://www.psr-seishinkai.org/img/hero_top.jpg);"></div>
   <div class="hin">
     <div class="hlogo">
-      <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="星心会 マーク">
+      <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="">
       <span class="hero-corp">一般社団法人 心理社会的リハビリテーション</span>
-      <span class="hero-name">星心会</span>
+      <span class="hero-brand">星心会</span>
     </div>
     <p class="en">SEISHINKAI · YOKKAICHI</p>
     <h1 class="copy">
-      <span>環境調整という、</span>
+      <span>環境調整という、</span><br>
       <span>メンタルヘルスケア</span>
-      <span class="where">三重県四日市市</span>
     </h1>
+    <div>
+      <span class="where">三重県四日市市</span>
+    </div>
   </div>
   <p class="acc">名古屋西ICから車で約30分 ／ 三岐線 山城駅から徒歩5分 ／ 四日市駅から三岐バス「団地下」</p>
 </section>
@@ -547,11 +840,6 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
 </section>
 
-<section class="enh-news">
-  <h2>お知らせ</h2>
-  <a href="news/">お知らせ一覧を見る →</a>
-</section>
-
 <section class="blk" id="self">
   <div class="h">
     <span class="en">FOR YOU</span>
@@ -560,18 +848,18 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
   <div class="cards">
     <a class="sc" href="shichirin/">
-      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/fish.jpg')"></div>
+      <div class="th" style="background-image:url(https://www.psr-seishinkai.org/img/fish.jpg)"></div>
       <div class="bd">
-        <p class="nm">しちりんの会</p>
         <span class="ct">自費参加・手続き不要</span>
+        <p class="nm">しちりんの会</p>
         <p class="ln">火を囲めば黙っていても心がゆるみます。</p>
       </div>
     </a>
     <a class="sc" href="ryozanpaku/">
-      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/homemeal.jpg')"></div>
+      <div class="th" style="background-image:url(https://www.psr-seishinkai.org/img/homemeal.jpg)"></div>
       <div class="bd">
-        <p class="nm">自立支援寮 梁山泊</p>
         <span class="ct">メンタルピアレジデンス</span>
+        <p class="nm">自立支援寮 梁山泊</p>
         <p class="ln">働き続けるための住まい。親元を出る第一歩の拠点にも。</p>
       </div>
     </a>
@@ -588,16 +876,16 @@ gtag('config', 'G-XVX8LZ4DXC');
     <a class="sc" href="kintoun/">
       <div class="th t"><img src="https://www.psr-seishinkai.org/img/kintoun-logo.png" alt="金斗雲 ロゴ"></div>
       <div class="bd">
-        <p class="nm">訪問支援 金斗雲</p>
         <span class="ct">訪問・アウトリーチ</span>
+        <p class="nm">アウトリーチ 金斗雲</p>
         <p class="ln">家から出られない、窓口まで行くのが難しい方へ直接訪問します。</p>
       </div>
     </a>
     <a class="sc" href="chamu/">
-      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/counter.jpg')"></div>
+      <div class="th" style="background-image:url(https://www.psr-seishinkai.org/img/counter.jpg)"></div>
       <div class="bd">
-        <p class="nm">生活介護事業所 茶夢</p>
         <span class="ct">日中の居場所</span>
+        <p class="nm">生活介護事業所 茶夢</p>
         <p class="ln">料理・喫茶・読書・アートなどを通じて、静かに穏やかに過ごします。</p>
       </div>
     </a>
@@ -610,32 +898,27 @@ gtag('config', 'G-XVX8LZ4DXC');
     <h2>お子さまの保護者</h2>
     <p>落ち着きがない、かんしゃくが多い、集団生活が苦手なお子さまの保護者の方へ。</p>
   </div>
-  <div class="cards" style="margin-bottom: 24px;">
+  <div class="cards">
     <a class="sc" href="leo/">
-      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/panda.jpg')"></div>
+      <div class="th" style="background-image:url(https://www.psr-seishinkai.org/img/panda.jpg)"></div>
       <div class="bd">
-        <p class="nm">児発・放デイ レオ</p>
         <span class="ct">子どもの情緒</span>
+        <p class="nm">児発・放デイ レオ</p>
         <p class="ln">すべての基礎となる「情緒」の安定を丁寧に図ります。</p>
       </div>
     </a>
     <a class="sc" href="leo/parent-training/">
-      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/pt-classroom.jpg')"></div>
+      <div class="th" style="background-image:url(https://www.psr-seishinkai.org/img/pt-classroom.jpg)"></div>
       <div class="bd">
-        <p class="nm">ペアレントトレーニング</p>
         <span class="ct">保護者向けプログラム</span>
+        <p class="nm">ペアレントトレーニング</p>
         <p class="ln">アドラー心理学に基づく親御さんのための伴走支援講座です。</p>
       </div>
     </a>
-  </div>
-  <div class="list-cards">
     <a class="lc" href="leo/assessment/">
-      <!-- 画像なし（テキストのみのカードとして表示） -->
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">発達検査</p>
-        <span class="ct">WISC-V・新版K式</span>
-        <p class="ln">検査して点数を出すだけで終わりにせず、その後の生活環境につなげます。</p>
-      </div>
+      <span class="ct">WISC-V・新版K式</span>
+      <p class="nm">発達検査</p>
+      <p class="ln">検査して点数を出すだけで終わりにせず、その後の生活環境につなげます。</p>
     </a>
   </div>
 </section>
@@ -646,76 +929,66 @@ gtag('config', 'G-XVX8LZ4DXC');
     <h2>企業・支援機関</h2>
     <p>職場におけるメンタルヘルス対策や障害者雇用定着の支援を行います。</p>
   </div>
-  <div class="list-cards">
+  <div class="cards">
     <a class="lc" href="business/employment/">
-      <!-- 画像なし（テキストのみのカードとして表示） -->
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">雇用定着サポート</p>
-        <span class="ct">職場定着支援</span>
-        <p class="ln">メンタルヘルスの実務家が、社員一人ひとりを継続的に担当します。</p>
-      </div>
+      <span class="ct">職場定着支援</span>
+      <p class="nm">雇用定着サポート</p>
+      <p class="ln">メンタルヘルスの実務家が、社員一人ひとりを継続的に担当します。</p>
     </a>
     <a class="lc" href="business/stress-check/">
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">ストレスチェック</p>
-        <span class="ct">アドラー心理学×ラインケア</span>
-        <p class="ln">形骸化させず、組織のメンタルヘルス改善に直結させるラインケア。</p>
-      </div>
+      <span class="ct">アドラー心理学×ラインケア</span>
+      <p class="nm">ストレスチェック</p>
+      <p class="ln">形骸化させず、組織のメンタルヘルス改善に直結させるラインケア。</p>
     </a>
     <a class="lc" href="business/stress-check-training/">
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">実施者養成研修</p>
-        <span class="ct">法定研修</span>
-        <p class="ln">歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。</p>
-      </div>
+      <span class="ct">法定研修</span>
+      <p class="nm">ストレスチェック実施者養成研修</p>
+      <p class="ln">歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。</p>
     </a>
     <a class="lc" href="business/agent-consulting/">
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">エージェントコンサル</p>
-        <span class="ct">AIエージェント導入</span>
-        <p class="ln">現場の事務・書類作成や広報を大幅に効率化するAI伴走。</p>
-      </div>
+      <span class="ct">AIエージェント導入</span>
+      <p class="nm">AIエージェントコンサル</p>
+      <p class="ln">現場の事務・書類作成や広報を大幅に効率化するAI伴走。</p>
     </a>
     <a class="lc" href="business/training/">
-      <div class="bd" style="padding: 24px 32px;">
-        <p class="nm">研修</p>
-        <span class="ct">指導員研修・合気道護身術</span>
-        <p class="ln">施設や企業の課題に合わせたオーダーメイド研修を実施します。</p>
-      </div>
+      <span class="ct">福祉職員研修・合気道護身術</span>
+      <p class="nm">研修</p>
+      <p class="ln">施設や企業の課題に合わせたオーダーメイド研修を実施します。</p>
     </a>
   </div>
-  <div style="text-align:center; margin-top: 40px;">
+  <div class="btn-wrap">
     <a class="btn" href="business/">企業・支援機関向けページへ →</a>
   </div>
 </section>
 
-<div class="dark" id="access">
-  <section class="blk" style="padding-top: 0; padding-bottom: 0;">
-    <div class="h"><span class="en">ACCESS</span></div>
+<div class="dark">
+  <section class="blk">
+    <div class="h">
+      <span class="en">ACCESS</span>
+      <h2>アクセス</h2>
+    </div>
     <p class="big30">名古屋西ICから車で <em>30</em> 分</p>
-
     <div class="access-box">
-      <div class="stph-wrap">
-        <img class="stph" src="https://www.psr-seishinkai.org/img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy">
-      </div>
+      <img class="stph" src="https://www.psr-seishinkai.org/img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201">
       <ul class="lst">
         <li>三岐線 山城駅から徒歩5分</li>
         <li>四日市駅から三岐バス「団地下」下車</li>
         <li>本部：三重県四日市市山城町59-4</li>
       </ul>
     </div>
-
-    <a class="go" href="access/">アクセスの詳細を見る</a>
+    <div class="go-wrap">
+      <a class="go" href="access/">アクセスの詳細を見る</a>
+    </div>
   </section>
 </div>
 
 <section class="cta" id="contact">
-  <span class="en">CONTACT</span>
+  <p class="en">CONTACT</p>
   <h2>ご相談・お問い合わせ</h2>
-  <p style="color:var(--text-soft);margin-top:8px">どの事業に相談すべきか決まっていなくても大丈夫です。</p>
+  <p>どの事業に相談すべきか決まっていなくても大丈夫です。</p>
   <div class="row">
     <a class="w" href="contact/#line">LINEで相談</a>
-    <a class="o" href="tel:0593150697">お電話で相談</a>
+    <a class="o" href="contact/">相談フォーム</a>
   </div>
   <a class="tnum" href="tel:0593150697">TEL：059-315-0697</a>
 </section>
@@ -724,10 +997,13 @@ gtag('config', 'G-XVX8LZ4DXC');
   <div class="in">
     <div>
       <a class="logo" href="/">
-        <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="星心会" style="filter: brightness(0) invert(1);">
-        <span>星心会</span>
+        <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="星心会">
+        <div class="logo-text">
+          <span class="corp">一般社団法人 心理社会的リハビリテーション</span>
+          <span class="brand-name">星心会</span>
+        </div>
       </a>
-      <p style="margin-top:16px; line-height: 1.8;">
+      <p style="margin-top:16px">
         一般社団法人 心理社会的リハビリテーション・星心会<br>
         〒512-8048 三重県四日市市山城町59-4<br>
         TEL <a href="tel:0593150697">059-315-0697</a><br>
@@ -772,6 +1048,25 @@ gtag('config', 'G-XVX8LZ4DXC');
 
 <a class="fab" href="#contact">相談する</a>
 
+<div class="drawer" id="mobile-menu" hidden>
+  <a href="#self">ご本人</a>
+  <a href="#family">ご家族</a>
+  <a href="#parents">保護者</a>
+  <a href="#partners">企業・支援機関</a>
+  <a href="access/">アクセス</a>
+  <a class="cta-btn" href="contact/">相談する</a>
+  <div class="sns">
+    <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X">
+      <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
+    </a>
+    <a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener" aria-label="Threads">
+      <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.335-1.272-8.186-3.709C2.239 17.917 1.76 14.791 1.76 11.2 1.76 7.618 2.597 4.764 4.249 2.7 5.962.563 8.572-.002 12.016 0h.015c3.554 0 6.233.586 8.01 1.8 1.348.919 2.261 2.247 2.724 3.95l-2.909.782c-.328-1.206-.948-2.096-1.843-2.646C16.8 3.125 14.863 2.78 12.03 2.78c-2.738 0-4.743.435-5.96 1.947-1.22 1.516-1.838 3.784-1.838 6.741 0 2.956.368 5.485 1.758 6.995 1.391 1.51 3.518 2.28 6.136 2.28 2.618 0 4.417-.676 5.35-2.012.784-1.123 1.056-2.527 1.056-4.526h-6.52v-2.78h9.43v.81c0 2.632-.453 4.76-1.348 6.326-1.42 2.484-4.103 3.679-7.989 3.679z"/></svg>
+    </a>
+  </div>
+</div>
 
 <script>
 (function(){
