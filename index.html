@@ -2,13 +2,15 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）</title>
 <meta name="description" content="星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。">
+
 <link rel="canonical" href="https://www.psr-seishinkai.org/">
 <meta property="og:title" content="星心会｜環境調整という、メンタルヘルスケアです。名古屋から30分（三重県四日市市）">
 <meta property="og:description" content="星心会は、環境調整によるメンタルヘルスケアを行う三重県四日市市の専門組織です。ご本人、ご家族、お子さまの保護者、企業・支援機関の方へ、それぞれの事業を用意しています。診断も手続きの知識も要りません。名古屋西ICから車で約30分です。">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.psr-seishinkai.org/">
 <meta property="og:image" content="https://www.psr-seishinkai.org/img/hero_top.jpg">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon.png" sizes="32x32" type="image/png">
@@ -16,7 +18,455 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20261102f">
+
+<style>
+  /* ==========================================================================
+     ベース設定（補完CSS）
+     ========================================================================== */
+  :root {
+    --text-main: #333333;
+    --text-soft: #666666;
+    --bg-main: #f9fafb;
+    --bg-card: #ffffff;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --border: #e5e7eb;
+  }
+  
+  body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-main);
+    margin: 0;
+    padding-top: 72px; /* ヘッダーの高さ拡大に合わせて調整 */
+    line-height: 1.6;
+    word-wrap: break-word;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ==========================================================================
+     ヘッダー周り (.gh)
+     ========================================================================== */
+  .gh {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 72px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    z-index: 1000;
+  }
+  .gh .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .gh .logo img { 
+    width: 44px; 
+    height: 44px; 
+    flex-shrink: 0;
+  }
+  .gh .logo .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .gh .logo .logo-corp {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    letter-spacing: 0.02em;
+  }
+  .gh .logo .logo-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.05em;
+  }
+  
+  .gh nav { display: none; } /* モバイル非表示 */
+  .gh nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+  .gh nav a:hover { color: var(--primary); }
+  .sns { display: flex; gap: 12px; align-items: center; }
+  .sns svg { width: 20px; height: 20px; fill: var(--text-soft); }
+  
+  .gh .cta-btn {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: auto;
+    margin-right: 16px;
+  }
+  .gh .cta-btn:hover { background: var(--primary-hover); }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 24px; height: 24px;
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  }
+  .menu-btn i { display: block; width: 100%; height: 2px; background: var(--text-main); }
+
+  @media (min-width: 1024px) {
+    .gh nav { display: flex; gap: 24px; align-items: center; }
+    .gh .cta-btn { margin-left: 24px; margin-right: 0; }
+    .menu-btn { display: none; }
+  }
+
+
+  /* モバイルメニュー */
+  .drawer {
+    display: block;
+    position: fixed;
+    top: 72px;
+    inset-inline: 0;
+    bottom: 0;
+    background: #ffffff;
+    z-index: 999;
+    overflow-y: auto;
+    padding: 16px 24px 48px;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  body.open { overflow: hidden; }
+  body.open .drawer { opacity: 1; pointer-events: auto; transform: none; }
+  .drawer a {
+    display: block;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .drawer a:hover { color: var(--primary); }
+  .drawer .sns { margin-top: 20px; gap: 16px; }
+  .drawer .sns a { border: 0; padding: 0; display: inline-flex; }
+  .drawer .sns svg { width: 22px; height: 22px; fill: var(--text-soft); }
+  .drawer .cta-btn {
+    display: inline-block;
+    margin-top: 24px;
+    background: var(--primary);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-align: center;
+    border: 0;
+  }
+  @media (min-width: 1024px) {
+    .drawer { display: none !important; }
+  }
+
+
+  /* ==========================================================================
+     ヒーローエリア (.hero)
+     ========================================================================== */
+  .hero {
+    position: relative;
+    height: 70vh;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    overflow: hidden;
+  }
+  .hero .bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    filter: brightness(0.4); /* 背景を暗くしてテキストを読みやすく */
+  }
+  .hero .hin {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+  }
+  .hero .hlogo { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px; 
+    margin-bottom: 24px; 
+  }
+  .hero .hlogo img { 
+    width: 68px; 
+    height: 68px; 
+  }
+  .hero .hlogo .hero-corp {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+  }
+  .hero .hlogo .hero-name {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .hero .en { font-size: 0.85rem; letter-spacing: 0.2em; opacity: 0.8; margin-bottom: 16px; }
+  .hero .copy { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 700; line-height: 1.4; display: flex; flex-direction: column; gap: 8px; margin: 0; }
+  .hero .copy .where { font-size: 1rem; font-weight: 400; opacity: 0.9; margin-top: 10px; }
+  .hero .acc {
+    position: absolute; bottom: 24px; z-index: 2;
+    font-size: 0.8rem; background: rgba(0,0,0,0.6);
+    padding: 8px 16px; border-radius: 20px;
+    width: 90%; max-width: 600px;
+  }
+
+  /* ==========================================================================
+     共通セクション (.blk)
+     ========================================================================== */
+  .blk {
+    padding: 80px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .blk .h { text-align: center; margin-bottom: 48px; }
+  .blk .h .en { display: block; font-size: 0.8rem; font-weight: 600; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 8px; }
+  .blk h2 { font-size: 2rem; font-weight: 700; margin: 0 0 16px; }
+  .blk p { color: var(--text-soft); }
+
+  /* ==========================================================================
+     どなたの相談ですか？ (.aud)
+     ========================================================================== */
+  .aud { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 600px) { .aud { grid-template-columns: repeat(2, 1fr); } }
+  .aud a {
+    background: var(--bg-card);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    font-weight: 700; font-size: 1.1rem;
+  }
+  .aud a:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+  .aud a small {
+    font-weight: 400; font-size: 0.85rem;
+    color: var(--text-soft); margin-top: 8px;
+  }
+
+  /* ==========================================================================
+     お知らせ (.enh-news)
+     ========================================================================== */
+  .enh-news {
+    max-width: 880px; margin: 0 auto 40px; padding: 24px 32px;
+    background: #ffffff; border-radius: 12px;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .enh-news h2 { font-size: 1.1rem; margin: 0; font-weight: 700; }
+  .enh-news a { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: underline; }
+
+  /* ==========================================================================
+     カードコンポーネント (.cards, .sc)
+     ========================================================================== */
+  .cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 768px) { .cards { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } }
+  .sc {
+    background: var(--bg-card);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+    transition: all 0.3s ease;
+  }
+  .sc:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+  .sc .th {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background-size: cover; background-position: center;
+    background-color: #f8fafc;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @media (min-width: 640px) {
+    .sc { gap: 24px; padding: 20px; }
+    .sc .th { width: 120px; height: 120px; border-radius: 10px; }
+  }
+  .sc .th img { max-width: 80%; max-height: 80%; object-fit: contain; } /* 金斗雲ロゴ等用 */
+  .sc .bd { display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+  .sc .nm { font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
+  .sc .ct {
+    font-size: 0.75rem; font-weight: 600;
+    background: #f8fafc; color: #475569;
+    padding: 4px 8px; border-radius: 6px;
+    display: inline-block; align-self: flex-start;
+    margin-bottom: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  .sc .ln { font-size: 0.9rem; color: var(--text-soft); margin: 0; line-height: 1.5; }
+
+  /* ==========================================================================
+     リスト型カードコンポーネント (.list-cards, .lc) - 画像なし用
+     ========================================================================== */
+  .list-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 768px) { .list-cards { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } }
+  .lc {
+    background: var(--bg-card);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .lc:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
+    border-color: #cbd5e1;
+  }
+  .lc .bd {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  .lc .nm { font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
+  .lc .ct {
+    font-size: 0.75rem; font-weight: 600;
+    background: #f8fafc; color: #475569;
+    padding: 4px 8px; border-radius: 6px;
+    display: inline-block; align-self: flex-start;
+    margin-bottom: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  .lc .ln { font-size: 0.9rem; color: var(--text-soft); margin: 0; line-height: 1.5; }
+
+  .btn { display: inline-block; background: var(--text-main); color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-align: center; transition: background 0.3s; }
+  .btn:hover { background: #000; }
+
+  /* ==========================================================================
+     ダークセクション (.dark) - アクセスエリア
+     ========================================================================== */
+  .dark { background: #1e293b; color: #f8fafc; padding: 40px 0; margin-top: 40px; }
+  .dark .blk { padding: 60px 24px; }
+  .dark .h .en { color: #94a3b8; }
+  .dark p { color: #cbd5e1; }
+  .dark .big30 { font-size: 1.2rem; text-align: center; margin: 0 0 32px; }
+  .dark .big30 em { font-size: 2.5rem; font-style: normal; font-weight: 700; color: #ffffff; padding: 0 6px; }
+
+  /* アクセス情報の2カラムレイアウト */
+  .dark .access-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .dark .access-box {
+      flex-direction: row;
+      align-items: center;
+      padding: 28px 32px;
+      gap: 32px;
+    }
+  }
+
+  .dark .stph-wrap {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 200px;
+  }
+  .dark .stph {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .dark .lst {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.8;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+  }
+  .dark .go { display: block; width: fit-content; margin: 32px auto 0; background: #334155; color: #fff; padding: 12px 32px; border-radius: 8px; border: 1px solid #475569; font-weight: 600; }
+  .dark .go:hover { background: #475569; }
+
+  /* ==========================================================================
+     CTAセクション (.cta)
+     ========================================================================== */
+  .cta { text-align: center; padding: 80px 24px; background: #eff6ff; margin: 40px 24px; border-radius: 24px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .cta .en { font-weight: 600; color: var(--primary); letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 8px; display: block; }
+  .cta h2 { font-size: 2rem; font-weight: 700; margin: 0; }
+  .cta .row { display: flex; justify-content: center; gap: 16px; margin: 32px 0; flex-wrap: wrap; }
+  .cta .w, .cta .o { padding: 16px 32px; border-radius: 999px; font-weight: 700; min-width: 220px; display: inline-block; }
+  .cta .w { background: #06c755; color: white; } /* LINE Color */
+  .cta .w:hover { filter: brightness(1.1); }
+  .cta .o { background: #ffffff; border: 2px solid var(--text-main); color: var(--text-main); }
+  .cta .o:hover { background: var(--text-main); color: #fff; }
+  .cta .tnum { display: inline-block; font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
+
+  /* ==========================================================================
+     フッター (.gf)
+     ========================================================================== */
+  .gf { background: #111827; color: #9ca3af; padding: 80px 24px 24px; font-size: 0.9rem; }
+  .gf .in { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
+  @media (min-width: 768px) { .gf .in { grid-template-columns: 2fr 1fr 1fr 1fr 1fr; } }
+  .gf .logo { color: #ffffff; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .gf .logo img { width: 32px; height: 32px; border-radius: 4px; }
+  .gf h5 { color: #ffffff; margin: 0 0 16px; font-size: 1rem; font-weight: 600; }
+  .gf ul { list-style: none; padding: 0; margin: 0; }
+  .gf ul li { margin-bottom: 12px; }
+  .gf a:hover { color: #ffffff; text-decoration: underline; }
+  .gf .cp { grid-column: 1 / -1; text-align: center; margin-top: 48px; border-top: 1px solid #374151; padding-top: 24px; font-size: 0.8rem; }
+
+  /* ==========================================================================
+     フローティングアクションボタン (.fab)
+     ========================================================================== */
+  .fab {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--primary); color: #ffffff;
+    padding: 16px 28px; border-radius: 999px;
+    font-weight: 700; font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+    z-index: 100; transition: transform 0.2s;
+  }
+  .fab:hover { transform: scale(1.05); }
+</style>
+
+
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.psr-seishinkai.org/#org", "name": "一般社団法人 心理社会的リハビリテーション・星心会", "alternateName": "星心会", "url": "https://www.psr-seishinkai.org/", "telephone": "059-315-0697", "address": {"@type": "PostalAddress", "postalCode": "512-8048", "addressCountry": "JP", "addressRegion": "三重県", "addressLocality": "四日市市", "streetAddress": "山城町59-4"}, "areaServed": ["四日市市", "三重県", "名古屋市", "愛知県"], "sameAs": ["https://x.com/gcbfhq", "https://www.instagram.com/psr_seishinkai/", "https://www.threads.com/@psr_seishinkai"], "logo": "https://www.psr-seishinkai.org/img/logo_black.svg"}]}</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVX8LZ4DXC"></script>
@@ -26,56 +476,59 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-XVX8LZ4DXC');
 </script>
-<!--enh:css--><style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}</style><!--/enh:css--></head>
+
+</head>
 <body>
 <header class="gh">
-  <a class="logo" href=""><img src="img/mark_black.svg" alt="星心会 ロゴ"><span>星心会</span></a>
+  <a class="logo" href="/">
+    <img src="https://www.psr-seishinkai.org/img/mark_black.svg" alt="星心会 ロゴ">
+    <div class="logo-text">
+      <span class="logo-corp">一般社団法人 心理社会的リハビリテーション</span>
+      <span class="logo-name">星心会</span>
+    </div>
+  </a>
   <nav>
     <a href="#self">ご本人</a>
     <a href="#family">ご家族</a>
     <a href="#parents">保護者</a>
     <a href="#partners">企業・支援機関</a>
-    <a href="access/">アクセス</a>
+    <a href="#access">アクセス</a>
     <div class="sns">
       <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
       <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg></a>
-      <a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.3-.1c-.2-3.3-2-5.1-5-5.2h-.1c-1.8 0-3.3.8-4.2 2.2l1.6 1.1c.7-1 1.7-1.2 2.6-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.7-.2-2.6-.1-2.6.1-4.3 1.7-4.2 3.8.1 1.1.6 2 1.5 2.6.8.5 1.8.8 2.8.7 1.4-.1 2.4-.6 3.2-1.5.6-.7.9-1.6 1.1-2.7.7.4 1.2.9 1.4 1.6.5 1.1.5 2.9-1 4.4-1.3 1.3-2.9 1.9-5.3 1.9-2.6 0-4.6-.9-5.9-2.5C5.2 17.1 4.5 14.8 4.5 12s.7-5.1 1.9-6.6C7.7 3.8 9.7 3 12.3 3c2.7 0 4.7.8 6 2.5.7.8 1.2 1.8 1.5 3l1.9-.5c-.4-1.5-1-2.7-1.9-3.8C18.2 2.1 15.7 1 12.3 1h-.1C8.9 1 6.4 2.1 4.7 4.2 3.2 6.1 2.5 8.7 2.5 12s.7 5.9 2.2 7.8c1.7 2.1 4.2 3.2 7.5 3.2h.1c2.9 0 5-.8 6.7-2.5 2.3-2.3 2.2-5.1 1.4-6.9-.5-1.2-1.6-2.2-2.7-2.5zm-5 4.9c-1.1.1-2.3-.4-2.4-1.5 0-.8.6-1.7 2.4-1.8h.6c.7 0 1.3.1 1.9.2-.2 2.7-1.5 3-2.5 3.1z"/></svg></a>
     </div>
   </nav>
-  <a class="cta-btn" href="contact/">相談する</a>
-  <button class="menu-btn" aria-label="メニュー"><i></i><i></i></button>
+  <a class="cta-btn" href="#contact">相談する</a>
+  <button class="menu-btn" type="button" aria-label="メニュー" aria-controls="mobile-menu" aria-expanded="false"><i></i><i></i><i></i></button>
 </header>
 
-<div class="drawer">
-  <h4>ご本人</h4>
-  <a href="shichirin/">しちりんの会<small>自費参加</small></a>
-  <a href="ryozanpaku/">梁山泊<small>メンタルピアレジデンス</small></a>
-  <h4>ご家族</h4>
-  <a href="kintoun/">金斗雲<small>訪問</small></a>
-  <a href="chamu/">茶夢<small>日中の居場所</small></a>
-  <h4>お子さまの保護者</h4>
-  <a href="leo/">レオ<small>子どもの情緒</small></a>
-  <a href="leo/parent-training/">ペアレントトレーニング<small>保護者向け</small></a>
-  <a href="leo/assessment/">発達検査<small>WISC-V・新版K式</small></a>
-  <h4>企業・支援機関</h4>
-  <a href="business/employment/">雇用定着サポート<small>職場定着</small></a>
-  <a href="business/stress-check/">ストレスチェック<small>ラインケア</small></a>
-  <a href="business/stress-check-training/">ストレスチェック研修<small>実施者養成</small></a>
-  <a href="business/agent-consulting/">エージェントコンサル<small>AI導入</small></a>
-  <a href="business/training/">研修<small>児童指導員・護身術</small></a>
-  <h4>INFO</h4>
-  <a href="about/">星心会について</a>
-  <a href="access/">アクセス</a>
-  <a href="faq/">よくある質問</a>
-  <a href="contact/">相談する</a>
+<div class="drawer" id="mobile-menu" hidden>
+  <a href="#self">ご本人</a>
+  <a href="#family">ご家族</a>
+  <a href="#parents">保護者</a>
+  <a href="#partners">企業・支援機関</a>
+  <a href="#access">アクセス</a>
+  <a class="cta-btn" href="#contact">相談する</a>
+  <div class="sns">
+    <a href="https://x.com/gcbfhq" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg></a>
+    <a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg></a>
+  </div>
 </div>
 
 <section class="hero">
-  <div class="bg" style="background-image:url(img/hero_top.jpg);"></div>
+  <div class="bg" style="background-image:url('https://www.psr-seishinkai.org/img/hero_top.jpg');"></div>
   <div class="hin">
-    <div class="hlogo"><img src="img/mark_white.svg" alt=""><span>星心会</span></div>
+    <div class="hlogo">
+      <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="星心会 マーク">
+      <span class="hero-corp">一般社団法人 心理社会的リハビリテーション</span>
+      <span class="hero-name">星心会</span>
+    </div>
     <p class="en">SEISHINKAI · YOKKAICHI</p>
-    <h1 class="copy"><span>環境調整という、</span><span>メンタルヘルスケア</span><span class="where">三重県四日市市</span></h1>
+    <h1 class="copy">
+      <span>環境調整という、</span>
+      <span>メンタルヘルスケア</span>
+      <span class="where">三重県四日市市</span>
+    </h1>
   </div>
   <p class="acc">名古屋西ICから車で約30分 ／ 三岐線 山城駅から徒歩5分 ／ 四日市駅から三岐バス「団地下」</p>
 </section>
@@ -94,7 +547,12 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
 </section>
 
-<!--enh:find--><section class="enh"><span class="en">FIND</span><h2>困りごとから探す</h2><div class="grid"><a href="ryozanpaku/"><b>親元を出たい・働きながら暮らしたい</b>→ 梁山泊</a><a href="chamu/"><b>日中に安心して過ごせる場所がほしい</b>→ 茶夢</a><a href="kintoun/"><b>家族が家から出られない</b>→ 金斗雲</a><a href="leo/"><b>子どもが落ち着かない・発達が気になる</b>→ レオ</a><a href="leo/parent-training/"><b>子どもへの関わり方に悩んでいる</b>→ ペアレントトレーニング</a><a href="leo/assessment/"><b>子どもの特性を知りたい</b>→ 発達検査</a><a href="shichirin/"><b>診断も手続きもなく、気軽に集まりたい</b>→ しちりんの会</a><a href="contact/"><b>どこに相談すればいいかわからない</b>→ 相談フォーム</a></div><p class="note" style="margin-top:14px">児童発達支援・放課後等デイサービスの手続きは<a href="guide/jukyushasho/">受給者証ガイド</a>をご覧ください。</p></section><section class="enh"><span class="en">NEWS</span><h2>お知らせ</h2><p><a href="news/">お知らせ一覧</a></p></section><!--/enh:find--><section class="blk" id="self">
+<section class="enh-news">
+  <h2>お知らせ</h2>
+  <a href="news/">お知らせ一覧を見る →</a>
+</section>
+
+<section class="blk" id="self">
   <div class="h">
     <span class="en">FOR YOU</span>
     <h2>ご本人</h2>
@@ -102,7 +560,7 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
   <div class="cards">
     <a class="sc" href="shichirin/">
-      <div class="th" style="background-image:url(img/fish.jpg)"></div>
+      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/fish.jpg')"></div>
       <div class="bd">
         <p class="nm">しちりんの会</p>
         <span class="ct">自費参加・手続き不要</span>
@@ -110,7 +568,7 @@ gtag('config', 'G-XVX8LZ4DXC');
       </div>
     </a>
     <a class="sc" href="ryozanpaku/">
-      <div class="th" style="background-image:url(img/homemeal.jpg)"></div>
+      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/homemeal.jpg')"></div>
       <div class="bd">
         <p class="nm">自立支援寮 梁山泊</p>
         <span class="ct">メンタルピアレジデンス</span>
@@ -128,7 +586,7 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
   <div class="cards">
     <a class="sc" href="kintoun/">
-      <div class="th t"><img src="img/kintoun-logo.png" alt="金斗雲 ロゴ" style="width:60%;max-width:200px;max-height:85%;height:auto;object-fit:contain"></div>
+      <div class="th t"><img src="https://www.psr-seishinkai.org/img/kintoun-logo.png" alt="金斗雲 ロゴ"></div>
       <div class="bd">
         <p class="nm">訪問支援 金斗雲</p>
         <span class="ct">訪問・アウトリーチ</span>
@@ -136,7 +594,7 @@ gtag('config', 'G-XVX8LZ4DXC');
       </div>
     </a>
     <a class="sc" href="chamu/">
-      <div class="th" style="background-image:url(img/counter.jpg)"></div>
+      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/counter.jpg')"></div>
       <div class="bd">
         <p class="nm">生活介護事業所 茶夢</p>
         <span class="ct">日中の居場所</span>
@@ -152,9 +610,9 @@ gtag('config', 'G-XVX8LZ4DXC');
     <h2>お子さまの保護者</h2>
     <p>落ち着きがない、かんしゃくが多い、集団生活が苦手なお子さまの保護者の方へ。</p>
   </div>
-  <div class="cards">
+  <div class="cards" style="margin-bottom: 24px;">
     <a class="sc" href="leo/">
-      <div class="th" style="background-image:url(img/panda.jpg)"></div>
+      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/panda.jpg')"></div>
       <div class="bd">
         <p class="nm">児発・放デイ レオ</p>
         <span class="ct">子どもの情緒</span>
@@ -162,15 +620,18 @@ gtag('config', 'G-XVX8LZ4DXC');
       </div>
     </a>
     <a class="sc" href="leo/parent-training/">
-      <div class="th" style="background-image:url(img/pt-classroom.jpg)"></div>
+      <div class="th" style="background-image:url('https://www.psr-seishinkai.org/img/pt-classroom.jpg')"></div>
       <div class="bd">
         <p class="nm">ペアレントトレーニング</p>
         <span class="ct">保護者向けプログラム</span>
         <p class="ln">アドラー心理学に基づく親御さんのための伴走支援講座です。</p>
       </div>
     </a>
-    <a class="sc" href="leo/assessment/">
-      <div class="bd">
+  </div>
+  <div class="list-cards">
+    <a class="lc" href="leo/assessment/">
+      <!-- 画像なし（テキストのみのカードとして表示） -->
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">発達検査</p>
         <span class="ct">WISC-V・新版K式</span>
         <p class="ln">検査して点数を出すだけで終わりにせず、その後の生活環境につなげます。</p>
@@ -185,64 +646,73 @@ gtag('config', 'G-XVX8LZ4DXC');
     <h2>企業・支援機関</h2>
     <p>職場におけるメンタルヘルス対策や障害者雇用定着の支援を行います。</p>
   </div>
-  <div class="cards">
-    <a class="sc" href="business/employment/">
-      <div class="bd">
+  <div class="list-cards">
+    <a class="lc" href="business/employment/">
+      <!-- 画像なし（テキストのみのカードとして表示） -->
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">雇用定着サポート</p>
         <span class="ct">職場定着支援</span>
         <p class="ln">メンタルヘルスの実務家が、社員一人ひとりを継続的に担当します。</p>
       </div>
     </a>
-    <a class="sc" href="business/stress-check/">
-      <div class="bd">
+    <a class="lc" href="business/stress-check/">
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">ストレスチェック</p>
         <span class="ct">アドラー心理学×ラインケア</span>
         <p class="ln">形骸化させず、組織のメンタルヘルス改善に直結させるラインケア。</p>
       </div>
     </a>
-    <a class="sc" href="business/stress-check-training/">
-      <div class="bd">
+    <a class="lc" href="business/stress-check-training/">
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">実施者養成研修</p>
         <span class="ct">法定研修</span>
         <p class="ln">歯科医師・看護師・精神保健福祉士・公認心理師の方が対象です。</p>
       </div>
     </a>
-    <a class="sc" href="business/agent-consulting/">
-      <div class="bd">
+    <a class="lc" href="business/agent-consulting/">
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">エージェントコンサル</p>
         <span class="ct">AIエージェント導入</span>
         <p class="ln">現場の事務・書類作成や広報を大幅に効率化するAI伴走。</p>
       </div>
     </a>
-    <a class="sc" href="business/training/">
-      <div class="bd">
+    <a class="lc" href="business/training/">
+      <div class="bd" style="padding: 24px 32px;">
         <p class="nm">研修</p>
         <span class="ct">指導員研修・合気道護身術</span>
         <p class="ln">施設や企業の課題に合わせたオーダーメイド研修を実施します。</p>
       </div>
     </a>
   </div>
-  <p style="margin-top:28px"><a class="btn" href="business/">企業・支援機関向けページへ →</a></p>
+  <div style="text-align:center; margin-top: 40px;">
+    <a class="btn" href="business/">企業・支援機関向けページへ →</a>
+  </div>
 </section>
 
-<div class="dark">
-  <section class="blk">
+<div class="dark" id="access">
+  <section class="blk" style="padding-top: 0; padding-bottom: 0;">
     <div class="h"><span class="en">ACCESS</span></div>
     <p class="big30">名古屋西ICから車で <em>30</em> 分</p>
-    <img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:20%;height:auto;display:block;margin-top:24px">
-    <ul class="lst">
-      <li>三岐線 山城駅から徒歩5分</li>
-      <li>四日市駅から三岐バス「団地下」下車</li>
-      <li>本部：三重県四日市市山城町59-4</li>
-    </ul>
+
+    <div class="access-box">
+      <div class="stph-wrap">
+        <img class="stph" src="https://www.psr-seishinkai.org/img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy">
+      </div>
+      <ul class="lst">
+        <li>三岐線 山城駅から徒歩5分</li>
+        <li>四日市駅から三岐バス「団地下」下車</li>
+        <li>本部：三重県四日市市山城町59-4</li>
+      </ul>
+    </div>
+
     <a class="go" href="access/">アクセスの詳細を見る</a>
   </section>
 </div>
 
 <section class="cta" id="contact">
-  <p class="en">CONTACT</p>
+  <span class="en">CONTACT</span>
   <h2>ご相談・お問い合わせ</h2>
-  <p style="color:var(--soft);margin-top:8px">どの事業に相談すべきか決まっていなくても大丈夫です。</p>
+  <p style="color:var(--text-soft);margin-top:8px">どの事業に相談すべきか決まっていなくても大丈夫です。</p>
   <div class="row">
     <a class="w" href="contact/#line">LINEで相談</a>
     <a class="o" href="tel:0593150697">お電話で相談</a>
@@ -253,8 +723,16 @@ gtag('config', 'G-XVX8LZ4DXC');
 <footer class="gf">
   <div class="in">
     <div>
-      <a class="logo" href=""><img src="img/mark_black.svg" alt="星心会"><span>星心会</span></a>
-      <p style="margin-top:14px">一般社団法人 心理社会的リハビリテーション・星心会<br>〒512-8048 三重県四日市市山城町59-4<br>TEL <a href="tel:0593150697">059-315-0697</a><br>名古屋西ICより車で約30分／山城駅徒歩5分</p>
+      <a class="logo" href="/">
+        <img src="https://www.psr-seishinkai.org/img/mark_white.svg" alt="星心会" style="filter: brightness(0) invert(1);">
+        <span>星心会</span>
+      </a>
+      <p style="margin-top:16px; line-height: 1.8;">
+        一般社団法人 心理社会的リハビリテーション・星心会<br>
+        〒512-8048 三重県四日市市山城町59-4<br>
+        TEL <a href="tel:0593150697">059-315-0697</a><br>
+        名古屋西ICより車で約30分／山城駅徒歩5分
+      </p>
     </div>
     <div>
       <h5>ご本人</h5>
@@ -292,7 +770,30 @@ gtag('config', 'G-XVX8LZ4DXC');
   </div>
 </footer>
 
-<a class="fab" href="contact/">相談する</a>
+<a class="fab" href="#contact">相談する</a>
+
+
+<script>
+(function(){
+  var btn = document.querySelector('.menu-btn');
+  var drawer = document.getElementById('mobile-menu');
+  if (!btn || !drawer) return;
+  function sync(){
+    var open = document.body.classList.contains('open');
+    drawer.hidden = !open;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  sync();
+  var obs = new MutationObserver(sync);
+  obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && document.body.classList.contains('open')) {
+      document.body.classList.remove('open');
+    }
+  });
+})();
+</script>
 <script src="assets/site.js"></script>
+
 </body>
 </html>

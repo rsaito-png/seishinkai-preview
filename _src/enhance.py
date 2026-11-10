@@ -71,7 +71,8 @@ PLAN=[ # path, id, html_fn, anchor ('cta' or regex)
  ('chamu/','more',chamu_more,'cta'),
  ('kintoun/','area',kintoun_more,'cta'),
  ('leo/parent-training/','detail',lambda r:eval_detail('pt',r),'cta'),
- ('','find',top_blocks,r'<section class="blk" id="self">'),
+ # 新トップ（2026-11-10）は手置きHTML。find/news を差し込むとデザインが崩れるので対象外。
+ # ('','find',top_blocks,r'<section class="blk" id="self">'),
 ]
 def put(o,id_,block,anchor):
     o=re.sub(r'<!--enh:'+id_+r'-->.*?<!--/enh:'+id_+r'-->','',o,flags=re.S)
