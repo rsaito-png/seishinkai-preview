@@ -622,14 +622,13 @@ PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',sho
  rel=[('ペアレントトレーニング','leo/parent-training/'),('レオ','leo/')],cta_h='検査を申し込む'))
 
 PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',big='金',
- addr_ld={"@type":"PostalAddress","addressCountry":"JP","addressRegion":"三重県","addressLocality":"三重郡菰野町","streetAddress":"田光1801-165"},
  title='金斗雲｜訪問・アウトリーチ｜家族が家から出ないご家庭へ（三重県四日市市・菰野町）',
  desc='家族が家から出ない、相談に行けない。金斗雲は、こちらから自宅へ出向く訪問とアウトリーチです。家族からの相談でも始められます。訪問は四日市市・菰野町など三重県内です。',
  cat='訪問｜アウトリーチ',copy=['来られないなら、','こちらから行きます。'],sub='家から出られない、窓口に行けない。<br>その状態を前提に、自宅から始めます。',acc='訪問地域：四日市市・菰野町など三重県内',
  what_h='4つの<br>支援',what=[('アウトリーチ','','相談に来られない人のもとへ出向きます。外に連れ出すことを目的にはしません。'),('家事援助','','食事、掃除、洗濯。生活の土台を自宅で立て直します。'),('外出の同行','','買い物、寺、街。外に出る日は一緒に出ます。'),('家族の相談','','本人が動けなくても、家族からの相談で始められます。')],
  gal=[('kitchen_prep','台所の下ごしらえ'),('clothes','古着屋へ'),('snackwalk','街歩き'),('storefront','街の店先')],
  flow=[["CONTACT","相談","本人でも家族でも、電話またはLINEでご連絡ください。"],["VISIT","訪問","まず話を聞きます。無理に外へ出そうとはしません。"],["PLAN","計画","必要な支援を決めます。"+TEJUN],["SUPPORT","支援開始","定期的に訪問し、生活と外出の範囲を少しずつ広げます。"]],
- info=[('対象','外に出にくい方、そのご家族'),('訪問地域','四日市市・菰野町など三重県内 '+ph('実施地域の詳細')),('事業所','三重県三重郡菰野町田光1801-165'),('担当','精神保健福祉士などの有資格者'),('費用','公的制度の利用可。所得に応じた負担上限あり。手続きはこちらで代行'),('申し込み','電話またはLINE')],
+ info=[('対象','外に出にくい方、そのご家族'),('訪問地域','四日市市・菰野町など三重県内 '+ph('実施地域の詳細')),('担当','精神保健福祉士などの有資格者'),('費用','公的制度の利用可。所得に応じた負担上限あり。手続きはこちらで代行'),('申し込み','電話またはLINE')],
  faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。'),('家庭の環境ごと見直したい場合は？','ご家族からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。')],
  rel=[('茶夢','chamu/'),('ご家族の方へ','#family')],cta_h='相談する'))
 
@@ -1229,7 +1228,7 @@ def access(rel): return f'''<section class="blk wide"><div class="h"><span class
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">LOCATIONS</span><h2>拠点</h2></div><ul class="lst">
 <li><b>本部・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>茶夢・レオ</b>〒512-8055 三重県四日市市あさけが丘2-1-42（山城駅から徒歩12分）<br><a href="{MAP}三重県四日市市あさけが丘2-1-42" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
-<li><b>金斗雲</b>三重県三重郡菰野町田光1801-165</li><li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
+<li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
 <section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="w" href="{rel}contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
 simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow')
 
