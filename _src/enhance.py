@@ -70,7 +70,6 @@ PLAN=[ # path, id, html_fn, anchor ('cta' or regex)
  ('leo/','leoextra',leo_blocks,'cta'),
  ('chamu/','more',chamu_more,'cta'),
  ('kintoun/','area',kintoun_more,'cta'),
- ('leo/assessment/','detail',lambda r:eval_detail('assess',r),'cta'),
  ('leo/parent-training/','detail',lambda r:eval_detail('pt',r),'cta'),
  ('','find',top_blocks,r'<section class="blk" id="self">'),
 ]

@@ -294,6 +294,8 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   assert.match(config, /enabled:\s*true/);
   assert.match(config, /endpoint:\s*"https:\/\/zvrardoyxocmqhvyddnf\.supabase\.co\/functions\/v1\/site-contact-intake"/);
   assert.equal(browser.includes("contact_inquiry_accepted"), true);
+  assert.match(browser, /gtag\("event", "contact_inquiry_accepted", globalThis\.inquiryAcceptedParams\(location\.pathname\)\)/);
+  assert.equal(html.includes("要確認：受付日・時間"), false);
   assert.equal(browser.includes("form_submit"), false);
   assert.equal(browser.includes("メールでお知らせ"), false);
   assert.equal(browser.includes("通知メールは送りません"), true);
@@ -327,6 +329,7 @@ test("content rebuild preserves a hand-edited contact page and can still generat
   assert.equal(generated.includes("contact-config.js"), true);
   assert.equal(generated.includes("通知メールや自動返信はありません"), true);
   assert.equal(generated.includes("国内で処理"), false);
+  assert.equal(generated.includes("要確認：受付日・時間"), false);
   await rm(dir, { recursive: true });
 });
 

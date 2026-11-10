@@ -189,7 +189,7 @@ SEO={
  'ryozanpaku/':('メンタルピアレジデンス 梁山泊｜三重県四日市市｜星心会','メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。'),
  'shichirin/':('自費参加 しちりんの会｜三重県菰野町｜星心会','火を囲めば黙っていてもゆるみます。しちりんの会は、七輪で火を起こして食べる自費参加の会です。三重県菰野町、不定期の土曜、手続きは不要です。'),
  'leo/parent-training/':('ペアレントトレーニング レオ｜三重県四日市市｜星心会','アドラー心理学に基づくペアレントトレーニング「アドペア」です。保護者の相談を、三重県四日市市のレオで行います。'),
- 'leo/assessment/':('発達検査 レオ｜三重県四日市市｜星心会','検査して終わりにはしません。WISC-Vと新版K式の発達検査を、三重県四日市市あさけが丘のレオで行います。'),
+ 'leo/assessment/':('発達検査（WISC-V・新版K式）｜四日市市｜星心会','三重県四日市市あさけが丘のレオで行う発達検査です。WISC-Vは小1〜高2、新版K式は未就学児。各25,000円（税込）で、事前面談・検査・報告書・フィードバック面談を含みます。'),
 }
 def under_construction(path):
     """企業・支援機関（/business/）は公開準備が整うまで工事中。戻すときは False を返す。
@@ -542,7 +542,7 @@ PAGES.append(dict(path='suishodama/',name='水晶玉',en='SUISHODAMA',ink=True,m
  tel='070-3291-9626',addr_ld=YAMA,
  what_h='4つの<br>環境調整',what=[('心の不調','眠れない・気分の波','不眠や気分の波に、生活リズムと日々の環境の側から手を打ちます。'),('家庭環境','親元にいると息が詰まる','親との距離を設計し直します。親元を出て暮らす選択肢も含め、住まい・日中・お金の手続きまで手配します。'),('就労環境','仕事が続かない','就労先とペースを設計し、面接同行から会社との折衝まで行います。通い続けるための生活の組み立ても含みます。'),('人間関係','人間関係に疲れた','似た者同士で集う居場所につなぎます。孤立は放置しません。')],
  flow=[["CONTACT","問い合わせ","電話またはLINEでご連絡ください。氏名と相談内容の要点だけで十分です。"],["ASSESSMENT","アセスメント","心の不調・家庭環境・就労環境・人間関係の現状を評価し、調整の優先順位を決めます。"],["DESIGN & ARRANGE","設計と手配","変える環境と手段を決めて計画書にし、家庭・職場・居場所との連絡と調整まで行います。"],["MONITORING","モニタリング","定期的に再評価し、合わない環境は再調整します。"]],
- info=[('内容','メンタルヘルスコーディネート（環境調整）<br>アセスメント／設計と手配／モニタリング'),('担当','精神保健福祉士などの有資格者'),('場所',PLACE_Y),('受付',ph('受付日・時間')),('料金','多くの場合、自己負担なし '+ph('表記の可否')),('申し込み','電話またはLINE')],
+ info=[('内容','メンタルヘルスコーディネート（環境調整）<br>アセスメント／設計と手配／モニタリング'),('担当','精神保健福祉士などの有資格者'),('場所',PLACE_Y),('料金','多くの場合、自己負担なし '+ph('表記の可否')),('申し込み','電話またはLINE')],
  faq=[('親と離れて暮らしたいです。','対応します。親元を出る計画を立て、住まい（梁山泊・一人暮らし）と日中の行き先まで手配します。'),('料金は？','多くの場合、自己負担はありません。公的制度を使い、'+TEJUN),('家族からの依頼は？','受け付けます。本人の利用意思は面談で確認します。'),NAGOYA,('他の支援機関を利用中でも？','対応します。現在の利用先を前提に設計します。')],
  rel=[('しちりんの会','shichirin/'),('RYDEEN','rydeen/')],cta_h='申し込み'))
 
@@ -612,8 +612,8 @@ PAGES.append(dict(path='leo/parent-training/',name='ペアレントトレーニ�
  rel=[('発達検査','leo/assessment/'),('レオ','leo/')],cta_h='相談を予約する'))
 
 PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',short=True,type='Service',
- title='発達検査（WISC-V・新版K式）｜25,000円・検査から支援へ直結｜三重県四日市市 レオ',
- desc='WISC-V（小1〜高2）と新版K式発達検査（未就学児）を行います。事前面談・検査・報告書・フィードバック面談込みで各25,000円（税込）です。結果は日々の支援と学習指導に直結させます。三重県四日市市。',
+ title='発達検査（WISC-V・新版K式）｜四日市市｜星心会',
+ desc='三重県四日市市あさけが丘のレオで行う発達検査です。WISC-Vは小1〜高2、新版K式は未就学児。各25,000円（税込）で、事前面談・検査・報告書・フィードバック面談を含みます。',
  cat='WISC-V・新版K式｜公認心理師が実施',copy=['特性を数値で掴み、','支援に直結させます。'],sub='検査して終わりにはしません。<br>結果を、日々の学習指導に反映します。',acc='レオ（四日市市あさけが丘）で実施',
  what_h='2つの<br>検査',what=[('WISC-V','小1〜高2','ウィスク・ファイヴ。認知の得意・不得意を指標ごとに数値化します。'),('新版K式','未就学児','新版K式発達検査。未就学のお子さまの発達の状態を確認します。'),('報告書','','結果を報告書にまとめ、視覚・聴覚の特性に応じた指導方法まで書き込みます。'),('フィードバック','','面談で結果を説明し、家庭と支援の現場での使い方を示します。')],
  flow=[["INTERVIEW","事前面談","困りごとと検査の目的を確認します。"],["TEST","検査","公式マニュアルに則り、厳密に実施します。"],["REPORT","報告書","結果と具体的な学習アプローチを文書にします。"],["FEEDBACK","フィードバック面談","結果を説明し、支援に落とし込みます。"]],
@@ -1310,8 +1310,8 @@ LINE_ID='@279qxcql'
 LINE_ADD='https://line.me/R/ti/p/@279qxcql'
 LINE_BLURB='星心会への相談は、法人共通の公式LINE（'+LINE_ID+'）、電話059-315-0697、または相談フォームで受け付けます。'
 _CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
-def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">星心会 公式LINE</h2><p>本部・全事業の窓口です。友だち追加は、パソコンでもスマートフォンでもこちらから進められます。</p></div><p><a class="btn" href="{LINE_ADD}" style="background:#06c755;max-width:100%;white-space:normal;text-align:center;line-height:1.5">星心会 公式LINEを友だち追加</a></p><p style="color:var(--soft);font-size:14px;margin-top:14px">LINE ID　<b style="color:var(--ink);font-weight:600;letter-spacing:.06em">{LINE_ID}</b></p></section>
-<section class="blk" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）　受付 {ph('受付日・時間')}</p>
+def contact(rel): return f'''<section class="blk" data-track="contact"><div class="h"><span class="en">LINE</span><h2 id="line">星心会 公式LINE</h2><p>本部・全事業の窓口です。友だち追加は、パソコンでもスマートフォンでもこちらから進められます。</p></div><p><a class="btn" href="{LINE_ADD}" style="background:#06c755;max-width:100%;white-space:normal;text-align:center;line-height:1.5">星心会 公式LINEを友だち追加</a></p><p style="color:var(--soft);font-size:14px;margin-top:14px">LINE ID　<b style="color:var(--ink);font-weight:600;letter-spacing:.06em">{LINE_ID}</b></p></section>
+<section class="blk" data-track="contact" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
 <ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
 <p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>

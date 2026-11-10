@@ -18,3 +18,41 @@ const aud=document.querySelector('.aud');if(aud){const cards=document.querySelec
 const fab=document.querySelector('.fab'),ctas=document.querySelectorAll('.cta,.gf');
 if(fab&&'IntersectionObserver'in window){const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));fab.classList.toggle('hide',vis.size>0)});ctas.forEach(c=>io.observe(c));}
 if(fab){const f=()=>fab.classList.toggle('top',scrollY<innerHeight*0.6);addEventListener('scroll',f,{passive:true});f();}
+
+/* Consultation clicks. Params are page_path and link_location only — never the phone number or the LINE ID. */
+function inquiryAcceptedParams(pathname) {
+  var path = String(pathname || '/').split('?')[0].split('#')[0];
+  if (!path || path.charAt(0) !== '/') path = '/' + (path || '');
+  return { page_path: path, method: 'server_receipt', form_id: 'contact-intake' };
+}
+function consultClickEvent(href, pagePath, linkLocation) {
+  var raw = String(href || '');
+  var name = '';
+  if (/^tel:/i.test(raw)) name = 'phone_click';
+  else if (/^https?:\/\/(www\.)?line\.me\//i.test(raw)) name = 'line_click';
+  if (!name) return null;
+  var path = String(pagePath || '/').split('?')[0].split('#')[0];
+  if (!path || path.charAt(0) !== '/') path = '/' + (path || '');
+  var loc = String(linkLocation || 'body');
+  if (!/^[a-z0-9_-]{1,40}$/.test(loc)) loc = 'body';
+  return { name: name, params: { page_path: path, link_location: loc } };
+}
+function consultLinkLocation(anchor) {
+  var marked = anchor.closest('[data-track]');
+  if (marked) return marked.getAttribute('data-track') || 'body';
+  if (anchor.closest('header, .gh, .drawer')) return 'header';
+  if (anchor.closest('footer, .gf')) return 'footer';
+  if (anchor.closest('#line')) return 'contact';
+  if (anchor.closest('.cta, #contact')) {
+    var parts = location.pathname.split('/').filter(Boolean);
+    return parts.length ? parts[parts.length - 1] : 'home';
+  }
+  return 'body';
+}
+document.addEventListener('click', function (e) {
+  var anchor = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+  if (!anchor || typeof gtag !== 'function') return;
+  var event = consultClickEvent(anchor.getAttribute('href'), location.pathname, consultLinkLocation(anchor));
+  if (!event) return;
+  gtag('event', event.name, event.params);
+}, true);

@@ -127,7 +127,7 @@ export function installContactIntake(doc = document) {
       if (status) status.textContent = successText(body);
       setError("");
       if (shouldCountLead(body) && typeof window.gtag === "function") {
-        window.gtag("event", "contact_inquiry_accepted", { method: "server_receipt", form_id: "contact-intake" });
+        window.gtag("event", "contact_inquiry_accepted", globalThis.inquiryAcceptedParams(location.pathname));
       }
       if (body.stored === true) {
         idem = crypto.randomUUID();
