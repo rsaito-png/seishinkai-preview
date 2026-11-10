@@ -1304,10 +1304,13 @@ def nagoya(rel): return f'''<section class="blk wide prose"><p>星心会の本�
 simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICから車で約30分｜星心会（三重県四日市市）','名古屋から星心会（三重県四日市市山城町）へは、名古屋西ICから車で約30分。三岐線山城駅から徒歩5分。名古屋在住の方が利用できる事業も紹介します。','名古屋からのアクセス','FROM NAGOYA',nagoya)
 
 # ---------- contact ----------
-# contact/index.html は手編集。原稿ビルドで仮フォームや偽の LINE リンクを戻さない。
 # contact/index.html は手編集。ファイルがあるときは書き戻さない。
+# 公式LINEは法人共通（星心会 公式LINE）。事業別アカウントや未掲載の案内に戻さない。
+LINE_ID='@279qxcql'
+LINE_ADD='https://line.me/R/ti/p/@279qxcql'
+LINE_BLURB='星心会への相談は、法人共通の公式LINE（'+LINE_ID+'）、電話059-315-0697、または相談フォームで受け付けます。'
 _CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
-def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">公式LINE</h2><p>公式LINEのURLは、確認できるまで掲載していません。電話、または下のフォームをご利用ください。</p></div></section>
+def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">LINE</span><h2 id="line">星心会 公式LINE</h2><p>本部・全事業の窓口です。友だち追加は、パソコンでもスマートフォンでもこちらから進められます。</p></div><p><a class="btn" href="{LINE_ADD}" style="background:#06c755;max-width:100%;white-space:normal;text-align:center;line-height:1.5">星心会 公式LINEを友だち追加</a></p><p style="color:var(--soft);font-size:14px;margin-top:14px">LINE ID　<b style="color:var(--ink);font-weight:600;letter-spacing:.06em">{LINE_ID}</b></p></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）　受付 {ph('受付日・時間')}</p>
 <ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
@@ -1328,7 +1331,7 @@ def _finish_contact_page():
     if os.path.isfile(fp):
         print('contact: preserved hand-edited page')
         return
-    simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）','星心会への相談は、電話059-315-0697、または相談フォームで受け付けます。公式LINEのURLは公開していません。','相談する','CONTACT',contact)
+    simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）',LINE_BLURB,'相談する','CONTACT',contact)
     rel='../'
     o=open(fp,encoding='utf-8').read()
     stopper='''<script>

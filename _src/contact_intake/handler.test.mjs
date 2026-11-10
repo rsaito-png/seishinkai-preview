@@ -275,6 +275,11 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   const browser = readFileSync(path.join(root, "assets/contact-intake.mjs"), "utf8");
   assert.equal(html.includes('href="#line"'), false);
   assert.equal(html.includes('id="line"'), true);
+  assert.equal(html.includes("https://line.me/R/ti/p/@279qxcql"), true);
+  assert.equal(html.includes("@279qxcql"), true);
+  assert.equal(html.includes("星心会 公式LINE"), true);
+  assert.equal(html.includes("確認できるまで掲載していません"), false);
+  assert.equal(html.includes("公式LINEのURLは公開していません"), false);
   assert.equal(html.includes('id="contact-intake"'), true);
   assert.equal(html.includes('type="submit" disabled'), true);
   assert.equal(html.includes("supabase.co"), false);
@@ -312,6 +317,11 @@ test("content rebuild preserves a hand-edited contact page and can still generat
   assert.equal(generated.includes("hand-edited-contact"), false);
   assert.equal(generated.includes('id="contact-intake"'), true);
   assert.equal(generated.includes('href="#line"'), false);
+  assert.equal(generated.includes("https://line.me/R/ti/p/@279qxcql"), true);
+  assert.equal(generated.includes("@279qxcql"), true);
+  assert.equal(generated.includes("星心会 公式LINE"), true);
+  assert.equal(generated.includes("確認できるまで掲載していません"), false);
+  assert.equal(generated.includes("公式LINEのURLは公開していません"), false);
   assert.equal(generated.includes("type=\"submit\" disabled"), true);
   assert.equal(generated.includes("contact-intake-submit"), true);
   assert.equal(generated.includes("contact-config.js"), true);
