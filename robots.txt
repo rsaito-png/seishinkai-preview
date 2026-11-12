@@ -2,6 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /archive/
 Disallow: /design-gallery/
-Disallow: /suishodama/
-Disallow: /rydeen/
 Sitemap: https://psr-seishinkai.org/sitemap.xml

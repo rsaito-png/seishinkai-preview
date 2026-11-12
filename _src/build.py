@@ -242,6 +242,19 @@ body.sct-page .fab{display:none}
 .sct h1 .ln{display:block;white-space:nowrap}
 .sct h1 .ln.sct-title-b{display:inline-block;margin-top:.12em;padding-bottom:.5em;background-image:radial-gradient(circle,#9a3412 2.2px,transparent 2.35px);background-size:9px 12px;background-repeat:repeat-x;background-position:left bottom}
 .sct-lead{margin:16px 0 0;font-size:1.05rem;line-height:1.75;max-width:28em}
+.sct-glance{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0}
+.sct-glance div{background:rgba(255,248,236,.72);border-radius:10px;padding:10px 12px}
+.sct-glance dt{font-size:12px;font-weight:700;letter-spacing:.08em;color:#9a3412}
+.sct-glance dd{margin:4px 0 0;font-size:.95rem;line-height:1.65}
+.sct-acts{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
+.sct-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border-radius:8px;font-weight:700;text-decoration:none;border:2px solid #241910}
+.sct-btn-go{background:#241910;color:#fff8ec}
+.sct-btn-talk{background:transparent;color:#241910}
+.sct-quiet{margin:8px 0 0;font-size:13px;line-height:1.6}
+.sct-quiet a{color:inherit;border-bottom:1px solid currentColor}
+.sct-end{max-width:1080px;margin:0 auto;padding:8px 32px 72px}
+.sct-end h2{margin:0 0 8px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-weight:700;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:.06em}
+.sct-end h2::before{content:"";display:block;width:2.4em;height:10px;margin:0 0 .35em;background-image:radial-gradient(circle,#b93812 2.1px,transparent 2.25px);background-size:8px 10px;background-repeat:repeat-x}
 .sct-fig{grid-area:fig;margin:0}
 .sct-fig img{display:block;width:100%;height:auto}
 .sct-main{grid-area:main;padding:8px 0 4px}
@@ -287,6 +300,10 @@ body.sct-page .fab{display:none}
  .sct h1::before{top:.28em;width:12px;height:12px;background:linear-gradient(#b93812,#b93812) center/12px 3px no-repeat,linear-gradient(#b93812,#b93812) center/3px 12px no-repeat}
  .sct-sec h2,.sct-follow h2{letter-spacing:.05em}
  .sct-follow h2{font-size:1.65rem}
+ .sct-glance{grid-template-columns:1fr}
+ .sct-acts{flex-direction:column}
+ .sct-btn{width:100%}
+ .sct-end{padding-left:20px;padding-right:20px}
 }
 </style>'''
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
@@ -294,6 +311,8 @@ body.sct-page .fab{display:none}
     o=o.replace('<body>','<body class="sct-page">',1)
     o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">'+style+'</head>',1)
     g=(d.get('gal') or [('sct_soudan','相談の様子のイラスト')])[0]
+    acts=f'''<div class="sct-acts" data-track="sct"><a class="sct-btn sct-btn-go" href="https://rsaito-png.github.io/portal/sct.html">申し込む</a><a class="sct-btn sct-btn-talk" href="{rel}contact/">相談する</a></div><p class="sct-quiet">電話 <a href="tel:0593150697">059-315-0697</a></p>'''
+    glance='''<dl class="sct-glance"><div><dt>対象</dt><dd>歯科医師・看護師・精神保健福祉士・公認心理師</dd></div><div><dt>日程・形式</dt><dd>Google Meetのリアルタイム開催。3科目・合計5時間（科目1が2時間、科目2と科目3が各1.5時間）。開催日は申込ページの募集回です。定員はお問い合わせください。</dd></div><div><dt>費用</dt><dd>3科目一括 12,800円（税込）。科目1の免除が承認された場合は10,800円（税込）。</dd></div><div><dt>申し込み</dt><dd>申込ページでアカウントを作り、資格を確認し、開催回を選んで、Squareのカード決済をします。</dd></div></dl>'''
     subjects=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(n)}</h3>{_sct_bits(a)}</div></article>' for i,(n,s,a) in enumerate(d.get('what') or [],1))
     steps=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(t)}</h3>{_sct_bits(x)}</div></article>' for i,(en,t,x) in enumerate(d.get('flow') or [],1))
     facts=''.join(f'<h3>{html.escape(k)}</h3>{_sct_bits(v)}' for k,v in d.get('info') or [])
@@ -305,6 +324,7 @@ body.sct-page .fab{display:none}
 <p class="sct-kicker">労働安全衛生法に基づく実施者養成研修</p>
 <h1><span class="ln">ストレスチェック</span><span class="ln sct-title-b">実施者養成研修</span></h1>
 <p class="sct-lead">{d.get("sub") or ""}</p>
+{glance}{acts}
 </div>
 <figure class="sct-fig"><img src="{rel}img/{html.escape(g[0])}.jpg" alt="{html.escape(g[1])}" width="1024" height="572"></figure>
 <div class="sct-main">
@@ -327,6 +347,7 @@ body.sct-page .fab{display:none}
 <section class="sct-sec" id="faq"><h2>よくある質問</h2>{faqs}</section>
 </div>
 <section class="sct-follow" id="follow-up"><div class="sct-follow-in"><h2>個別フォローアップ研修</h2>{follow}</div></section>
+<section class="sct-end" id="ask-end"><h2>申し込み・相談</h2><p>法定の養成研修は申込ページから進めます。内容の相談は相談ページ、または電話です。</p>{acts}</section>
 </main>'''
     o+=footer(rel)
     write(d['path'], o)
@@ -694,8 +715,8 @@ PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=lambda rel: 
  rel=[('研修','business/training/'),('ストレスチェック','business/stress-check/')],cta_h='無料で相談する'))
 
 PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,deco=True,gal=[('sct_soudan','相談の様子のイラスト')],name='ストレスチェック実施者養成研修',en='PRACTITIONER TRAINING',big='SC',short=True,type='Course',
- title='ストレスチェック実施者養成研修｜歯科医師・看護師・精神保健福祉士・公認心理師｜オンライン 星心会',
- desc='ストレスチェック実施者養成研修です。歯科医師・看護師・精神保健福祉士・公認心理師の方を対象に、Google Meetのリアルタイム開催で3科目・計5時間を行います。受講料は税込12,800円です。',
+ title='ストレスチェック実施者養成研修｜歯科医師・看護師・精神保健福祉士・公認心理師｜星心会',
+ desc='歯科医師・看護師・精神保健福祉士・公認心理師向けの実施者養成研修です。Google Meetのリアルタイム開催で、3科目・合計5時間。受講料は税込12,800円（科目1免除の承認後は10,800円）。開催回は申込ページで募集します。',
  cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='',
  what_h='3つの<br>科目',what=[],flow=[],info=[],faq=[],
  rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
@@ -1315,6 +1336,7 @@ def contact(rel): return f'''<section class="blk" data-track="contact"><div clas
 <ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
 <p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>
+<p style="font-size:13px;color:var(--soft);margin-top:8px">営業・勧誘目的のご連絡はご遠慮ください。</p>
 <style>.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
 <form id="contact-intake" class="form" method="post" action="/contact/" onsubmit="return false" novalidate>
 <label for="contact-service">相談したい事業</label><select id="contact-service" name="service">{''.join(f'<option>{html.escape(s)}</option>' for s in _CONTACT_OPTIONS)}</select>
@@ -1369,7 +1391,10 @@ def smap(rel):
     for _,lab,en,_,ks,_h in AUD: o+=f'<h3 style="margin:30px 0 8px;font-size:15px">{lab}</h3><ul class="lst">'+''.join(f'<li><a href="{rel}{SV[k][2]}"><span>{SV[k][1]}</span></a></li>' for k in ks)+'</ul>'
     return o+'<h3 style="margin:30px 0 8px;font-size:15px">INFO</h3><ul class="lst">'+''.join(f'<li><a href="{rel}{u}"><span>{n}</span></a></li>' for n,u in INFO if not under_construction(u))+'</ul></section>'
 simple_page('sitemap/','サイトマップ｜星心会','星心会のサイトマップです。対象者別に事業を並べています。','サイトマップ','SITEMAP',smap)
-open(OUT+'/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{BASE}/{u}</loc></url>\n' for n,u in dict.fromkeys(ALL+[('サイトマップ','sitemap/')]) if not under_construction(u))+'</urlset>\n')
+# 休止ページは noindex のまま残し、サイトマップには出さない。robots.txt では塞がない。
+PAUSED_PATHS={'suishodama/','rydeen/'}
+def indexable(u): return (u or '') not in PAUSED_PATHS and not under_construction(u)
+open(OUT+'/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{BASE}/{u}</loc></url>\n' for n,u in dict.fromkeys(ALL+[('サイトマップ','sitemap/')]) if indexable(u))+'</urlset>\n')
 
 # ---------- 404 (absolute-free: uses JS to find base) ----------
 o=head('/seishinkai-preview/','ページが見つかりません｜星心会','','404.html')
@@ -1379,7 +1404,8 @@ o=o.replace('href="/seishinkai-preview/','href="')
 write('404.html',o+header('')+'<section class="blk" style="text-align:center;min-height:60svh"><p class="en" style="color:var(--hi)">404</p><h1 style="font-weight:600;font-size:30px;letter-spacing:.14em;margin:10px 0 20px">ページが見つかりません</h1><a class="btn" href="./">トップへ</a> <a class="btn" href="contact/" style="background:var(--hi)">相談する</a></section>'+footer(''))
 
 # ---------- robots / llms ----------
-open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /design-gallery/\nDisallow: /suishodama/\nDisallow: /rydeen/\nSitemap: '+BASE+'/sitemap.xml\n')
+# 水晶玉と RYDEEN は休止ページの noindex を読ませるため、Disallow しない。
+open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /design-gallery/\nSitemap: '+BASE+'/sitemap.xml\n')
 L=f'''# 星心会（{ORG}）
 > 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。
 
