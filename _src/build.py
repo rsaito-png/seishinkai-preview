@@ -18,12 +18,11 @@ ADDR='〒512-8048 三重県四日市市山城町59-4'
 SNS=[('X','https://x.com/gcbfhq'),('Instagram','https://www.instagram.com/psr_seishinkai/'),('Threads','https://www.threads.com/@psr_seishinkai')]
 LINE_ADD='https://line.me/R/ti/p/@279qxcql'
 def org_node():
-    """画面の「齊藤 蓮」は名乗り。JSON-LD の別名だけ本名「齊藤 連」。"""
     return {"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
       "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
       "areaServed":["四日市市","三重県","名古屋市","愛知県"],"logo":BASE+"/img/logo_black.svg",
       "sameAs":[u for _,u in SNS]+[LINE_ADD],
-      "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 蓮","alternateName":"齊藤 連","jobTitle":"代表"}}
+      "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 蓮","jobTitle":"代表"}}
 # ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
 SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
 NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/'}
