@@ -22,7 +22,7 @@ def org_node():
       "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
       "areaServed":["四日市市","三重県","名古屋市","愛知県"],"logo":BASE+"/img/logo_black.svg",
       "sameAs":[u for _,u in SNS]+[LINE_ADD],
-      "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 蓮","jobTitle":"代表"}}
+      "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 連","jobTitle":"代表"}}
 # ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
 SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
 NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/'}
@@ -232,6 +232,10 @@ def construction_page(path, name):
     o+=f'''<section class="hero short type"><div class="hin"><p class="en">UNDER CONSTRUCTION</p><h1>工事中</h1><p class="sub">{esc(name)}</p><p class="sub" style="max-width:26em;line-height:1.9;margin-top:16px">このページはただいま準備中です。<br>公開までしばらくお待ちください。</p><a class="go" href="{rel}">トップへ戻る</a></div></section>'''
     o+=footer(rel); write(path,o)
 def write_paused(path, name):
+    # 休止案内は公開済みの HTML を正とする。代表者名の置換対象にしない。
+    fp=os.path.join(OUT, path, 'index.html') if not str(path).endswith('.html') else os.path.join(OUT, path)
+    if os.path.isfile(fp):
+        return
     rel=relof(path)
     title=name+'は休止しています｜星心会'
     desc=name+'は休止しています。現在、利用の申し込みは受け付けていません。'
@@ -1260,7 +1264,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <div class="gal"><img src="{rel}img/forest_work.jpg" alt="森の整備" loading="lazy"><img src="{rel}img/harvest.jpg" alt="収穫" loading="lazy"><img src="{rel}img/ikebana.jpg" alt="生け花" loading="lazy"><img src="{rel}img/karate_studio.jpg" alt="道場" loading="lazy"></div>
 <section class="blk wide"><div class="h"><span class="en">NAME</span><h2>名称の由来</h2></div><p style="font-weight:600;font-size:21px;line-height:2.1;letter-spacing:.12em">星に心があるならば<br>それを感じ取れるくらい<br>心こまやかな人たちの<br>集まりでありたいと考えています</p></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">PROFILE</span><h2>法人概要</h2></div><dl class="info">
-<dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名 {ph('最新の人数')}</dd><dt>代表者</dt><dd>齊藤 蓮</dd>
+<dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名 {ph('最新の人数')}</dd><dt>代表者</dt><dd>齊藤 連</dd>
 <dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
 <section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
 <li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
@@ -1272,7 +1276,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <li><a href="{rel}leo/assessment/"><span>発達検査</span></a>　WISC-V（小1〜高2）と新版K式（未就学児）。三重県四日市市あさけが丘。</li>
 <li><a href="{rel}business/stress-check-training/"><span>ストレスチェック実施者養成研修</span></a>　歯科医師・看護師・精神保健福祉士・公認心理師向け。Google Meet。</li>
 </ul></section>
-<section class="blk wide" style="padding-top:0"><div class="h"><span class="en">REPRESENTATIVE</span><h2>代表</h2></div><div class="prose"><p><b>齊藤 蓮</b>（さいとう・れん）<br>公認心理師／精神保健福祉士／第二種衛生管理者／農福連携技術支援者（農林水産省認定）</p>
+<section class="blk wide" style="padding-top:0"><div class="h"><span class="en">REPRESENTATIVE</span><h2>代表</h2></div><div class="prose"><p><b>齊藤 連</b>（さいとう・れん）<br>公認心理師／精神保健福祉士／第二種衛生管理者／農福連携技術支援者（農林水産省認定）</p>
 <p>1984年、三重県津市生まれです。早稲田大学第一文学部東洋哲学専修を卒業後、毎日新聞グループに入社しました。東京での6年間の企業勤務を経て精神保健福祉士に転身し、精神科デイケアに6年間勤務したのち、2022年に独立開業しました。現在、同朋大学大学院でメンタルヘルスのリハビリテーションを研究しています。</p></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">STAFF</span><h2>専門職</h2></div><dl class="info"><dt>加藤 幸弘</dt><dd>公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務。<a href="{rel}leo/parent-training/" style="display:inline;color:var(--hi)">ペアレントトレーニング</a>とレオの職員研修を担当。</dd><dt>あんどう</dt><dd>公認心理師（滋賀大学教育学部卒業）。<a href="{rel}leo/assessment/" style="display:inline;color:var(--hi)">発達検査</a>を担当。</dd><dt>各事業所</dt><dd>金斗雲：介護福祉士、看護師など／茶夢：有資格者が対応</dd></dl></section>'''
 simple_page('about/','星心会について｜理念・法人概要・代表｜三重県四日市市','一般社団法人 心理社会的リハビリテーション・星心会の理念「まず、情緒の安定です。」と、法人概要、代表プロフィールを掲載しています。三重県四日市市山城町。','星心会について','ABOUT',about,photo='walker')
@@ -1442,7 +1446,7 @@ write('404.html',o+header('')+'<section class="blk" style="text-align:center;min
 # 水晶玉と RYDEEN は休止ページの noindex を読ませるため、Disallow しない。
 open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /design-gallery/\nSitemap: '+BASE+'/sitemap.xml\n')
 L=f'''# 星心会（{ORG}）
-> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。代表者は齊藤 蓮です。公式LINEは {LINE_ADD} です。水晶玉とRYDEENは休止中のため、下の現行事業には入れていません。
+> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。代表者は齊藤 連です。公式LINEは {LINE_ADD} です。水晶玉とRYDEENは休止中のため、下の現行事業には入れていません。
 
 眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。相談は電話またはフォームで受け付けます。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
 
