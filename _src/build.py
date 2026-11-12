@@ -16,6 +16,33 @@ gtag('config', '{GA_ID}');
 </script>'''
 ADDR='〒512-8048 三重県四日市市山城町59-4'
 SNS=[('X','https://x.com/gcbfhq'),('Instagram','https://www.instagram.com/psr_seishinkai/'),('Threads','https://www.threads.com/@psr_seishinkai')]
+LINE_ADD='https://line.me/R/ti/p/@279qxcql'
+def org_node():
+    """画面の「齊藤 蓮」は名乗り。JSON-LD の別名だけ本名「齊藤 連」。"""
+    return {"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
+      "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
+      "areaServed":["四日市市","三重県","名古屋市","愛知県"],"logo":BASE+"/img/logo_black.svg",
+      "sameAs":[u for _,u in SNS]+[LINE_ADD],
+      "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 蓮","alternateName":"齊藤 連","jobTitle":"代表"}}
+# ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
+SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
+NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/'}
+def service_node(d, path):
+    kind=d.get('type') or 'Service'
+    if kind in ('LocalBusiness','Residence'): kind='Service'
+    node={'@type':kind,'@id':BASE+'/'+path+'#service','name':d['name'],'url':BASE+'/'+path,'provider':{'@id':BASE+'/#org'}}
+    if d.get('desc'): node['description']=d['desc']
+    if path in SERVICE_AREA: node['areaServed']=SERVICE_AREA[path]
+    if path=='shichirin/':
+        node['address']={'@type':'PostalAddress','addressCountry':'JP','addressRegion':'三重県','addressLocality':'菰野町','streetAddress':'田光'}
+    elif path=='leo/parent-training/':
+        node['address']={'@type':'PostalAddress','postalCode':'512-8055','addressCountry':'JP','addressRegion':'三重県','addressLocality':'四日市市','streetAddress':'あさけが丘2-1-42'}
+    elif d.get('addr_ld') and path not in NO_SERVICE_ADDRESS:
+        node['address']=d['addr_ld']
+    tel=d.get('tel') or TEL
+    if tel: node['telephone']=tel
+    if d.get('audience'): node['audience']=d['audience']
+    return node
 ICON={'X':'<svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20z"/></svg>',
 'Instagram':'<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>',
 'Threads':'<svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.3-.1c-.2-3.3-2-5.1-5-5.2h-.1c-1.8 0-3.3.8-4.2 2.2l1.6 1.1c.7-1 1.7-1.2 2.6-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.7-.2-2.6-.1-2.6.1-4.3 1.7-4.2 3.8.1 1.1.6 2 1.5 2.6.8.5 1.8.8 2.8.7 1.4-.1 2.4-.6 3.2-1.5.6-.7.9-1.6 1.1-2.7.7.4 1.2.9 1.4 1.6.5 1.1.5 2.9-1 4.4-1.3 1.3-2.9 1.9-5.3 1.9-2.6 0-4.6-.9-5.9-2.5C5.2 17.1 4.5 14.8 4.5 12s.7-5.1 1.9-6.6C7.7 3.8 9.7 3 12.3 3c2.7 0 4.7.8 6 2.5.7.8 1.2 1.8 1.5 3l1.9-.5c-.4-1.5-1-2.7-1.9-3.8C18.2 2.1 15.7 1 12.3 1h-.1C8.9 1 6.4 2.1 4.7 4.2 3.2 6.1 2.5 8.7 2.5 12s.7 5.9 2.2 7.8c1.7 2.1 4.2 3.2 7.5 3.2h.1c2.9 0 5-.8 6.7-2.5 2.3-2.3 2.2-5.1 1.4-6.9-.5-1.2-1.6-2.2-2.7-2.5zm-5 4.9c-1.1.1-2.3-.4-2.4-1.5 0-.8.6-1.7 2.4-1.8h.6c.7 0 1.3.1 1.9.2-.2 2.7-1.5 3-2.5 3.1z"/></svg>'}
@@ -98,9 +125,7 @@ def ph(t): PH.add(t); return P(t)
 
 def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
     body_class=join_cls(body_class, aud_class(path, aud))
-    graph=[{"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
-      "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
-      "areaServed":["四日市市","三重県","名古屋市","愛知県"],"sameAs":[u for _,u in SNS],"logo":BASE+"/img/logo_black.svg"}]
+    graph=[org_node()]
     if ld: graph+=ld
     return f'''<!DOCTYPE html>
 <html lang="ja">
@@ -390,7 +415,7 @@ def service_page(d):
         add=[(q,a.format(what=__import__('re').sub('<[^>]+>','',d['sub']))) for q,a in COMMON if (q.startswith('診断') or q[:4] not in have and not (path=='chamu/' and q.startswith('家族に'))) and not (path=='leo/' and q.startswith('家族')) and not (q.startswith('いくら') and ('費用' in have or '料金' in have or path in ('ryozanpaku/','chamu/')))]
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
-    ld=[dict({"@type":d.get('type','LocalBusiness'),"name":d['name'],**({"logo":BASE+"/img/"+d['logo'].replace('.webp','.png'),"image":BASE+"/img/"+d['logo'].replace('.webp','.png')} if d.get('logo') else {}),"description":d['desc'],"parentOrganization":{"@id":BASE+"/#org"},"telephone":d.get('tel',TEL),"url":BASE+"/"+path},**({"address":d['addr_ld']} if d.get('addr_ld') else {}),**({"audience":d['audience']} if d.get('audience') else {})),faq_ld(d['faq'])]
+    ld=[service_node(d,path),faq_ld(d['faq'])]
     if path=='business/stress-check-training/':
         sct_page(d, rel, ld); return
     if path=='chamu/':
@@ -1237,6 +1262,16 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">PROFILE</span><h2>法人概要</h2></div><dl class="info">
 <dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名 {ph('最新の人数')}</dd><dt>代表者</dt><dd>齊藤 蓮</dd>
 <dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
+<section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
+<li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
+<li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　メンタルピアレジデンス。働き続ける人の住まい。三重県四日市市山城町。</li>
+<li><a href="{rel}kintoun/"><span>金斗雲</span></a>　居宅介護（訪問）。外に出にくい方とそのご家族。四日市市・菰野町など三重県内。</li>
+<li><a href="{rel}chamu/"><span>茶夢</span></a>　生活介護。統合失調症・自閉症の方の日中の居場所。三重県四日市市あさけが丘。</li>
+<li><a href="{rel}leo/"><span>レオ</span></a>　児童発達支援・放課後等デイサービス。満1歳から18歳。三重県四日市市あさけが丘。</li>
+<li><a href="{rel}leo/parent-training/"><span>ペアレントトレーニング</span></a>　保護者向けプログラム。三重県四日市市のレオ。</li>
+<li><a href="{rel}leo/assessment/"><span>発達検査</span></a>　WISC-V（小1〜高2）と新版K式（未就学児）。三重県四日市市あさけが丘。</li>
+<li><a href="{rel}business/stress-check-training/"><span>ストレスチェック実施者養成研修</span></a>　歯科医師・看護師・精神保健福祉士・公認心理師向け。Google Meet。</li>
+</ul></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">REPRESENTATIVE</span><h2>代表</h2></div><div class="prose"><p><b>齊藤 蓮</b>（さいとう・れん）<br>公認心理師／精神保健福祉士／第二種衛生管理者／農福連携技術支援者（農林水産省認定）</p>
 <p>1984年、三重県津市生まれです。早稲田大学第一文学部東洋哲学専修を卒業後、毎日新聞グループに入社しました。東京での6年間の企業勤務を経て精神保健福祉士に転身し、精神科デイケアに6年間勤務したのち、2022年に独立開業しました。現在、同朋大学大学院でメンタルヘルスのリハビリテーションを研究しています。</p></div></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">STAFF</span><h2>専門職</h2></div><dl class="info"><dt>加藤 幸弘</dt><dd>公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務。<a href="{rel}leo/parent-training/" style="display:inline;color:var(--hi)">ペアレントトレーニング</a>とレオの職員研修を担当。</dd><dt>あんどう</dt><dd>公認心理師（滋賀大学教育学部卒業）。<a href="{rel}leo/assessment/" style="display:inline;color:var(--hi)">発達検査</a>を担当。</dd><dt>各事業所</dt><dd>金斗雲：介護福祉士、看護師など／茶夢：有資格者が対応</dd></dl></section>'''
@@ -1407,7 +1442,7 @@ write('404.html',o+header('')+'<section class="blk" style="text-align:center;min
 # 水晶玉と RYDEEN は休止ページの noindex を読ませるため、Disallow しない。
 open(OUT+'/robots.txt','w').write('User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /design-gallery/\nSitemap: '+BASE+'/sitemap.xml\n')
 L=f'''# 星心会（{ORG}）
-> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。
+> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。代表者は齊藤 蓮です。公式LINEは {LINE_ADD} です。水晶玉とRYDEENは休止中のため、下の現行事業には入れていません。
 
 眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。相談は電話またはフォームで受け付けます。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
 
@@ -1422,7 +1457,7 @@ L+='''補足：
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
 
 ## その他
-'''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)
+'''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)+f'- 公式LINE: {LINE_ADD}\n'
 open(OUT+'/llms.txt','w').write(L)
 
 # ---------- redirect stubs ----------
