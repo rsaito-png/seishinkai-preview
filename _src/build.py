@@ -455,8 +455,16 @@ def service_page(d):
     if path=='ryozanpaku/':
         o=o.replace('</head>','''<style>
 .hero.ryo-hero{min-height:auto;overflow:visible}
+.hero.ryo-hero::after{background:linear-gradient(180deg,rgba(15,23,42,.62) 0%,rgba(15,23,42,.55) 55%,rgba(15,23,42,.28) 100%)}
+.hero.ryo-hero .hin{padding-top:28px}
+.hero.ryo-hero .hin .en{display:inline-block;color:#dcfce7;background:rgba(15,23,42,.72);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;letter-spacing:.16em}
+.hero.ryo-hero .hin h1,.hero.ryo-hero .hin h1.deco{color:#fff!important;font-size:clamp(42px,8.2vw,72px)!important;font-weight:900!important;line-height:1.1!important;margin:12px 0 6px!important;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+.hero.ryo-hero .hin h1 .ryo-name{display:inline-block;background:rgba(15,23,42,.78);padding:2px 14px 8px;border-bottom:6px solid #2e7d32;letter-spacing:.08em}
+.hero.ryo-hero .hin h1 .ryo-yomi{display:block;margin-top:8px;font-size:.34em;font-weight:600;letter-spacing:.16em;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.hero.ryo-hero .copy{font-size:clamp(16px,2.2vw,20px);font-weight:500;line-height:1.55;margin-top:12px;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.65)}
+.hero.ryo-hero .sub{font-size:14px;font-weight:400;color:#e2e8f0;text-shadow:0 1px 3px rgba(0,0,0,.65)}
 .ryo-vac{margin-top:16px;background:rgba(255,255,255,.96);color:#1e293b;border-radius:12px;padding:14px 16px;max-width:560px}
-.ryo-badge{display:inline-block;background:#b45309;color:#fff;font-weight:700;letter-spacing:.06em;border-radius:999px;padding:6px 14px;font-size:15px;line-height:1.4}
+.ryo-badge{display:inline-block;background:#c2410c;color:#fff;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:8px 18px;font-size:20px;line-height:1.35;box-shadow:0 2px 0 #7c2d12}
 .ryo-vac .ryo-lead{margin:8px 0 0;font-size:15px;font-weight:700}
 .ryo-vac .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .ryo-vac .row a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px}
@@ -465,7 +473,12 @@ def service_page(d):
 .cta .ryo-badge{margin:8px 0 0}
 </style></head>''',1)
         ryo_top=f'''<div class="ryo-vac" data-track="ryozanpaku"><p class="ryo-badge">空室 残りわずか</p><p class="ryo-lead">見学・入居のご相談を受け付けています</p><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div></div>'''
-    o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1 class="{'long' if len(d["name"])>5 else ''}{' deco' if d.get('deco') else ''}">{d["name"].replace("ストレスチェック実施者","ストレスチェック<wbr>実施者<wbr>").replace("<wbr>養成研修","養成<wbr>研修") if d.get("deco") else d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
+    shown=d["name"].replace("ストレスチェック実施者","ストレスチェック<wbr>実施者<wbr>").replace("<wbr>養成研修","養成<wbr>研修") if d.get("deco") else d["name"]
+    if path=='ryozanpaku/' and '（' in shown:
+        nm,yomi=shown.split('（',1)
+        shown=f'<span class="ryo-name">{nm}</span><span class="ryo-yomi">（{yomi}</span>'
+    h1_cls=(('long' if len(d["name"])>5 else '')+(' deco' if d.get('deco') else '')).strip()
+    o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1 class="{h1_cls}">{shown}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
 <p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{ryo_top}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
