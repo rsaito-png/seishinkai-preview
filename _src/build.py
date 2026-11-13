@@ -446,12 +446,27 @@ def service_page(d):
     elif d.get('ink'):
         o+=f'<section class="hero type"><div class="bg" style="background:#fff"></div>'
     elif d.get('photo'):
-        o+=f'<section class="hero{" short" if d.get("short") else ""}"><div class="bg" style="background-image:url({rel}img/{d["photo"]}.jpg);background-position:{d.get("pos","50% 50%")}"></div>'
+        ryo=' ryo-hero' if path=='ryozanpaku/' else ''
+        o+=f'<section class="hero{ryo}{" short" if d.get("short") else ""}"><div class="bg" style="background-image:url({rel}img/{d["photo"]}.jpg);background-position:{d.get("pos","50% 50%")}"></div>'
     else:
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
     mark=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
+    ryo_top=''
+    if path=='ryozanpaku/':
+        o=o.replace('</head>','''<style>
+.hero.ryo-hero{min-height:auto;overflow:visible}
+.ryo-vac{margin-top:16px;background:rgba(255,255,255,.96);color:#1e293b;border-radius:12px;padding:14px 16px;max-width:560px}
+.ryo-badge{display:inline-block;background:#b45309;color:#fff;font-weight:700;letter-spacing:.06em;border-radius:999px;padding:6px 14px;font-size:15px;line-height:1.4}
+.ryo-vac .ryo-lead{margin:8px 0 0;font-size:15px;font-weight:700}
+.ryo-vac .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ryo-vac .row a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px}
+.ryo-vac .w{background:#06c755;color:#fff}
+.ryo-vac .o{background:#fff;border:1px solid #e2e8f0;color:#1e293b}
+.cta .ryo-badge{margin:8px 0 0}
+</style></head>''',1)
+        ryo_top=f'''<div class="ryo-vac" data-track="ryozanpaku"><p class="ryo-badge">空室 残りわずか</p><p class="ryo-lead">見学・入居のご相談を受け付けています</p><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div></div>'''
     o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1 class="{'long' if len(d["name"])>5 else ''}{' deco' if d.get('deco') else ''}">{d["name"].replace("ストレスチェック実施者","ストレスチェック<wbr>実施者<wbr>").replace("<wbr>養成研修","養成<wbr>研修") if d.get("deco") else d["name"]}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
-<p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
+<p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{ryo_top}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
         if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
@@ -502,7 +517,8 @@ def service_page(d):
     _tdup=path in OLD and _bt(tel) in B
     if _tdup: DUPLOG.append((path,'tel',[tel]))
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
-    o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>
+    ryo_cta='<p class="ryo-badge">空室 残りわずか</p>' if path=='ryozanpaku/' else ''
+    o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>{ryo_cta}
 <div class="row"><a class="w" href="{line}">{html.escape(CHROME.get('line_label') or 'LINE')}</a><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
     o+=footer(rel); write(path,o)
 
