@@ -96,16 +96,16 @@ def h2groups(md):
 def lines(ls): return [x for x in ls if x!=NOTE]
 # Top-page business cards. Match #### headings to SVCS keys by the current Japanese names.
 CARD_NAMES=[
-('オンライン丹田呼吸法教室','tanden'),('丹田呼吸法教室','tanden'),
+('オンライン呼吸法教室','kokyu'),('呼吸法教室','kokyu'),
 ('ストレスチェック実施者養成研修','sct'),('実施者養成研修','sct'),
 ('ペアレントトレーニング','parent'),('雇用定着サポート','employment'),('エージェントコンサル','agent'),
 ('しちりんの会','shichirin'),('ストレスチェック','stress'),('発達検査','assess'),
 ('水晶玉','suishodama'),('梁山泊','ryozanpaku'),('金斗雲','kintoun'),('茶夢','chamu'),
 ('レオ','leo'),('研修','training'),('RYDEEN','rydeen'),('ライディーン','rydeen')]
 CARD_KEYS={n:k for n,k in CARD_NAMES}
-CARD_IDS={'suishodama','shichirin','rydeen','ryozanpaku','kintoun','chamu','leo','parent','assess','employment','stress','sct','agent','training','tanden'}
-CARD_LABEL={'suishodama':'水晶玉','shichirin':'しちりんの会','rydeen':'RYDEEN','ryozanpaku':'梁山泊','kintoun':'金斗雲','chamu':'茶夢','leo':'レオ','parent':'ペアレントトレーニング','assess':'発達検査','employment':'雇用定着サポート','stress':'ストレスチェック','sct':'ストレスチェック実施者養成研修','agent':'エージェントコンサル','training':'研修','tanden':'オンライン丹田呼吸法教室'}
-CARD_GROUPS=[('ご本人',['suishodama','shichirin','rydeen','ryozanpaku','tanden']),('ご家族',['kintoun','chamu']),('お子さまの保護者',['leo','parent','assess']),('企業・支援機関',['employment','stress','sct','agent','training'])]
+CARD_IDS={'suishodama','shichirin','rydeen','ryozanpaku','kintoun','chamu','leo','parent','assess','employment','stress','sct','agent','training','kokyu'}
+CARD_LABEL={'suishodama':'水晶玉','shichirin':'しちりんの会','rydeen':'RYDEEN','ryozanpaku':'梁山泊','kintoun':'金斗雲','chamu':'茶夢','leo':'レオ','parent':'ペアレントトレーニング','assess':'発達検査','employment':'雇用定着サポート','stress':'ストレスチェック','sct':'ストレスチェック実施者養成研修','agent':'エージェントコンサル','training':'研修','kokyu':'オンライン呼吸法教室'}
+CARD_GROUPS=[('ご本人',['suishodama','shichirin','rydeen','ryozanpaku','kokyu']),('ご家族',['kintoun','chamu']),('お子さまの保護者',['leo','parent','assess']),('企業・支援機関',['employment','stress','sct','agent','training'])]
 def card_key(name):
     """Map a #### heading or svc key to an SVCS key. Longer Japanese names win."""
     raw=re.sub(r'\*','',(name or '')).strip()
