@@ -25,7 +25,7 @@ def org_node():
       "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 連","jobTitle":"代表"}}
 # ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
 SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
-NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/'}
+NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/','tanden/'}
 def service_node(d, path):
     kind=d.get('type') or 'Service'
     if kind in ('LocalBusiness','Residence'): kind='Service'
@@ -48,6 +48,7 @@ ICON={'X':'<svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3
 SVCS=[ # key,name,url,cat,line,thumb
 ('shichirin','しちりんの会','shichirin/','自費参加｜手続き不要','七輪で火を起こし、焼いて食べます。手続きも診断も要りません。','fish'),
 ('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。','homemeal'),
+('tanden','オンライン丹田呼吸法教室','tanden/','オンライン｜毎週火曜','毎週火曜 9:30〜10:00。同じ流れで参加する30分です。',None),
 ('chamu','茶夢','chamu/','統合失調症・自閉症の方のための日中の居場所','料理・喫茶・読書・アートで、日中を安全に過ごす場所です。','counter'),
 ('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。',None),
 ('leo','レオ','leo/','子どもの情緒','おもちゃ、武道、庭いじり。遊びの中で情緒を整えます。','panda'),
@@ -88,10 +89,10 @@ for _i,_s in enumerate(SVCS):
 SV={s[0]:s for s in SVCS}
 CHROME={}
 CUR={}
-AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['shichirin','ryozanpaku'],'眠れない・仕事が続かない・親元を出たい'),
+AUD=[('self','ご本人','FOR YOU','眠れない、気分の波がある、仕事が続かない、親元を出たい。ご自身のことで困っている大人の方へ。',['shichirin','ryozanpaku','tanden'],'眠れない・仕事が続かない・親元を出たい'),
 ('family','ご家族','FOR FAMILIES','家族が家から出ない、日中の行き場がない。ご家族の方へ。本人が動けなくても、ご家族からの相談で始められます。',['kintoun','chamu'],'家族が家から出ない・日中の行き場がない'),
 ('parents','お子さまの保護者','FOR PARENTS','落ち着かない、かんしゃくが多い、集団が苦手なお子さまの保護者の方へ。',['leo','parent','assess'],'落ち着かない・かんしゃく・発達が気になる'),
-('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','sct','agent','training'],'職場定着・ストレスチェック・研修')]
+('partners','企業・支援機関','FOR PARTNERS','企業、JEED（高齢・障害・求職者雇用支援機構）、ハローワーク、労働局の方へ。職場定着を、職場と住まいの両方から支えます。',['employment','stress','sct','agent','training','tanden'],'職場定着・ストレスチェック・研修')]
 # 下層の body に足す対象者クラス。見た目のCSSはまだ足さない。トップの4セクションと同じ印。
 # content 先頭の audience: を優先し、無いページはパスで決める（/business/ のように原稿が無いページを含む）。
 _AUD_OK={'self','family','parents','partners'}
@@ -103,7 +104,7 @@ def aud_slug(path, explicit=None):
     s=_norm_aud(explicit)
     if s: return s
     p=(path or '').strip().strip('/')
-    if p in ('ryozanpaku','shichirin'): return 'self'
+    if p in ('ryozanpaku','shichirin','tanden'): return 'self'
     if p in ('chamu','kintoun'): return 'family'
     if p=='leo' or p.startswith('leo/'): return 'parents'
     if p=='business' or p.startswith('business/'): return 'partners'
@@ -215,6 +216,7 @@ SEO={
  'shichirin/':('自費参加 しちりんの会｜三重県菰野町｜星心会','火を囲めば黙っていてもゆるみます。しちりんの会は、七輪で火を起こして食べる自費参加の会です。三重県菰野町、不定期の土曜、手続きは不要です。'),
  'leo/parent-training/':('ペアレントトレーニング レオ｜三重県四日市市｜星心会','アドラー心理学に基づくペアレントトレーニング「アドペア」です。保護者の相談を、三重県四日市市のレオで行います。'),
  'leo/assessment/':('発達検査（WISC-V・新版K式）｜四日市市｜星心会','三重県四日市市あさけが丘のレオで行う発達検査です。WISC-Vは小1〜高2、新版K式は未就学児。各25,000円（税込）で、事前面談・検査・報告書・フィードバック面談を含みます。'),
+ 'tanden/':('オンライン丹田呼吸法教室｜毎週火曜 9:30〜10:00｜星心会','障害者雇用で働く方のための、オンラインの丹田呼吸法教室です。サークル型で、毎週火曜 9:30〜10:00、Google Meetで30分。カメラはオフでも参加できます。個人は月額3,000円。医療や治療の代わりではありません。'),
 }
 def under_construction(path):
     """企業・支援機関（/business/）は公開準備が整うまで工事中。戻すときは False を返す。
@@ -381,6 +383,81 @@ body.sct-page .fab{display:none}
     o+=footer(rel)
     write(d['path'], o)
 
+def _td_parts(fragment):
+    return [p.strip() for p in _re.split(r'<br\s*/?>', fragment or '') if p.strip()]
+def tanden_page(d, rel, ld):
+    """オンライン丹田呼吸法教室。本文は全部見える。押さないと出ない部品は使わない。"""
+    style='''<style>
+body.tanden-page{background:#f8fafc}
+.td{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+.td-kicker{margin:0;color:#2e7d32;font-size:12px;font-weight:700;letter-spacing:.14em}
+.td h1{margin:8px 0 12px;font-size:clamp(1.65rem,5vw,2.3rem);font-weight:800;line-height:1.35;letter-spacing:.04em;color:#0f172a}
+.td-lead{margin:0;font-size:1.05rem;line-height:1.8}
+.td-copy{margin:8px 0 0;color:#334155;line-height:1.8}
+.td-warn{margin:16px 0 0;padding:12px 14px;background:#fff;border:1px solid #e2e8f0;border-left:4px solid #2e7d32;border-radius:10px;line-height:1.8}
+.td section{margin-top:36px}
+.td h2{margin:0 0 12px;padding-left:12px;border-left:4px solid #2e7d32;font-size:1.25rem;font-weight:700;line-height:1.4;color:#0f172a}
+.td p,.td li{font-size:1rem;line-height:1.85}
+.td ul,.td ol{margin:0;padding-left:1.3em}
+.td li{margin:8px 0}
+.td-facts{display:grid;gap:10px;margin:0}
+.td-facts div{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px}
+.td-facts dt{font-size:12px;font-weight:700;letter-spacing:.08em;color:#2e7d32}
+.td-facts dd{margin:4px 0 0}
+.td ol.td-steps{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.td-steps li{margin:0;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px}
+.td-steps b{display:block;color:#0f172a}
+.td-quiet{margin-top:28px;padding:14px;background:#f1f5f9;border-radius:12px}
+.td-quiet p{margin:0 0 8px}
+.td-quiet p:last-child{margin:0}
+.td-acts{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.td-acts a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 16px;border-radius:8px;font-weight:700;text-align:center}
+.td-go{background:#1e293b;color:#fff}
+.td-tel{background:#fff;color:#1e293b;border:1px solid #e2e8f0}
+.td-faq h3{margin:18px 0 4px;font-size:1rem;font-weight:700}
+.td-faq p{margin:0}
+@media(min-width:700px){
+ .td{padding:40px 24px 88px}
+ .td-acts{flex-direction:row}
+ .td-acts a{flex:1}
+}
+</style>'''
+    info={k:v for k,v in (d.get('info') or [])}
+    who=next((a for n,s,a in (d.get('what') or []) if 'こんな方' in n), '')
+    who_items=''.join(f'<li>{p}</li>' for p in _td_parts(who))
+    steps=''.join(f'<li><b>{html.escape(t)}</b>{"".join(f"<p>{p}</p>" for p in _td_parts(x))}</li>' for en,t,x in (d.get('flow') or []))
+    facts=''.join(f'<div><dt>{html.escape(k)}</dt><dd>{info[k]}</dd></div>' for k in ('日時','形式','参加費') if info.get(k))
+    teacher=_td_parts(info.get('講師'))
+    teacher_html=''.join(f'<p>{p}</p>' for p in teacher)
+    apply=_td_parts(info.get('申し込み'))
+    apply_html=''.join(f'<p>{p}</p>' for p in apply)
+    pending=_td_parts(info.get('まだ決まっていないこと'))
+    pending_html=''.join(f'<p>{p}</p>' for p in pending)
+    note=''.join(f'<p>{p}</p>' for p in _td_parts(info.get('注意')))
+    faqs=''.join(f'<h3>{html.escape(q)}</h3>{"".join(f"<p>{p}</p>" for p in _td_parts(a))}' for q,a in (d.get('faq') or []))
+    copy=''.join(f'<p class="td-copy">{html.escape(x)}</p>' for x in (d.get('copy') or []) if str(x).strip())
+    o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
+    o=o.replace('<body class="aud-self">','<body class="aud-self tanden-page">',1)
+    o=o.replace('<body>','<body class="tanden-page">',1)
+    o=o.replace('</head>',style+'</head>',1)
+    o+=f'''<main class="td">
+<p class="td-kicker">オンラインの教室</p>
+<h1>{html.escape(d["name"])}</h1>
+<p class="td-lead">{d.get("sub") or ""}</p>
+{copy}
+{f'<div class="td-warn">{note}</div>' if note else ''}
+<section id="facts"><h2>日時と参加のしかた</h2><dl class="td-facts">{facts}</dl></section>
+<section id="who"><h2>こんな方へ</h2><ul>{who_items}</ul></section>
+<section id="flow"><h2>毎回の流れ</h2><p>毎回、この順番です。</p><ol class="td-steps">{steps}</ol></section>
+<section id="teacher"><h2>講師</h2>{teacher_html}</section>
+<section id="apply"><h2>申し込み</h2>{apply_html}
+<div class="td-acts"><a class="td-go" href="{rel}contact/">相談フォーム</a><a class="td-tel" href="tel:0593150697">電話 059-315-0697</a></div></section>
+{f'<section class="td-quiet" id="open"><h2>このページで決めていないこと</h2>{pending_html}</section>' if pending_html else ''}
+<section class="td-faq" id="faq"><h2>よくある質問</h2>{faqs}</section>
+</main>'''
+    o+=footer(rel)
+    write(d['path'], o)
+
 def service_page(d):
     path=d['path']
     if path=='suishodama/':
@@ -420,6 +497,8 @@ def service_page(d):
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
     ld=[service_node(d,path),faq_ld(d['faq'])]
+    if path=='tanden/':
+        tanden_page(d, rel, ld); return
     if path=='business/stress-check-training/':
         sct_page(d, rel, ld); return
     if path=='chamu/':
@@ -720,6 +799,23 @@ PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,ex
  info=[('正式名称','メンタルピアレジデンス・梁山泊'),('対象','仕事を続けたい、心の波を抱える社会人／親元を出たい人 '+ph('入居条件')),('場所','三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分'),('費用','家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）'),('申し込み','電話 059-315-0697 またはLINE')],
  faq=[('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。紹介・連携の窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),('親に知られずに相談できますか？','対応します。連絡方法は本人の指定に従います。'),('費用は？','家賃は月8万円です。ほかに費用はかかりません。'),('名古屋から移り住めますか？','移り住めます。名古屋西ICから車で約30分です。')],
  rel=[('しちりんの会','shichirin/'),('相談する','contact/')],cta_h='見学を申し込む'))
+
+PAGES.append(dict(path='tanden/',keep_desc=True,name='オンライン丹田呼吸法教室',en='TANDEN',short=True,type='Service',
+ title='オンライン丹田呼吸法教室｜毎週火曜 9:30〜10:00｜星心会',
+ desc='障害者雇用で働く方のための、オンラインの丹田呼吸法教室です。サークル型で、毎週火曜 9:30〜10:00、Google Meetで30分。カメラはオフでも参加できます。個人は月額3,000円。医療や治療の代わりではありません。',
+ cat='オンライン｜毎週火曜',copy=['毎週火曜の30分です。','毎回、同じ流れで進みます。'],
+ sub='サークル型で、定期的に参加できる場です。',
+ what_h='こんな方へ',what=[('こんな方へ','','障害者雇用で働いている、発達障害などの方。<br>仕事はできるが、疲れをため込みやすい方。<br>企業（特例子会社など）が、社員のために申し込むこともできます。')],
+ flow=[['IN','チェックイン（5分）','今日の様子を、短く話します。話したくないときは、聞いているだけでもかまいません。'],['BREATHE','丹田呼吸（15分）','丹田に意識を置いて、呼吸をします。'],['OUT','振り返り（10分）','今日の呼吸を振り返ります。職場で使える1分呼吸を紹介します。']],
+ info=[('日時','毎週火曜 9:30〜10:00（30分）です。就業時間の中で参加できる時間です。'),
+  ('形式','Google Meetです。カメラはオフでも参加できます。'),
+  ('参加費','個人は月額3,000円です。法人契約はご相談ください。法人の料金は、このページには書いていません。'),
+  ('講師','齊藤 連（さいとう・れん）が担当します。星心会の代表です。'),
+  ('申し込み','相談フォームか、電話で申し込みます。'),
+  ('まだ決まっていないこと','開始日、定員、体験の有無、支払いの方法は、このページでは決めていません。申し込みのときに確認してください。'),
+  ('注意','この教室は、医療や治療の代わりではありません。')],
+ faq=[('カメラをオンにしないと参加できませんか？','オフでも参加できます。'),('医療の代わりになりますか？','なりません。医療や治療の代わりではありません。'),('参加費はいくらですか？','個人は月額3,000円です。法人契約はご相談ください。')],
+ rel=[('相談する','contact/')],cta_h='申し込む'))
 
 BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('stress-check-training','ストレスチェック実施者養成研修','PRACTITIONER TRAINING','実施者になるための研修を、オンラインで行います。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','Grok Botを、事業所の職員にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
 PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',short=True,type='Service',
@@ -1192,7 +1288,7 @@ for d in PAGES: service_page(d)
 # ---------- TOP ----------
 def card(k,rel=''):
     _,n,u,c,l,t=SV[k]
-    if k in ('assess','employment','stress','agent','sct','training'):
+    if k in ('assess','employment','stress','agent','sct','training','tanden'):
         th=''
     elif t:
         th=f'<div class="th" style="background-image:url({rel}img/{t}.jpg)"></div>'
@@ -1298,6 +1394,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
 <li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
 <li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　メンタルピアレジデンス。働き続ける人の住まい。三重県四日市市山城町。</li>
+<li><a href="{rel}tanden/"><span>オンライン丹田呼吸法教室</span></a>　毎週火曜 9:30〜10:00。Google Meet。カメラはオフでも参加できます。個人は月額3,000円。</li>
 <li><a href="{rel}kintoun/"><span>金斗雲</span></a>　居宅介護（訪問）。外に出にくい方とそのご家族。四日市市・菰野町など三重県内。</li>
 <li><a href="{rel}chamu/"><span>茶夢</span></a>　生活介護。統合失調症・自閉症の方の日中の居場所。三重県四日市市あさけが丘。</li>
 <li><a href="{rel}leo/"><span>レオ</span></a>　児童発達支援・放課後等デイサービス。満1歳から18歳。三重県四日市市あさけが丘。</li>
@@ -1378,6 +1475,7 @@ def guide(rel):
 <a class="any" href="{rel}leo/assessment/"><b>発達検査・ペアトレ</b><small>受給者証なし・自費</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}ryozanpaku/"><b>梁山泊</b><small>住まい（家賃 月8万円）</small><span class="u">受給者証不要</span></a>
 <a class="any" href="{rel}shichirin/"><b>しちりんの会</b><small>自費参加 3,000円</small><span class="u">手続き不要</span></a>
+<a class="any" href="{rel}tanden/"><b>オンライン丹田呼吸法教室</b><small>毎週火曜 9:30〜10:00・月額3,000円</small><span class="u">受給者証不要</span></a>
 </div>
 <div class="help">手続きがわからないときは、電話または相談フォームへご連絡ください。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/">相談フォーム</a></div>
 </div>"""
@@ -1388,7 +1486,8 @@ simple_page('news/','お知らせ｜星心会（三重県四日市市）','星�
 def nagoya(rel): return f'''<section class="blk wide prose"><p>星心会の本部（三重県四日市市山城町59-4）は、名古屋から車で約30分です。名古屋にお住まいの方の相談も受け付けています。</p>
 <h2 style="font-size:20px;margin:30px 0 10px">車で</h2><p>名古屋西ICから約30分です。</p>
 <h2 style="font-size:20px;margin:30px 0 10px">電車・バスで</h2><ul class="lst"><li>三岐鉄道三岐線「山城」駅から徒歩5分（本部・梁山泊）</li><li>同駅から徒歩12分（茶夢・レオ／四日市市あさけが丘2-1-42）</li><li>四日市駅から三岐バスで「団地下」下車</li></ul><p>名古屋から近鉄・JRで四日市方面へ出て、三岐線またはバスに乗り継ぎます。運行時刻は各交通機関でご確認ください。</p>
-<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋から移り住むこともできます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li></ul>
+<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋から移り住むこともできます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li>
+<li><a href="{rel}tanden/"><span>オンライン丹田呼吸法教室</span></a>　Google Meetです。名古屋から参加できます。毎週火曜 9:30〜10:00。</li></ul>
 <p>公的制度を使う事業は、お住まいの市区町村によって使える制度が異なります。初回連絡時に確認し、手続きはこちらで進めます。金斗雲の訪問は三重県内のみです。</p><p><a href="{rel}access/" style="display:inline;color:var(--hi)">アクセス全体を見る</a>　／　相談 059-315-0697</p></section>'''
 simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICから車で約30分｜星心会（三重県四日市市）','名古屋から星心会（三重県四日市市山城町）へは、名古屋西ICから車で約30分。三岐線山城駅から徒歩5分。名古屋在住の方が利用できる事業も紹介します。','名古屋からのアクセス','FROM NAGOYA',nagoya)
 
@@ -1488,6 +1587,7 @@ L+='''補足：
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
 - ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
+- オンライン丹田呼吸法教室は、障害者雇用で働く方のためのサークル型のオンライン教室です。毎週火曜 9:30〜10:00（30分）、Google Meet、カメラはオフでも参加できます。個人は月額3,000円。法人契約はご相談ください。医療や治療の代わりではありません。申し込みは相談フォーム（「決まっていない」を選び、本文に教室名を書く）または電話 059-315-0697 です。
 
 ## その他
 '''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)+f'- 公式LINE: {LINE_ADD}\n'
