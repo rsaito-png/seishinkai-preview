@@ -408,54 +408,115 @@ def kokyu_letter():
 def kokyu_page(d, rel, ld):
     """オンライン呼吸法教室。対象・日時・形式・料金・申込をカードで見せる。"""
     style='''<style>
-body.kokyu-page{background:#f8fafc}
-.ky{max-width:760px;margin:0 auto;padding:28px 16px 80px}
-.ky h1{margin:0;font-size:clamp(1.55rem,5vw,2.1rem);font-weight:800;line-height:1.3;letter-spacing:.03em;color:#0f172a}
-.ky-note{margin:8px 0 0;font-size:12px;line-height:1.6;color:#64748b}
-.ky-letter{margin:16px 0 0;font-size:1rem;line-height:1.85;white-space:pre-line}
-.ky-sign{margin:0;text-align:right;font-size:1rem;line-height:1.85}
-.ky-grid{display:grid;gap:10px;margin-top:18px}
-.ky-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px}
-.ky-card dt{font-size:12px;font-weight:700;letter-spacing:.08em;color:#2e7d32}
-.ky-card dd{margin:4px 0 0;font-size:1rem;line-height:1.65}
+body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea 100%)}
+.ky{max-width:760px;margin:0 auto;padding:22px 16px 80px}
+.ky-hero{position:relative;overflow:hidden;border-radius:22px;padding:28px 22px 26px;background:linear-gradient(125deg,#0f6e6b 0%,#2f8f9a 46%,#f0b27a 100%);color:#fff;box-shadow:0 16px 40px rgba(15,110,107,.22)}
+.ky-hero h1{position:relative;z-index:1;margin:8px 0 0;font-size:clamp(1.55rem,5vw,2.15rem);font-weight:800;line-height:1.3;letter-spacing:.03em;color:#fff}
+.ky-mark{display:block;width:74px;height:12px}
+.ky-note{position:relative;z-index:1;margin:10px 0 0;font-size:12px;line-height:1.6;color:rgba(255,255,255,.88)}
+.ky-ripples{position:absolute;right:-18px;top:-28px;width:210px;height:210px;pointer-events:none}
+.ky-ring{fill:none;stroke:#fff;transform-origin:100px 100px;animation:ky-breathe 8s ease-in-out infinite}
+.ky-ring.r2{animation-delay:-2.6s;stroke:#f6d7b8}
+.ky-ring.r3{animation-delay:-5.2s;stroke:#b7efe4}
+@keyframes ky-breathe{0%,100%{transform:scale(.82);opacity:.35}50%{transform:scale(1);opacity:.85}}
+.ky-letter{margin:18px 0 0;padding:16px 16px 8px;background:rgba(255,255,255,.78);border:1px solid rgba(47,143,154,.18);border-radius:16px;font-size:1rem;line-height:1.85;white-space:pre-line;box-shadow:0 8px 24px rgba(15,110,107,.06)}
+.ky-sign{margin:0;padding:0 16px 4px;text-align:right;font-size:1rem;line-height:1.85}
+.ky-wave{display:block;width:100%;height:36px;margin:8px 0 0}
+.ky-grid{display:grid;gap:12px;margin-top:8px}
+.ky-card{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid rgba(47,143,154,.16);border-radius:16px;padding:12px 14px;box-shadow:0 8px 20px rgba(15,110,107,.05)}
+.ky-card.wide{grid-column:auto}
+.ky-ico{flex:0 0 36px;width:36px;height:36px;border-radius:12px;display:grid;place-items:center}
+.ky-ico svg{width:22px;height:22px;display:block}
+.ky-who .ky-ico{background:#d8f3ee;color:#0f6e6b}
+.ky-when .ky-ico{background:#d7f0f8;color:#1d7f96}
+.ky-how .ky-ico{background:#ffe8d2;color:#c56a2d}
+.ky-fee .ky-ico{background:#d8f3ee;color:#0f6e6b}
+.ky-ask .ky-ico{background:#ffe8d2;color:#c56a2d}
+.ky-card dt{font-size:12px;font-weight:700;letter-spacing:.08em}
+.ky-who dt{color:#0f6e6b}
+.ky-when dt{color:#1d7f96}
+.ky-how dt,.ky-ask dt{color:#c56a2d}
+.ky-fee dt{color:#0f6e6b}
+.ky-card dd{margin:4px 0 0;font-size:1rem;line-height:1.65;color:#1e293b}
 .ky-card dd p{margin:0}
 .ky-card dd p+p{margin-top:4px}
 .ky-acts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.ky-acts a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 14px;border-radius:8px;font-weight:700;text-align:center}
-.ky-go{background:#1e293b;color:#fff}
-.ky-tel{background:#fff;color:#1e293b;border:1px solid #e2e8f0}
+.ky-acts a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 14px;border-radius:999px;font-weight:700;text-align:center}
+.ky-go{background:linear-gradient(90deg,#0f6e6b,#2f8f9a);color:#fff}
+.ky-tel{background:#fff;color:#0f6e6b;border:1.5px solid #f0b27a}
+.ky-org{position:relative;overflow:hidden;margin-top:18px;padding:18px 16px 16px;border-radius:20px;background:linear-gradient(135deg,#fff7ee 0%,#e7f7fb 55%,#e5f6f1 100%);border:1px solid rgba(197,106,45,.28);box-shadow:0 12px 28px rgba(197,106,45,.12)}
+.ky-org h2{margin:0;font-size:1.15rem;line-height:1.4;color:#0f6e6b}
+.ky-org ul{margin:12px 0 0;padding:0;list-style:none}
+.ky-org li{position:relative;margin:0 0 8px;padding-left:1.15em;line-height:1.65;color:#1e293b}
+.ky-org li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0f6e6b,#f0b27a)}
+.ky-org-go{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:12px;padding:10px 16px;border-radius:999px;background:linear-gradient(90deg,#b4531d,#d9783a);color:#fff;font-weight:700;text-align:center}
 @media(min-width:700px){
- .ky{padding:36px 24px 88px}
+ .ky{padding:32px 24px 88px}
+ .ky-hero{padding:34px 32px 30px}
  .ky-grid{grid-template-columns:1fr 1fr}
  .ky-card.wide{grid-column:1 / -1}
  .ky-acts{flex-direction:row}
  .ky-acts a{flex:1}
+ .ky-org{padding:22px 22px 18px}
+ .ky-org-go{max-width:280px}
+}
+@media(prefers-reduced-motion:reduce){
+ .ky-ring{animation:none}
 }
 </style>'''
     info={k:v for k,v in (d.get('info') or [])}
     who=next((a for n,s,a in (d.get('what') or []) if '対象' in n), '')
     who_html=''.join(f'<p>{p}</p>' for p in _ky_parts(who))
+    ICO={
+     'who':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="10.2" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>',
+     'when':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4.5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+     'how':'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+     'fee':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="15" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
+     'ask':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16.5V7.5A2.5 2.5 0 017.5 5h9A2.5 2.5 0 0119 7.5v6A2.5 2.5 0 0116.5 16H9L5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+    }
+    TONE={'日時':'when','形式':'how','料金':'fee','申し込み':'ask'}
     def card(key, wide=False):
         if not info.get(key): return ''
         bits=''.join(f'<p>{p}</p>' for p in _ky_parts(info[key]))
-        return f'<div class="ky-card{" wide" if wide else ""}"><dt>{html.escape(key)}</dt><dd>{bits}</dd></div>'
+        tone=TONE.get(key,'who')
+        ico=ICO['ask' if key=='申し込み' else tone if tone in ICO else 'who']
+        if key=='日時': ico=ICO['when']
+        elif key=='形式': ico=ICO['how']
+        elif key=='料金': ico=ICO['fee']
+        return f'<div class="ky-card ky-{tone}{" wide" if wide else ""}"><span class="ky-ico">{ico}</span><div><dt>{html.escape(key)}</dt><dd>{bits}</dd></div></div>'
     note=''.join(_ky_parts(info.get('注意')))
     letter, sign=kokyu_letter()
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
     o=o.replace('<body class="aud-self">','<body class="aud-self kokyu-page">',1)
     o=o.replace('<body>','<body class="kokyu-page">',1)
     o=o.replace('</head>',style+'</head>',1)
+    wave='''<svg class="ky-wave" viewBox="0 0 720 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 C120 6 200 38 320 22 S520 6 720 26" fill="none" stroke="#2f8f9a" stroke-width="2.2"/><path d="M0 32 C140 14 240 42 380 28 S560 16 720 34" fill="none" stroke="#f0b27a" stroke-width="2"/></svg>'''
+    ripples='''<svg class="ky-ripples" viewBox="0 0 200 200" aria-hidden="true"><circle class="ky-ring" cx="100" cy="100" r="26" stroke-width="1.4"/><circle class="ky-ring r2" cx="100" cy="100" r="48" stroke-width="1.3"/><circle class="ky-ring r3" cx="100" cy="100" r="72" stroke-width="1.2"/></svg>'''
+    mark='''<svg class="ky-mark" viewBox="0 0 74 12" aria-hidden="true"><path d="M1 8c8-8 16 8 24 0s16 8 24 0 16 8 24 0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>'''
     o+=f'''<main class="ky">
+<section class="ky-hero">{ripples}{mark}
 <h1>{html.escape(d["name"])}</h1>
 {f'<p class="ky-note">{html.escape(note)}</p>' if note else ''}
+</section>
 <div class="ky-letter">{html.escape(letter)}</div>
 <p class="ky-sign">{html.escape(sign)}</p>
+{wave}
 <dl class="ky-grid">
-<div class="ky-card wide"><dt>対象</dt><dd>{who_html}</dd></div>
+<div class="ky-card ky-who wide"><span class="ky-ico">{ICO['who']}</span><div><dt>対象</dt><dd>{who_html}</dd></div></div>
 {card('日時')}{card('形式')}{card('料金', True)}
-<div class="ky-card wide"><dt>申し込み</dt><dd>{''.join(f'<p>{p}</p>' for p in _ky_parts(info.get('申し込み')))}
-<div class="ky-acts"><a class="ky-go" href="{rel}contact/?service=kokyu">相談フォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div>
+<div class="ky-card ky-ask wide"><span class="ky-ico">{ICO['ask']}</span><div><dt>申し込み</dt><dd>{''.join(f'<p>{p}</p>' for p in _ky_parts(info.get('申し込み')))}
+<div class="ky-acts"><a class="ky-go" href="{rel}contact/?service=kokyu">相談フォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div></div>
 </dl>
+<section class="ky-org">
+<h2>企業・団体の方へ</h2>
+<ul>
+<li>業務時間内の研修として導入できます（毎週火曜 9:30〜10:00・30分・Google Meet）。</li>
+<li>障害者雇用で働く社員のセルフケアと、職場定着の支えになります。</li>
+<li>社員の方は、職場や自宅からオンラインで参加できます。</li>
+<li>料金と人数は、法人ご相談です。</li>
+</ul>
+<a class="ky-org-go" href="{rel}contact/?service=kokyu">企業として相談する</a>
+</section>
 </main>'''
     o+=footer(rel)
     write(d['path'], o)
