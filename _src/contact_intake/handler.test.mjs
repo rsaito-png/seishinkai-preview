@@ -69,6 +69,19 @@ test("persistence failure stores nothing and sends nothing", async () => {
   assert.equal(shouldCountLead(result.body), false);
 });
 
+test("the breathing class is a valid service and an unknown service is rejected without storing", async () => {
+  const store = createMemoryStore();
+  const known = await accept(store, payload(90, { service: "オンライン呼吸法教室", name: "" }));
+  assert.equal(known.result.status, 400);
+  assert.equal(known.result.body.stored, false);
+  assert.equal(known.result.body.fields.service, undefined);
+  const unknown = await accept(store, payload(91, { service: "存在しない事業", name: "" }));
+  assert.equal(unknown.result.status, 400);
+  assert.equal(unknown.result.body.stored, false);
+  assert.equal(unknown.result.body.fields.service, "invalid");
+  assert.equal(store.rows.length, 0);
+});
+
 test("validation, injection, honeypot, and timing do not store or count", async () => {
   const store = createMemoryStore();
   const cases = [

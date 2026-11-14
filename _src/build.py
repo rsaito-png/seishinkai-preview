@@ -385,6 +385,26 @@ body.sct-page .fab{display:none}
 
 def _ky_parts(fragment):
     return [p.strip() for p in _re.split(r'<br\s*/?>', fragment or '') if p.strip()]
+def kokyu_letter():
+    """会長の文。改行と署名の字は原稿のまま出す。"""
+    fallback=('医療でも呼吸法を勧められることは多いですが、それを実践する人に出会ったことがありません。\n'
+              'しかし数々のエビデンスが存在するように、呼吸法は確かに役立ちます。\n'
+              '長年に渡ってメンタルと呼吸の関係について探求してきた講師が、誰でもできるやり方でお伝えします。\n'
+              'あなたの大切なセルフケアになりますよう。\n'
+              '\n'
+              '星心会\u3000会長')
+    text=fallback
+    if CONTENT:
+        f=_o.path.join(CONTENT,'kokyu.md')
+        if _o.path.isfile(f):
+            raw=open(f,encoding='utf-8').read().replace('\r\n','\n').replace('\r','\n')
+            m=_re.search(r'(?m)^## 会長のことば[ \t]*\n(.*?)(?=^## |\Z)', raw, _re.S)
+            if m and m.group(1).strip():
+                text=m.group(1).strip('\n')
+    lines=text.split('\n')
+    sign=lines[-1]
+    body='\n'.join(lines[:-1])
+    return body, sign
 def kokyu_page(d, rel, ld):
     """オンライン呼吸法教室。対象・日時・形式・料金・申込をカードで見せる。"""
     style='''<style>
@@ -392,17 +412,14 @@ body.kokyu-page{background:#f8fafc}
 .ky{max-width:760px;margin:0 auto;padding:28px 16px 80px}
 .ky h1{margin:0;font-size:clamp(1.55rem,5vw,2.1rem);font-weight:800;line-height:1.3;letter-spacing:.03em;color:#0f172a}
 .ky-note{margin:8px 0 0;font-size:12px;line-height:1.6;color:#64748b}
+.ky-letter{margin:16px 0 0;font-size:1rem;line-height:1.85;white-space:pre-line}
+.ky-sign{margin:0;text-align:right;font-size:1rem;line-height:1.85}
 .ky-grid{display:grid;gap:10px;margin-top:18px}
 .ky-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px}
 .ky-card dt{font-size:12px;font-weight:700;letter-spacing:.08em;color:#2e7d32}
 .ky-card dd{margin:4px 0 0;font-size:1rem;line-height:1.65}
 .ky-card dd p{margin:0}
 .ky-card dd p+p{margin-top:4px}
-.ky h2{margin:22px 0 0;font-size:15px;font-weight:700;letter-spacing:.06em}
-.ky-flow{list-style:none;display:grid;gap:8px;margin:10px 0 0;padding:0}
-.ky-flow li{margin:0;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px}
-.ky-flow b{display:block;font-size:1rem;line-height:1.4}
-.ky-flow span{display:block;margin-top:2px;color:#334155;font-size:.95rem;line-height:1.5}
 .ky-acts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .ky-acts a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:10px 14px;border-radius:8px;font-weight:700;text-align:center}
 .ky-go{background:#1e293b;color:#fff}
@@ -411,7 +428,6 @@ body.kokyu-page{background:#f8fafc}
  .ky{padding:36px 24px 88px}
  .ky-grid{grid-template-columns:1fr 1fr}
  .ky-card.wide{grid-column:1 / -1}
- .ky-flow{grid-template-columns:repeat(3,1fr)}
  .ky-acts{flex-direction:row}
  .ky-acts a{flex:1}
 }
@@ -423,8 +439,8 @@ body.kokyu-page{background:#f8fafc}
         if not info.get(key): return ''
         bits=''.join(f'<p>{p}</p>' for p in _ky_parts(info[key]))
         return f'<div class="ky-card{" wide" if wide else ""}"><dt>{html.escape(key)}</dt><dd>{bits}</dd></div>'
-    steps=''.join(f'<li><b>{html.escape(t)}</b><span>{"".join(_ky_parts(x))}</span></li>' for en,t,x in (d.get('flow') or []))
     note=''.join(_ky_parts(info.get('注意')))
+    letter, sign=kokyu_letter()
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
     o=o.replace('<body class="aud-self">','<body class="aud-self kokyu-page">',1)
     o=o.replace('<body>','<body class="kokyu-page">',1)
@@ -432,14 +448,14 @@ body.kokyu-page{background:#f8fafc}
     o+=f'''<main class="ky">
 <h1>{html.escape(d["name"])}</h1>
 {f'<p class="ky-note">{html.escape(note)}</p>' if note else ''}
+<div class="ky-letter">{html.escape(letter)}</div>
+<p class="ky-sign">{html.escape(sign)}</p>
 <dl class="ky-grid">
 <div class="ky-card wide"><dt>対象</dt><dd>{who_html}</dd></div>
 {card('日時')}{card('形式')}{card('料金', True)}
 <div class="ky-card wide"><dt>申し込み</dt><dd>{''.join(f'<p>{p}</p>' for p in _ky_parts(info.get('申し込み')))}
-<div class="ky-acts"><a class="ky-go" href="{rel}contact/">相談フォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div>
+<div class="ky-acts"><a class="ky-go" href="{rel}contact/?service=kokyu">相談フォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div>
 </dl>
-<h2>毎回の流れ</h2>
-<ol class="ky-flow">{steps}</ol>
 </main>'''
     o+=footer(rel)
     write(d['path'], o)
@@ -792,11 +808,11 @@ PAGES.append(dict(path='kokyu/',keep_desc=True,name='オンライン呼吸法教
  cat='オンライン｜毎週火曜',copy=['毎週火曜 9:30〜10:00'],
  sub='30分のオンライン教室です。',
  what=[('対象','','障害者雇用で働いている方。仕事はできるが、疲れをため込みやすい方。<br>障害者雇用をしている会社が、社員のために申し込むこともできます。')],
- flow=[['IN','チェックイン','5分'],['BREATHE','呼吸の練習','15分'],['OUT','振り返り','10分。職場で使える1分呼吸。']],
+ flow=[],
  info=[('日時','毎週火曜 9:30〜10:00（30分）'),
   ('形式','Google Meet。カメラはオフでも参加できます。'),
   ('料金','個人は月額3,000円。法人はご相談ください。'),
-  ('申し込み','「決まっていない」を選び、本文に「オンライン呼吸法教室」と書いてください。'),
+  ('申し込み','相談フォームか、電話です。本文に、個人か会社の担当者かを書いてください。'),
   ('注意','医療や治療の代わりではありません。')],
  faq=[],rel=[('相談する','contact/')],cta_h='申し込む'))
 
@@ -1480,7 +1496,7 @@ simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICか
 LINE_ID='@279qxcql'
 LINE_ADD='https://line.me/R/ti/p/@279qxcql'
 LINE_BLURB='星心会への相談は、法人共通の公式LINE（'+LINE_ID+'）、電話059-315-0697、または相談フォームで受け付けます。'
-_CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修']
+_CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修','オンライン呼吸法教室']
 def contact(rel): return f'''<section class="blk" data-track="contact"><div class="h"><span class="en">LINE</span><h2 id="line">星心会 公式LINE</h2><p>本部・全事業の窓口です。友だち追加は、パソコンでもスマートフォンでもこちらから進められます。</p></div><p><a class="btn" href="{LINE_ADD}" style="background:#06c755;max-width:100%;white-space:normal;text-align:center;line-height:1.5">星心会 公式LINEを友だち追加</a></p><p style="color:var(--soft);font-size:14px;margin-top:14px">LINE ID　<b style="color:var(--ink);font-weight:600;letter-spacing:.06em">{LINE_ID}</b></p></section>
 <section class="blk" data-track="contact" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
 <ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
@@ -1570,7 +1586,7 @@ L+='''補足：
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
 - ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
-- オンライン呼吸法教室は、毎週火曜 9:30〜10:00（30分）、Google Meetです。カメラはオフでも参加できます。個人は月額3,000円。法人はご相談ください。医療や治療の代わりではありません。申し込みは相談フォーム（「決まっていない」を選び、本文に教室名を書く）または電話 059-315-0697 です。
+- オンライン呼吸法教室は、毎週火曜 9:30〜10:00（30分）、Google Meetです。カメラはオフでも参加できます。個人は月額3,000円。法人はご相談ください。医療や治療の代わりではありません。申し込みは相談フォーム（https://psr-seishinkai.org/contact/?service=kokyu ）または電話 059-315-0697 です。
 
 ## その他
 '''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)+f'- 公式LINE: {LINE_ADD}\n'

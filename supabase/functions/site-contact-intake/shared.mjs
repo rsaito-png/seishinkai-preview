@@ -15,6 +15,7 @@ export const SERVICES = [
   "エージェントコンサル",
   "ストレスチェック実施者養成研修",
   "研修",
+  "オンライン呼吸法教室",
 ];
 
 export const LIMITS = {

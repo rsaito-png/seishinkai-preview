@@ -59,9 +59,32 @@ function storageSet(name, value) {
   }
 }
 
+const SERVICE_FROM_QUERY = {
+  kokyu: "オンライン呼吸法教室",
+};
+
+function applyServiceQuery(doc) {
+  const select = doc.getElementById("contact-service");
+  const view = doc.defaultView;
+  if (!select || !view) return;
+  let asked = "";
+  try {
+    asked = new URLSearchParams(view.location.search).get("service") || "";
+  } catch {
+    return;
+  }
+  const label = SERVICE_FROM_QUERY[asked] || asked;
+  const match = [...select.options].find((option) => option.value === label || option.text === label);
+  if (!match) return;
+  select.value = match.value;
+  const form = doc.getElementById("contact-intake");
+  if (form && typeof form.scrollIntoView === "function") form.scrollIntoView({ block: "start" });
+}
+
 export function installContactIntake(doc = document) {
   const form = doc.getElementById("contact-intake");
   if (!form) return;
+  applyServiceQuery(doc);
   const status = doc.getElementById("contact-status");
   const error = doc.getElementById("contact-error");
   const button = form.querySelector("button[type=submit]");
