@@ -537,7 +537,7 @@ LEO_EXTRA_CSS='''
 .leo-days-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:8px;background:#2e7d5b;color:#fff;font-weight:700}
 '''
 def leo_consult_html(rel):
-    return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
+    return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
 def leo_days_html():
     ig='<blockquote class="instagram-media" data-instgrm-permalink="%s" data-instgrm-version="14"><a href="%s" target="_blank" rel="noopener">Instagramでこの投稿を見る</a></blockquote>'%(LEO_IG_POST,LEO_IG_POST)
     th='<blockquote class="text-post-media" data-text-post-permalink="%s" data-text-post-version="0"><a href="%s" target="_blank" rel="noopener">Threadsでこの投稿を見る</a></blockquote>'%(LEO_THREAD_POST,LEO_THREAD_POST)
