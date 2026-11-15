@@ -521,13 +521,77 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
     o+=footer(rel)
     write(d['path'], o)
 
+LEO_THREAD_POSTS=[
+ 'https://www.threads.com/@psr_seishinkai/post/Dfrn9VHgTnI',
+ 'https://www.threads.com/@psr_seishinkai/post/Dfrnt8RgeNU',
+ 'https://www.threads.com/@psr_seishinkai/post/DfrneETgdNq',
+]
+LEO_EXTRA_CSS='''
+.leo-consult{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px;max-width:520px}
+.leo-consult a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px;font-size:15px}
+.leo-consult .w{background:#06c755;color:#fff}
+.leo-consult .o{background:#fff;color:#1e293b}
+.leo-days{max-width:1080px;margin:0 auto;padding:28px 20px 8px}
+.leo-days-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:960px){.leo-days-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}}
+.leo-days-grid>*{min-width:0;max-width:100%}
+.leo-days iframe{margin:0!important;min-width:0!important;width:100%!important;max-width:100%!important}
+.leo-days blockquote.text-post-media,.leo-days blockquote.text-post-media-registered{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important}
+.leo-days-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.leo-days-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:8px;background:#2e7d5b;color:#fff;font-weight:700}
+'''
+def leo_consult_html(rel):
+    return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
+def leo_days_html():
+    posts=''.join('<blockquote class="text-post-media" data-text-post-permalink="%s" data-text-post-version="0"><a href="%s" target="_blank" rel="noopener">Threadsで見る</a></blockquote>'%(u,u) for u in LEO_THREAD_POSTS)
+    script='''<script>
+(function(){
+  var root=document.getElementById("leo-days");
+  if(!root) return;
+  function load(){
+    if(document.querySelector("script[data-leo-embed]")) return;
+    var s=document.createElement("script");
+    s.async=true;
+    s.src="https://www.threads.com/embed.js";
+    s.setAttribute("data-leo-embed","1");
+    document.body.appendChild(s);
+  }
+  if(!("IntersectionObserver" in window)){load();return;}
+  var io=new IntersectionObserver(function(es){
+    for(var i=0;i<es.length;i++){if(es[i].isIntersecting){load();io.disconnect();return;}}
+  },{rootMargin:"240px 0px"});
+  io.observe(root);
+})();
+</script>'''
+    return '<section class="leo-days" id="leo-days"><div class="leo-sec-head"><span class="en">DAILY</span><h2>日々の様子</h2></div><div class="leo-days-grid">'+posts+'</div><div class="leo-days-links" data-track="leo-sns"><a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener">インスタグラムで見る</a><a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener">Threadsで見る</a></div></section>\n'+script
+def patch_preserved_leo():
+    """手置きの /leo/ に、相談ボタンと日々の様子を足す。再ビルドしても二重にはしない。"""
+    fp=_o.path.join(OUT,'leo','index.html')
+    html=open(fp,encoding='utf-8').read()
+    orig=html
+    style='<style id="leo-extra-css">'+LEO_EXTRA_CSS+'</style>'
+    if 'id="leo-extra-css"' in html:
+        html=_re.sub(r'<style id="leo-extra-css">.*?</style>', style, html, count=1, flags=_re.S)
+    else:
+        html=html.replace('</head>', style+'</head>', 1)
+    if 'id="leo-consult"' not in html:
+        needle='<p class="leo-lead">情緒を整え、落ち着きを取り戻すことを目指します</p>'
+        if needle not in html: raise SystemExit('leo consult anchor missing')
+        html=html.replace(needle, needle+leo_consult_html('../'), 1)
+    if 'id="leo-days"' not in html:
+        if '</main>' not in html: raise SystemExit('leo main missing')
+        html=html.replace('</main>', '</main>\n'+leo_days_html(), 1)
+    if html!=orig:
+        open(fp,'w',encoding='utf-8').write(html)
+
 def service_page(d):
     path=d['path']
     if path=='suishodama/':
         write_paused(path,'水晶玉'); return
     if path=='rydeen/':
         write_paused(path,'RYDEEN（ライディーン）'); return
-    if path=='leo/' and os.path.isfile(os.path.join(OUT,'leo','index.html')): return
+    if path=='leo/' and os.path.isfile(os.path.join(OUT,'leo','index.html')):
+        patch_preserved_leo(); return
     if path=='leo/assessment/' and os.path.isfile(os.path.join(OUT,'leo','assessment','index.html')): return
     if path=='chamu/' and os.path.isfile(os.path.join(OUT,'chamu','index.html')): return
     if path in DOCMETA and DOCMETA[path][0]: d['name']=DOCMETA[path][0]
@@ -580,7 +644,7 @@ def service_page(d):
             o=_re.sub(r'<body class="([^"]*)">', _leo_body, o, count=1)
         else:
             o=o.replace('<body>','<body class="leo-book">\n<a class="skip" href="#book">本文へ</a>',1)
-        o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="'+rel+'assets/leo.css?v=20261031b">\n</head>',1)
+        o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="'+rel+'assets/leo.css?v=20261031b">\n<style id="leo-extra-css">'+LEO_EXTRA_CSS+'</style></head>',1)
         o+=leo_book_html(d,rel)+footer(rel); write(path,o); return
     if path=='leo/assessment/':
         o=o.replace('</head>','<style>.assess-plain{min-height:0;background:#f8fafc;color:#1e293b}.assess-plain::after{content:none}.assess-plain .en{color:#2e7d32}.assess-plain h1{color:#1e293b!important}.assess-plain .copy,.assess-plain .sub,.assess-plain .acc{color:#334155}</style></head>',1)
@@ -1298,7 +1362,7 @@ def leo_book_html(d,rel):
     role='<br>'.join(esc(x) for x in (d.get('copy') or []) if str(x).strip())
     lead=d.get('sub') or ''
     hero=d.get('photo') or 'panda'
-    o=f'<main id="book"><article class="book"><section class="spread cover">{picture(hero,"おもちゃの棚と、床に座るパンダのぬいぐるみ","cover")}<div class="txt"><p class="role">{role}</p><h1>{esc(d.get("name") or "レオ")}</h1><p class="lead">{lead}</p></div></section>'
+    o=f'<main id="book"><article class="book"><section class="spread cover">{picture(hero,"おもちゃの棚と、床に座るパンダのぬいぐるみ","cover")}<div class="txt"><p class="role">{role}</p><h1>{esc(d.get("name") or "レオ")}</h1>{leo_consult_html(rel)}<p class="lead">{lead}</p></div></section>'
     def solo(inner):
         nonlocal flip_next
         flipped=flip_next; flip_next=not flip_next
@@ -1316,6 +1380,7 @@ def leo_book_html(d,rel):
             for im in imgs[1:]: o+=spread('<div class="txt"></div>',picture(im[0],im[1]))
         else: o+=solo(body)
     o+=spread(f'<div class="txt">{paras(lunch_ps+info_ps)}</div>',picture('leo-dayori.png','レオだより','dayori'),soft=True)
+    o+=leo_days_html()
     o+='<section class="end" id="contact">'
     if evals:
         o+=f'<p class="evalh">{evals["h"]}</p>'
