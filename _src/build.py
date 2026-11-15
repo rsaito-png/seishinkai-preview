@@ -521,40 +521,39 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
     o+=footer(rel)
     write(d['path'], o)
 
-LEO_THREAD_POSTS=[
- 'https://www.threads.com/@psr_seishinkai/post/Dfrn9VHgTnI',
- 'https://www.threads.com/@psr_seishinkai/post/Dfrnt8RgeNU',
- 'https://www.threads.com/@psr_seishinkai/post/DfrneETgdNq',
-]
+LEO_IG_POST='https://www.instagram.com/p/Dfsq9UBFMva/'
+LEO_THREAD_POST='https://www.threads.com/@psr_seishinkai/post/Dfrn9VHgTnI'
 LEO_EXTRA_CSS='''
 .leo-consult{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px;max-width:520px}
 .leo-consult a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px;font-size:15px}
 .leo-consult .w{background:#06c755;color:#fff}
 .leo-consult .o{background:#fff;color:#1e293b}
-.leo-days{max-width:1080px;margin:0 auto;padding:28px 20px 8px}
-.leo-days-grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media(min-width:960px){.leo-days-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}}
-.leo-days-grid>*{min-width:0;max-width:100%}
-.leo-days iframe{margin:0!important;min-width:0!important;width:100%!important;max-width:100%!important}
+.leo-days{max-width:880px;margin:0 auto;padding:28px 20px 8px}
+.leo-days-grid{display:grid;grid-template-columns:minmax(0,400px);gap:20px;justify-content:center}
+@media(min-width:800px){.leo-days-grid{grid-template-columns:repeat(2,minmax(0,400px))}}
+.leo-days iframe,.leo-days .instagram-media{display:block;margin:0 auto!important;width:100%!important;max-width:400px!important;min-width:0!important}
 .leo-days blockquote.text-post-media,.leo-days blockquote.text-post-media-registered{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important}
-.leo-days-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.leo-days-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;justify-content:center}
 .leo-days-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:8px;background:#2e7d5b;color:#fff;font-weight:700}
 '''
 def leo_consult_html(rel):
     return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
 def leo_days_html():
-    posts=''.join('<blockquote class="text-post-media" data-text-post-permalink="%s" data-text-post-version="0"><a href="%s" target="_blank" rel="noopener">Threadsで見る</a></blockquote>'%(u,u) for u in LEO_THREAD_POSTS)
+    ig='<blockquote class="instagram-media" data-instgrm-permalink="%s" data-instgrm-version="14"><a href="%s" target="_blank" rel="noopener">Instagramでこの投稿を見る</a></blockquote>'%(LEO_IG_POST,LEO_IG_POST)
+    th='<blockquote class="text-post-media" data-text-post-permalink="%s" data-text-post-version="0"><a href="%s" target="_blank" rel="noopener">Threadsでこの投稿を見る</a></blockquote>'%(LEO_THREAD_POST,LEO_THREAD_POST)
     script='''<script>
 (function(){
   var root=document.getElementById("leo-days");
   if(!root) return;
   function load(){
     if(document.querySelector("script[data-leo-embed]")) return;
-    var s=document.createElement("script");
-    s.async=true;
-    s.src="https://www.threads.com/embed.js";
-    s.setAttribute("data-leo-embed","1");
-    document.body.appendChild(s);
+    ["//www.instagram.com/embed.js","https://www.threads.com/embed.js"].forEach(function(src){
+      var s=document.createElement("script");
+      s.async=true;
+      s.src=src;
+      s.setAttribute("data-leo-embed","1");
+      document.body.appendChild(s);
+    });
   }
   if(!("IntersectionObserver" in window)){load();return;}
   var io=new IntersectionObserver(function(es){
@@ -563,7 +562,7 @@ def leo_days_html():
   io.observe(root);
 })();
 </script>'''
-    return '<section class="leo-days" id="leo-days"><div class="leo-sec-head"><span class="en">DAILY</span><h2>日々の様子</h2></div><div class="leo-days-grid">'+posts+'</div><div class="leo-days-links" data-track="leo-sns"><a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener">インスタグラムで見る</a><a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener">Threadsで見る</a></div></section>\n'+script
+    return '<section class="leo-days" id="leo-days"><div class="leo-sec-head"><span class="en">DAILY</span><h2>日々の様子</h2></div><div class="leo-days-grid">'+ig+th+'</div><div class="leo-days-links" data-track="leo-sns"><a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener">インスタグラムで見る</a><a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener">Threadsで見る</a></div></section>\n'+script
 def patch_preserved_leo():
     """手置きの /leo/ に、相談ボタンと日々の様子を足す。再ビルドしても二重にはしない。"""
     fp=_o.path.join(OUT,'leo','index.html')
@@ -578,9 +577,14 @@ def patch_preserved_leo():
         needle='<p class="leo-lead">情緒を整え、落ち着きを取り戻すことを目指します</p>'
         if needle not in html: raise SystemExit('leo consult anchor missing')
         html=html.replace(needle, needle+leo_consult_html('../'), 1)
-    if 'id="leo-days"' not in html:
-        if '</main>' not in html: raise SystemExit('leo main missing')
-        html=html.replace('</main>', '</main>\n'+leo_days_html(), 1)
+    days=leo_days_html().rstrip('\n')
+    pat=r'<section class="leo-days" id="leo-days">[\s\S]*?</section>\s*<script>[\s\S]*?</script>'
+    if _re.search(pat, html):
+        html=_re.sub(pat, days, html, count=1)
+    elif '</main>' not in html:
+        raise SystemExit('leo main missing')
+    else:
+        html=html.replace('</main>', '</main>\n'+days, 1)
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
 
