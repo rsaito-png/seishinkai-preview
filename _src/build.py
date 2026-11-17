@@ -547,6 +547,14 @@ LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding
 .leo-days blockquote.text-post-media,.leo-days blockquote.text-post-media-registered{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important}
 .leo-days-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;justify-content:center}
 .leo-days-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:8px;background:#2e7d5b;color:#fff;font-weight:700}
+.leo-soudan{margin:0 0 56px}
+.leo-soudan-lead{font-size:15.5px;line-height:1.85;color:var(--leo-ink);margin:0 0 12px}
+.leo-soudan-tel{margin:0 0 18px}
+.leo-soudan-tel a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:12px;background:#fff;border:2px solid var(--leo-green);color:var(--leo-green);font-weight:800;font-size:18px}
+.leo-soudan-flyer{margin:0;max-width:360px}
+.leo-soudan-flyer img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--leo-line);box-shadow:var(--leo-shadow)}
+.leo-soudan-flyer figcaption{margin:12px 0 0}
+.leo-soudan-flyer figcaption a{font-weight:700;color:var(--leo-green);font-size:14.5px}
 '''
 def leo_consult_html(rel):
     return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
@@ -575,8 +583,25 @@ def leo_days_html():
 })();
 </script>'''
     return '<section class="leo-days" id="leo-days"><div class="leo-sec-head"><span class="en">DAILY</span><h2>日々の様子</h2></div><div class="leo-days-grid">'+ig+th+'</div><div class="leo-days-links" data-track="leo-sns"><a href="https://www.instagram.com/psr_seishinkai/" target="_blank" rel="noopener">インスタグラムで見る</a><a href="https://www.threads.com/@psr_seishinkai" target="_blank" rel="noopener">Threadsで見る</a></div></section>\n'+script
+def leo_soudan_html(rel):
+    return (
+        '<section class="leo-soudan" id="leo-soudan">\n'
+        '  <div class="leo-sec-head">\n'
+        '    <span class="en">FREE CONSULT</span>\n'
+        '    <h2>発達のお悩み相談（無料）</h2>\n'
+        '  </div>\n'
+        '  <p class="leo-soudan-lead">月曜・金曜 13:00〜14:00。相談無料。診断の有無は問いません。</p>\n'
+        '  <p class="leo-soudan-tel"><a href="tel:070-6967-0011">070-6967-0011</a></p>\n'
+        '  <figure class="leo-soudan-flyer">\n'
+        f'    <a href="{rel}img/leo-soudan-flyer.pdf">\n'
+        f'      <img src="{rel}img/leo-soudan-flyer.jpg" alt="児童発達支援レオの発達のお悩み相談チラシ。月曜・金曜 13時から14時、相談無料。" width="794" height="1123" loading="lazy">\n'
+        '    </a>\n'
+        f'    <figcaption><a href="{rel}img/leo-soudan-flyer.pdf">チラシをダウンロード（PDF）</a></figcaption>\n'
+        '  </figure>\n'
+        '</section>'
+    )
 def patch_preserved_leo():
-    """手置きの /leo/ に、相談ボタンと日々の様子を足す。再ビルドしても二重にはしない。"""
+    """手置きの /leo/ に、相談ボタン・相談チラシ・日々の様子を足す。再ビルドしても二重にはしない。"""
     fp=_o.path.join(OUT,'leo','index.html')
     html=open(fp,encoding='utf-8').read()
     orig=html
@@ -597,6 +622,15 @@ def patch_preserved_leo():
         raise SystemExit('leo main missing')
     else:
         html=html.replace('</main>', '</main>\n'+days, 1)
+    soudan=leo_soudan_html('../')
+    spat=r'<section class="leo-soudan" id="leo-soudan">[\s\S]*?</section>'
+    if _re.search(spat, html):
+        html=_re.sub(spat, soudan, html, count=1)
+    else:
+        anchor=_re.search(r'<div class="leo-sub-programs">[\s\S]*?</div>\s*', html)
+        if not anchor:
+            raise SystemExit('leo soudan anchor missing')
+        html=html[:anchor.end()]+'\n'+soudan+'\n'+html[anchor.end():]
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
 
