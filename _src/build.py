@@ -419,7 +419,11 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
 .ky-ring.r2{animation-delay:-2.6s;stroke:#f6d7b8}
 .ky-ring.r3{animation-delay:-5.2s;stroke:#b7efe4}
 @keyframes ky-breathe{0%,100%{transform:scale(.82);opacity:.35}50%{transform:scale(1);opacity:.85}}
-.ky-letter{margin:18px 0 0;padding:16px 16px 8px;background:rgba(255,255,255,.78);border:1px solid rgba(47,143,154,.18);border-radius:16px;font-size:1rem;line-height:1.85;white-space:pre-line;box-shadow:0 8px 24px rgba(15,110,107,.06)}
+.ky-intro{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.ky-photo{margin:0}
+.ky-photo img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 14px 32px rgba(15,110,107,.16)}
+.ky-photo figcaption{margin:8px 0 0;font-size:12px;line-height:1.5;text-align:center;color:#5c6f74}
+.ky-letter{margin:0;padding:16px 16px 8px;background:rgba(255,255,255,.78);border:1px solid rgba(47,143,154,.18);border-radius:16px;font-size:1rem;line-height:1.85;white-space:pre-line;box-shadow:0 8px 24px rgba(15,110,107,.06)}
 .ky-sign{margin:0;padding:0 16px 4px;text-align:right;font-size:1rem;line-height:1.85}
 .ky-wave{display:block;width:100%;height:36px;margin:8px 0 0}
 .ky-grid{display:grid;gap:12px;margin-top:8px}
@@ -453,6 +457,8 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
 @media(min-width:700px){
  .ky{padding:32px 24px 88px}
  .ky-hero{padding:34px 32px 30px}
+ .ky-intro{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:start;gap:18px}
+ .ky-photo{max-width:420px}
  .ky-grid{grid-template-columns:1fr 1fr}
  .ky-card.wide{grid-column:1 / -1}
  .ky-acts{flex-direction:row}
@@ -498,8 +504,13 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
 <h1>{html.escape(d["name"])}</h1>
 {f'<p class="ky-note">{html.escape(note)}</p>' if note else ''}
 </section>
+<div class="ky-intro">
+<figure class="ky-photo"><img src="{rel}img/kokyu-practice.jpg" alt="呼吸法の練習風景" width="960" height="1200" loading="lazy"><figcaption>練習のようす</figcaption></figure>
+<div>
 <div class="ky-letter">{html.escape(letter)}</div>
 <p class="ky-sign">{html.escape(sign)}</p>
+</div>
+</div>
 {wave}
 <dl class="ky-grid">
 <div class="ky-card ky-who wide"><span class="ky-ico">{ICO['who']}</span><div><dt>対象</dt><dd>{who_html}</dd></div></div>
