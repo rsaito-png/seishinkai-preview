@@ -523,12 +523,13 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
 
 LEO_IG_POST='https://www.instagram.com/p/Dfsq9UBFMva/'
 LEO_THREAD_POST='https://www.threads.com/@psr_seishinkai/post/Dfrn9VHgTnI'
-LEO_EXTRA_CSS='''
+LEO_CONSULT_CSS='''
 .leo-consult{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px;max-width:520px}
 .leo-consult a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px;font-size:15px}
 .leo-consult .w{background:#06c755;color:#fff}
 .leo-consult .o{background:#fff;color:#1e293b}
-.leo-days{max-width:880px;margin:0 auto;padding:28px 20px 8px}
+'''
+LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding:28px 20px 8px}
 .leo-days-grid{display:grid;grid-template-columns:minmax(0,400px);gap:20px;justify-content:center}
 @media(min-width:800px){.leo-days-grid{grid-template-columns:repeat(2,minmax(0,400px))}}
 .leo-days iframe,.leo-days .instagram-media{display:block;margin:0 auto!important;width:100%!important;max-width:400px!important;min-width:0!important}
@@ -662,6 +663,7 @@ def service_page(d):
         o+=f'<section class="hero type{" short" if d.get("short") else ""}"><div class="big">{d["big"]}</div>'
     mark=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
     ryo_top=''
+    pt_consult=''
     if path=='ryozanpaku/':
         o=o.replace('</head>','''<style>
 .hero.ryo-hero{min-height:auto;overflow:visible}
@@ -683,13 +685,16 @@ def service_page(d):
 .cta .ryo-badge{margin:8px 0 0}
 </style></head>''',1)
         ryo_top=f'''<div class="ryo-vac" data-track="ryozanpaku"><p class="ryo-badge">空室 残りわずか</p><p class="ryo-lead">見学・入居のご相談を受け付けています</p><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div></div>'''
+    if path=='leo/parent-training/':
+        o=o.replace('</head>','<style id="leo-consult-css">'+LEO_CONSULT_CSS+'</style></head>',1)
+        pt_consult=leo_consult_html(rel)
     shown=d["name"].replace("ストレスチェック実施者","ストレスチェック<wbr>実施者<wbr>").replace("<wbr>養成研修","養成<wbr>研修") if d.get("deco") else d["name"]
     if path=='ryozanpaku/' and '（' in shown:
         nm,yomi=shown.split('（',1)
         shown=f'<span class="ryo-name">{nm}</span><span class="ryo-yomi">（{yomi}</span>'
     h1_cls=(('long' if len(d["name"])>5 else '')+(' deco' if d.get('deco') else '')).strip()
     o+=f'''<div class="hin">{mark}{f'<img class="plogo" src="{rel}img/{d["logo"]}" alt="RYDEEN ロゴ" width="120" height="120">' if d.get('logo') else ''}<p class="en">{d["en"]}</p><h1 class="{h1_cls}">{shown}</h1>{f'<p class="svc">{d["cat"]}</p>' if d.get("cat") else ''}
-<p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{ryo_top}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
+<p class="copy">{''.join(f"<span>{x}</span>" for x in d["copy"])}</p><p class="sub">{d["sub"]}</p>{d.get("badge","")}{ryo_top}{pt_consult}{f'<a class="go" href="#what">{d["go"]}</a>' if d.get("go") else ''}</div>
 <p class="acc">{d["acc"]}</p></section>'''
     if path in OLD:
         if d.get('gal'): o+=(f'<div style="max-width:1040px;margin:0 auto;padding:24px 24px 56px"><img src="{rel}img/{d["gal"][0][0]}.jpg" alt="{esc(d["gal"][0][1])}" loading="lazy" style="display:block;width:100%;max-width:1040px;height:auto;margin:0 auto"></div>' if len(d['gal'])==1 else '<div class="gal">'+''.join(f'<img src="{rel}img/{g}.jpg" alt="{esc(a)}" loading="lazy">' for g,a in d['gal'])+'</div>')
