@@ -1623,7 +1623,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <div class="gal"><img src="{rel}img/forest_work.jpg" alt="森の整備" loading="lazy"><img src="{rel}img/harvest.jpg" alt="収穫" loading="lazy"><img src="{rel}img/ikebana.jpg" alt="生け花" loading="lazy"><img src="{rel}img/karate_studio.jpg" alt="道場" loading="lazy"></div>
 <section class="blk wide"><div class="h"><span class="en">NAME</span><h2>名称の由来</h2></div><p style="font-weight:600;font-size:21px;line-height:2.1;letter-spacing:.12em">星に心があるならば<br>それを感じ取れるくらい<br>心こまやかな人たちの<br>集まりでありたいと考えています</p></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">PROFILE</span><h2>法人概要</h2></div><dl class="info">
-<dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名 {ph('最新の人数')}</dd><dt>代表者</dt><dd>齊藤 連</dd>
+<dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名</dd><dt>代表者</dt><dd>齊藤 連</dd>
 <dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
 <section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
 <li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
@@ -1781,7 +1781,7 @@ def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法�
 <p><b>相談フォーム</b><br>ウェブサイトの相談フォームに書かれた内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。このフォームから通知メールや自動返信は送りません。</p>
 <p><b>1. 利用目的</b><br>相談・問い合わせへの回答、サービスの提供と連絡のために利用します。</p><p><b>2. 第三者提供</b><br>法令に基づく場合を除き、本人の同意なく第三者に提供しません。</p>
 <p><b>3. 管理</b><br>漏えい・滅失を防ぐため、適切に管理します。</p><p><b>4. 開示・訂正・削除</b><br>本人からの求めに応じ、法令に従って対応します。</p>
-<p><b>5. アクセス解析</b><br>本サイトでは、アクセス解析ツールを使用する場合があります。{ph('使用ツール')}</p><p><b>6. 窓口</b><br>{ORG}　{ADDR}　TEL {TEL}</p><p>{ph('プライバシーポリシー全文の確認')}</p></section>'''
+<p><b>5. アクセス解析</b><br>本サイトでは、アクセス解析ツールを使用する場合があります。</p><p><b>6. 窓口</b><br>{ORG}　{ADDR}　TEL {TEL}</p></section>'''
 simple_page('privacy/','プライバシーポリシー｜星心会','星心会のプライバシーポリシーです。','プライバシーポリシー','PRIVACY',priv)
 
 # ---------- sitemap page ----------
