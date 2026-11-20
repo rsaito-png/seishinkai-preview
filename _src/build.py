@@ -233,18 +233,47 @@ def construction_page(path, name):
     o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">',1)
     o+=f'''<section class="hero short type"><div class="hin"><p class="en">UNDER CONSTRUCTION</p><h1>工事中</h1><p class="sub">{esc(name)}</p><p class="sub" style="max-width:26em;line-height:1.9;margin-top:16px">このページはただいま準備中です。<br>公開までしばらくお待ちください。</p><a class="go" href="{rel}">トップへ戻る</a></div></section>'''
     o+=footer(rel); write(path,o)
+PAUSE_NOTE_CSS='''
+.pause-note{margin-top:18px;background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:16px 18px;max-width:34em;color:#1e293b;text-align:left}
+.pause-line{margin:0 0 8px;font-size:18px;font-weight:800;color:#9a3412}
+.pause-note p{margin:0;line-height:1.7}
+.pause-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pause-links .go{margin:0}
+'''
+def rydeen_notice(rel):
+    return f'''<div class="pause-note"><p class="pause-line">現在、RYDEENは休止しています。</p><p>星心会のほかの事業は、トップページからご覧いただけます。</p><p class="pause-links"><a class="go" href="{rel}">ほかの事業を見る</a><a class="go" href="{rel}contact/">相談する</a></p></div>'''
+def patch_rydeen():
+    """公開済みの休止ページに、タイトル直下の案内だけ足す。"""
+    fp=_o.path.join(OUT,'rydeen','index.html')
+    html=open(fp,encoding='utf-8').read()
+    orig=html
+    if 'id="pause-note-css"' not in html:
+        html=html.replace('</head>','<style id="pause-note-css">'+PAUSE_NOTE_CSS+'</style></head>',1)
+    if 'class="pause-note"' not in html:
+        needle='<h1 class="long">RYDEEN（ライディーン）は休止しています</h1>'
+        if needle not in html:
+            raise SystemExit('rydeen title missing')
+        html=html.replace(needle, needle+rydeen_notice('../'), 1)
+    if html!=orig:
+        open(fp,'w',encoding='utf-8').write(html)
+
 def write_paused(path, name):
     # 休止案内は公開済みの HTML を正とする。代表者名の置換対象にしない。
     fp=os.path.join(OUT, path, 'index.html') if not str(path).endswith('.html') else os.path.join(OUT, path)
     if os.path.isfile(fp):
+        if path=='rydeen/':
+            patch_rydeen()
         return
     rel=relof(path)
     title=name+'は休止しています｜星心会'
     desc=name+'は休止しています。現在、利用の申し込みは受け付けていません。'
     o=head(rel,title,desc,path)
     o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">',1)
+    if path=='rydeen/':
+        o=o.replace('</head>','<style id="pause-note-css">'+PAUSE_NOTE_CSS+'</style></head>',1)
     o+=header(rel)
-    o+=f'''<section class="hero short type" style="min-height:42svh"><div class="hin"><p class="en">PAUSED</p><h1 class="long">{esc(name)}は休止しています</h1>
+    note=rydeen_notice(rel) if path=='rydeen/' else ''
+    o+=f'''<section class="hero short type" style="min-height:42svh"><div class="hin"><p class="en">PAUSED</p><h1 class="long">{esc(name)}は休止しています</h1>{note}
 <p class="sub" style="max-width:28em;line-height:1.9;margin-top:16px">現在、この事業の利用申し込みは受け付けていません。</p>
 <p class="sub" style="margin-top:18px"><a class="go" href="{rel}contact/">相談フォーム</a></p>
 <p class="sub"><a href="tel:0593150697">059-315-0697</a></p>
@@ -1477,9 +1506,35 @@ def card(k,rel=''):
     if k=='rydeen': th=f'<div class="th t" style="background:#05070d"><img src="{rel}img/rydeen_logo.webp" alt="RYDEEN ロゴ" style="width:72%;max-width:150px;aspect-ratio:1;border-radius:50%"></div>'
     return f'<a class="sc" href="{rel}{u}">{th}<div class="bd"><p class="nm">{n}</p><p class="ct">{c}</p><p class="ln">{l}</p></div></a>'
 TOPC=dict(copy=['環境調整という、','メンタルヘルスケアです。'],sub='',entry_h='どなたの相談ですか。',entry_p='診断も、病院に行ったことも、手続きの知識も要りません。書類と手続きはこちらで進めます。',aud=[(a[0],a[1],a[3],a[5]) for a in AUD])
+VAC_ENTRY_CSS='''
+.vac-entry{display:flex;align-items:center;gap:12px;margin:22px auto 0;padding:12px 16px;max-width:520px;background:#fff;color:#2b3334;border-radius:12px;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.vac-entry:hover{color:#144e54}
+.vac-badge{flex:0 0 auto;background:#c2410c;color:#fff;font-weight:800;font-size:14px;letter-spacing:.06em;border-radius:999px;padding:6px 12px;line-height:1.35}
+.vac-copy{display:flex;flex-direction:column;line-height:1.45}
+.vac-copy b{font-size:16px}
+.vac-copy span{font-size:13px;font-weight:600}
+'''
+def vac_entry_html():
+    return '<a class="vac-entry" href="ryozanpaku/"><span class="vac-badge">空室 残りわずか</span><span class="vac-copy"><b>梁山泊</b><span>見学・入居のご相談を受け付けています</span></span></a>'
+def patch_top_vacancy():
+    """手置きトップに、梁山泊の空室入口だけ足す。"""
+    fp=_o.path.join(OUT,'index.html')
+    html=open(fp,encoding='utf-8').read()
+    orig=html
+    if 'id="vac-entry-css"' not in html:
+        html=html.replace('</head>','<style id="vac-entry-css">'+VAC_ENTRY_CSS+'</style></head>',1)
+    if 'class="vac-entry"' not in html:
+        needle='<span class="where">三重県四日市市</span>\n    </div>'
+        if needle not in html:
+            raise SystemExit('top vacancy anchor missing')
+        html=html.replace(needle, needle+'\n    '+vac_entry_html(), 1)
+    if html!=orig:
+        open(fp,'w',encoding='utf-8').write(html)
+
 def top():
     # 公開トップは手置きHTML（テキストH1付き）。ビルドで上書きするとヒーローが戻る。
     if _o.path.isfile(_o.path.join(OUT,'index.html')) and not _o.environ.get('REBUILD_TOP'):
+        patch_top_vacancy()
         return
     global TOPC
     rel=''
