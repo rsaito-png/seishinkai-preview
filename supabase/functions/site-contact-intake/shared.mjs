@@ -84,8 +84,30 @@ export function validateIntake(input) {
     ok: Object.keys(errors).length === 0,
     errors,
     spam: false,
-    value: { service, name, email: emailRaw, body, idempotency_key: key, opened_at: opened },
+    value: { service, name, email: emailRaw, body, idempotency_key: key, opened_at: opened, attribution: sanitizeAttribution(input.attribution) },
   };
+}
+
+const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "referrer_host", "landing_path", "submit_path"];
+
+export function sanitizeAttribution(input) {
+  const src = input && typeof input === "object" && !Array.isArray(input) ? input : {};
+  const out = {};
+  for (const key of ATTR_KEYS) {
+    let value = typeof src[key] === "string" ? src[key].trim() : "";
+    if (controls(value)) value = "";
+    if (key === "landing_path" || key === "submit_path") {
+      value = value.split("?")[0].split("#")[0];
+      if (!value.startsWith("/") || value.length > 200) value = "";
+    } else if (key === "referrer_host") {
+      value = value.toLowerCase().replace(/[^a-z0-9.-]/g, "");
+      if (value.length > 253) value = value.slice(0, 253);
+    } else if (value.length > 100) {
+      value = value.slice(0, 100);
+    }
+    out[key] = value || null;
+  }
+  return out;
 }
 
 export function dwellError(openedAt, now) {

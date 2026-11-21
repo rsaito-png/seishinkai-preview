@@ -37,6 +37,12 @@ create table if not exists site_contact.inquiries (
   restored_at timestamptz,
   lead_eligible boolean not null,
   test boolean not null default false,
+  utm_source text,
+  utm_medium text,
+  utm_campaign text,
+  referrer_host text,
+  landing_path text,
+  submit_path text,
   constraint inquiries_idem_uq unique (idempotency_key),
   constraint inquiries_dedupe_uq unique (dedupe_key),
   constraint inquiries_name_len check (char_length(name) between 1 and 80),
@@ -112,7 +118,13 @@ begin
       'review', review,
       'sales_reason', sales_reason,
       'read_at', read_at,
-      'restored_at', restored_at
+      'restored_at', restored_at,
+      'utm_source', utm_source,
+      'utm_medium', utm_medium,
+      'utm_campaign', utm_campaign,
+      'referrer_host', referrer_host,
+      'landing_path', landing_path,
+      'submit_path', submit_path
     ) order by created_at desc)
     from site_contact.inquiries
     where test = false

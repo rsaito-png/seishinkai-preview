@@ -41,7 +41,19 @@ async function accept(store, input, extra = {}) {
 
 test("saved inquiry is counted once and is not emailed", async () => {
   const store = createMemoryStore();
-  const { result } = await accept(store, payload(1, { body: "見学したいです。家族の相談です。" }));
+  const { result } = await accept(store, payload(1, {
+    body: "見学したいです。家族の相談です。",
+    attribution: {
+      utm_source: "google",
+      utm_medium: "cpc",
+      utm_campaign: "leo",
+      referrer_host: "www.google.com",
+      landing_path: "/leo/?utm_source=google",
+      submit_path: "/contact/",
+      name: "漏らさない",
+      email: "secret@example.com",
+    },
+  }));
   assert.equal(result.status, 200);
   assert.equal(result.body.stored, true);
   assert.equal(result.body.lead_event, true);
@@ -51,6 +63,10 @@ test("saved inquiry is counted once and is not emailed", async () => {
   assert.equal(JSON.stringify(result.body).includes("山田太郎"), false);
   assert.equal(store.rows.length, 1);
   assert.equal(store.rows[0].lane, "normal");
+  assert.equal(store.rows[0].utm_source, "google");
+  assert.equal(store.rows[0].landing_path, "/leo/");
+  assert.equal(store.rows[0].submit_path, "/contact/");
+  assert.equal(store.rows[0].name, "山田太郎");
   assert.equal(shouldCountLead(result.body), true);
 });
 
@@ -308,6 +324,10 @@ test("public page keeps the form disabled and does not treat form_submit as a le
   assert.match(config, /endpoint:\s*"https:\/\/zvrardoyxocmqhvyddnf\.supabase\.co\/functions\/v1\/site-contact-intake"/);
   assert.equal(browser.includes("contact_inquiry_accepted"), true);
   assert.match(browser, /gtag\("event", "contact_inquiry_accepted", globalThis\.inquiryAcceptedParams\(location\.pathname\)\)/);
+  assert.equal(browser.includes('gtag("event", "generate_lead"'), true);
+  assert.equal(browser.includes("lead.name"), false);
+  assert.equal(browser.includes("lead.email"), false);
+  assert.equal(browser.includes("lead.body"), false);
   assert.equal(html.includes("要確認：受付日・時間"), false);
   assert.equal(html.includes("営業・勧誘目的のご連絡はご遠慮ください。"), true);
   assert.equal(browser.includes("form_submit"), false);

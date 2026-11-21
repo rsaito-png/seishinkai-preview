@@ -41,16 +41,65 @@ function txApi(sql) {
       return true;
     },
     async insert(row) {
-      try {
+      const values = {
+        idempotency_key: row.idempotency_key,
+        dedupe_key: row.dedupe_key,
+        service: row.service,
+        name: row.name,
+        email: row.email,
+        body: row.body,
+        email_hash: row.email_hash,
+        content_hash: row.content_hash,
+        ip_hash: row.ip_hash,
+        lane: row.lane,
+        review: row.review,
+        sales_reason: row.sales_reason,
+        lead_eligible: row.lead_eligible,
+        test: row.test,
+      };
+      const attr = {
+        utm_source: row.utm_source ?? null,
+        utm_medium: row.utm_medium ?? null,
+        utm_campaign: row.utm_campaign ?? null,
+        referrer_host: row.referrer_host ?? null,
+        landing_path: row.landing_path ?? null,
+        submit_path: row.submit_path ?? null,
+      };
+      const write = async (withAttr) => {
+        if (withAttr) {
+          const rows = await sql`
+            insert into site_contact.inquiries (
+              idempotency_key, dedupe_key, service, name, email, body,
+              email_hash, content_hash, ip_hash, lane, review, sales_reason, lead_eligible, test,
+              utm_source, utm_medium, utm_campaign, referrer_host, landing_path, submit_path
+            ) values (
+              ${values.idempotency_key}, ${values.dedupe_key}, ${values.service}, ${values.name}, ${values.email}, ${values.body},
+              ${values.email_hash}, ${values.content_hash}, ${values.ip_hash}, ${values.lane}, ${values.review}, ${values.sales_reason}, ${values.lead_eligible}, ${values.test},
+              ${attr.utm_source}, ${attr.utm_medium}, ${attr.utm_campaign}, ${attr.referrer_host}, ${attr.landing_path}, ${attr.submit_path}
+            ) returning *`;
+          return rows[0];
+        }
         const rows = await sql`
           insert into site_contact.inquiries (
             idempotency_key, dedupe_key, service, name, email, body,
             email_hash, content_hash, ip_hash, lane, review, sales_reason, lead_eligible, test
           ) values (
-            ${row.idempotency_key}, ${row.dedupe_key}, ${row.service}, ${row.name}, ${row.email}, ${row.body},
-            ${row.email_hash}, ${row.content_hash}, ${row.ip_hash}, ${row.lane}, ${row.review}, ${row.sales_reason}, ${row.lead_eligible}, ${row.test}
+            ${values.idempotency_key}, ${values.dedupe_key}, ${values.service}, ${values.name}, ${values.email}, ${values.body},
+            ${values.email_hash}, ${values.content_hash}, ${values.ip_hash}, ${values.lane}, ${values.review}, ${values.sales_reason}, ${values.lead_eligible}, ${values.test}
           ) returning *`;
         return rows[0];
+      };
+      try {
+        await sql`savepoint inquiry_attr`;
+        try {
+          const saved = await write(true);
+          await sql`release savepoint inquiry_attr`;
+          return saved;
+        } catch (error) {
+          if (!error || error.code !== "42703") throw error;
+          await sql`rollback to savepoint inquiry_attr`;
+          return await write(false);
+        }
       } catch (error) {
         mapUnique(error);
       }

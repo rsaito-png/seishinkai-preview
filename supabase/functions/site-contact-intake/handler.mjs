@@ -4,6 +4,7 @@ import {
   jstStamp,
   publicResult,
   sha256Hex,
+  sanitizeAttribution,
   validateIntake,
 } from "./shared.mjs";
 import { classifyInquiry } from "./classify.mjs";
@@ -100,6 +101,7 @@ export async function acceptIntake(input, ctx) {
         read_at: null,
         lead_eligible: ctx.suppressLead !== true && screen.lane === "normal",
         test: ctx.suppressLead === true,
+        ...sanitizeAttribution(value.attribution),
       });
       return { kind: "created", row };
     });

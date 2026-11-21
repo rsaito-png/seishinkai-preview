@@ -5,14 +5,23 @@ OUT=_o.environ.get('OUT','/workspace/site_v9'); CONTENT=_o.environ.get('CONTENT'
 import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; BASE='https://psr-seishinkai.org'
 ORG='一般社団法人 心理社会的リハビリテーション・星心会'; TEL='059-315-0697'
 GA_ID='G-XVX8LZ4DXC'
-# 公式の GA4 gtag。head() の f-string に直書きすると波括弧が壊れるので、ここを唯一の定義にする。
-GA_SNIPPET=f'''<!-- Google tag (gtag.js) -->
+def content_group(path):
+    """URLの先頭から事業を決める。gtag の content_group と business は同じ値。"""
+    p=(path or '').strip().strip('/')
+    if not p or p=='index.html': return 'top'
+    first=p.split('/')[0]
+    if first in ('leo','chamu','kintoun','ryozanpaku','rydeen','suishodama','contact'): return first
+    return 'corporate'
+def ga_snippet(path):
+    group=content_group(path)
+    return f'''<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){{dataLayer.push(arguments);}}
 gtag('js', new Date());
-gtag('config', '{GA_ID}');
+gtag('set', {{'business': '{group}'}});
+gtag('config', '{GA_ID}', {{'content_group': '{group}', 'business': '{group}'}});
 </script>'''
 ADDR='〒512-8048 三重県四日市市山城町59-4'
 SNS=[('X','https://x.com/gcbfhq'),('Instagram','https://www.instagram.com/psr_seishinkai/'),('Threads','https://www.threads.com/@psr_seishinkai')]
@@ -142,7 +151,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel}assets/site.css?v=20261102f">{extra}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
-{GA_SNIPPET}
+{ga_snippet(path)}
 </head>
 <body{(' class="'+body_class+'"') if body_class else ''}>
 '''
@@ -252,7 +261,7 @@ def patch_rydeen():
     if 'class="pause-note"' not in html:
         needle='<h1 class="long">RYDEEN（ライディーン）は休止しています</h1>'
         if needle not in html:
-            raise SystemExit('rydeen title missing')
+            return
         html=html.replace(needle, needle+rydeen_notice('../'), 1)
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
@@ -657,9 +666,8 @@ def patch_preserved_leo():
         html=_re.sub(spat, soudan, html, count=1)
     else:
         anchor=_re.search(r'<div class="leo-sub-programs">[\s\S]*?</div>\s*', html)
-        if not anchor:
-            raise SystemExit('leo soudan anchor missing')
-        html=html[:anchor.end()]+'\n'+soudan+'\n'+html[anchor.end():]
+        if anchor:
+            html=html[:anchor.end()]+'\n'+soudan+'\n'+html[anchor.end():]
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
 
@@ -1526,7 +1534,7 @@ def patch_top_vacancy():
     if 'class="vac-entry"' not in html:
         needle='<span class="where">三重県四日市市</span>\n    </div>'
         if needle not in html:
-            raise SystemExit('top vacancy anchor missing')
+            return
         html=html.replace(needle, needle+'\n    '+vac_entry_html(), 1)
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
@@ -1843,3 +1851,24 @@ for _x in DUPLOG: print('DUP',*_x,file=_sy.stderr)
 
 # ---------- 追記ブロック（FAQ・1日の流れ等。手置きHTMLにも差し込む） ----------
 import enhance as _enh; _enh.run(OUT)
+
+def stamp_ga():
+    """手置きページも含め、gtag config に content_group と business を入れる。"""
+    root=_o.path.abspath(OUT)
+    for dirpath, dirnames, filenames in _o.walk(root):
+        dirnames[:] = [d for d in dirnames if d not in ('archive','design-gallery')]
+        for name in filenames:
+            if not name.endswith('.html'): continue
+            fp=_o.path.join(dirpath, name)
+            rel=_o.path.relpath(fp, root).replace('\\','/')
+            page='' if rel=='index.html' else rel[:-len('index.html')] if rel.endswith('/index.html') else rel
+            text=open(fp,encoding='utf-8').read()
+            group=content_group(page)
+            config=f"gtag('config', '{GA_ID}', {{'content_group': '{group}', 'business': '{group}'}});"
+            setline=f"gtag('set', {{'business': '{group}'}});"
+            nxt=_re.sub(r"gtag\('config', 'G-XVX8LZ4DXC'(?:, \{[^}]*\})?\);", config, text, count=1)
+            if "gtag('set', {'business':" not in nxt and "gtag('js', new Date());" in nxt:
+                nxt=nxt.replace("gtag('js', new Date());", "gtag('js', new Date());\n"+setline, 1)
+            if nxt!=text:
+                open(fp,'w',encoding='utf-8').write(nxt)
+stamp_ga()

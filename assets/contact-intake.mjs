@@ -1,4 +1,4 @@
-import { shouldCountLead, validateIntake } from "../../supabase/functions/site-contact-intake/shared.mjs";
+import { shouldCountLead, validateIntake, SERVICES } from "../../supabase/functions/site-contact-intake/shared.mjs";
 
 const COPY = {
   name_required: "お名前を入力してください。",
@@ -118,6 +118,7 @@ export function installContactIntake(doc = document) {
       company_url: String(data.get("company_url") || ""),
       idempotency_key: idem,
       opened_at: Number(storageKey("seishinkai-contact-opened") || Date.now()),
+      attribution: typeof globalThis.attributionPayload === "function" ? globalThis.attributionPayload(location.pathname) : undefined,
     };
     const validated = validateIntake(input);
     if (!validated.ok) {
@@ -149,6 +150,12 @@ export function installContactIntake(doc = document) {
       }
       if (status) status.textContent = successText(body);
       setError("");
+      if (body.stored === true && body.duplicate !== true && body.test !== true && typeof window.gtag === "function") {
+        const service = String(data.get("service") || "");
+        const lead = { business: "contact" };
+        if (SERVICES.includes(service)) lead.service = service;
+        window.gtag("event", "generate_lead", lead);
+      }
       if (shouldCountLead(body) && typeof window.gtag === "function") {
         window.gtag("event", "contact_inquiry_accepted", globalThis.inquiryAcceptedParams(location.pathname));
       }
