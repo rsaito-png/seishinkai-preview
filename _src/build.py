@@ -2,7 +2,7 @@ import re as _re
 import os, json, html, shutil
 import os as _o
 OUT=_o.environ.get('OUT','/workspace/site_v9'); CONTENT=_o.environ.get('CONTENT',''); DUMP=_o.environ.get('DUMP','')
-import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; BASE='https://psr-seishinkai.org'
+import sys as _s; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__))); import content_io as CI; import leo_llmo; BASE='https://psr-seishinkai.org'
 ORG='一般社団法人 心理社会的リハビリテーション・星心会'; TEL='059-315-0697'
 GA_ID='G-XVX8LZ4DXC'
 def content_group(path):
@@ -593,6 +593,10 @@ LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding
 .leo-soudan-flyer img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--leo-line);box-shadow:var(--leo-shadow)}
 .leo-soudan-flyer figcaption{margin:12px 0 0}
 .leo-soudan-flyer figcaption a{font-weight:700;color:var(--leo-green);font-size:14.5px}
+.leo-facts{max-width:720px;margin:0 auto;padding:8px 20px 48px}
+.leo-facts .leo-info-card{margin-bottom:20px}
+.leo-faq-link{text-align:center;margin:0}
+.leo-faq-link a{color:var(--leo-green);font-weight:700}
 '''
 def leo_consult_html(rel):
     return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
@@ -668,6 +672,7 @@ def patch_preserved_leo():
         anchor=_re.search(r'<div class="leo-sub-programs">[\s\S]*?</div>\s*', html)
         if anchor:
             html=html[:anchor.end()]+'\n'+soudan+'\n'+html[anchor.end():]
+    html=leo_llmo.replace_jsonld(html)
     if html!=orig:
         open(fp,'w',encoding='utf-8').write(html)
 
@@ -1793,8 +1798,17 @@ def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法�
 simple_page('privacy/','プライバシーポリシー｜星心会','星心会のプライバシーポリシーです。','プライバシーポリシー','PRIVACY',priv)
 
 # ---------- sitemap page ----------
-INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('星心会について','about/'),('アクセス','access/'),('よくある質問','faq/'),('相談する','contact/'),('プライバシーポリシー','privacy/')]
+
+def write_leo_faq():
+    path='leo/faq/'
+    title='レオのよくある質問｜放課後等デイサービス・児童発達支援｜四日市市あさけが丘'
+    desc='四日市市あさけが丘の児童発達支援・放課後等デイサービス「レオ」のよくある質問です。対象年齢、診断、受給者証、費用、送迎、見学、利用の流れをまとめています。'
+    qa=leo_llmo.faq_resolved(relof(path))
+    simple_page(path,title,desc,'レオのよくある質問','LEO FAQ',leo_llmo.faq_body,ld=[faq_ld(qa)],sub='児童発達支援・放課後等デイサービス｜四日市市あさけが丘')
+
+INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('星心会について','about/'),('アクセス','access/'),('よくある質問','faq/'),('レオのよくある質問','leo/faq/'),('相談する','contact/'),('プライバシーポリシー','privacy/')]
 ALL=[('トップ','')]+[(s[1],s[2]) for s in SVCS]+INFO
+write_leo_faq()
 def smap(rel):
     o='<section class="blk"><ul class="lst"><li><a href="'+rel+'"><span>トップ</span></a></li></ul>'
     for _,lab,en,_,ks,_h in AUD: o+=f'<h3 style="margin:30px 0 8px;font-size:15px">{lab}</h3><ul class="lst">'+''.join(f'<li><a href="{rel}{SV[k][2]}"><span>{SV[k][1]}</span></a></li>' for k in ks)+'</ul>'

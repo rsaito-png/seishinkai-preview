@@ -1,6 +1,7 @@
 # 手置きHTML（レオ・茶夢・RYDEEN・トップ）も含め、ビルドの最後に追記ブロックを差し込む。
 # <!--enh:ID--> ... <!--/enh:ID--> で囲み、毎回置き換えるので何度ビルドしても重複しない。
 import os, re, json, html
+import leo_llmo
 BASE='https://psr-seishinkai.org'
 CSS='''<style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}</style>'''
 def sec(en,h,body,id_=''):
@@ -10,11 +11,7 @@ def faq_ld(qa): return '<script type="application/ld+json">'+json.dumps({"@conte
 G='<a href="{r}guide/jukyushasho/">受給者証ガイド</a>'
 
 FAQ={
-'leo/':[('対象は何歳ですか？','満1歳から18歳までです。小学校入学前は児童発達支援、小学生以降は放課後等デイサービスとして利用します。'),
- ('診断がないと利用できませんか？','診断の有無は問いません。今の困りごとから始めます。'),
- ('費用はいくらですか？','公的制度（通所受給者証）を使います。所得に応じた負担上限があり、満3歳になって初めての4月1日から小学校入学前の3年間は、国の制度で利用者負担が無償です。昼食は1回300円です。手続きは'+G+'をご覧ください。'),
- ('利用時間は？','1部が11:00〜14:30、2部が放課後〜17:00です。'),
- ('送迎はありますか？','地域によって相談を受けます。お問い合わせの際にお住まいの地域をお知らせください。')],
+# レオのFAQは /leo/faq/ に移し、このページへは注入しない。
 'chamu/':[('診断がなくても利用できますか？','診断の有無は問いません。今の困りごとから始めます。'),
  ('人と話すのが苦手でも大丈夫ですか？','大丈夫です。少人数で活動しており、話さずに過ごすことも前提にしています。'),
  ('営業時間は？','平日11時〜15時です。短時間からの利用もできます。'),
@@ -31,7 +28,7 @@ FAQ={
  ('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),
  ('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。')],
 }
-NEW_LD={'leo/','chamu/'}  # 他はビルドの FAQPage が既にある
+NEW_LD={'chamu/'}  # レオの FAQPage は /leo/faq/ に置く
 
 def leo_blocks(r):
     day=sec('A DAY','1日の流れ','''<h3>1部（11:00〜14:30）</h3><ul><li>11:00 来所・あいさつ</li><li>活動：おもちゃ遊び、武道・ヨガ・農作業など（日によって変わります）</li><li>昼食：手作りの和定食（1回300円。偏食指導にも取り組みます）</li><li>14:30 終了</li></ul>
@@ -42,7 +39,7 @@ def leo_blocks(r):
 <h3>強み</h3><ul><li>体験型プログラムの多様性（茶道、畑、料理など）。季節に応じたイベントや、家庭では経験しにくい活動を取り入れています。</li><li>LINEによる高頻度・詳細な活動報告。毎回、活動の様子を写真と文章で共有しています。</li><li>専門性の高い個別支援と共感的な姿勢。職員一人ひとりがこどもの特性を理解し、寄り添った支援を行っています。</li></ul>
 <h3>課題と改善の取り組み</h3><ul><li>業務継続計画（BCP）の浸透：具体的な場面を想定したロールプレイング研修を行い、役割分担を掲示します。</li><li>非常災害訓練・安全計画の周知：訓練の様子をLINEで配信・掲示し、安全計画をあらためて配布します。</li><li>地域交流の機会：近隣の公園や図書館などの利用を再開し、地域行事への参加を計画します。</li></ul>
 <p class="note">放課後等デイサービスの評価と各評価表の全文は、このページの「令和7年度 事業所評価の公表」のPDFでご覧いただけます。</p>''')
-    return day+start+ev
+    return day+start+ev+leo_llmo.facts_html(r)
 
 def chamu_more(r):
     return sec('ABOUT CHAMU','茶夢で過ごす1日',f'''<p>茶夢は、統合失調症・自閉症の方のための生活介護事業所です。生産活動を無理強いせず、ゆったり過ごしていただくことに専念しています。</p>
@@ -93,4 +90,7 @@ def run(OUT):
         o=put(o,'css',CSS,'head')
         for i,f,a in lst: o=put(o,i,f(r),a)
         if p in NEW_LD: o=put(o,'faqld',faq_ld(FAQ[p]),'head')
+        if p=='leo/':
+            o=re.sub(r'<!--enh:faq-->.*?<!--/enh:faq-->','',o,flags=re.S)
+            o=re.sub(r'<!--enh:faqld-->.*?<!--/enh:faqld-->','',o,flags=re.S)
         open(fn,'w',encoding='utf-8').write(o)
