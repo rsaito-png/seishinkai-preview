@@ -219,7 +219,7 @@ CP={'chamu/','leo/','kintoun/','ryozanpaku/'}
 # 事業ページの <title> と meta description。事業種別・地域・対象を機械が読めるようにする。本文は変えない。
 SEO={
  'kintoun/':('居宅介護 金斗雲｜三重県四日市市｜星心会','家から出られない、窓口に行けない。金斗雲は、外に出にくい方とそのご家族のための居宅介護（訪問支援）です。出向くのは四日市市と菰野町を中心とした三重県内です。'),
- 'leo/':('児童発達支援・放課後等デイサービス レオ｜三重県四日市市｜星心会','情緒を整え、落ち着きを取り戻すことを目指す療育。児童発達支援・放課後等デイサービスのレオは、発達が気になる満1歳から18歳までが対象です。三重県四日市市あさけが丘。'),
+ 'leo/':('放課後等デイサービス・児童発達支援 レオ｜四日市市あさけが丘｜星心会','情緒を整え、落ち着きを取り戻すことを目指す療育。児童発達支援・放課後等デイサービスのレオは、発達が気になる満1歳から18歳までが対象です。三重県四日市市あさけが丘。'),
  'chamu/':('生活介護 茶夢｜三重県四日市市｜星心会','統合失調症・自閉症の方のための日中の居場所。生活介護事業所の茶夢は、料理・喫茶・読書・アートで静かに過ごす場です。短時間利用可。三重県四日市市あさけが丘。'),
  'ryozanpaku/':('メンタルピアレジデンス 梁山泊｜三重県四日市市｜星心会','メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。'),
  'shichirin/':('自費参加 しちりんの会｜三重県菰野町｜星心会','火を囲めば黙っていてもゆるみます。しちりんの会は、七輪で火を起こして食べる自費参加の会です。三重県菰野町、不定期の土曜、手続きは不要です。'),
@@ -1839,10 +1839,13 @@ open(OUT+'/llms.txt','w').write(L)
 RED=[('tanden/','kokyu/'),('aboutus/','about/'),('dormitory/','ryozanpaku/'),('retreat/','kintoun/'),('kissa/','chamu/'),('j/privacy/','privacy/'),
 ('当事者様/','contact/'),('当事者様/無料お役立ちai/','contact/'),('保護者様/','leo/'),('保護者様/子どもの情緒安定-児発-放デイ/','leo/'),('保護者様/ペアレントトレーニング/','leo/parent-training/'),
 ('保護者様/発達検査/','leo/assessment/'),('保護者様/無料-お子様の学習支援ai/','leo/'),('企業様/','business/'),('企業様/職場ストレスチェック/','business/stress-check/'),('企業様/障害者雇用サポート/','business/employment/'),
-('福祉-教育-医療関係者様/','business/'),('福祉-教育-医療関係者様/aiコンサル/','business/agent-consulting/'),('福祉-教育-医療関係者様/児童指導員-研修/','business/training/'),('福祉-教育-医療関係者様/消防コンサル/','business/')]
+('福祉-教育-医療関係者様/','business/'),('福祉-教育-医療関係者様/aiコンサル/','business/agent-consulting/'),('福祉-教育-医療関係者様/児童指導員-研修/','business/training/'),('福祉-教育-医療関係者様/消防コンサル/','business/'),
+('services/子どもの情操教育/','leo/')]
+REDIRECT_INDEXABLE={'services/子どもの情操教育/'}
 for old,new in RED:
     r='../'*old.count('/')+new
-    write(old,f'<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>移動しました｜星心会</title><link rel="canonical" href="{BASE}/{new}"><meta http-equiv="refresh" content="0; url={r}"><script>location.replace("{r}"+location.hash)</script></head><body><p>このページは移動しました：<a href="{r}">{BASE}/{new}</a></p></body></html>')
+    robots='' if old in REDIRECT_INDEXABLE else '<meta name="robots" content="noindex">'
+    write(old,f'<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">{robots}<title>移動しました｜星心会</title><link rel="canonical" href="{BASE}/{new}"><meta http-equiv="refresh" content="0; url={r}"><script>location.replace("{r}"+location.hash)</script></head><body><p>このページは移動しました：<a href="{r}">{BASE}/{new}</a></p></body></html>')
 open(OUT+'/.nojekyll','w').write('')
 print('placeholders:',sorted(PH))
 

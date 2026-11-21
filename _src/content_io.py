@@ -1,6 +1,6 @@
 # Markdown <-> page data for Google Docs editing
 import html,re,os,posixpath
-BASE='https://www.psr-seishinkai.org'
+BASE='https://psr-seishinkai.org'
 NOTE='ここを書き換えると、サイトに反映されます'
 def slug(path): return path.strip('/').replace('/','-') or 'top'
 PHR=re.compile(r'<span class="ph">要確認：(.*?)</span>')
