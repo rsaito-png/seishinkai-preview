@@ -3,10 +3,10 @@
 import os, re, json, html
 import leo_llmo
 BASE='https://psr-seishinkai.org'
-CSS='''<style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}</style>'''
+CSS='''<style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}.enh#faq details{border-bottom:1px solid rgba(0,0,0,.12);padding:0}.enh#faq summary{cursor:pointer;list-style:none;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:16px 4px;min-height:52px;font-weight:700;font-size:16px;line-height:1.45;text-align:left}.enh#faq summary::-webkit-details-marker{display:none}.enh#faq summary:after{content:'+';flex:0 0 auto;font-weight:500;font-size:22px;line-height:1;opacity:.45}.enh#faq details[open] summary:after{content:'\\2212'}.enh#faq details>div{padding:0 4px 18px;font-size:15px;line-height:1.9}.enh#faq summary:focus-visible{outline:2px solid currentColor;outline-offset:2px}.enh .cm-who-list,.enh .cm-act-grid,.enh .cm-steps{padding-left:0;margin:0}.enh .cm-who-list{display:grid;gap:10px;list-style:none}.enh .cm-who-list li{background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;margin:0}.enh .cm-act-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;list-style:none}.enh .cm-act-grid li{background:rgba(0,0,0,.03);border-radius:12px;padding:16px 16px 14px;margin:0}.enh .cm-act-grid b{display:block;margin:0 0 4px;font-size:15px}.enh .cm-steps{display:grid;gap:10px;list-style:none;counter-reset:step}.enh .cm-steps li{counter-increment:step;display:grid;grid-template-columns:2.2em 1fr;gap:12px;align-items:start;background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;margin:0}.enh .cm-steps li:before{content:counter(step);font-weight:700;opacity:.5}@media(max-width:640px){.enh .cm-act-grid{grid-template-columns:1fr}}</style>'''
 def sec(en,h,body,id_=''):
     return f'<section class="enh"{f" id={chr(34)}{id_}{chr(34)}" if id_ else ""}><span class="en">{en}</span><h2>{h}</h2>{body}</section>'
-def faq_html(qa): return sec('FAQ','よくある質問',''.join(f'<h3>{q}</h3><p>{a}</p>' for q,a in qa),'faq')
+def faq_html(qa): return sec('FAQ','よくある質問',''.join(f'<details><summary>{q}</summary><div>{a}</div></details>' for q,a in qa),'faq')
 def faq_ld(qa): return '<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":re.sub('<[^>]+>','',a)}} for q,a in qa]},ensure_ascii=False)+'</script>'
 G='<a href="{r}guide/jukyushasho/">受給者証ガイド</a>'
 
@@ -48,11 +48,12 @@ def leo_blocks(r):
     return ev+leo_llmo.facts_html(r)
 
 def chamu_more(r):
-    return sec('ABOUT CHAMU','茶夢で過ごす1日',f'''<p>茶夢は、統合失調症・自閉症の方のための生活介護事業所です。生産活動を無理強いせず、ゆったり過ごしていただくことに専念しています。</p>
-<h3>できること</h3><ul><li><b>料理</b>：一緒に台所に立ち、作って食べます。</li><li><b>喫茶</b>：お茶を淹れて、静かに過ごします。</li><li><b>読書</b>：好きな本を、好きなペースで読めます。</li><li><b>アート</b>：手を動かして表現します。</li></ul>
-<h3>こんな方に</h3><ul><li>人が苦手で、大人数の場所がつらい方</li><li>日中に安心して過ごせる場所を探している方</li><li>強度行動障害があり、受け入れ先に困っている方（ご相談ください）</li></ul>
-<h3>利用の流れ</h3><ol><li>電話またはLINEで見学を予約（ご家族だけの見学も可）</li><li>見学・面談</li><li>お住まいの市町で障害福祉サービスの申請（手続きはこちらで案内します）</li><li>契約・利用開始（短時間からでもかまいません）</li></ol>
-<dl><dt>営業時間</dt><dd>平日 11時〜15時</dd><dt>場所</dt><dd>四日市市あさけが丘2-1-42（三岐線 山城駅 徒歩12分）</dd></dl>''')
+    return sec('ABOUT CHAMU','茶夢で過ごす1日','''<h3>できること</h3>
+<ul class="cm-act-grid"><li><b>料理</b>一緒に台所に立ち、作って食べます。</li><li><b>喫茶</b>お茶を淹れて、静かに過ごします。</li><li><b>読書</b>好きな本を、好きなペースで読めます。</li><li><b>アート</b>手を動かして表現します。</li></ul>
+<h3>こんな方に</h3>
+<ul class="cm-who-list"><li>人が苦手で、大人数の場所がつらい方</li><li>日中に安心して過ごせる場所を探している方</li><li>強度行動障害があり、受け入れ先に困っている方（ご相談ください）</li></ul>
+<h3>利用の流れ</h3>
+<ol class="cm-steps"><li>電話またはLINEで見学を予約（ご家族だけの見学も可）</li><li>見学・面談</li><li>お住まいの市町で障害福祉サービスの申請（手続きはこちらで案内します）</li><li>契約・利用開始（短時間からでもかまいません）</li></ol>''')
 
 def kintoun_more(r):
     return sec('AREA','訪問地域と、ご依頼の例','''<h3>訪問地域</h3><p>三重県四日市市・菰野町を中心に、三重県内へ訪問します。地域によっては対応できない場合があるため、まずはご住所をお知らせください。名古屋からの相談は、電話または<a href="../contact/">相談フォーム</a>で受け付けます。</p>

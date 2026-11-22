@@ -1,0 +1,164 @@
+/* 梁山泊：仕事のあとに戻る家の気配。茶夢の喫茶とは色を分ける。 */
+body.aud-self{
+  --ryo-ink:#221910;
+  --ryo-sub:#5c4c3f;
+  --ryo-paper:#f6f0e8;
+  --ryo-card:#fffdf9;
+  --ryo-line:#e4d8c8;
+  --ryo-copper:#9a4f24;
+  --ryo-night:#2a1f18;
+}
+body.aud-self{background:var(--ryo-paper);color:var(--ryo-ink)}
+body.aud-self .hero.ryo-hero::after{
+  background:linear-gradient(180deg,rgba(34,25,16,.15) 0%,rgba(34,25,16,.82) 88%);
+}
+body.aud-self .ryo-badge{
+  display:inline-block;
+  background:var(--ryo-copper);
+  color:#fff;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.06em;
+  padding:6px 14px;
+  border-radius:999px;
+}
+body.aud-self #what{
+  max-width:880px;
+  margin:0 auto;
+  padding:48px 20px 20px;
+}
+body.aud-self #what .prose.old,
+body.aud-self #what .ryo-body{display:contents}
+body.aud-self .ryo-lead-card,
+body.aud-self .ryo-rent,
+body.aud-self .ryo-place,
+body.aud-self .ryo-visit{
+  background:var(--ryo-card);
+  border:1px solid var(--ryo-line);
+  border-radius:18px;
+  box-shadow:0 10px 28px -12px rgba(34,25,16,.12);
+}
+body.aud-self .ryo-lead-card{
+  padding:28px 24px;
+  margin:0 0 28px;
+}
+body.aud-self .ryo-lead-card h3{
+  font-family:"Noto Serif JP",serif;
+  font-size:clamp(20px,4vw,26px);
+  line-height:1.5;
+  margin:0 0 12px;
+  background:none;
+  padding:0;
+}
+body.aud-self .ryo-lead-card p{margin:0;color:var(--ryo-sub);line-height:1.9}
+body.aud-self .ryo-sec-title{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:var(--ryo-copper);
+  margin:0 0 12px;
+}
+body.aud-self .ryo-steps{
+  display:grid;
+  gap:12px;
+  margin:0 0 28px;
+  padding:0;
+  list-style:none;
+  counter-reset:ryo;
+}
+body.aud-self .ryo-steps li{
+  counter-increment:ryo;
+  display:grid;
+  grid-template-columns:2.4em 1fr;
+  gap:4px 12px;
+  align-items:start;
+  background:var(--ryo-card);
+  border:1px solid var(--ryo-line);
+  border-radius:16px;
+  padding:16px 18px;
+}
+body.aud-self .ryo-steps li:before{
+  content:counter(ryo);
+  font-weight:700;
+  color:var(--ryo-copper);
+  font-size:18px;
+  line-height:1.2;
+  grid-row:1 / span 2;
+}
+body.aud-self .ryo-steps .k,
+body.aud-self .ryo-steps .v{grid-column:2}
+body.aud-self .ryo-steps dt,
+body.aud-self .ryo-steps .k{
+  font-weight:700;
+  margin:0 0 2px;
+}
+body.aud-self .ryo-steps dd,
+body.aud-self .ryo-steps .v{
+  margin:0;
+  color:var(--ryo-sub);
+  font-size:15px;
+}
+body.aud-self .ryo-facts{
+  display:grid;
+  gap:16px;
+  margin:0 0 28px;
+}
+@media(min-width:700px){
+  body.aud-self .ryo-facts{grid-template-columns:1.1fr .9fr}
+  body.aud-self .ryo-steps{grid-template-columns:1fr 1fr 1fr}
+  body.aud-self .ryo-steps li{grid-template-columns:1fr}
+  body.aud-self .ryo-steps li:before{grid-row:auto;margin-bottom:8px}
+  body.aud-self .ryo-steps .k,
+  body.aud-self .ryo-steps .v{grid-column:auto}
+}
+body.aud-self .ryo-rent,
+body.aud-self .ryo-place{overflow:hidden;padding:0}
+body.aud-self .ryo-rent-inner,
+body.aud-self .ryo-place-inner{padding:22px 22px 24px}
+body.aud-self .ryo-rent .ryo-num{
+  font-family:"Noto Serif JP",serif;
+  font-size:clamp(36px,7vw,52px);
+  line-height:1.1;
+  letter-spacing:.02em;
+  margin:4px 0 8px;
+}
+body.aud-self .ryo-rent .ryo-num small{font-size:.42em;font-weight:500;margin-left:.2em}
+body.aud-self .ryo-photo{
+  width:100%;
+  aspect-ratio:16/10;
+  object-fit:cover;
+  display:block;
+}
+body.aud-self .ryo-visit{padding:22px 22px 24px;margin:0 0 8px}
+body.aud-self #partners{background:transparent}
+body.aud-self #faq.enh{
+  max-width:880px;
+  padding-top:24px;
+}
+body.aud-self #faq.enh h2{
+  font-family:"Noto Serif JP",serif;
+  letter-spacing:.04em;
+}
+body.aud-self #faq.enh details{border-bottom-color:var(--ryo-line)}
+body.aud-self #faq.enh summary{color:var(--ryo-ink)}
+body.aud-self #faq.enh details>div{color:var(--ryo-sub)}
+
+body.aud-self #partners .lst{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  gap:12px;
+}
+body.aud-self #partners .lst li{
+  background:var(--ryo-card);
+  border:1px solid var(--ryo-line);
+  border-radius:16px;
+  padding:18px 20px;
+  line-height:1.8;
+}
+body.aud-self #partners .lst b{
+  display:block;
+  margin:0 0 6px;
+  font-size:16px;
+}
