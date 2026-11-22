@@ -29,8 +29,9 @@ FAQ={
  ('費用は？','公的制度を使えます。所得に応じた負担上限があり、多くの方が無料または低額で利用しています。'),
  ('どんなスタッフが来ますか？','介護福祉士、看護師などの有資格者が対応します。')],
 'ryozanpaku/':[('費用は？','家賃は月8万円で、朝夕食事付きです。'),
- ('働きながら住めますか？','住めます。働きながら暮らせます。働き続けるための住まいとして設計しています。'),
- ('なぜ住まいが就労の継続に関係するのですか？','精神障害のある人は、雇用されても仕事が続かないことが多いです。ハローワークの紹介で一般企業（就労継続支援A型を除く）に就職した人のうち、精神障害のある人の就職後1年時点の職場定着率は49.3%で、身体障害（60.8%）、知的障害（68.0%）、発達障害（71.5%）と比べて最も低い数字です（障害者職業総合センター「障害者の就業状況等に関する調査研究」調査研究報告書No.137、2017年）。梁山泊は、働き続けるための住まいとして設計しています。睡眠・食事・帰宅後の過ごし方を整え、欠勤と離職の芽を生活の側で摘みます。'),
+ ('働きながら住めますか？','住めます。働きながら暮らせます。'),
+ ('障害者雇用で働きながらの住まいとして使えますか？','使えます。障害者雇用で働いている方も暮らせます。'),
+ ('なぜ住まいが就労の継続に関係するのですか？','精神障害のある人は、雇用されても仕事が続かないことが多いです。ハローワークの紹介で一般企業（就労継続支援A型を除く）に就職した人のうち、精神障害のある人の就職後1年時点の職場定着率は49.3%で、身体障害（60.8%）、知的障害（68.0%）、発達障害（71.5%）と比べて最も低い数字です（障害者職業総合センター「障害者の就業状況等に関する調査研究」調査研究報告書No.137、2017年）。栄養豊かな食事、家事のサポート（居宅介護）、社会経験豊富な職員からのアドバイスで、メンタルが安定しやすくなります。それが仕事の継続につながります。'),
  ('親と離れて暮らせますか？','暮らせます。親元を出たい方の、住まい・日中・お金の手続きの段取りはこちらで組みます。'),
  ('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),
  ('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),
@@ -39,7 +40,7 @@ FAQ={
  ('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),
  ('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。'),
  ('県外や遠方からでも入れますか？','はい。県外からでも、日本全国から入居できます。見学は、電話または問合せフォームで受け付けます。'),
- ('グループホームですか？受給者証は必要ですか？','梁山泊は、障害福祉サービスのグループホーム（共同生活援助）ではありません。ケアの付いた一般の賃貸住居で、受給者証は不要です。'),
+ ('四日市でグループホームを探しています。梁山泊は候補になりますか？','四日市市にありますが、グループホーム（共同生活援助）ではありません。一般の賃貸住居で、居宅介護を利用できます。受給者証は不要です。'),
  ('県外から入るとき、役所の手続きは必要ですか？','グループホーム（共同生活援助）ではないため、入居先の市町村で受給者証を申請する必要はありません。'),
  ('就職活動の拠点として使えますか？','はい。ここを足がかりにして就職活動をすることもできます。就労できる方に向いています。障害者雇用で働いている方、障害者雇用での就職を目指す方にも向いています。')],
 }
@@ -100,9 +101,10 @@ def style_ryozanpaku(o):
     if 'assets/ryozanpaku.css' not in o:
         o=re.sub(
             r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
-            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122g">',
+            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122h">',
             o, count=1)
-    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
+    o=re.sub(r'(assets/ryozanpaku\.css\?v=)[^"]+', r'\g<1>20261122h', o)
+    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
     new='''<section class="blk" id="what"><div class="ryo-body">
 <p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>働きながら暮らせる</span><span>障害者雇用で働く方に</span><span>就職活動の拠点にも</span></p>
 <section class="ryo-story" aria-labelledby="ryo-story-h">
@@ -110,7 +112,17 @@ def style_ryozanpaku(o):
 <p class="ryo-stat-num">49.3<span>%</span></p>
 <p class="ryo-stat-label">精神障害のある人の、就職後1年の職場定着率</p>
 <p class="ryo-stat-src"><a href="https://www.nivr.jeed.go.jp/research/report/houkoku/houkoku137.html" target="_blank" rel="noopener">障害者職業総合センター「障害者の就業状況等に関する調査研究」（2017年）</a>。ハローワーク紹介・一般企業（就労継続支援A型を除く）。</p>
-<p class="ryo-story-ans">梁山泊は、働き続けるための住まいです。</p>
+<div class="ryo-flow">
+<div class="ryo-flow-row">
+<div class="ryo-flow-cell"><b>栄養豊かな<br>食事</b></div>
+<div class="ryo-flow-cell"><b>家事の<br>サポート</b><small>居宅介護</small></div>
+<div class="ryo-flow-cell"><b>社会経験豊富な<br>職員からの<br>アドバイス</b></div>
+</div>
+<div class="ryo-flow-arrow" aria-hidden="true">↓</div>
+<div class="ryo-flow-result">メンタルが安定する</div>
+<div class="ryo-flow-arrow" aria-hidden="true">↓</div>
+<div class="ryo-flow-result">仕事が続く</div>
+</div>
 </section>
 <div class="ryo-facts">
 <div class="ryo-rent">
@@ -118,7 +130,6 @@ def style_ryozanpaku(o):
 <div class="ryo-rent-inner">
 <p class="ryo-sec-title">家賃</p>
 <p class="ryo-num">月8万円<small>朝夕食事付き</small></p>
-<p>ほかに費用はかかりません</p>
 </div>
 </div>
 <div class="ryo-place">
@@ -143,15 +154,24 @@ def style_ryozanpaku(o):
         o=re.sub(r'<p class="ryo-chips">[\s\S]*?</p>',chips,o,count=1)
     elif '<div class="ryo-body">' in o:
         o=o.replace('<div class="ryo-body">','<div class="ryo-body">\n'+chips,1)
-    story=(
-        '<section class="ryo-story" aria-labelledby="ryo-story-h">'
-        '<h2 id="ryo-story-h">雇用されても、続かない人が多い。</h2>'
-        '<p class="ryo-stat-num">49.3<span>%</span></p>'
-        '<p class="ryo-stat-label">精神障害のある人の、就職後1年の職場定着率</p>'
-        '<p class="ryo-stat-src"><a href="https://www.nivr.jeed.go.jp/research/report/houkoku/houkoku137.html" target="_blank" rel="noopener">障害者職業総合センター「障害者の就業状況等に関する調査研究」（2017年）</a>。ハローワーク紹介・一般企業（就労継続支援A型を除く）。</p>'
-        '<p class="ryo-story-ans">梁山泊は、働き続けるための住まいです。</p>'
-        '</section>'
-    )
+    story=("""
+<section class="ryo-story" aria-labelledby="ryo-story-h">
+<h2 id="ryo-story-h">雇用されても、続かない人が多い。</h2>
+<p class="ryo-stat-num">49.3<span>%</span></p>
+<p class="ryo-stat-label">精神障害のある人の、就職後1年の職場定着率</p>
+<p class="ryo-stat-src"><a href="https://www.nivr.jeed.go.jp/research/report/houkoku/houkoku137.html" target="_blank" rel="noopener">障害者職業総合センター「障害者の就業状況等に関する調査研究」（2017年）</a>。ハローワーク紹介・一般企業（就労継続支援A型を除く）。</p>
+<div class="ryo-flow">
+<div class="ryo-flow-row">
+<div class="ryo-flow-cell"><b>栄養豊かな<br>食事</b></div>
+<div class="ryo-flow-cell"><b>家事の<br>サポート</b><small>居宅介護</small></div>
+<div class="ryo-flow-cell"><b>社会経験豊富な<br>職員からの<br>アドバイス</b></div>
+</div>
+<div class="ryo-flow-arrow" aria-hidden="true">↓</div>
+<div class="ryo-flow-result">メンタルが安定する</div>
+<div class="ryo-flow-arrow" aria-hidden="true">↓</div>
+<div class="ryo-flow-result">仕事が続く</div>
+</div>
+</section>""")
     if '<section class="ryo-story"' in o:
         o=re.sub(r'<section class="ryo-story"[\s\S]*?</section>',story,o,count=1)
     elif '<p class="ryo-chips">' in o:

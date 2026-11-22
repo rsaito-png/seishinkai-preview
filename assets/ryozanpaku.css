@@ -222,12 +222,66 @@ body.aud-self .ryo-stat-src{
   opacity:.78;
 }
 body.aud-self .ryo-stat-src a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-body.aud-self .ryo-story-ans{
+body.aud-self .ryo-flow{
   margin:22px 0 0;
   padding-top:18px;
   border-top:1px solid rgba(246,240,232,.22);
-  font-size:17px;
+}
+body.aud-self .ryo-flow-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.35fr;
+  gap:6px;
+  align-items:stretch;
+}
+body.aud-self .ryo-flow-cell{
+  background:rgba(255,253,249,.08);
+  border:1px solid rgba(246,240,232,.2);
+  border-radius:12px;
+  padding:10px 6px 9px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:4.6em;
+}
+body.aud-self .ryo-flow-cell b{
+  display:block;
+  font-size:12px;
   font-weight:700;
-  line-height:1.65;
+  line-height:1.4;
   color:#fffdf9;
+  word-break:keep-all;
+  line-break:strict;
+  overflow-wrap:normal;
+}
+body.aud-self .ryo-flow-cell small{
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:.04em;
+  opacity:.75;
+  color:#f6f0e8;
+}
+body.aud-self .ryo-flow-arrow{
+  text-align:center;
+  font-size:16px;
+  line-height:1;
+  margin:6px 0 4px;
+  color:#fffdf9;
+  opacity:.7;
+}
+body.aud-self .ryo-flow-result{
+  background:rgba(255,253,249,.14);
+  border:1px solid rgba(246,240,232,.28);
+  border-radius:12px;
+  padding:10px 12px;
+  text-align:center;
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:.04em;
+  color:#fff;
+}
+@media (max-width:360px){
+  body.aud-self .ryo-flow-cell b{font-size:11px;}
 }
