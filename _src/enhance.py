@@ -101,10 +101,10 @@ def style_ryozanpaku(o):
     if 'assets/ryozanpaku.css' not in o:
         o=re.sub(
             r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
-            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122h">',
+            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122i">',
             o, count=1)
-    o=re.sub(r'(assets/ryozanpaku\.css\?v=)[^"]+', r'\g<1>20261122h', o)
-    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
+    o=re.sub(r'(assets/ryozanpaku\.css\?v=)[^"]+', r'\g<1>20261122i', o)
+    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p><h3 class="oh">部屋・建物の様子</h3><img class="pin" src="../img/ryozanpaku-room.jpg" alt="梁山泊の居室。6畳で、エアコンと窓があります。" loading="lazy" width="720" height="540"><p style="margin:0 0 12px">居室（6畳・クローゼット付き）</p><img class="pin" src="../img/ryozanpaku-dining.jpg" alt="梁山泊の食堂。壁際にテーブルと椅子が並んでいます。" loading="lazy" width="720" height="540"><p style="margin:0 0 12px">食堂</p><img class="pin" src="../img/ryozanpaku-exterior.jpg" alt="梁山泊の建物の外観。四日市市山城町にあります。" loading="lazy" width="720" height="540"><p style="margin:0 0 12px">建物の外観</p></div></section>'
     new='''<section class="blk" id="what"><div class="ryo-body">
 <p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>働きながら暮らせる</span><span>障害者雇用で働く方に</span><span>就職活動の拠点にも</span></p>
 <section class="ryo-story" aria-labelledby="ryo-story-h">
@@ -140,6 +140,21 @@ def style_ryozanpaku(o):
 </div>
 </div>
 </div>
+<div class="ryo-rooms">
+<p class="ryo-sec-title">部屋・建物の様子</p>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-room.jpg" alt="梁山泊の居室。6畳で、エアコンと窓があります。" width="1600" height="1200" loading="lazy">
+<figcaption>居室（6畳・クローゼット付き）</figcaption>
+</figure>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-dining.jpg" alt="梁山泊の食堂。壁際にテーブルと椅子が並んでいます。" width="1280" height="1280" loading="lazy">
+<figcaption>食堂</figcaption>
+</figure>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-exterior.jpg" alt="梁山泊の建物の外観。四日市市山城町にあります。" width="1280" height="1280" loading="lazy">
+<figcaption>建物の外観</figcaption>
+</figure>
+</div>
 </div></section>'''
     if old in o:
         o=o.replace(old,new,1)
@@ -154,8 +169,7 @@ def style_ryozanpaku(o):
         o=re.sub(r'<p class="ryo-chips">[\s\S]*?</p>',chips,o,count=1)
     elif '<div class="ryo-body">' in o:
         o=o.replace('<div class="ryo-body">','<div class="ryo-body">\n'+chips,1)
-    story=("""
-<section class="ryo-story" aria-labelledby="ryo-story-h">
+    story=("""<section class="ryo-story" aria-labelledby="ryo-story-h">
 <h2 id="ryo-story-h">雇用されても、続かない人が多い。</h2>
 <p class="ryo-stat-num">49.3<span>%</span></p>
 <p class="ryo-stat-label">精神障害のある人の、就職後1年の職場定着率</p>
@@ -179,6 +193,24 @@ def style_ryozanpaku(o):
 
     o=re.sub(r'\n?<div class="ryo-lead-card">[\s\S]*?</div>\s*','\n',o,count=1)
     o=re.sub(r'\n?<p class="ryo-sec-title">入居までの流れ</p>\s*<ol class="ryo-steps">[\s\S]*?</ol>\s*','\n',o,count=1)
+    if 'class="ryo-rooms"' not in o and 'class="ryo-facts"' in o:
+        rooms='''<div class="ryo-rooms">
+<p class="ryo-sec-title">部屋・建物の様子</p>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-room.jpg" alt="梁山泊の居室。6畳で、エアコンと窓があります。" width="1600" height="1200" loading="lazy">
+<figcaption>居室（6畳・クローゼット付き）</figcaption>
+</figure>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-dining.jpg" alt="梁山泊の食堂。壁際にテーブルと椅子が並んでいます。" width="1280" height="1280" loading="lazy">
+<figcaption>食堂</figcaption>
+</figure>
+<figure>
+<img class="ryo-photo" src="../img/ryozanpaku-exterior.jpg" alt="梁山泊の建物の外観。四日市市山城町にあります。" width="1280" height="1280" loading="lazy">
+<figcaption>建物の外観</figcaption>
+</figure>
+</div>
+'''
+        o=re.sub(r'(<div class="ryo-facts">[\s\S]*?</div>\s*</div>\s*</div>)\s*(</div></section>)', r'\1\n'+rooms+r'\2', o, count=1)
     return o
 
 def run(OUT):

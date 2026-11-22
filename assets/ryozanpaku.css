@@ -129,6 +129,21 @@ body.aud-self .ryo-photo{
   object-fit:cover;
   display:block;
 }
+
+body.aud-self .ryo-rooms{margin:0 0 8px}
+body.aud-self .ryo-rooms figure{margin:0 0 22px}
+body.aud-self .ryo-rooms .ryo-photo{
+  aspect-ratio:auto;
+  object-fit:contain;
+  height:auto;
+  border-radius:16px;
+}
+body.aud-self .ryo-rooms figcaption{
+  margin:8px 2px 0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--ryo-sub);
+}
 body.aud-self .ryo-visit{padding:22px 22px 24px;margin:0 0 8px}
 body.aud-self #partners{background:transparent}
 body.aud-self #faq.enh{
