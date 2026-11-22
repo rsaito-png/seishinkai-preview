@@ -171,8 +171,8 @@ def _infolinks(key,default):
             else: n=row.strip()
         out.append((n,u,sm))
     return out
-_DRAWER=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/','')]
-_FOOT=[('企業・支援機関の方へ','business/',''),('星心会について','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
+_DRAWER=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/','')]
+_FOOT=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
 def header(rel):
     lab=_navlabs(); gs=CHROME.get('groups')
     dr=''
@@ -1809,7 +1809,7 @@ def write_leo_faq():
     qa=leo_llmo.faq_resolved(relof(path))
     simple_page(path,title,desc,'レオのよくある質問','LEO FAQ',leo_llmo.faq_body,ld=[faq_ld(qa)],sub='児童発達支援・放課後等デイサービス｜四日市市あさけが丘')
 
-INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('星心会について','about/'),('アクセス','access/'),('よくある質問','faq/'),('レオのよくある質問','leo/faq/'),('相談する','contact/'),('プライバシーポリシー','privacy/')]
+INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('法人情報','about/'),('アクセス','access/'),('よくある質問','faq/'),('レオのよくある質問','leo/faq/'),('相談する','contact/'),('プライバシーポリシー','privacy/')]
 ALL=[('トップ','')]+[(s[1],s[2]) for s in SVCS]+INFO
 write_leo_faq()
 def smap(rel):
