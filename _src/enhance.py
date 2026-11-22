@@ -97,7 +97,7 @@ def style_ryozanpaku(o):
             r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
             r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122c">',
             o, count=1)
-    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3><p style="margin:0 0 12px">お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p><h3 class="oh">入居までの流れ</h3><dl class="info" style="margin:6px 0 16px"><dt>ご相談</dt><dd>まずは今のお気持ちや不安をお伺いします</dd><dt>見学・面談</dt><dd>部屋と暮らしを見ていただき、面談します。</dd><dt>契約・入居</dt><dd>入居者さんご本人と契約し、入居します。</dd></dl><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">見学・ご相談</h3><p style="margin:0 0 12px">「まだ決める段階じゃない…」という方も大歓迎です。<br>見学とご相談は、電話またはLINEで受け付けます。</p><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p><h3 class="oh">申し込み</h3><p style="margin:0 0 12px">電話 059-315-0697 またはLINE</p></div></section>'
+    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3><p style="margin:0 0 12px">お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p><h3 class="oh">入居までの流れ</h3><dl class="info" style="margin:6px 0 16px"><dt>ご相談</dt><dd>まずは今のお気持ちや不安をお伺いします</dd><dt>見学・面談</dt><dd>部屋と暮らしを見ていただき、面談します。</dd><dt>契約・入居</dt><dd>入居者さんご本人と契約し、入居します。</dd></dl><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
     new='''<section class="blk" id="what"><div class="ryo-body">
 <div class="ryo-lead-card">
 <h3>「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3>
@@ -122,18 +122,19 @@ def style_ryozanpaku(o):
 <img class="ryo-photo" src="../img/yamashiro_st.jpg" alt="山城駅" width="800" height="500" loading="lazy">
 <div class="ryo-place-inner">
 <p class="ryo-sec-title">場所</p>
-<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p>
+<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p>
 </div>
 </div>
-</div>
-<div class="ryo-visit">
-<p class="ryo-sec-title">見学・ご相談</p>
-<p>「まだ決める段階じゃない…」という方も大歓迎です。<br>見学とご相談は、電話またはLINEで受け付けます。</p>
-<p style="margin-top:10px">電話 059-315-0697 またはLINE</p>
 </div>
 </div></section>'''
     if old in o:
         o=o.replace(old,new,1)
+    # Already-styled pages: keep the card layout, apply later copy/layout fixes.
+    o=re.sub(r'<p class="svc">メンタルピアレジデンス｜家賃 月8万円</p>\s*','',o,count=1)
+    short='<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p>'
+    long='<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p>'
+    o=o.replace(short,long,1)
+    o=re.sub(r'\n?<div class="ryo-visit">[\s\S]*?</div>\s*','\n',o,count=1)
     return o
 
 def run(OUT):
