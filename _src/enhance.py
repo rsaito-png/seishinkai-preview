@@ -1,7 +1,6 @@
 # 手置きHTML（レオ・茶夢・RYDEEN・トップ）も含め、ビルドの最後に追記ブロックを差し込む。
 # <!--enh:ID--> ... <!--/enh:ID--> で囲み、毎回置き換えるので何度ビルドしても重複しない。
 import os, re, json, html
-from urllib.parse import quote as _quote
 import leo_llmo
 BASE='https://psr-seishinkai.org'
 CSS='''<style>.enh{max-width:880px;margin:0 auto;padding:56px 24px;line-height:1.95}.enh h2{font-size:24px;letter-spacing:.08em;margin:0 0 18px}.enh h3{font-size:17px;margin:26px 0 6px}.enh p{margin:0 0 10px}.enh .en{display:block;font-size:12px;letter-spacing:.2em;opacity:.6;margin-bottom:6px}.enh ol,.enh ul{padding-left:1.3em;margin:0 0 10px}.enh li{margin:4px 0}.enh dl{display:grid;grid-template-columns:8em 1fr;gap:8px 16px;margin:0}.enh dt{font-weight:700}.enh dd{margin:0}.enh a{color:inherit;text-decoration:underline}.enh .note{font-size:13px;opacity:.75}.enh .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.enh .grid a{display:block;border:1px solid currentColor;border-radius:10px;padding:14px 16px;text-decoration:none}.enh .grid b{display:block;margin-bottom:4px}.enh#faq details{border-bottom:1px solid rgba(0,0,0,.12);padding:0}.enh#faq summary{cursor:pointer;list-style:none;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:16px 4px;min-height:52px;font-weight:700;font-size:16px;line-height:1.45;text-align:left}.enh#faq summary::-webkit-details-marker{display:none}.enh#faq summary:after{content:'+';flex:0 0 auto;font-weight:500;font-size:22px;line-height:1;opacity:.45}.enh#faq details[open] summary:after{content:'\\2212'}.enh#faq details>div{padding:0 4px 18px;font-size:15px;line-height:1.9}.enh#faq summary:focus-visible{outline:2px solid currentColor;outline-offset:2px}.enh .cm-who-list,.enh .cm-act-grid,.enh .cm-steps{padding-left:0;margin:0}.enh .cm-who-list{display:grid;gap:10px;list-style:none}.enh .cm-who-list li{background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;margin:0}.enh .cm-act-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;list-style:none}.enh .cm-act-grid li{background:rgba(0,0,0,.03);border-radius:12px;padding:16px 16px 14px;margin:0}.enh .cm-act-grid b{display:block;margin:0 0 4px;font-size:15px}.enh .cm-steps{display:grid;gap:10px;list-style:none;counter-reset:step}.enh .cm-steps li{counter-increment:step;display:grid;grid-template-columns:2.2em 1fr;gap:12px;align-items:start;background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;margin:0}.enh .cm-steps li:before{content:counter(step);font-weight:700;opacity:.5}@media(max-width:640px){.enh .cm-act-grid{grid-template-columns:1fr}}</style>'''
@@ -30,15 +29,15 @@ FAQ={
  ('費用は？','公的制度を使えます。所得に応じた負担上限があり、多くの方が無料または低額で利用しています。'),
  ('どんなスタッフが来ますか？','介護福祉士、看護師などの有資格者が対応します。')],
 'ryozanpaku/':[('費用は？','家賃は月8万円で、朝夕食事付きです。'),
- ('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),
- ('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),
+ ('働きながら住めますか？','住めます。働きながら暮らせます。働き続けるための住まいとして設計しています。'),
+ ('親と離れて暮らせますか？','暮らせます。親元を出たい方の、住まい・日中・お金の手続きの段取りはこちらで組みます。'),
  ('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),
  ('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),
  ('親に知られずに相談できますか？','常識の範囲内でご希望に応じます。'),
  ('空室はありますか？部屋は何室ですか？','部屋は5室です。2026年12月時点で、空きは2室あります。入居できるのは男性の方です。'),
  ('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),
  ('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。'),
- ('県外や遠方からでも入れますか？','はい。日本全国から入居できます。見学は、電話または公式LINEで受け付けます。'),
+ ('県外や遠方からでも入れますか？','はい。県外からでも、日本全国から入居できます。見学は、電話または公式LINEで受け付けます。'),
  ('グループホームですか？受給者証は必要ですか？','梁山泊は、障害福祉サービスのグループホーム（共同生活援助）ではありません。ケアの付いた一般の賃貸住居で、受給者証は不要です。'),
  ('県外から入るとき、役所の手続きは必要ですか？','グループホーム（共同生活援助）ではないため、入居先の市町村で受給者証を申請する必要はありません。'),
  ('就職活動の拠点として使えますか？','はい。ここを足がかりにして就職活動をすることもできます。就労できる方に向いています。')],
@@ -100,11 +99,11 @@ def style_ryozanpaku(o):
     if 'assets/ryozanpaku.css' not in o:
         o=re.sub(
             r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
-            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122d">',
+            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122e">',
             o, count=1)
     old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3><p style="margin:0 0 12px">お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p><h3 class="oh">入居までの流れ</h3><dl class="info" style="margin:6px 0 16px"><dt>ご相談</dt><dd>まずは今のお気持ちや不安をお伺いします</dd><dt>見学・面談</dt><dd>部屋と暮らしを見ていただき、面談します。</dd><dt>契約・入居</dt><dd>入居者さんご本人と契約し、入居します。</dd></dl><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
     new='''<section class="blk" id="what"><div class="ryo-body">
-<p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>就職活動の拠点にも</span></p>
+<p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>働きながら暮らせる</span><span>就職活動の拠点にも</span></p>
 <div class="ryo-lead-card">
 <h3>「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3>
 <p>お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p>
@@ -141,18 +140,11 @@ def style_ryozanpaku(o):
     long='<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p>'
     o=o.replace(short,long,1)
     o=re.sub(r'\n?<div class="ryo-visit">[\s\S]*?</div>\s*','\n',o,count=1)
-    chips='<p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>就職活動の拠点にも</span></p>'
-    if 'ryo-chips' not in o and '<div class="ryo-body">' in o:
+    chips='<p class="ryo-chips"><span>受給者証不要</span><span>全国から入居可</span><span>働きながら暮らせる</span><span>就職活動の拠点にも</span></p>'
+    if '<p class="ryo-chips">' in o:
+        o=re.sub(r'<p class="ryo-chips">[\s\S]*?</p>',chips,o,count=1)
+    elif '<div class="ryo-body">' in o:
         o=o.replace('<div class="ryo-body">','<div class="ryo-body">\n'+chips,1)
-    if 'ryo-xshare' not in o:
-        share_url='https://psr-seishinkai.org/ryozanpaku/?utm_source=x&utm_medium=social&utm_campaign=ryozanpaku'
-        text='就労できる人のための住まい、梁山泊です。日本全国から入居できます。受給者証は不要です。'
-        intent='https://x.com/intent/tweet?text='+_quote(text)+'&url='+_quote(share_url)
-        share='<p class="ryo-xshare"><a href="'+intent+'" target="_blank" rel="noopener">Xでシェア</a></p>'
-        if '<section class="cta" id="contact">' in o:
-            o=o.replace('<section class="cta" id="contact">',share+'\n<section class="cta" id="contact">',1)
-        elif '<!--enh:faq-->' in o:
-            o=o.replace('<!--enh:faq-->',share+'<!--enh:faq-->',1)
     return o
 
 def run(OUT):

@@ -3,3 +3,13 @@ Allow: /
 Disallow: /archive/
 Disallow: /design-gallery/
 Sitemap: https://psr-seishinkai.org/sitemap.xml
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: GrokBot
+Allow: /
+
+User-agent: xAI-SearchBot
+Allow: /
+
