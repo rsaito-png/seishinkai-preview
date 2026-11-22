@@ -1690,21 +1690,9 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <section class="blk wide"><div class="h"><span class="en">NAME</span><h2>名称の由来</h2></div><p style="font-weight:600;font-size:21px;line-height:2.1;letter-spacing:.12em">星に心があるならば<br>それを感じ取れるくらい<br>心こまやかな人たちの<br>集まりでありたいと考えています</p></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">PROFILE</span><h2>法人概要</h2></div><dl class="info">
 <dt>法人名</dt><dd>{ORG}</dd><dt>所在地</dt><dd>{ADDR}</dd><dt>電話</dt><dd>{TEL}</dd><dt>設立</dt><dd>令和3年12月13日</dd><dt>従業員数</dt><dd>15名</dd><dt>代表者</dt><dd>齊藤 連</dd>
-<dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
-<section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
-<li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
-<li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　メンタルピアレジデンス。就労できる人の住まい。全国から入居可。受給者証不要。三重県四日市市山城町。</li>
-<li><a href="{rel}kokyu/"><span>オンライン呼吸法教室</span></a>　毎週火曜 9:30〜10:00。Google Meet。個人は月額3,000円。</li>
-<li><a href="{rel}kintoun/"><span>金斗雲</span></a>　居宅介護（訪問）。外に出にくい方とそのご家族。四日市市・菰野町など三重県内。</li>
-<li><a href="{rel}chamu/"><span>茶夢</span></a>　生活介護。統合失調症・自閉症の方の日中の居場所。三重県四日市市あさけが丘。</li>
-<li><a href="{rel}leo/"><span>レオ</span></a>　児童発達支援・放課後等デイサービス。2歳から18歳。三重県四日市市あさけが丘。</li>
-<li><a href="{rel}leo/parent-training/"><span>ペアレントトレーニング</span></a>　保護者向けプログラム。三重県四日市市のレオ。</li>
-<li><a href="{rel}leo/assessment/"><span>発達検査</span></a>　WISC-V（小1〜高2）と新版K式（未就学児）。三重県四日市市あさけが丘。</li>
-<li><a href="{rel}business/stress-check-training/"><span>ストレスチェック実施者養成研修</span></a>　歯科医師・看護師・精神保健福祉士・公認心理師向け。Google Meet。</li>
-</ul></section>
+<dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd></dl></section>
 <section class="blk wide" style="padding-top:0"><div class="h"><span class="en">REPRESENTATIVE</span><h2>代表</h2></div><div class="prose"><p><b>齊藤 連</b>（さいとう・れん）<br>公認心理師／精神保健福祉士／第二種衛生管理者／農福連携技術支援者（農林水産省認定）</p>
-<p>1984年、三重県津市生まれです。早稲田大学第一文学部東洋哲学専修を卒業後、毎日新聞グループに入社しました。東京での6年間の企業勤務を経て精神保健福祉士に転身し、精神科デイケアに6年間勤務したのち、2022年に独立開業しました。現在、同朋大学大学院でメンタルヘルスのリハビリテーションを研究しています。</p></div></section>
-<section class="blk wide" style="padding-top:0"><div class="h"><span class="en">STAFF</span><h2>専門職</h2></div><dl class="info"><dt>加藤 幸弘</dt><dd>公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務。<a href="{rel}leo/parent-training/" style="display:inline;color:var(--hi)">ペアレントトレーニング</a>とレオの職員研修を担当。</dd><dt>あんどう</dt><dd>公認心理師（滋賀大学教育学部卒業）。<a href="{rel}leo/assessment/" style="display:inline;color:var(--hi)">発達検査</a>を担当。</dd><dt>各事業所</dt><dd>金斗雲：介護福祉士、看護師など／茶夢：有資格者が対応</dd></dl></section>'''
+<p>1984年、三重県津市生まれです。早稲田大学第一文学部東洋哲学専修を卒業後、毎日新聞グループに入社しました。東京での6年間の企業勤務を経て精神保健福祉士に転身し、精神科デイケアに6年間勤務したのち、2022年に独立開業しました。現在、同朋大学大学院でメンタルヘルスのリハビリテーションを研究しています。</p></div></section>'''
 simple_page('about/','星心会について｜理念・法人概要・代表｜三重県四日市市','一般社団法人 心理社会的リハビリテーション・星心会の理念「まず、情緒の安定です。」と、法人概要、代表プロフィールを掲載しています。三重県四日市市山城町。','星心会について','ABOUT',about,photo='walker')
 
 # ---------- access ----------
