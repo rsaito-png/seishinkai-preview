@@ -25,12 +25,11 @@ gtag('config', '{GA_ID}', {{'content_group': '{group}', 'business': '{group}'}})
 </script>'''
 ADDR='〒512-8048 三重県四日市市山城町59-4'
 SNS=[('X','https://x.com/gcbfhq'),('Instagram','https://www.instagram.com/psr_seishinkai/'),('Threads','https://www.threads.com/@psr_seishinkai')]
-LINE_ADD='https://line.me/R/ti/p/@279qxcql'
 def org_node():
     return {"@type":"Organization","@id":BASE+"/#org","name":ORG,"alternateName":"星心会","url":BASE+"/","telephone":TEL,
       "address":{"@type":"PostalAddress","postalCode":"512-8048","addressCountry":"JP","addressRegion":"三重県","addressLocality":"四日市市","streetAddress":"山城町59-4"},
       "areaServed":["四日市市","三重県","名古屋市","愛知県"],"logo":BASE+"/img/logo_black.svg",
-      "sameAs":[u for _,u in SNS]+[LINE_ADD],
+      "sameAs":[u for _,u in SNS],
       "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 連","jobTitle":"代表"}}
 # ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
 SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['日本','四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
@@ -181,7 +180,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/site.css?v=20261102f">{extra}
+<link rel="stylesheet" href="{rel}assets/site.css?v=20261122a">{extra}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
 {ga_snippet(path)}
 </head>
@@ -190,7 +189,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 def sns_html(labels=False):
     return '<div class="sns">'+''.join(f'<a href="{u}" target="_blank" rel="noopener" aria-label="{n}">{ICON[n]}{(" "+n) if labels else ""}</a>' for n,u in SNS)+'</div>'
 def _navlabs():
-    d=['ご本人','ご家族','保護者','企業・支援機関','アクセス','相談する']
+    d=['ご本人','ご家族','保護者','企業・支援機関','アクセス','問合せフォーム']
     v=CHROME.get('top') or []
     return [(v[i] if i<len(v) and v[i] else d[i]) for i in range(6)]
 def _infolinks(key,default):
@@ -203,8 +202,8 @@ def _infolinks(key,default):
             else: n=row.strip()
         out.append((n,u,sm))
     return out
-_DRAWER=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/','')]
-_FOOT=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('相談する','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
+_DRAWER=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('問合せフォーム','contact/','')]
+_FOOT=[('企業・支援機関の方へ','business/',''),('法人情報','about/',''),('アクセス','access/',''),('よくある質問','faq/',''),('問合せフォーム','contact/',''),('プライバシーポリシー','privacy/',''),('サイトマップ','sitemap/','')]
 def header(rel):
     lab=_navlabs(); gs=CHROME.get('groups')
     dr=''
@@ -231,7 +230,7 @@ def footer(rel):
 <div><h5>INFO</h5><ul>{''.join(f'<li><a href="{rel}{u}">{n}</a></li>' for n,u,sm in _infolinks('foot',_FOOT))}</ul>
 <h5 style="margin-top:20px">FOLLOW</h5>{sns_html(True).replace('class="sns"','class="sns" style="flex-direction:column;align-items:flex-start;gap:10px"')}</div>
 <p class="cp">{html.escape(CHROME.get('copy') or f'© 星心会 {ORG}')}</p></div></footer>
-<a class="fab" href="{rel}contact/">相談する</a>
+<a class="fab" href="{rel}contact/">問合せフォーム</a>
 <script src="{rel}assets/site.js"></script>
 </body></html>'''
 def write(path,body):
@@ -282,7 +281,7 @@ PAUSE_NOTE_CSS='''
 .pause-links .go{margin:0}
 '''
 def rydeen_notice(rel):
-    return f'''<div class="pause-note"><p class="pause-line">現在、RYDEENは休止しています。</p><p>星心会のほかの事業は、トップページからご覧いただけます。</p><p class="pause-links"><a class="go" href="{rel}">ほかの事業を見る</a><a class="go" href="{rel}contact/">相談する</a></p></div>'''
+    return f'''<div class="pause-note"><p class="pause-line">現在、RYDEENは休止しています。</p><p>星心会のほかの事業は、トップページからご覧いただけます。</p><p class="pause-links"><a class="go" href="{rel}">ほかの事業を見る</a><a class="go" href="{rel}contact/">問合せフォーム</a></p></div>'''
 def patch_rydeen():
     """公開済みの休止ページに、タイトル直下の案内だけ足す。"""
     fp=_o.path.join(OUT,'rydeen','index.html')
@@ -316,7 +315,7 @@ def write_paused(path, name):
     note=rydeen_notice(rel) if path=='rydeen/' else ''
     o+=f'''<section class="hero short type" style="min-height:42svh"><div class="hin"><p class="en">PAUSED</p><h1 class="long">{esc(name)}は休止しています</h1>{note}
 <p class="sub" style="max-width:28em;line-height:1.9;margin-top:16px">現在、この事業の利用申し込みは受け付けていません。</p>
-<p class="sub" style="margin-top:18px"><a class="go" href="{rel}contact/">相談フォーム</a></p>
+<p class="sub" style="margin-top:18px"><a class="go" href="{rel}contact/">問合せフォーム</a></p>
 <p class="sub"><a href="tel:0593150697">059-315-0697</a></p>
 <p class="sub"><a href="{rel}">トップへ戻る</a></p></div></section>'''
     o+=footer(rel)
@@ -412,7 +411,7 @@ body.sct-page .fab{display:none}
     o=o.replace('<body>','<body class="sct-page">',1)
     o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">'+style+'</head>',1)
     g=(d.get('gal') or [('sct_soudan','相談の様子のイラスト')])[0]
-    acts=f'''<div class="sct-acts" data-track="sct"><a class="sct-btn sct-btn-go" href="https://rsaito-png.github.io/portal/sct.html">申し込む</a><a class="sct-btn sct-btn-talk" href="{rel}contact/">相談する</a></div><p class="sct-quiet">電話 <a href="tel:0593150697">059-315-0697</a></p>'''
+    acts=f'''<div class="sct-acts" data-track="sct"><a class="sct-btn sct-btn-go" href="https://rsaito-png.github.io/portal/sct.html">申し込む</a><a class="sct-btn sct-btn-talk" href="{rel}contact/">問合せフォーム</a></div><p class="sct-quiet">電話 <a href="tel:0593150697">059-315-0697</a></p>'''
     glance='''<dl class="sct-glance"><div><dt>対象</dt><dd>歯科医師・看護師・精神保健福祉士・公認心理師</dd></div><div><dt>日程・形式</dt><dd>Google Meetのリアルタイム開催。3科目・合計5時間（科目1が2時間、科目2と科目3が各1.5時間）。開催日は申込ページの募集回です。定員はお問い合わせください。</dd></div><div><dt>費用</dt><dd>3科目一括 12,800円（税込）。科目1の免除が承認された場合は10,800円（税込）。</dd></div><div><dt>申し込み</dt><dd>申込ページでアカウントを作り、資格を確認し、開催回を選んで、Squareのカード決済をします。</dd></div></dl>'''
     subjects=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(n)}</h3>{_sct_bits(a)}</div></article>' for i,(n,s,a) in enumerate(d.get('what') or [],1))
     steps=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(t)}</h3>{_sct_bits(x)}</div></article>' for i,(en,t,x) in enumerate(d.get('flow') or [],1))
@@ -586,7 +585,7 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
 <div class="ky-card ky-who wide"><span class="ky-ico">{ICO['who']}</span><div><dt>対象</dt><dd>{who_html}</dd></div></div>
 {card('日時')}{card('形式')}{card('料金', True)}
 <div class="ky-card ky-ask wide"><span class="ky-ico">{ICO['ask']}</span><div><dt>申し込み</dt><dd>{''.join(f'<p>{p}</p>' for p in _ky_parts(info.get('申し込み')))}
-<div class="ky-acts"><a class="ky-go" href="{rel}contact/?service=kokyu">相談フォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div></div>
+<div class="ky-acts"><a class="ky-go" href="{rel}contact/?service=kokyu">問合せフォーム</a><a class="ky-tel" href="tel:0593150697">電話 059-315-0697</a></div></dd></div></div>
 </dl>
 <section class="ky-org">
 <h2>企業・団体の方へ</h2>
@@ -606,8 +605,8 @@ LEO_IG_POST='https://www.instagram.com/p/Dfsq9UBFMva/'
 LEO_THREAD_POST='https://www.threads.com/@psr_seishinkai/post/Dfrn9VHgTnI'
 LEO_CONSULT_CSS='''
 .leo-consult{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px;max-width:520px}
-.leo-consult a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px;font-size:15px}
-.leo-consult .w{background:#06c755;color:#fff}
+.leo-consult a{flex:1 1 40%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px;font-size:15px}
+.leo-consult .w{background:var(--hi,#2e7d32);color:#fff}
 .leo-consult .o{background:#fff;color:#1e293b}
 '''
 LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding:28px 20px 8px}
@@ -632,7 +631,7 @@ LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding
 .leo-faq-link a,.leo-maps-reviews a{color:var(--leo-green);font-weight:700}
 '''
 def leo_consult_html(rel):
-    return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'
+    return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{rel}contact/">問合せフォーム</a></div>'
 def leo_days_html():
     ig='<blockquote class="instagram-media" data-instgrm-permalink="%s" data-instgrm-version="14"><a href="%s" target="_blank" rel="noopener">Instagramでこの投稿を見る</a></blockquote>'%(LEO_IG_POST,LEO_IG_POST)
     th='<blockquote class="text-post-media" data-text-post-permalink="%s" data-text-post-version="0"><a href="%s" target="_blank" rel="noopener">Threadsでこの投稿を見る</a></blockquote>'%(LEO_THREAD_POST,LEO_THREAD_POST)
@@ -806,12 +805,12 @@ def service_page(d):
 .ryo-badge{display:inline-block;background:#c2410c;color:#fff;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:8px 18px;font-size:20px;line-height:1.35;box-shadow:0 2px 0 #7c2d12}
 .ryo-vac .ryo-lead{margin:8px 0 0;font-size:15px;font-weight:700}
 .ryo-vac .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.ryo-vac .row a{flex:1 1 30%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px}
-.ryo-vac .w{background:#06c755;color:#fff}
+.ryo-vac .row a{flex:1 1 40%;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;padding:10px 8px}
+.ryo-vac .w{background:var(--hi,#2e7d32);color:#fff}
 .ryo-vac .o{background:#fff;border:1px solid #e2e8f0;color:#1e293b}
 .cta .ryo-badge{margin:8px 0 0}
 </style></head>''',1)
-        ryo_top=f'''<div class="ryo-vac" data-track="ryozanpaku"><p class="ryo-badge">空室 残りわずか</p><p class="ryo-lead">見学・入居のご相談を受け付けています</p><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div></div>'''
+        ryo_top=f'''<div class="ryo-vac" data-track="ryozanpaku"><p class="ryo-badge">空室 残りわずか</p><p class="ryo-lead">見学・入居のご相談を受け付けています</p><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{rel}contact/">問合せフォーム</a></div></div>'''
     if path=='leo/parent-training/':
         o=o.replace('</head>','<style id="leo-consult-css">'+LEO_CONSULT_CSS+'</style></head>',1)
         pt_consult=leo_consult_html(rel)
@@ -862,7 +861,7 @@ def service_page(d):
     if d.get('followup'):
         o+=f'''<section class="blk wide" id="follow-up"><div class="h"><span class="en">FOLLOW-UP</span><h2>個別フォローアップ研修</h2></div><div class="prose" style="font-size:15px;line-height:1.9">{d["followup"]}</div></section>'''
     o+='<div class="rel"><span class="en">RELATED</span><div class="two">'+''.join(f'<a class="btn" style="text-align:center;letter-spacing:.1em" href="{rel}{u}">{n} →</a>' for n,u in d['rel'])+'</div></div>'
-    tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    tel=d.get('tel',TEL); form=f'{rel}contact/'
     B=_bt(o.split('<p class="acc">')[1].split('</section>',1)[1].split('class="rel"')[0]) if '<p class="acc">' in o else ''
     if d.get('acc'):
         _ap=d['acc'].split('／'); _keep=[x for x in _ap if not _dup(x)]
@@ -874,7 +873,7 @@ def service_page(d):
     cm=f'<img class="mark" src="{rel}img/{d["mark"]}" alt="">' if d.get('mark') else ''
     ryo_cta='<p class="ryo-badge">空室 残りわずか</p>' if path=='ryozanpaku/' else ''
     o+=f'''<section class="cta" id="contact">{cm}<p class="en" style="color:var(--hi)">CONTACT</p><h2>{d.get("cta_h","相談する")}</h2>{ryo_cta}
-<div class="row"><a class="w" href="{line}">{html.escape(CHROME.get('line_label') or 'LINE')}</a><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
+<div class="row"><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a><a class="w" href="{form}">{html.escape(CHROME.get('line_label') or '問合せフォーム')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
     o+=footer(rel); write(path,o)
 
 def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub=''):
@@ -910,7 +909,7 @@ def partners(rel):
 <li><b>定着支援と一体で</b>専任担当による<a href="{rel}business/employment/" style="display:inline;color:var(--hi)">雇用定着サポート</a>と住まいを組み合わせて提供できます。</li></ul>'''
     return f'''<section class="blk wide" id="partners"><div class="h"><span class="en">FOR PARTNERS</span><h2>{h}</h2><p>{p}</p></div><div>
 {ul}
-<div class="cta" style="padding:28px 20px;margin-top:22px;text-align:left"><p class="en" style="color:var(--hi)">CONTACT</p><p style="margin:6px 0 14px">紹介・連携の問い合わせ</p><div class="row" style="margin:0;max-width:none"><a class="o" href="tel:0593150697" style="text-align:center">電話 059-315-0697</a><a class="w" href="{rel}contact/" style="text-align:center">フォーム</a></div></div></div></section>'''
+<div class="cta" style="padding:28px 20px;margin-top:22px;text-align:left"><p class="en" style="color:var(--hi)">CONTACT</p><p style="margin:6px 0 14px">紹介・連携の問い合わせ</p><div class="row" style="margin:0;max-width:none"><a class="o" href="tel:0593150697" style="text-align:center">電話 059-315-0697</a><a class="w" href="{rel}contact/" style="text-align:center">問合せフォーム</a></div></div></div></section>'''
 AUD_P=[{"@type":"Audience","audienceType":"企業の人事・雇用担当"},{"@type":"Audience","audienceType":"JEED（高齢・障害・求職者雇用支援機構）"},{"@type":"Audience","audienceType":"ハローワーク"},{"@type":"Audience","audienceType":"労働局"},{"@type":"Audience","audienceType":"働き続けたい社会人・親元を出たい人"}]
 TEJUN='書類と手続きはこちらで進めます。'
 OLD={}
@@ -962,8 +961,8 @@ PAGES.append(dict(path='suishodama/',name='水晶玉',en='SUISHODAMA',ink=True,m
  sub='心の不調・家庭環境・就労環境・人間関係。<br>心の状態を左右する環境を、<wbr>評価し、設計し、手配し、見直します。',acc=ACC,
  tel='070-3291-9626',addr_ld=YAMA,
  what_h='4つの<br>環境調整',what=[('心の不調','眠れない・気分の波','不眠や気分の波に、生活リズムと日々の環境の側から手を打ちます。'),('家庭環境','親元にいると息が詰まる','親との距離を設計し直します。親元を出て暮らす選択肢も含め、住まい・日中・お金の手続きまで手配します。'),('就労環境','仕事が続かない','就労先とペースを設計し、面接同行から会社との折衝まで行います。通い続けるための生活の組み立ても含みます。'),('人間関係','人間関係に疲れた','似た者同士で集う居場所につなぎます。孤立は放置しません。')],
- flow=[["CONTACT","問い合わせ","電話またはLINEでご連絡ください。氏名と相談内容の要点だけで十分です。"],["ASSESSMENT","アセスメント","心の不調・家庭環境・就労環境・人間関係の現状を評価し、調整の優先順位を決めます。"],["DESIGN & ARRANGE","設計と手配","変える環境と手段を決めて計画書にし、家庭・職場・居場所との連絡と調整まで行います。"],["MONITORING","モニタリング","定期的に再評価し、合わない環境は再調整します。"]],
- info=[('内容','メンタルヘルスコーディネート（環境調整）<br>アセスメント／設計と手配／モニタリング'),('担当','精神保健福祉士などの有資格者'),('場所',PLACE_Y),('料金','多くの場合、自己負担なし '+ph('表記の可否')),('申し込み','電話またはLINE')],
+ flow=[["CONTACT","問い合わせ","電話または問合せフォームでご連絡ください。氏名と相談内容の要点だけで十分です。"],["ASSESSMENT","アセスメント","心の不調・家庭環境・就労環境・人間関係の現状を評価し、調整の優先順位を決めます。"],["DESIGN & ARRANGE","設計と手配","変える環境と手段を決めて計画書にし、家庭・職場・居場所との連絡と調整まで行います。"],["MONITORING","モニタリング","定期的に再評価し、合わない環境は再調整します。"]],
+ info=[('内容','メンタルヘルスコーディネート（環境調整）<br>アセスメント／設計と手配／モニタリング'),('担当','精神保健福祉士などの有資格者'),('場所',PLACE_Y),('料金','多くの場合、自己負担なし '+ph('表記の可否')),('申し込み','電話または問合せフォーム')],
  faq=[('親と離れて暮らしたいです。','対応します。親元を出る計画を立て、住まい（梁山泊・一人暮らし）と日中の行き先まで手配します。'),('料金は？','多くの場合、自己負担はありません。公的制度を使い、'+TEJUN),('家族からの依頼は？','受け付けます。本人の利用意思は面談で確認します。'),NAGOYA,('他の支援機関を利用中でも？','対応します。現在の利用先を前提に設計します。')],
  rel=[('しちりんの会','shichirin/'),('RYDEEN','rydeen/')],cta_h='申し込み'))
 
@@ -973,7 +972,7 @@ PAGES.append(dict(path='rydeen/',name='RYDEEN',en='RYDEEN',big='R',logo='rydeen_
  cat='PCで働く',copy=['PCで、','働きます。'],sub='SNS運用代行、Web広報、AIを使った事務。<br>練習ではなく、実務です。',badge='<p class="badge">2026年11月1日 開所</p>',acc=ACC,addr_ld=YAMA,
  what_h='3つの<br>実務',what=[('SNS運用代行','','企業・店舗のSNSを、投稿の企画から作成・予約まで請け負います。'),('Web広報','','ホームページの更新、写真の整理、告知文の作成を、外部の仕事として納品します。'),('AI事務','','AIを道具として使い、文書作成やデータ整理をこなします。使い方は現場で覚えます。')],
  flow=[["VISIT","見学","作業内容と環境を確認します。PCの得意・不得意もここで見ます。"],["TRIAL","体験","実際の作業を体験し、ペースと担当を決めます。"],["CONTRACT","手続き",TEJUN],["WORK","通所","担当業務を持ち、実務として納品します。"]],
- info=[('対象','PC作業が得意、または得意にしたい方'),('場所',PLACE_Y),('開所','2026年11月1日'),('時間',ph('利用時間')),('費用','公的制度の利用可（手続きはこちらで代行） '+ph('利用料')),('申し込み','見学予約は電話またはLINE')],
+ info=[('対象','PC作業が得意、または得意にしたい方'),('場所',PLACE_Y),('開所','2026年11月1日'),('時間',ph('利用時間')),('費用','公的制度の利用可（手続きはこちらで代行） '+ph('利用料')),('申し込み','見学予約は電話または問合せフォーム')],
  faq=[('PCはどの程度使えればいいですか？','見学・体験で作業内容を確認し、担当を決めます。'),('何か準備は要りますか？','要りません。'+TEJUN),('名古屋から通えますか？','通えます。名古屋西ICから車で約30分、三岐線 山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。')],
  rel=[('梁山泊','ryozanpaku/'),('水晶玉','suishodama/')],cta_h='見学を申し込む'))
 
@@ -984,7 +983,7 @@ PAGES.append(dict(path='chamu/',badge='<p class="badge">短時間利用OK</p>',n
  what_h='4つの<br>過ごし方',what=[('料理','','台所に立ちます。献立から仕込み、盛り付けまで行います。'),('喫茶','','カウンターで一杯。静かな喫茶スペースで過ごします。'),('読書','','本棚の前で、自分のペースで過ごします。'),('アート','生け花など','花を生け、手を動かします。言葉にしなくていい表現です。')],
  gal=[('kitchen','台所での調理'),('ikebana','生け花'),('library','本棚'),('parfait','喫茶で過ごす参加者')],
  flow=[["VISIT","見学","場所と雰囲気を確認します。予約制です。"],["TRIAL","体験","短時間から体験し、過ごし方を決めます。"],["CONTRACT","手続き",TEJUN],["STAY","利用","短時間から利用できます。ペースは本人が決めます。"]],
- info=[('対象','統合失調症・自閉症の方<br>強度行動障害：応相談'),('場所',PLACE_A),('時間',ph('利用時間')),('申し込み','見学は予約制。電話またはLINE')],
+ info=[('対象','統合失調症・自閉症の方<br>強度行動障害：応相談'),('場所',PLACE_A),('時間',ph('利用時間')),('申し込み','見学は予約制。電話または問合せフォーム')],
  faq=[('人と話すのが苦手でも大丈夫ですか？','大丈夫です。話さずに過ごすことも前提にしています。'),('短時間だけの利用は？','短時間から利用できます。'),('家族が先に見学できますか？','できます。予約のうえ、ご家族だけの見学にも対応します。'),('スタッフはどんな人ですか？','有資格者が対応します。'),NAGOYA],
  rel=[('金斗雲','kintoun/'),('ご家族の方へ','#family')],cta_h='見学を申し込む'))
 
@@ -995,10 +994,10 @@ PAGES.append(dict(path='shichirin/',name='しちりんの会',en='SHICHIRIN',pho
  cat='自費参加｜手続き不要',copy=['火を起こす','ところから始めます。'],sub='七輪で焼いて、食べます。<br>手続きも、診断も要りません。',acc='三重県菰野町田光／不定期土曜 11:00〜',
  what_h='やること',what=[('火を起こす','','炭に火をつけるところから、全員が自分の手で行います。'),('焼く','','魚や野菜を、七輪の前で焼けるまで待ちます。'),('食べる','','焼いたものをその場で食べます。食材費は参加費に含みます。'),('森','菰野町田光','会場は菰野の森です。街から離れて半日を過ごします。')],
  gal=[('tent_man','テントで笑う'),('fish_meal','みんなで食事'),('stove','火起こし'),('walker','菰野の森')],
- flow=[["APPLY","申し込み","LINEまたは電話で参加希望をお伝えください。"],["DATE","日程の連絡","開催日と集合場所をご連絡します。開催は不定期の土曜日です。"],["DAY","当日","11:00から、火を起こし、焼いて、食べます。"]],
- info=[('種別','自費参加'),('日時','不定期土曜日 11:00〜'),('場所','三重県菰野町田光'),('参加費','食材費込み 3,000円'),('手続き','不要。診断も不要'),('申し込み','LINEまたは電話')],
+ flow=[["APPLY","申し込み","電話または問合せフォームで参加希望をお伝えください。"],["DATE","日程の連絡","開催日と集合場所をご連絡します。開催は不定期の土曜日です。"],["DAY","当日","11:00から、火を起こし、焼いて、食べます。"]],
+ info=[('種別','自費参加'),('日時','不定期土曜日 11:00〜'),('場所','三重県菰野町田光'),('参加費','食材費込み 3,000円'),('手続き','不要。診断も不要'),('申し込み','電話または問合せフォーム')],
  faq=[('手続きは必要ですか？','不要です。自費参加で、診断も要りません。'),('眠れないだけでも参加していいですか？','参加できます。理由は問いません。'),('費用は？','食材費込み3,000円です。'),('次の開催日は？','不定期の土曜日です。申し込み時にご案内します。'),('名古屋から参加できますか？','参加できます。会場は三重県菰野町田光です。詳しい場所は申し込み後にご案内します。'),('一人で参加してもいいですか？','参加できます。')],
- rel=[('梁山泊','ryozanpaku/'),('相談する','contact/')],cta_h='参加を申し込む'))
+ rel=[('梁山泊','ryozanpaku/'),('問合せフォーム','contact/')],cta_h='参加を申し込む'))
 
 def leo_extra(rel):
     b=_slot('parents'); h4=b.get('h4') or []
@@ -1027,7 +1026,7 @@ PAGES.append(dict(path='leo/parent-training/',name='ペアレントトレーニ�
  desc='子育てのこと、学校とのかかわり、家族関係。公認心理師の加藤幸弘が、保護者の方の話を丁寧にお聴きします。レオの利用者とご家族は無料です。三重県四日市市、レオで行います。',
  cat='保護者向けプログラム｜レオ',copy=['育児のモヤモヤを、','解決します。'],sub='カウンセラーが、あなたの話を丁寧にお聴きします。',acc='',
  what_h='相談できる<br>こと',what=[('子育てのこと','','毎日の関わり方や、お子さまの気になる様子についてお話しください。'),('学校とのかかわり','','先生とのやりとりや、登校のことなど、学校との関係についてお聴きします。'),('家族関係','','ご家族の間のことも、あわせてご相談いただけます。'),('進学相談','','特別支援学級や通級、特別支援学校などへの進み方や選び方の迷いについてお聴きします。')],
- flow=[["CONTACT","予約","電話またはLINEでご予約ください。"],["SESSION","相談","カウンセラーが、お話を丁寧にお聴きします。"],["HOME","家庭で","話して整理したことを、ご家庭で試します。"]],
+ flow=[["CONTACT","予約","電話または問合せフォームでご予約ください。"],["SESSION","相談","カウンセラーが、お話を丁寧にお聴きします。"],["HOME","家庭で","話して整理したことを、ご家庭で試します。"]],
  info=[('担当','加藤幸弘（公認心理師、学校心理士、日本アドラー心理学会認定カウンセラー。三重県公立小中学校スクールカウンセラー、元三重県教育委員会勤務）'),('日程','水曜午前（予約制）'),('費用','レオの利用者とそのご家族は無料です。それ以外の方は1回4,000円です。')],
  faq=[('レオを利用していなくても相談できますか？','相談できます。1回4,000円です。'),('どんなことを相談できますか？','子育てのこと、学校とのかかわり、家族関係、特別支援教育の進学相談などをお聴きします。'),('発達検査と組み合わせられますか？','組み合わせられます。')],
  rel=[('発達検査','leo/assessment/'),('レオ','leo/')],cta_h='相談を予約する'))
@@ -1038,7 +1037,7 @@ PAGES.append(dict(path='leo/assessment/',name='発達検査',en='ASSESSMENT',sho
  cat='WISC-V・新版K式｜公認心理師が実施',copy=['特性を数値で掴み、','支援に直結させます。'],sub='検査して終わりにはしません。<br>結果を、日々の学習指導に反映します。',acc='レオ（四日市市あさけが丘）で実施',
  what_h='2つの<br>検査',what=[('WISC-V','小1〜高2','ウィスク・ファイヴ。認知の得意・不得意を指標ごとに数値化します。'),('新版K式','未就学児','新版K式発達検査。未就学のお子さまの発達の状態を確認します。'),('報告書','','結果を報告書にまとめ、視覚・聴覚の特性に応じた指導方法まで書き込みます。'),('フィードバック','','面談で結果を説明し、家庭と支援の現場での使い方を示します。')],
  flow=[["INTERVIEW","事前面談","困りごとと検査の目的を確認します。"],["TEST","検査","公式マニュアルに則り、厳密に実施します。"],["REPORT","報告書","結果と具体的な学習アプローチを文書にします。"],["FEEDBACK","フィードバック面談","結果を説明し、支援に落とし込みます。"]],
- info=[('検査','WISC-V（小1〜高2）／新版K式発達検査（未就学児）'),('料金','各 25,000円（税込）<br>事前面談・検査・報告書・フィードバック面談を含む'),('担当','公認心理師'),('場所','レオ（三重県四日市市あさけが丘2-1-42）'),('申し込み','電話またはLINE')],
+ info=[('検査','WISC-V（小1〜高2）／新版K式発達検査（未就学児）'),('料金','各 25,000円（税込）<br>事前面談・検査・報告書・フィードバック面談を含む'),('担当','公認心理師'),('場所','レオ（三重県四日市市あさけが丘2-1-42）'),('申し込み','電話または問合せフォーム')],
  faq=[('市役所や学校に提出できますか？','提出先によっては、民間施設の結果を公的な判定基準（各種申請や入級判定など）として受理しない場合があります。申請目的の場合は、事前に提出先へ有効性を確認してください。'),('料金に含まれるものは？','事前面談、検査実施、結果報告書の作成、フィードバック面談です。'),('検査後の支援は？','結果をもとに学習アプローチを設計します。レオの利用やペアレントトレーニングにも直結します。')],
  rel=[('ペアレントトレーニング','leo/parent-training/'),('レオ','leo/')],cta_h='検査を申し込む'))
 
@@ -1048,9 +1047,9 @@ PAGES.append(dict(path='kintoun/',name='金斗雲',en='KINTOUN',big='金',
  cat='訪問｜アウトリーチ',copy=['来られないなら、','こちらから行きます。'],sub='家から出られない、窓口に行けない。<br>その状態を前提に、自宅から始めます。',acc='訪問地域：四日市市・菰野町など三重県内',
  what_h='4つの<br>支援',what=[('アウトリーチ','','相談に来られない人のもとへ出向きます。外に連れ出すことを目的にはしません。'),('家事援助','','食事、掃除、洗濯。生活の土台を自宅で立て直します。'),('外出の同行','','買い物、寺、街。外に出る日は一緒に出ます。'),('家族の相談','','本人が動けなくても、家族からの相談で始められます。')],
  gal=[('kitchen_prep','台所の下ごしらえ'),('clothes','古着屋へ'),('snackwalk','街歩き'),('storefront','街の店先')],
- flow=[["CONTACT","相談","本人でも家族でも、電話またはLINEでご連絡ください。"],["VISIT","訪問","まず話を聞きます。無理に外へ出そうとはしません。"],["PLAN","計画","必要な支援を決めます。"+TEJUN],["SUPPORT","支援開始","定期的に訪問し、生活と外出の範囲を少しずつ広げます。"]],
- info=[('対象','外に出にくい方、そのご家族'),('訪問地域','四日市市・菰野町など三重県内 '+ph('実施地域の詳細')),('担当','精神保健福祉士などの有資格者'),('費用','公的制度の利用可。所得に応じた負担上限あり。手続きはこちらで代行'),('申し込み','電話またはLINE')],
- faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。'),('家庭の環境ごと見直したい場合は？','ご家族からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">相談フォーム</a>で受け付けます。')],
+ flow=[["CONTACT","相談","本人でも家族でも、電話または問合せフォームでご連絡ください。"],["VISIT","訪問","まず話を聞きます。無理に外へ出そうとはしません。"],["PLAN","計画","必要な支援を決めます。"+TEJUN],["SUPPORT","支援開始","定期的に訪問し、生活と外出の範囲を少しずつ広げます。"]],
+ info=[('対象','外に出にくい方、そのご家族'),('訪問地域','四日市市・菰野町など三重県内 '+ph('実施地域の詳細')),('担当','精神保健福祉士などの有資格者'),('費用','公的制度の利用可。所得に応じた負担上限あり。手続きはこちらで代行'),('申し込み','電話または問合せフォーム')],
+ faq=[('家族からの相談でも始められますか？','始められます。本人が相談できない状態を前提にしています。'),('無理に外へ連れ出されませんか？','連れ出しを目的にはしません。話を聞くところから始めます。'),('費用は？','公的制度を使えます。所得に応じた負担上限があり、'+TEJUN),('名古屋も訪問できますか？','訪問は四日市市・菰野町など三重県内です。名古屋からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">問合せフォーム</a>で受け付けます。'),('家庭の環境ごと見直したい場合は？','ご家族からの相談は、電話または<a href="../contact/" style="display:inline;color:var(--hi)">問合せフォーム</a>で受け付けます。')],
  rel=[('茶夢','chamu/'),('ご家族の方へ','#family')],cta_h='相談する'))
 
 PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,extra=partners,audience=AUD_P,name='梁山泊',en='MENTAL PEER RESIDENCE',big='梁',type='Residence',addr_ld=YAMA,
@@ -1058,10 +1057,10 @@ PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,ex
  desc='メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。',
  cat='メンタルピアレジデンス｜家賃 月8万円',copy=['仕事はできる人が、','崩れないための住まいです。'],sub='職場定着を支える、住まいとケアの場です。<br>似た者同士で暮らし、仕事帰りに整えます。',acc=ACC,
  what_h='梁山泊の<br>役割',what=[('職場定着','生活基盤','職場定着は生活で決まります。睡眠・食事・帰宅後の過ごし方を整え、欠勤と離職の芽を生活の側で摘みます。'),('ピアで暮らす','似た者同士','同じように心の波を抱えて働く人同士で暮らします。'),('仕事帰りに整える','','職場の緊張を家に持ち込みません。帰って整える場所があります。'),('親元を出る','','親元にいると息が詰まる人の、最初の住まいにもなります。')],
- flow=[["CONTACT","問い合わせ","電話またはLINEで、今の仕事と住まいの状況を要点だけお伝えください。"],["VISIT","見学・面談","建物と暮らし方を確認し、入居の条件を説明します。"],["MOVE","入居","通勤と生活のリズムを組み立てます。"],["KEEP","定着","崩れの兆しは早めに拾い、環境を調整します。職場・紹介元との連携窓口は本部が一本で受けます。"]],
- info=[('正式名称','メンタルピアレジデンス・梁山泊'),('対象','仕事を続けたい、心の波を抱える社会人／親元を出たい人 '+ph('入居条件')),('場所','三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分'),('費用','家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）'),('申し込み','電話 059-315-0697 またはLINE')],
- faq=[('費用は？','家賃は月8万円で、朝夕食事付きです。'),('働きながら住めますか？','住めます。働きながら暮らせます。働き続けるための住まいとして設計しています。'),('親と離れて暮らせますか？','暮らせます。親元を出たい方の、住まい・日中・お金の手続きの段取りはこちらで組みます。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親に知られずに相談できますか？','常識の範囲内でご希望に応じます。'),('空室はありますか？部屋は何室ですか？','部屋は5室です。2026年12月時点で、空きは2室あります。入居できるのは男性の方です。'),('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。'),('県外や遠方からでも入れますか？','はい。県外からでも、日本全国から入居できます。見学は、電話または公式LINEで受け付けます。'),('グループホームですか？受給者証は必要ですか？','梁山泊は、障害福祉サービスのグループホーム（共同生活援助）ではありません。ケアの付いた一般の賃貸住居で、受給者証は不要です。'),('県外から入るとき、役所の手続きは必要ですか？','グループホーム（共同生活援助）ではないため、入居先の市町村で受給者証を申請する必要はありません。'),('就職活動の拠点として使えますか？','はい。ここを足がかりにして就職活動をすることもできます。就労できる方に向いています。')],
- rel=[('しちりんの会','shichirin/'),('相談する','contact/')],cta_h='見学を申し込む'))
+ flow=[["CONTACT","問い合わせ","電話または問合せフォームで、今の仕事と住まいの状況を要点だけお伝えください。"],["VISIT","見学・面談","建物と暮らし方を確認し、入居の条件を説明します。"],["MOVE","入居","通勤と生活のリズムを組み立てます。"],["KEEP","定着","崩れの兆しは早めに拾い、環境を調整します。職場・紹介元との連携窓口は本部が一本で受けます。"]],
+ info=[('正式名称','メンタルピアレジデンス・梁山泊'),('対象','仕事を続けたい、心の波を抱える社会人／親元を出たい人 '+ph('入居条件')),('場所','三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分'),('費用','家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）'),('申し込み','電話 059-315-0697 または問合せフォーム')],
+ faq=[('費用は？','家賃は月8万円で、朝夕食事付きです。'),('働きながら住めますか？','住めます。働きながら暮らせます。働き続けるための住まいとして設計しています。'),('親と離れて暮らせますか？','暮らせます。親元を出たい方の、住まい・日中・お金の手続きの段取りはこちらで組みます。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親に知られずに相談できますか？','常識の範囲内でご希望に応じます。'),('空室はありますか？部屋は何室ですか？','部屋は5室です。2026年12月時点で、空きは2室あります。入居できるのは男性の方です。'),('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。'),('県外や遠方からでも入れますか？','はい。県外からでも、日本全国から入居できます。見学は、電話または問合せフォームで受け付けます。'),('グループホームですか？受給者証は必要ですか？','梁山泊は、障害福祉サービスのグループホーム（共同生活援助）ではありません。ケアの付いた一般の賃貸住居で、受給者証は不要です。'),('県外から入るとき、役所の手続きは必要ですか？','グループホーム（共同生活援助）ではないため、入居先の市町村で受給者証を申請する必要はありません。'),('就職活動の拠点として使えますか？','はい。ここを足がかりにして就職活動をすることもできます。就労できる方に向いています。')],
+ rel=[('しちりんの会','shichirin/'),('問合せフォーム','contact/')],cta_h='見学を申し込む'))
 
 PAGES.append(dict(path='kokyu/',keep_desc=True,name='オンライン呼吸法教室',en='KOKYU',short=True,type='Service',
  title='オンライン呼吸法教室｜毎週火曜 9:30〜10:00｜星心会',
@@ -1073,9 +1072,9 @@ PAGES.append(dict(path='kokyu/',keep_desc=True,name='オンライン呼吸法教
  info=[('日時','毎週火曜 9:30〜10:00（30分）'),
   ('形式','Google Meet。カメラはオフでも参加できます。'),
   ('料金','個人は月額3,000円。法人はご相談ください。'),
-  ('申し込み','相談フォームか、電話です。本文に、個人か会社の担当者かを書いてください。'),
+  ('申し込み','問合せフォームか、電話です。本文に、個人か会社の担当者かを書いてください。'),
   ('注意','医療や治療の代わりではありません。')],
- faq=[],rel=[('相談する','contact/')],cta_h='申し込む'))
+ faq=[],rel=[('問合せフォーム','contact/')],cta_h='申し込む'))
 
 BIZ=[('employment','雇用定着サポート','EMPLOYMENT','現場に任せず、専任の担当者をつけます。'),('stress-check','ストレスチェック','STRESS CHECK','実施して終わらせず、組織を変える材料にします。'),('stress-check-training','ストレスチェック実施者養成研修','PRACTITIONER TRAINING','実施者になるための研修を、オンラインで行います。'),('agent-consulting','エージェントコンサル','AGENT CONSULTING','Grok Botを、事業所の職員にします。'),('training','研修','TRAINING','児童指導員研修と合気道研修を行います。')]
 PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',en='STRESS CHECK',short=True,type='Service',
@@ -1084,7 +1083,7 @@ PAGES.append(dict(path='business/stress-check/',name='ストレスチェック',
  cat='企業・法人向け',copy=['実施して終わらせず、','組織を変える材料にします。'],sub='アドラー心理学 × ラインケア支援です。',acc='三重・愛知の企業・法人向け',
  what_h='3つの<br>支援',what=[('管理職研修','','自社の診断データを題材に、ケーススタディとグループワークを行います。現場で使える部下への接し方を身につけます。'),('個別面談','アドラー流','高ストレス者と管理職への1on1です。他責から「今、自分にできること」へ意識を向けます。'),('ラインケア定着','','許可を得たうえで、管理職へ具体的な対応策をフィードバックします。負担を一人に集中させません。')],
  flow=[["CONSULT","無料相談","現状と過去の結果を確認します。"],["PLAN","提案","解決プランを提示します。強引な営業はしません。"],["RUN","実施","チェック・研修・面談を一社完結で行います。"],["FOLLOW","定着","ラインケアの体制を現場に残します。"]],
- info=[('対象','企業・法人'),('料金','無料相談あり／本契約 '+ph('料金')),('担当','公認心理師・精神保健福祉士などの有資格者'),('申し込み','電話または相談フォーム')],
+ info=[('対象','企業・法人'),('料金','無料相談あり／本契約 '+ph('料金')),('担当','公認心理師・精神保健福祉士などの有資格者'),('申し込み','電話または問合せフォーム')],
  faq=[('相談は有料ですか？','初回の相談は無料です。'),('産業医との関係は？','産業医の判定に加え、予防と現場での定着を担います。'),('過去の結果も使えますか？','使えます。過去の診断結果をもとに提案します。')],
  rel=[('雇用定着サポート','business/employment/'),('エージェントコンサル','business/agent-consulting/')],cta_h='無料で相談する'))
 
@@ -1124,7 +1123,7 @@ PAGES.append(dict(path='business/agent-consulting/',deco=True,extra=lambda rel: 
  cat='事業所・法人向け',copy=['Grok Botを、','事業所の職員にします。'],sub='チャットで頼むと、書類と広報を仕上げて戻します。<br>星心会が毎日使っている方法を、そのまま伝えます。',acc='',
  what_h='Grok Botに<br>任せる業務',what=[('計画書・会議録','','前回の計画とモニタリング記録を渡すと、アセスメントから計画原案、担当者会議録までをGoogleドキュメントに下書きします。職員は確認と修正に集中できます。'),('記録・事務','','メモや音声から記録を文章化します。受領通知などの定型書類も、届いたPDFから作ります。'),('SNS・広報','','日々の報告から投稿文と画像を作り、InstagramやXに出す前の下書きまで用意します。'),('ホームページ','','このサイトもGrok Botで作り、更新しています。文言の修正や写真の差し替えを、チャットの一言で反映します。')],
  flow=[["CONSULT","無料相談","任せたい業務と予算を伺います。"],["SETUP","導入","Grok Botを事業所のGoogleアカウントや様式につなぎ、最初の業務を一緒に動かします。"],["TRAIN","研修","職員が自分で頼めるところまで教えます。"],["HANDOVER","自走","以降は事業所だけで運用できます。"]],
- info=[('対象','対人支援の事業所・法人'),('マニュアル','個別支援計画一式・計画相談書類一式の高速化マニュアル　各18,000円（税込）'),('伴走コンサル','月額30,000円（税込）を3か月（総額90,000円）。4か月目以降は事業所だけで運用できます。'),('申し込み','電話または相談フォーム')],
+ info=[('対象','対人支援の事業所・法人'),('マニュアル','個別支援計画一式・計画相談書類一式の高速化マニュアル　各18,000円（税込）'),('伴走コンサル','月額30,000円（税込）を3か月（総額90,000円）。4か月目以降は事業所だけで運用できます。'),('申し込み','電話または問合せフォーム')],
  faq=[('Grok Botとは何ですか？','チャットで頼んだ仕事を、ドキュメント作成やメール確認、Web作業まで自分で進めるAIエージェントです。'),('高額なシステムが必要ですか？','不要です。今あるパソコンとGoogleアカウントで始められます。'),('PCに詳しい職員がいません。','チャットで頼めれば使えます。現場が自分で使えるところまで研修します。'),('個人情報の扱いは？','どの情報を渡し、何を職員が確認するか、事業所ごとに決めてから始めます。')],
  rel=[('研修','business/training/'),('ストレスチェック','business/stress-check/')],cta_h='無料で相談する'))
 
@@ -1331,9 +1330,9 @@ def chamu_page(d,rel,ld):
     while pi<len(seq): o+=tuck()
     if d.get('rel'):
         o+=''.join(f'<p class="more"><a href="{rel}{u}">{esc(n)}</a></p>' for n,u in d['rel'])
-    tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    tel=d.get('tel',TEL); form=f'{rel}contact/'
     o+=f'<section class="sign" id="contact"><h2>{esc(d.get("cta_h") or "相談する")}</h2>'
-    o+=f'<p><a href="{line}">{esc(CHROME.get("line_label") or "LINE")}</a></p>'
+    o+=f'<p><a href="{form}">{esc(CHROME.get("line_label") or "問合せフォーム")}</a></p>'
     # JSON-LDのtelephoneは本文の重複ではない。手紙の末尾に番号を一度だけ出す。
     if _plain(tel) not in _plain(o[o.rfind('<article'):]):
         o+=f'<p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
@@ -1400,9 +1399,9 @@ def kintoun_page(d,rel,ld):
     while pi<len(seq): o+=dish()
     if d.get('rel'):
         o+=''.join(f'<p class="more"><a href="{rel}{u}">{esc(n)}</a></p>' for n,u in d['rel'])
-    tel=d.get('tel',TEL); line=f'{rel}contact/#line'
+    tel=d.get('tel',TEL); form=f'{rel}contact/'
     o+=f'<section class="sign" id="contact"><h2>{esc(d.get("cta_h") or "相談する")}</h2>'
-    o+=f'<p><a href="{line}">{esc(CHROME.get("line_label") or "LINE")}</a></p>'
+    o+=f'<p><a href="{form}">{esc(CHROME.get("line_label") or "問合せフォーム")}</a></p>'
     if _plain(tel) not in _plain(o[o.rfind('<article'):]):
         o+=f'<p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
     o+=(d.get('cta_note') or '')+'</section></article></main>'
@@ -1537,7 +1536,7 @@ def leo_book_html(d,rel):
         line=h4[i][1][0] if i<len(h4) and h4[i][1] else blurbs.get(u,'')
         o+=f'<p><a href="{rel}{u}">{esc(n)}</a>{("　"+_soft(line)) if line else ""}</p>'
     tel=d.get('tel') or TEL
-    o+=f'<h2>{esc(d.get("cta_h") or "見学を申し込む")}</h2><p><a href="{rel}contact/#line">{esc(CHROME.get("line_label") or "LINE")}</a></p><p><a href="tel:{tel.replace("-","")}">{esc(tel)}</a></p>'
+    o+=f'<h2>{esc(d.get("cta_h") or "見学を申し込む")}</h2><p><a href="tel:{tel.replace("-","")}">{esc(CHROME.get("tel_label") or "電話")}</a></p><p><a href="{rel}contact/">{esc(CHROME.get("line_label") or "問合せフォーム")}</a></p>'
     return o+'</section></article></main>'
 
 _td=_top_doc()
@@ -1650,7 +1649,7 @@ def top():
 <img class="stph" src="img/yamashiro_st.jpg" alt="三岐線 山城駅" loading="lazy" width="1600" height="1201" style="width:20%;height:auto;display:block;margin-top:24px"><ul class="lst" style="margin-top:24px;border-top-color:rgba(255,255,255,.4)"><li style="border-color:rgba(255,255,255,.12)">三岐線 山城駅から徒歩5分</li><li style="border-color:rgba(255,255,255,.12)">四日市駅から三岐バス「団地下」</li><li style="border-color:rgba(255,255,255,.12)">本部：三重県四日市市山城町59-4</li></ul>
 <a class="go" href="access/" style="margin-top:28px">アクセスを見る</a></div></section></div>
 <section class="cta" id="contact"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><p style="font-size:13px;opacity:.7;margin-top:8px">どの事業か決まっていなくてもかまいません。</p>
-<div class="row"><a class="w" href="contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
+<div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="contact/">問合せフォーム</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
     o=o.replace('<h2>SNS</h2>',f'<h2>{html.escape(sns_h)}</h2>',1)
     if col_nm: o=o.replace('<p class="nm">世界のメンタルヘルス・ニュース</p>',f'<p class="nm">{html.escape(col_nm)}</p>',1)
     if big_html: o=o.replace('<p class="big30">名古屋西IC<br>から車で <em>30</em>分</p>',f'<p class="big30">{big_html}</p>',1)
@@ -1702,13 +1701,13 @@ def access(rel): return f'''<section class="blk wide"><div class="h"><span class
 <li><b>本部・梁山泊</b>〒512-8048 三重県四日市市山城町59-4<br><a href="{MAP}三重県四日市市山城町59-4" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>茶夢・レオ</b>〒512-8055 三重県四日市市あさけが丘2-1-42（山城駅から徒歩12分）<br><a href="{MAP}三重県四日市市あさけが丘2-1-42" target="_blank" rel="noopener" style="display:inline;color:var(--hi)">地図を開く</a></li>
 <li><b>しちりんの会</b>三重県菰野町田光（詳しい場所は申し込み後にご案内します）</li></ul></section>
-<section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="w" href="{rel}contact/#line">LINE</a><a class="o" href="tel:0593150697">電話</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
+<section class="cta"><p class="en" style="color:var(--hi)">CONTACT</p><h2>相談する</h2><div class="row"><a class="o" href="tel:0593150697">電話</a><a class="w" href="{rel}contact/">問合せフォーム</a></div><a class="tnum" href="tel:0593150697">059-315-0697</a></section>'''
 simple_page('access/','アクセス｜名古屋西ICから車で30分・三岐線山城駅から徒歩5分｜星心会（三重県四日市市）','星心会へは、名古屋西ICから車で約30分、三岐線山城駅から徒歩5分です。四日市駅から三岐バス「団地下」も利用できます。所在地は三重県四日市市山城町59-4です。','アクセス','ACCESS',access,photo='rainbow')
 
 # ---------- faq ----------
 FAQ=[('費用はかかりますか？','事業によります。公的制度を使う事業は所得に応じた負担上限があり、多くの場合、自己負担なしまたは低額です。しちりんの会は自費参加（食材費込み3,000円）、梁山泊は一般の賃貸住居で、家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。'),
 ('診断がなくても相談できますか？','できます。診断の有無は問いません。'),('家族から相談してもいいですか？','受け付けます。本人が動けない状態でも、家族からの相談で始められます。'),
-NAGOYA,('どこに相談すればいいかわかりません。','どの事業か決まっていなくても、059-315-0697、または相談フォームへご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。'),
+NAGOYA,('どこに相談すればいいかわかりません。','どの事業か決まっていなくても、059-315-0697、または問合せフォームへご連絡ください。'),('名古屋からどのくらいかかりますか？','名古屋西ICから車で約30分です。三岐線 山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。'),
 ('病院に通っていないと使えませんか？','使えます。通院の有無を前提にしていません。生活と環境の側から組み立てます。'),('人間関係に疲れています。どこに相談すればいいですか？','しちりんの会に参加するか、住まいごと変えたい方は梁山泊をご覧ください。')]
 FAQ_CATS=[('全体・はじめての方','common',FAQ),
 ('子ども（レオ・発達検査・ペアレントトレーニング）','kids',[('レオは何歳から利用できますか？','2歳から18歳までです。小学校入学前は児童発達支援、小学生以降は放課後等デイサービスとして利用します。'),('受給者証はどこで申請しますか？','お住まいの市町です。四日市市はこども発達支援課（059-354-8064）、菰野町は子ども家庭課 発達支援係（059-391-1226）です。詳しくは<a href="{r}guide/jukyushasho/" style="display:inline;color:var(--hi)">受給者証ガイド</a>をご覧ください。'),('発達検査の料金は？','WISC-V（小1〜高2）・新版K式（未就学児）とも各25,000円（税込）です。事前面談、検査、結果報告書、フィードバック面談を含みます。'),('ペアレントトレーニングの費用は？','レオの利用者とそのご家族は無料、それ以外の方は1回4,000円です。水曜午前の予約制です。')]),
@@ -1744,7 +1743,7 @@ def guide(rel):
 <p class="src">出典：<a href="{Y}" target="_blank" rel="noopener">四日市市</a>／<a href="{K}" target="_blank" rel="noopener">菰野町</a>／三重県「市町窓口」（2026年11月確認）</p>
 <h2>② 受給者証が届くまで</h2>
 <div class="gsteps"><div class="st"><b>相談・申請</b>市町の窓口へ</div><div class="st"><b>計画案</b>相談支援事業所が作成</div><div class="st"><b>提出</b>計画案を市町へ</div><div class="st"><b>支給決定</b>受給者証が届く</div><div class="st hi"><b>契約・利用</b>事業所と契約</div></div>
-<div class="help" style="margin-top:18px">手続きで迷ったときは、電話または<a href="{rel}contact/">相談フォーム</a>へご連絡ください。</div>
+<div class="help" style="margin-top:18px">手続きで迷ったときは、電話または<a href="{rel}contact/">問合せフォーム</a>へご連絡ください。</div>
 <p class="src">大人のサービスでは、種類により障害支援区分の認定が入ります。くわしい流れは窓口でご確認ください。</p>
 <h2>③ 子どもと大人のちがい</h2>
 <table class="cmp"><tr><th></th><th class="k">子ども（18歳未満）</th><th class="a">大人（18歳以上）</th></tr>
@@ -1764,7 +1763,7 @@ def guide(rel):
 <a class="any" href="{rel}shichirin/"><b>しちりんの会</b><small>自費参加 3,000円</small><span class="u">手続き不要</span></a>
 <a class="any" href="{rel}kokyu/"><b>オンライン呼吸法教室</b><small>毎週火曜 9:30〜10:00・月額3,000円</small><span class="u">受給者証不要</span></a>
 </div>
-<div class="help">手続きがわからないときは、電話または相談フォームへご連絡ください。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/">相談フォーム</a></div>
+<div class="help">手続きがわからないときは、電話または問合せフォームへご連絡ください。<br><a href="tel:0593150697">本部 059-315-0697</a><a href="tel:07069670011">レオ 070-6967-0011</a><a href="{rel}contact/">問合せフォーム</a></div>
 </div>"""
 simple_page('guide/jukyushasho/','受給者証ガイド｜子ども・大人の申請窓口（四日市市・菰野町）｜星心会','福祉サービスに必要な受給者証を図解。18歳未満は通所受給者証、18歳以上は障害福祉サービス受給者証。四日市市・菰野町の窓口と流れ、星心会のどの事業所で使えるかをまとめました。','受給者証ガイド','GUIDE',guide)
 NEWS=[('2026-11-04','受給者証ガイドを公開しました','guide','児童発達支援・放課後等デイサービスを使うための通所受給者証について、四日市市・菰野町の窓口と流れをまとめたページを公開しました。','guide/jukyushasho/')]
@@ -1780,13 +1779,10 @@ simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICか
 
 # ---------- contact ----------
 # contact/index.html は手編集。ファイルがあるときは書き戻さない。
-# 公式LINEは法人共通（星心会 公式LINE）。事業別アカウントや未掲載の案内に戻さない。
-LINE_ID='@279qxcql'
-LINE_ADD='https://line.me/R/ti/p/@279qxcql'
-LINE_BLURB='星心会への相談は、法人共通の公式LINE（'+LINE_ID+'）、電話059-315-0697、または相談フォームで受け付けます。'
+# 公開の問い合わせ方法は電話と問合せフォームのみ。公式LINEは公開しない。
+CONTACT_BLURB='星心会への相談は、電話059-315-0697、または問合せフォームで受け付けます。'
 _CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修','オンライン呼吸法教室']
-def contact(rel): return f'''<section class="blk" data-track="contact"><div class="h"><span class="en">LINE</span><h2 id="line">星心会 公式LINE</h2><p>本部・全事業の窓口です。友だち追加は、パソコンでもスマートフォンでもこちらから進められます。</p></div><p><a class="btn" href="{LINE_ADD}" style="background:#06c755;max-width:100%;white-space:normal;text-align:center;line-height:1.5">星心会 公式LINEを友だち追加</a></p><p style="color:var(--soft);font-size:14px;margin-top:14px">LINE ID　<b style="color:var(--ink);font-weight:600;letter-spacing:.06em">{LINE_ID}</b></p></section>
-<section class="blk" data-track="contact" style="padding-top:0"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
+def contact(rel): return f'''<section class="blk" data-track="contact"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
 <ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
 <section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
 <p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>
@@ -1807,7 +1803,7 @@ def _finish_contact_page():
     if os.path.isfile(fp):
         print('contact: preserved hand-edited page')
         return
-    simple_page('contact/','相談する｜LINE・電話059-315-0697・フォーム｜星心会（三重県四日市市）',LINE_BLURB,'相談する','CONTACT',contact)
+    simple_page('contact/','問合せフォーム｜電話059-315-0697｜星心会（三重県四日市市）',CONTACT_BLURB,'問合せフォーム','CONTACT',contact)
     rel='../'
     o=open(fp,encoding='utf-8').read()
     stopper='''<script>
@@ -1825,13 +1821,13 @@ document.addEventListener('submit', function (e) {
 '''
     o=o.replace('<!-- Google tag (gtag.js) -->', stopper+'<!-- Google tag (gtag.js) -->', 1)
     o=o.replace(f'<script src="{rel}assets/site.js"></script>', f'<script src="{rel}assets/contact-config.js"></script>\n<script type="module" src="{rel}assets/contact-intake.mjs"></script>\n<script src="{rel}assets/site.js"></script>', 1)
-    o=o.replace(f'href="{rel}assets/site.css?v=20261102f"', f'href="{rel}assets/site.css?v=20261107a"', 1)
+    o=o.replace(f'href="{rel}assets/site.css?v=20261122a"', f'href="{rel}assets/site.css?v=20261122a"', 1)
     open(fp,'w',encoding='utf-8').write(o)
 _finish_contact_page()
 
 # ---------- privacy ----------
 def priv(rel): return f'''<section class="blk prose"><p>{ORG}（以下「当法人」）は、相談・問い合わせ等で取得した個人情報を、次のとおり取り扱います。</p>
-<p><b>相談フォーム</b><br>ウェブサイトの相談フォームに書かれた内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。このフォームから通知メールや自動返信は送りません。</p>
+<p><b>問合せフォーム</b><br>ウェブサイトの問合せフォームに書かれた内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。このフォームから通知メールや自動返信は送りません。</p>
 <p><b>1. 利用目的</b><br>相談・問い合わせへの回答、サービスの提供と連絡のために利用します。</p><p><b>2. 第三者提供</b><br>法令に基づく場合を除き、本人の同意なく第三者に提供しません。</p>
 <p><b>3. 管理</b><br>漏えい・滅失を防ぐため、適切に管理します。</p><p><b>4. 開示・訂正・削除</b><br>本人からの求めに応じ、法令に従って対応します。</p>
 <p><b>5. アクセス解析</b><br>本サイトでは、アクセス解析ツールを使用する場合があります。</p><p><b>6. 窓口</b><br>{ORG}　{ADDR}　TEL {TEL}</p></section>'''
@@ -1846,7 +1842,7 @@ def write_leo_faq():
     qa=leo_llmo.faq_resolved(relof(path))
     simple_page(path,title,desc,'レオのよくある質問','LEO FAQ',leo_llmo.faq_body,ld=[faq_ld(qa)],sub='児童発達支援・放課後等デイサービス｜四日市市あさけが丘')
 
-INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('法人情報','about/'),('アクセス','access/'),('よくある質問','faq/'),('レオのよくある質問','leo/faq/'),('相談する','contact/'),('プライバシーポリシー','privacy/')]
+INFO=[('企業・支援機関の方へ','business/'),('お知らせ','news/'),('受給者証ガイド','guide/jukyushasho/'),('名古屋からのアクセス','access/nagoya/'),('法人情報','about/'),('アクセス','access/'),('よくある質問','faq/'),('レオのよくある質問','leo/faq/'),('問合せフォーム','contact/'),('プライバシーポリシー','privacy/')]
 ALL=[('トップ','')]+[(s[1],s[2]) for s in SVCS]+INFO
 write_leo_faq()
 def smap(rel):
@@ -1865,7 +1861,7 @@ o=head('/seishinkai-preview/','ページが見つかりません｜星心会',''
 o=o.replace('<link rel="canonical" href="'+BASE+'/404.html">','')
 o=o.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">'+'''<script>/* 404 is served at any depth: rewrite relative links to site root */document.write('<base href="'+(location.pathname.startsWith('/seishinkai-preview/')?'/seishinkai-preview/':'/')+'">')</script>''',1)
 o=o.replace('href="/seishinkai-preview/','href="')
-write('404.html',o+header('')+'<section class="blk" style="text-align:center;min-height:60svh"><p class="en" style="color:var(--hi)">404</p><h1 style="font-weight:600;font-size:30px;letter-spacing:.14em;margin:10px 0 20px">ページが見つかりません</h1><a class="btn" href="./">トップへ</a> <a class="btn" href="contact/" style="background:var(--hi)">相談する</a></section>'+footer(''))
+write('404.html',o+header('')+'<section class="blk" style="text-align:center;min-height:60svh"><p class="en" style="color:var(--hi)">404</p><h1 style="font-weight:600;font-size:30px;letter-spacing:.14em;margin:10px 0 20px">ページが見つかりません</h1><a class="btn" href="./">トップへ</a> <a class="btn" href="contact/" style="background:var(--hi)">問合せフォーム</a></section>'+footer(''))
 
 # ---------- robots / llms ----------
 # 水晶玉と RYDEEN は休止ページの noindex を読ませるため、Disallow しない。
@@ -1887,7 +1883,7 @@ open(OUT+'/robots.txt','w').write('\n'.join([
     '',
 ])+'\n')
 L=f'''# 星心会（{ORG}）
-> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。代表者は齊藤 連です。公式LINEは {LINE_ADD} です。水晶玉とRYDEENは休止中のため、下の現行事業には入れていません。
+> 環境調整によるメンタルヘルスケアを行う、三重県四日市市の専門組織です。名古屋西ICから車で約30分、三岐線山城駅から徒歩5分、四日市駅から三岐バス「団地下」も利用できます。電話は{TEL}、所在地は{ADDR}です。代表者は齊藤 連です。相談は電話または問合せフォームで受け付けます。水晶玉とRYDEENは休止中のため、下の現行事業には入れていません。
 
 眠れない、気分の波がある、仕事が続かない、親元にいると息が詰まる、といった悩みに環境調整で対応します。目的は情緒の安定です。精神科にも公的支援にも縁がなかった人を主な対象にしています。書類と手続きは星心会が進めます。相談は電話またはフォームで受け付けます。事業は対象者別に掲載しています（同じ事業が複数の対象に載ることがあります）。
 
@@ -1900,10 +1896,10 @@ L+='''補足：
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
 - ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
-- オンライン呼吸法教室は、毎週火曜 9:30〜10:00（30分）、Google Meetです。カメラはオフでも参加できます。個人は月額3,000円。法人はご相談ください。医療や治療の代わりではありません。申し込みは相談フォーム（https://psr-seishinkai.org/contact/?service=kokyu ）または電話 059-315-0697 です。
+- オンライン呼吸法教室は、毎週火曜 9:30〜10:00（30分）、Google Meetです。カメラはオフでも参加できます。個人は月額3,000円。法人はご相談ください。医療や治療の代わりではありません。申し込みは問合せフォーム（https://psr-seishinkai.org/contact/?service=kokyu ）または電話 059-315-0697 です。
 
 ## その他
-'''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)+f'- 公式LINE: {LINE_ADD}\n'
+'''+''.join(f'- [{n}]({BASE}/{u})\n' for n,u in INFO[:5])+'\n## SNS\n'+''.join(f'- {n}: {u}\n' for n,u in SNS)
 open(OUT+'/llms.txt','w').write(L)
 
 # ---------- redirect stubs ----------

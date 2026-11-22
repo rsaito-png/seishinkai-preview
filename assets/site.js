@@ -5,7 +5,7 @@ document.querySelectorAll('.chips').forEach(c=>{const ans=c.parentElement.queryS
 document.querySelectorAll('.steps').forEach(s=>{const F=JSON.parse(s.querySelector('script').textContent);let i=0;const q=k=>s.querySelector(k),n=F.length;
  const bar=q('.sbar');bar.innerHTML=F.map(()=>'<i></i>').join('');
  function r(a){q('.num').innerHTML=`0${i+1}<small>/ 0${n}</small>`;q('.k').textContent=F[i][0];q('h3').textContent=F[i][1];q('p').textContent=F[i][2];
-  bar.querySelectorAll('i').forEach((x,k)=>x.classList.toggle('on',k<=i));q('.prev').disabled=i===0;q('.next').textContent=i===n-1?'相談する':'次へ';
+  bar.querySelectorAll('i').forEach((x,k)=>x.classList.toggle('on',k<=i));q('.prev').disabled=i===0;q('.next').textContent=i===n-1?'問合せフォーム':'次へ';
   if(a){const c=q('.card');c.classList.remove('anim');void c.offsetWidth;c.classList.add('anim');}}
  q('.next').onclick=()=>{if(i===n-1){location.href=s.dataset.cta;return}i++;r(1)};q('.prev').onclick=()=>{if(i>0){i--;r(1)}};r(0);});
 const aud=document.querySelector('.aud');if(aud){const cards=document.querySelector('.cards'),self=document.querySelector('.self');

@@ -74,7 +74,7 @@ audience: family
 
 ### 申し込み
 
-電話またはLINE
+電話または問合せフォーム
 
 ## よくある質問
 
@@ -116,4 +116,4 @@ audience: family
 
 ### 家庭の環境ごと見直したい場合は？
 
-ご家族からの相談は、電話または[相談フォーム](https://psr-seishinkai.org/contact/)で受け付けます。
+ご家族からの相談は、電話または[問合せフォーム](https://psr-seishinkai.org/contact/)で受け付けます。

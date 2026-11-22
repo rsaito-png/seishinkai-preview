@@ -39,9 +39,10 @@ img { max-width: 100%; display: block; }
 .sns svg { width: 18px; height: 18px; fill: currentColor; }
 .gh .cta-btn {
   margin-left: auto; background: var(--hi); color: #fff;
-  height: 42px; display: flex; align-items: center; padding: 0 22px;
-  font-size: 14px; font-weight: 600; border-radius: 9999px;
+  height: 42px; display: flex; align-items: center; padding: 0 16px;
+  font-size: 13px; font-weight: 600; border-radius: 9999px;
   box-shadow: 0 2px 8px rgba(46,125,50,0.25);
+  white-space: nowrap;
 }
 .gh .cta-btn:hover { background: #256629; }
 .menu-btn { background: none; border: none; width: 44px; height: 44px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
@@ -175,7 +176,7 @@ section.blk { padding: 80px 24px; max-width: 1080px; margin: 0 auto; }
 }
 .cta .row { display: flex; gap: 14px; max-width: 440px; margin: 28px auto 0; }
 .cta .row a { flex: 1; padding: 14px 0; border-radius: 8px; font-weight: 600; }
-.cta .w { background: #06c755; color: #fff; }
+.cta .w { background: var(--hi); color: #fff; }
 .cta .o { background: #fff; border: 1px solid var(--line); color: var(--ink); }
 .cta .tnum { display: inline-block; margin-top: 18px; font-size: 24px; font-weight: 700; color: var(--ink); }
 
