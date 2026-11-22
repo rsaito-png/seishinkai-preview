@@ -100,7 +100,7 @@ def style_ryozanpaku(o):
     if 'assets/ryozanpaku.css' not in o:
         o=re.sub(
             r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
-            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122f">',
+            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122g">',
             o, count=1)
     old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3><p style="margin:0 0 12px">お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p><h3 class="oh">入居までの流れ</h3><dl class="info" style="margin:6px 0 16px"><dt>ご相談</dt><dd>まずは今のお気持ちや不安をお伺いします</dd><dt>見学・面談</dt><dd>部屋と暮らしを見ていただき、面談します。</dd><dt>契約・入居</dt><dd>入居者さんご本人と契約し、入居します。</dd></dl><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p></div></section>'
     new='''<section class="blk" id="what"><div class="ryo-body">
