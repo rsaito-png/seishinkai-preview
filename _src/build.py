@@ -33,8 +33,27 @@ def org_node():
       "sameAs":[u for _,u in SNS]+[LINE_ADD],
       "founder":{"@type":"Person","@id":BASE+"/#founder","name":"齊藤 連","jobTitle":"代表"}}
 # ページ本文にある範囲だけ。訪問とオンライン研修に、本部の番地は付けない。
-SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
+SERVICE_AREA={'shichirin/':['菰野町','三重県'],'ryozanpaku/':['日本','四日市市','三重県'],'chamu/':['四日市市','三重県'],'kintoun/':['四日市市','菰野町','三重県'],'leo/':['四日市市','三重県'],'leo/parent-training/':['四日市市','三重県'],'leo/assessment/':['四日市市','三重県']}
 NO_SERVICE_ADDRESS={'kintoun/','business/stress-check-training/','kokyu/'}
+def residence_node(d, path):
+    node={
+        '@type':'Residence',
+        '@id':BASE+'/'+path+'#place',
+        'name':'メンタルピアレジデンス 梁山泊',
+        'alternateName':['自立支援寮 梁山泊','梁山泊'],
+        'url':BASE+'/'+path,
+        'description':d.get('desc') or '',
+        'numberOfRooms':5,
+        'telephone':d.get('tel') or TEL,
+        'areaServed':[{'@type':'Country','name':'日本'},'四日市市','三重県'],
+        'amenityFeature':[
+            {'@type':'LocationFeatureSpecification','name':'朝夕の食事'},
+            {'@type':'LocationFeatureSpecification','name':'宿直の職員'},
+        ],
+    }
+    if d.get('addr_ld'):
+        node['address']=d['addr_ld']
+    return node
 def service_node(d, path):
     kind=d.get('type') or 'Service'
     if kind in ('LocalBusiness','Residence'): kind='Service'
@@ -56,7 +75,7 @@ ICON={'X':'<svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3
 'Threads':'<svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.3-.1c-.2-3.3-2-5.1-5-5.2h-.1c-1.8 0-3.3.8-4.2 2.2l1.6 1.1c.7-1 1.7-1.2 2.6-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.7-.2-2.6-.1-2.6.1-4.3 1.7-4.2 3.8.1 1.1.6 2 1.5 2.6.8.5 1.8.8 2.8.7 1.4-.1 2.4-.6 3.2-1.5.6-.7.9-1.6 1.1-2.7.7.4 1.2.9 1.4 1.6.5 1.1.5 2.9-1 4.4-1.3 1.3-2.9 1.9-5.3 1.9-2.6 0-4.6-.9-5.9-2.5C5.2 17.1 4.5 14.8 4.5 12s.7-5.1 1.9-6.6C7.7 3.8 9.7 3 12.3 3c2.7 0 4.7.8 6 2.5.7.8 1.2 1.8 1.5 3l1.9-.5c-.4-1.5-1-2.7-1.9-3.8C18.2 2.1 15.7 1 12.3 1h-.1C8.9 1 6.4 2.1 4.7 4.2 3.2 6.1 2.5 8.7 2.5 12s.7 5.9 2.2 7.8c1.7 2.1 4.2 3.2 7.5 3.2h.1c2.9 0 5-.8 6.7-2.5 2.3-2.3 2.2-5.1 1.4-6.9-.5-1.2-1.6-2.2-2.7-2.5zm-5 4.9c-1.1.1-2.3-.4-2.4-1.5 0-.8.6-1.7 2.4-1.8h.6c.7 0 1.3.1 1.9.2-.2 2.7-1.5 3-2.5 3.1z"/></svg>'}
 SVCS=[ # key,name,url,cat,line,thumb
 ('shichirin','しちりんの会','shichirin/','自費参加｜手続き不要','七輪で火を起こし、焼いて食べます。手続きも診断も要りません。','fish'),
-('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','仕事はできる人が、働き続けるための住まいです。親元を出る拠点にもなります。','homemeal'),
+('ryozanpaku','梁山泊','ryozanpaku/','メンタルピアレジデンス｜家賃 月8万円','就労できる人の住まいです。全国から入居できます。就職活動の拠点にもなります。','homemeal'),
 ('kokyu','オンライン呼吸法教室','kokyu/','オンライン｜毎週火曜','毎週火曜 9:30〜10:00。カメラはオフでも参加できます。',None),
 ('chamu','茶夢','chamu/','統合失調症・自閉症の方のための日中の居場所','料理・喫茶・読書・アートで、日中を安全に過ごす場所です。','counter'),
 ('kintoun','金斗雲','kintoun/','訪問｜アウトリーチ','家族が家から出ないなら、こちらから自宅へ行きます。',None),
@@ -136,6 +155,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
     body_class=join_cls(body_class, aud_class(path, aud))
     graph=[org_node()]
     if ld: graph+=ld
+    og_img=BASE+'/img/ryozanpaku_og.jpg' if path=='ryozanpaku/' else BASE+'/img/hero_top.jpg'
     return f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -145,7 +165,19 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{BASE}/{path}">
-<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/img/hero_top.jpg">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{BASE}/{path}">
+<meta property="og:site_name" content="星心会">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="{og_img}">
+<meta property="og:image:alt" content="{esc(title)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@gcbfhq">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(desc)}">
+<meta name="twitter:image" content="{og_img}">
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
@@ -221,7 +253,7 @@ SEO={
  'kintoun/':('居宅介護 金斗雲｜三重県四日市市｜星心会','家から出られない、窓口に行けない。金斗雲は、外に出にくい方とそのご家族のための居宅介護（訪問支援）です。出向くのは四日市市と菰野町を中心とした三重県内です。'),
  'leo/':('放課後等デイサービス・児童発達支援 レオ｜四日市市あさけが丘｜星心会','情緒を整え、落ち着きを取り戻すことを目指す療育。児童発達支援・放課後等デイサービスのレオは、発達が気になる2歳から18歳までが対象です。三重県四日市市あさけが丘。'),
  'chamu/':('生活介護 茶夢｜三重県四日市市｜星心会','統合失調症・自閉症の方のための日中の居場所。生活介護事業所の茶夢は、料理・喫茶・読書・アートで静かに過ごす場です。短時間利用可。三重県四日市市あさけが丘。'),
- 'ryozanpaku/':('メンタルピアレジデンス 梁山泊｜三重県四日市市｜星心会','メンタルピアレジデンス・梁山泊は、仕事はできるのに心の波で崩れやすい人が、働き続けるための住まいです。似た者同士で暮らし、仕事帰りに整えます。親元を出たい人の住まいにもなります。家賃は月8万円で、朝夕食事付きです。ほかに費用はかかりません。三重県四日市市山城町、名古屋西ICから車で約30分です。'),
+ 'ryozanpaku/':('梁山泊｜全国から入居可・就労できる人の住まい｜四日市市 星心会','メンタルピアレジデンス・梁山泊は、就労できる人のための住まいです。日本全国から入居できます。就職活動の拠点としても使えます。受給者証は不要です。家賃は月8万円で、朝夕食事付き。三重県四日市市山城町。入居できるのは男性の方です。'),
  'shichirin/':('自費参加 しちりんの会｜三重県菰野町｜星心会','火を囲めば黙っていてもゆるみます。しちりんの会は、七輪で火を起こして食べる自費参加の会です。三重県菰野町、不定期の土曜、手続きは不要です。'),
  'leo/parent-training/':('ペアレントトレーニング レオ｜三重県四日市市｜星心会','アドラー心理学に基づくペアレントトレーニング「アドペア」です。保護者の相談を、三重県四日市市のレオで行います。'),
  'leo/assessment/':('発達検査（WISC-V・新版K式）｜四日市市｜星心会','三重県四日市市あさけが丘のレオで行う発達検査です。WISC-Vは小1〜高2、新版K式は未就学児。各25,000円（税込）で、事前面談・検査・報告書・フィードバック面談を含みます。'),
@@ -718,7 +750,12 @@ def service_page(d):
         add=[(q,a.format(what=__import__('re').sub('<[^>]+>','',d['sub']))) for q,a in COMMON if (q.startswith('診断') or q[:4] not in have and not (path=='chamu/' and q.startswith('家族に'))) and not (path=='leo/' and q.startswith('家族')) and not (q.startswith('いくら') and ('費用' in have or '料金' in have or path in ('ryozanpaku/','chamu/')))]
         d['faq']=add+[f for f in d['faq'] if not f[0].startswith('診断がなくても')]
     if DUMP: _o.makedirs(DUMP,exist_ok=True); open(_o.path.join(DUMP,CI.slug(path)+'.md'),'w').write(CI.page_md(d,OLD.get(path)))
-    ld=[service_node(d,path),faq_ld(d['faq'])]
+    _svc=service_node(d,path)
+    if path=='ryozanpaku/':
+        _svc['serviceType']='住まいとケア'
+        ld=[residence_node(d,path),_svc,faq_ld(d['faq'])]
+    else:
+        ld=[_svc,faq_ld(d['faq'])]
     if path=='kokyu/':
         kokyu_page(d, rel, [service_node(d,path)]); return
     if path=='business/stress-check-training/':
@@ -1023,7 +1060,7 @@ PAGES.append(dict(path='ryozanpaku/',photo='homemeal',pos='50% 45%',deco=True,ex
  what_h='梁山泊の<br>役割',what=[('職場定着','生活基盤','職場定着は生活で決まります。睡眠・食事・帰宅後の過ごし方を整え、欠勤と離職の芽を生活の側で摘みます。'),('ピアで暮らす','似た者同士','同じように心の波を抱えて働く人同士で暮らします。'),('仕事帰りに整える','','職場の緊張を家に持ち込みません。帰って整える場所があります。'),('親元を出る','','親元にいると息が詰まる人の、最初の住まいにもなります。')],
  flow=[["CONTACT","問い合わせ","電話またはLINEで、今の仕事と住まいの状況を要点だけお伝えください。"],["VISIT","見学・面談","建物と暮らし方を確認し、入居の条件を説明します。"],["MOVE","入居","通勤と生活のリズムを組み立てます。"],["KEEP","定着","崩れの兆しは早めに拾い、環境を調整します。職場・紹介元との連携窓口は本部が一本で受けます。"]],
  info=[('正式名称','メンタルピアレジデンス・梁山泊'),('対象','仕事を続けたい、心の波を抱える社会人／親元を出たい人 '+ph('入居条件')),('場所','三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分'),('費用','家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）'),('申し込み','電話 059-315-0697 またはLINE')],
- faq=[('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。紹介・連携の窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),('親に知られずに相談できますか？','常識の範囲内でご希望に応じます。'),('費用は？','家賃は月8万円です。'),('名古屋から移り住めますか？','移り住めます。名古屋西ICから車で約30分です。'),('空室はありますか？部屋は何室ですか？','部屋は5室です。2026年12月時点で、空きは2室あります。入居できるのは男性の方です。'),('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。')],
+ faq=[('費用は？','家賃は月8万円で、朝夕食事付きです。'),('働きながら住めますか？','住めます。働き続けるための住まいとして設計しています。'),('親と離れて暮らせますか？','暮らせます。親元を出る段取り（住まい・日中・お金の手続き）はこちらで組みます。'),('会社に知られずに入居できますか？','対応します。連絡方法は本人の指定に従います。'),('企業や支援機関から紹介できますか？','できます。窓口は本部（059-315-0697）です。本人の同意のうえで、職場との情報共有の方法を決めます。'),('親に知られずに相談できますか？','常識の範囲内でご希望に応じます。'),('空室はありますか？部屋は何室ですか？','部屋は5室です。2026年12月時点で、空きは2室あります。入居できるのは男性の方です。'),('敷金や礼金はかかりますか？','敷金・礼金については、お問い合わせください。'),('生活の支援はありますか？','宿直の職員がいます。食事の提供、ヘルパーによる家事援助（掃除・洗濯・洗い物など）、相談援助があります。'),('県外や遠方からでも入れますか？','はい。日本全国から入居できます。見学は、電話または公式LINEで受け付けます。'),('グループホームですか？受給者証は必要ですか？','梁山泊は、障害福祉サービスのグループホーム（共同生活援助）ではありません。ケアの付いた一般の賃貸住居で、受給者証は不要です。'),('県外から入るとき、役所の手続きは必要ですか？','グループホーム（共同生活援助）ではないため、入居先の市町村で受給者証を申請する必要はありません。'),('就職活動の拠点として使えますか？','はい。ここを足がかりにして就職活動をすることもできます。就労できる方に向いています。')],
  rel=[('しちりんの会','shichirin/'),('相談する','contact/')],cta_h='見学を申し込む'))
 
 PAGES.append(dict(path='kokyu/',keep_desc=True,name='オンライン呼吸法教室',en='KOKYU',short=True,type='Service',
@@ -1643,7 +1680,7 @@ def about(rel): return f'''<section class="blk wide"><div class="h"><span class=
 <dt>スタッフ</dt><dd>公認心理師・精神保健福祉士などの有資格者</dd><dt>事業</dt><dd>{'<br>'.join(lab+'：'+'・'.join(SV[k][1] for k in ks) for _,lab,_,_,ks,_h in AUD)}</dd></dl></section>
 <section class="blk wide" id="services" style="padding-top:0"><div class="h"><span class="en">SERVICES</span><h2>現在の事業</h2></div><ul class="lst">
 <li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加。診断も手続きも要らない集まり。三重県菰野町田光。</li>
-<li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　メンタルピアレジデンス。働き続ける人の住まい。三重県四日市市山城町。</li>
+<li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　メンタルピアレジデンス。就労できる人の住まい。全国から入居可。受給者証不要。三重県四日市市山城町。</li>
 <li><a href="{rel}kokyu/"><span>オンライン呼吸法教室</span></a>　毎週火曜 9:30〜10:00。Google Meet。個人は月額3,000円。</li>
 <li><a href="{rel}kintoun/"><span>金斗雲</span></a>　居宅介護（訪問）。外に出にくい方とそのご家族。四日市市・菰野町など三重県内。</li>
 <li><a href="{rel}chamu/"><span>茶夢</span></a>　生活介護。統合失調症・自閉症の方の日中の居場所。三重県四日市市あさけが丘。</li>
@@ -1736,7 +1773,7 @@ simple_page('news/','お知らせ｜星心会（三重県四日市市）','星�
 def nagoya(rel): return f'''<section class="blk wide prose"><p>星心会の本部（三重県四日市市山城町59-4）は、名古屋から車で約30分です。名古屋にお住まいの方の相談も受け付けています。</p>
 <h2 style="font-size:20px;margin:30px 0 10px">車で</h2><p>名古屋西ICから約30分です。</p>
 <h2 style="font-size:20px;margin:30px 0 10px">電車・バスで</h2><ul class="lst"><li>三岐鉄道三岐線「山城」駅から徒歩5分（本部・梁山泊）</li><li>同駅から徒歩12分（茶夢・レオ／四日市市あさけが丘2-1-42）</li><li>四日市駅から三岐バスで「団地下」下車</li></ul><p>名古屋から近鉄・JRで四日市方面へ出て、三岐線またはバスに乗り継ぎます。運行時刻は各交通機関でご確認ください。</p>
-<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋から移り住むこともできます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li>
+<h2 style="font-size:20px;margin:30px 0 10px">名古屋在住の方が利用できる事業</h2><ul class="lst"><li><a href="{rel}ryozanpaku/"><span>梁山泊</span></a>　名古屋をはじめ、日本全国から入居できます（家賃 月8万円・朝夕食事付き）。</li><li><a href="{rel}shichirin/"><span>しちりんの会</span></a>　自費参加で、名古屋からも参加できます。</li>
 <li><a href="{rel}kokyu/"><span>オンライン呼吸法教室</span></a>　Google Meet。毎週火曜 9:30〜10:00。名古屋からも参加できます。</li></ul>
 <p>公的制度を使う事業は、お住まいの市区町村によって使える制度が異なります。初回連絡時に確認し、手続きはこちらで進めます。金斗雲の訪問は三重県内のみです。</p><p><a href="{rel}access/" style="display:inline;color:var(--hi)">アクセス全体を見る</a>　／　相談 059-315-0697</p></section>'''
 simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICから車で約30分｜星心会（三重県四日市市）','名古屋から星心会（三重県四日市市山城町）へは、名古屋西ICから車で約30分。三岐線山城駅から徒歩5分。名古屋在住の方が利用できる事業も紹介します。','名古屋からのアクセス','FROM NAGOYA',nagoya)
@@ -1820,7 +1857,8 @@ simple_page('sitemap/','サイトマップ｜星心会','星心会のサイト�
 # 休止ページは noindex のまま残し、サイトマップには出さない。robots.txt では塞がない。
 PAUSED_PATHS={'suishodama/','rydeen/'}
 def indexable(u): return (u or '') not in PAUSED_PATHS and not under_construction(u)
-open(OUT+'/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{BASE}/{u}</loc></url>\n' for n,u in dict.fromkeys(ALL+[('サイトマップ','sitemap/')]) if indexable(u))+'</urlset>\n')
+LASTMOD={'ryozanpaku/':'2026-11-22'}
+open(OUT+'/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{BASE}/{u}</loc>'+(f'<lastmod>{LASTMOD[u]}</lastmod>' if u in LASTMOD else '')+'</url>\n' for n,u in dict.fromkeys(ALL+[('サイトマップ','sitemap/')]) if indexable(u))+'</urlset>\n')
 
 # ---------- 404 (absolute-free: uses JS to find base) ----------
 o=head('/seishinkai-preview/','ページが見つかりません｜星心会','','404.html')
@@ -1842,7 +1880,7 @@ for _,lab,en,lead,ks,_h in AUD:
     L+=f'## {lab}向け\n{lead}\n'+''.join(f'- [{SV[k][1]}]({BASE}/{SV[k][2]}): {'。'.join(x for x in (SV[k][3],SV[k][4]) if x)}\n' for k in ks)+'\n'
 L+='''補足：
 - 茶夢は統合失調症・自閉症の方のための日中の居場所です。
-- メンタルピアレジデンス・梁山泊は、障害者雇用で働く人の職場定着を支える住まいとケアの場です。企業・JEED・ハローワーク・労働局からの紹介・連携は本部（059-315-0697）が窓口です。
+- メンタルピアレジデンス・梁山泊は、就労できる人のための住まいとケアの場です。ケアの付いた一般の賃貸住居で、受給者証は不要です。日本全国から入居できます。就職活動の拠点としても使えます。入居できるのは男性の方です（部屋は5室、2026年12月時点で空きは2室）。企業・JEED・ハローワーク・労働局からの紹介・連携は本部（059-315-0697）が窓口です。
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
 - ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
