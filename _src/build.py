@@ -811,10 +811,11 @@ def service_page(d):
 .hero.ryo-hero .hin h1 .ryo-yomi{display:block;margin-top:8px;font-size:.34em;font-weight:600;letter-spacing:.16em;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.7)}
 .hero.ryo-hero .copy{font-size:clamp(16px,2.2vw,20px);font-weight:500;line-height:1.55;margin-top:12px;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.65)}
 .hero.ryo-hero .sub{font-size:14px;font-weight:400;color:#e2e8f0;text-shadow:0 1px 3px rgba(0,0,0,.65)}
-.hero.ryo-hero .copy.ryo-catch{display:inline-block;width:fit-content;max-width:100%;margin:12px 0 0;padding:10px 16px 12px;box-sizing:border-box;background:rgba(15,23,42,.82);color:#fff;font-family:"Noto Serif JP",serif;font-weight:700;line-height:1.5;letter-spacing:.04em;text-shadow:none;border-bottom:4px solid #2e7d32}
-.hero.ryo-hero .copy.ryo-catch span{display:block}
-.hero.ryo-hero .ryo-catch-main{font-size:clamp(17px,2.5vw,24px)}
-.hero.ryo-hero .ryo-catch-sub{margin-top:6px;font-size:clamp(16px,2.2vw,22px);letter-spacing:.1em;color:#dcfce7;font-weight:700}
+.hero.ryo-hero .copy.ryo-catch{display:inline-block;width:fit-content;max-width:100%;margin:14px 0 0;padding:0 0 0 12px;box-sizing:border-box;background:none;border:0;border-left:2px solid #fbbf24;color:#fff;font-family:"Noto Serif JP",serif;font-weight:600;line-height:1.65;letter-spacing:.06em;text-shadow:0 1px 2px rgba(0,0,0,.92),0 2px 8px rgba(0,0,0,.78),0 0 18px rgba(0,0,0,.55)}
+.hero.ryo-hero .ryo-catch-main{display:block;font-size:clamp(16px,2.2vw,22px);font-weight:600}
+.hero.ryo-hero .ryo-catch-nowrap{white-space:nowrap}
+.hero.ryo-hero .ryo-catch-sub{display:inline-block;position:relative;margin-top:8px;padding:0 .04em .12em;font-size:clamp(15px,2vw,20px);letter-spacing:.12em;color:#fff;font-weight:600}
+.hero.ryo-hero .ryo-catch-sub::after{content:'';position:absolute;left:0;right:0;bottom:.06em;height:3px;background:#f59e0b;border-radius:1px 2px 2px 1px;transform:skewX(-10deg);opacity:.92;pointer-events:none}
 .ryo-vac{margin-top:16px;background:rgba(255,255,255,.96);color:#1e293b;border-radius:12px;padding:14px 16px;max-width:560px}
 .ryo-badge{display:inline-block;background:#c2410c;color:#fff;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:8px 18px;font-size:20px;line-height:1.35;box-shadow:0 2px 0 #7c2d12}
 .ryo-vac .ryo-lead{margin:8px 0 0;font-size:15px;font-weight:700}
