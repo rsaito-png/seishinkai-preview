@@ -152,6 +152,15 @@ def style_ryozanpaku(o):
         o=o.replace(old,new,1)
     # Already-styled pages: keep the card layout, apply later copy/layout fixes.
     o=re.sub(r'<p class="svc">メンタルピアレジデンス｜家賃 月8万円</p>\s*','',o,count=1)
+    catch='<p class="copy ryo-catch"><span class="ryo-catch-main">障害者雇用（精神）で働く人のためのシェアハウス。</span><span class="ryo-catch-sub">朝夕食事付き。</span></p>'
+    o=re.sub(r'(<section class="hero ryo-hero">[\s\S]*?)<p class="copy(?: ryo-catch)?">[\s\S]*?</p>', r'\1'+catch, o, count=1)
+    _catch_css=(""".hero.ryo-hero .copy.ryo-catch{display:inline-block;width:fit-content;max-width:100%;margin:12px 0 0;padding:10px 16px 12px;box-sizing:border-box;background:rgba(15,23,42,.82);color:#fff;font-family:"Noto Serif JP",serif;font-weight:700;line-height:1.5;letter-spacing:.04em;text-shadow:none;border-bottom:4px solid #2e7d32}
+.hero.ryo-hero .copy.ryo-catch span{display:block}
+.hero.ryo-hero .ryo-catch-main{font-size:clamp(17px,2.5vw,24px)}
+.hero.ryo-hero .ryo-catch-sub{margin-top:6px;font-size:clamp(16px,2.2vw,22px);letter-spacing:.1em;color:#dcfce7;font-weight:700}""")
+    if '.copy.ryo-catch{' not in o:
+        o=o.replace('.hero.ryo-hero .sub{font-size:14px;font-weight:400;color:#e2e8f0;text-shadow:0 1px 3px rgba(0,0,0,.65)}',
+                    '.hero.ryo-hero .sub{font-size:14px;font-weight:400;color:#e2e8f0;text-shadow:0 1px 3px rgba(0,0,0,.65)}\n'+_catch_css, 1)
     short='<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p>'
     long='<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分<br>三岐バス「団地下」 徒歩30秒<br>マックスバリュ（7〜23時営業） 徒歩1分<br>クスリのアオキ 徒歩3分<br>ローソン 徒歩7分</p>'
     o=o.replace(short,long,1)

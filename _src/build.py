@@ -261,7 +261,7 @@ SEO={
  'kintoun/':('居宅介護 金斗雲｜三重県四日市市｜星心会','家から出られない、窓口に行けない。金斗雲は、外に出にくい方とそのご家族のための居宅介護（訪問支援）です。出向くのは四日市市と菰野町を中心とした三重県内です。'),
  'leo/':('放課後等デイサービス・児童発達支援 レオ｜四日市市あさけが丘｜星心会','情緒を整え、落ち着きを取り戻すことを目指す療育。児童発達支援・放課後等デイサービスのレオは、発達が気になる2歳から18歳までが対象です。三重県四日市市あさけが丘。'),
  'chamu/':('生活介護 茶夢｜三重県四日市市｜星心会','統合失調症・自閉症の方のための日中の居場所。生活介護事業所の茶夢は、料理・喫茶・読書・アートで静かに過ごす場です。短時間利用可。三重県四日市市あさけが丘。'),
- 'ryozanpaku/':('梁山泊｜障害者雇用で働く人の住まい・受給者証不要・全国から入居可｜四日市市 星心会','メンタルピアレジデンス・梁山泊は、障害者雇用で働く人の住まいです。精神障害のある人は、雇用されても仕事が続かないことが多いです。就職後1年の職場定着率は49.3%です（障害者職業総合センター、2017年）。栄養豊かな食事、居宅介護による家事のサポート、社会経験豊富な職員からのアドバイスがあります。受給者証は不要で、日本全国から入居できます。家賃は月8万円で、朝夕食事付き。三重県四日市市山城町。入居できるのは男性の方です。'),
+ 'ryozanpaku/':('障害者雇用（精神）で働く人のためのシェアハウス。朝夕食事付き。｜梁山泊｜四日市市 星心会','障害者雇用（精神）で働く人のためのシェアハウス。朝夕食事付き。家賃は月8万円。受給者証は不要で、日本全国から入居できます。三重県四日市市山城町。入居できるのは男性の方です。'),
  'shichirin/':('自費参加 しちりんの会｜三重県菰野町｜星心会','火を囲めば黙っていてもゆるみます。しちりんの会は、七輪で火を起こして食べる自費参加の会です。三重県菰野町、不定期の土曜、手続きは不要です。'),
  'leo/parent-training/':('ペアレントトレーニング レオ｜三重県四日市市｜星心会','アドラー心理学に基づくペアレントトレーニング「アドペア」です。保護者の相談を、三重県四日市市のレオで行います。'),
  'leo/assessment/':('発達検査（WISC-V・新版K式）｜四日市市｜星心会','三重県四日市市あさけが丘のレオで行う発達検査です。WISC-Vは小1〜高2、新版K式は未就学児。各25,000円（税込）で、事前面談・検査・報告書・フィードバック面談を含みます。'),
@@ -811,6 +811,10 @@ def service_page(d):
 .hero.ryo-hero .hin h1 .ryo-yomi{display:block;margin-top:8px;font-size:.34em;font-weight:600;letter-spacing:.16em;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.7)}
 .hero.ryo-hero .copy{font-size:clamp(16px,2.2vw,20px);font-weight:500;line-height:1.55;margin-top:12px;color:#e2e8f0;text-shadow:0 1px 4px rgba(0,0,0,.65)}
 .hero.ryo-hero .sub{font-size:14px;font-weight:400;color:#e2e8f0;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+.hero.ryo-hero .copy.ryo-catch{display:inline-block;width:fit-content;max-width:100%;margin:12px 0 0;padding:10px 16px 12px;box-sizing:border-box;background:rgba(15,23,42,.82);color:#fff;font-family:"Noto Serif JP",serif;font-weight:700;line-height:1.5;letter-spacing:.04em;text-shadow:none;border-bottom:4px solid #2e7d32}
+.hero.ryo-hero .copy.ryo-catch span{display:block}
+.hero.ryo-hero .ryo-catch-main{font-size:clamp(17px,2.5vw,24px)}
+.hero.ryo-hero .ryo-catch-sub{margin-top:6px;font-size:clamp(16px,2.2vw,22px);letter-spacing:.1em;color:#dcfce7;font-weight:700}
 .ryo-vac{margin-top:16px;background:rgba(255,255,255,.96);color:#1e293b;border-radius:12px;padding:14px 16px;max-width:560px}
 .ryo-badge{display:inline-block;background:#c2410c;color:#fff;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:8px 18px;font-size:20px;line-height:1.35;box-shadow:0 2px 0 #7c2d12}
 .ryo-vac .ryo-lead{margin:8px 0 0;font-size:15px;font-weight:700}
