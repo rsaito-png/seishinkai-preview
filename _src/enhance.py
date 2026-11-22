@@ -85,6 +85,57 @@ def put(o,id_,block,anchor):
     pat=r'<section class="[^"]*cta[^"]*"' if anchor=='cta' else re.escape(anchor)
     m=re.search(pat,o) or re.search(r'<footer class="gf">',o)
     return o[:m.start()]+blk+o[m.start():] if m else o+blk
+def style_ryozanpaku(o):
+    """梁山泊の本文をカードと写真の見せ方にする。文言は変えない。build 後も残す。"""
+    if 'Noto+Serif+JP' not in o:
+        o=o.replace(
+            'family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap',
+            'family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@500;700&display=swap',
+            1)
+    if 'assets/ryozanpaku.css' not in o:
+        o=re.sub(
+            r'(<link rel="stylesheet" href="[^"]*assets/site\.css[^"]*">)',
+            r'\1\n<link rel="stylesheet" href="../assets/ryozanpaku.css?v=20261122c">',
+            o, count=1)
+    old='<section class="blk" id="what"><div class="prose old"><h3 class="oh">「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3><p style="margin:0 0 12px">お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p><h3 class="oh">入居までの流れ</h3><dl class="info" style="margin:6px 0 16px"><dt>ご相談</dt><dd>まずは今のお気持ちや不安をお伺いします</dd><dt>見学・面談</dt><dd>部屋と暮らしを見ていただき、面談します。</dd><dt>契約・入居</dt><dd>入居者さんご本人と契約し、入居します。</dd></dl><h3 class="oh">家賃・部屋数</h3><dl class="info" style="margin:6px 0 16px"><dt>家賃</dt><dd>家賃 月8万円（朝夕食事付き。ほかに費用はかかりません）</dd></dl><h3 class="oh">見学・ご相談</h3><p style="margin:0 0 12px">「まだ決める段階じゃない…」という方も大歓迎です。<br>見学とご相談は、電話またはLINEで受け付けます。</p><h3 class="oh">場所</h3><p style="margin:0 0 12px">三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p><h3 class="oh">申し込み</h3><p style="margin:0 0 12px">電話 059-315-0697 またはLINE</p></div></section>'
+    new='''<section class="blk" id="what"><div class="ryo-body">
+<div class="ryo-lead-card">
+<h3>「実家を出たい。でも、一人暮らしのイメージがつかない…」</h3>
+<p>お金のことや日中の過ごし方など、分からないことがあっても大丈夫です。<br>あなたの「出たい」という気持ちから、一緒に現実的な形にしていきます。</p>
+</div>
+<p class="ryo-sec-title">入居までの流れ</p>
+<ol class="ryo-steps">
+<li><div class="k">ご相談</div><div class="v">まずは今のお気持ちや不安をお伺いします</div></li>
+<li><div class="k">見学・面談</div><div class="v">部屋と暮らしを見ていただき、面談します。</div></li>
+<li><div class="k">契約・入居</div><div class="v">入居者さんご本人と契約し、入居します。</div></li>
+</ol>
+<div class="ryo-facts">
+<div class="ryo-rent">
+<img class="ryo-photo" src="../img/homemeal.jpg" alt="食事の様子" width="800" height="500">
+<div class="ryo-rent-inner">
+<p class="ryo-sec-title">家賃</p>
+<p class="ryo-num">月8万円<small>朝夕食事付き</small></p>
+<p>ほかに費用はかかりません</p>
+</div>
+</div>
+<div class="ryo-place">
+<img class="ryo-photo" src="../img/yamashiro_st.jpg" alt="山城駅" width="800" height="500" loading="lazy">
+<div class="ryo-place-inner">
+<p class="ryo-sec-title">場所</p>
+<p>三重県四日市市山城町59-4<br>三岐線 山城駅から徒歩5分<br>名古屋西ICから車で約30分</p>
+</div>
+</div>
+</div>
+<div class="ryo-visit">
+<p class="ryo-sec-title">見学・ご相談</p>
+<p>「まだ決める段階じゃない…」という方も大歓迎です。<br>見学とご相談は、電話またはLINEで受け付けます。</p>
+<p style="margin-top:10px">電話 059-315-0697 またはLINE</p>
+</div>
+</div></section>'''
+    if old in o:
+        o=o.replace(old,new,1)
+    return o
+
 def run(OUT):
     todo={}
     for p,i,f,a in PLAN: todo.setdefault(p,[]).append((i,f,a))
@@ -100,4 +151,6 @@ def run(OUT):
         if p=='leo/':
             o=re.sub(r'<!--enh:faq-->.*?<!--/enh:faq-->','',o,flags=re.S)
             o=re.sub(r'<!--enh:faqld-->.*?<!--/enh:faqld-->','',o,flags=re.S)
+        if p=='ryozanpaku/':
+            o=style_ryozanpaku(o)
         open(fn,'w',encoding='utf-8').write(o)
