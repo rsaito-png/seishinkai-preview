@@ -171,24 +171,10 @@ def facts_html(rel):
       <dd>お子さんやその日のメンバーに合わせて選びます。金曜は運動プログラム。</dd>
     </dl>
   </div>
-  <p class="leo-maps-reviews">Googleマップの口コミ評価 5.0（7件、2026年11月時点）　{MAPS_REVIEWS_A}</p>
   <p class="leo-faq-link"><a href="{rel}leo/faq/">レオのよくある質問</a></p>
 </section>'''
 
-def nearby_html(rel):
-    return f'''<section class="enh" id="nearby">
-  <span class="en">NEARBY</span>
-  <h2>近隣の市町（東員町・川越町・朝日町・菰野町・桑名市）にお住まいの方へ</h2>
-  <p>三重郡東員町、三重郡川越町、三重郡朝日町、三重郡菰野町、桑名市にお住まいの方にも、レオをご利用いただけます。これらの市町への送迎もできます。状況により、保護者の方に送迎をお願いすることもあります。</p>
-  <p>受給者証は、お住まいの市町で発行されます。四日市市にある事業所も利用できます。空き状況や見学のご相談は、電話（070-6967-0011）、<a href="{rel}contact/#line">公式LINE</a>、または<a href="{rel}contact/">相談フォーム</a>からお気軽にどうぞ。</p>
-</section>'''
 
-def consultants_html(rel):
-    return f'''<section class="enh" id="consultants">
-  <span class="en">FOR CONSULTANTS</span>
-  <h2>相談支援専門員の方へ</h2>
-  <p>レオでは、上限額管理や個別支援計画の共有をデジタル化しています。紙の書類を受け渡ししなくても、相談員さんと情報を共有できます。独自のシステムを導入しており、使い方は丁寧にお伝えしています。それを使っていただかなくてもけっこうです。空き状況（2026年12月時点）は、月曜日のみ満員で、火〜金は空きがあります。ご相談は、電話（<a href="tel:07069670011">070-6967-0011</a>）、<a href="{rel}contact/#line">公式LINE</a>、<a href="{rel}contact/">相談フォーム</a>からどうぞ。</p>
-</section>'''
 
 def faq_body(rel):
     items = ''.join('<details><summary>%s</summary><div>%s</div></details>' % (q, a) for q, a in faq_resolved(rel))
