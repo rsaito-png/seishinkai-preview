@@ -196,3 +196,143 @@ section.blk { padding: 80px 24px; max-width: 1080px; margin: 0 auto; }
   padding: 13px 26px; border-radius: 9999px; box-shadow: 0 6px 20px rgba(46,125,50,0.35);
 }
 @media(min-width: 900px){ .fab { display: none; } }
+
+/* Restored subpage layout from 2f446d2 (v=20261102e).
+   Scoped to body.sub-layout so the top page and hand-placed pages
+   (レオ, 茶夢, leo/assessment, 梁山泊, 金斗雲) are unchanged. */
+body.sub-layout { --sub-accent: #1f2937; }
+
+body.sub-layout .hero .hin h1,
+body.sub-layout .hero .hin h1.long {
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 30px !important;
+  letter-spacing: -0.01em !important;
+  margin: 16px 0 !important;
+  line-height: 1.2 !important;
+}
+@media (min-width: 900px) {
+  body.sub-layout .hero .hin h1,
+  body.sub-layout .hero .hin h1.long {
+    font-size: 64px !important;
+  }
+}
+
+body.sub-layout .hero.short { min-height: 72svh; }
+
+body.sub-layout .h h2 { font-size: 28px; line-height: 1.3; }
+@media (min-width: 900px) {
+  body.sub-layout .h h2 { font-size: 36px; }
+}
+
+body.sub-layout .gal {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+body.sub-layout .gal img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+@media (min-width: 900px) {
+  body.sub-layout .gal { grid-template-columns: repeat(4, 1fr); }
+}
+
+body.sub-layout dl.info {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  border-top: 2px solid var(--ink);
+  font-size: 14px;
+}
+body.sub-layout dl.info dt,
+body.sub-layout dl.info dd {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+body.sub-layout dl.info dt {
+  color: var(--soft);
+  letter-spacing: 0.02em;
+}
+@media (min-width: 900px) {
+  body.sub-layout dl.info { font-size: 18px; }
+}
+
+body.sub-layout .lst {
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+body.sub-layout .lst li {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-size: 14px;
+}
+body.sub-layout .lst li b { display: block; font-size: 15px; }
+body.sub-layout .lst a {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+body.sub-layout .lst a:after { content: "→"; color: var(--hi); }
+@media (min-width: 900px) {
+  body.sub-layout .lst li { font-size: 18px; }
+  body.sub-layout .lst li b { font-size: 19px; }
+}
+
+body.sub-layout .big30 {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 40px;
+  line-height: 1.2;
+}
+body.sub-layout .big30 em {
+  font-style: normal;
+  font-family: Inter, sans-serif;
+  color: var(--hi);
+}
+
+body.sub-layout :is(.h h2, .hin .copy, .prose h2, .prose h3, section.blk > h2, section.blk > h3) {
+  display: block !important;
+  width: fit-content;
+  max-width: 100%;
+  border-left: 4px solid var(--sub-accent) !important;
+  border-bottom: 2px solid var(--sub-accent) !important;
+  padding: 0.06em 0.15em 0.28em 0.5em !important;
+  margin-top: 0.4em !important;
+  margin-bottom: 0.6em !important;
+  text-wrap: balance;
+}
+body.sub-layout :is(.h h2, .prose h2, .prose h3, section.blk > h2, section.blk > h3):first-child {
+  margin-top: 0 !important;
+}
+
+body.sub-layout :is(.hin .sub, .prose p, .prose li, .intro, .ans, .card p, dl.info dd, details p, .lst li, .h p, section.blk p:not(.big30):not(.nm):not(.ct):not(.en), blockquote, blockquote div) {
+  line-height: 2 !important;
+  color: #374151 !important;
+}
+
+body.sub-layout :is(.hin, .hero > .acc, section.blk:not(:has(.cards)), .rel) {
+  max-width: 800px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+body.sub-layout section.blk:has(.cards) :is(.h p, .prose, .prose p) { max-width: 800px; }
+
+@media (min-width: 900px) {
+  body.sub-layout section.blk.wide:not(:has(.cards)),
+  body.sub-layout .wide:not(section):not(:has(.cards)) {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 800px);
+    gap: 28px 40px;
+    align-items: start;
+    max-width: min(1120px, 100%) !important;
+  }
+  body.sub-layout section.blk.wide .h,
+  body.sub-layout .wide .h { margin: 0; }
+  body.sub-layout section.blk.wide .h p { max-width: 16em; }
+  body.sub-layout section.blk.wide > :not(.h) { max-width: 800px; }
+}

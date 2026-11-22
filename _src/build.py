@@ -150,8 +150,12 @@ def P(t): return f'<span class="ph">要確認：{t}</span>'
 PH=set()
 def ph(t): PH.add(t); return P(t)
 
+_NO_SUB_LAYOUT = {'', 'leo/', 'chamu/', 'leo/assessment/', 'ryozanpaku/', 'kintoun/', 'business/stress-check-training/'}
 def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
     body_class=join_cls(body_class, aud_class(path, aud))
+    key = path if path.endswith('/') or path in ('', '404.html') else path + '/'
+    if key not in _NO_SUB_LAYOUT and path not in _NO_SUB_LAYOUT:
+        body_class=join_cls(body_class, 'sub-layout')
     graph=[org_node()]
     if ld: graph+=ld
     og_img=BASE+'/img/ryozanpaku_og.jpg' if path=='ryozanpaku/' else BASE+'/img/hero_top.jpg'
@@ -180,7 +184,7 @@ def head(rel,title,desc,path,ld=None,extra='',body_class='',aud=None):
 <link rel="icon" href="{rel}img/favicon.svg" type="image/svg+xml"><link rel="icon" href="{rel}img/favicon.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{rel}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/site.css?v=20261122a">{extra}
+<link rel="stylesheet" href="{rel}assets/site.css?v=20261122b">{extra}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)}</script>
 {ga_snippet(path)}
 </head>
@@ -562,6 +566,7 @@ body.kokyu-page{background:linear-gradient(180deg,#e7f7f4 0%,#eef6fb 42%,#fff4ea
     note=''.join(_ky_parts(info.get('注意')))
     letter, sign=kokyu_letter()
     o=head(rel,d['title'],d['desc'],d['path'],ld,aud=d.get('body_aud'))+header(rel)
+    o=o.replace('<body class="aud-self sub-layout">','<body class="aud-self kokyu-page sub-layout">',1)
     o=o.replace('<body class="aud-self">','<body class="aud-self kokyu-page">',1)
     o=o.replace('<body>','<body class="kokyu-page">',1)
     o=o.replace('</head>',style+'</head>',1)
@@ -1825,7 +1830,7 @@ document.addEventListener('submit', function (e) {
 '''
     o=o.replace('<!-- Google tag (gtag.js) -->', stopper+'<!-- Google tag (gtag.js) -->', 1)
     o=o.replace(f'<script src="{rel}assets/site.js"></script>', f'<script src="{rel}assets/contact-config.js"></script>\n<script type="module" src="{rel}assets/contact-intake.mjs"></script>\n<script src="{rel}assets/site.js"></script>', 1)
-    o=o.replace(f'href="{rel}assets/site.css?v=20261122a"', f'href="{rel}assets/site.css?v=20261122a"', 1)
+    o=o.replace(f'href="{rel}assets/site.css?v=20261122b"', f'href="{rel}assets/site.css?v=20261122b"', 1)
     open(fp,'w',encoding='utf-8').write(o)
 _finish_contact_page()
 
