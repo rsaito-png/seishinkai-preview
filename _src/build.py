@@ -1238,9 +1238,13 @@ def load_chrome(parsed):
             m2=_re.search(r'案内：\s*([^（(]+)',x)
             if m2: ch['flow_hint']=m2.group(1).strip()
         elif '申し込み' in x and '：' in x:
+            # 見た目の順は「電話／問合せフォーム」。line_label はフォームボタンの旧キー。
             parts=_slash(x.split('：',1)[-1])
-            if parts: ch['line_label']=parts[0]
-            if len(parts)>1: ch['tel_label']=parts[1]
+            for part in parts:
+                if '電話' in part and 'フォーム' not in part:
+                    ch['tel_label']=part
+                else:
+                    ch['line_label']=part
     steps=_slines(nav.get('steps'))
     if len(steps)>=2: ch['prev'],ch['next']=steps[0],steps[1]
     if _slines(nav.get('prev')): ch['prev']=_slines(nav.get('prev'))[0]
