@@ -46,6 +46,16 @@ function consultClickEvent(href, pagePath, linkLocation) {
   if (!/^[a-z0-9_-]{1,40}$/.test(loc)) loc = 'body';
   return { name: name, params: { page_path: path, link_location: loc, business: contentGroup(path) } };
 }
+function reviewClickEvent(href, pagePath, linkLocation) {
+  var raw = String(href || '');
+  if (!/^https?:\/\/(www\.)?(google\.com\/maps|maps\.google\.com)([/?#]|$)/i.test(raw)) return null;
+  if (!/[?&]cid=/i.test(raw)) return null;
+  var path = String(pagePath || '/').split('?')[0].split('#')[0];
+  if (!path || path.charAt(0) !== '/') path = '/' + (path || '');
+  var loc = String(linkLocation || 'body');
+  if (!/^[a-z0-9_-]{1,40}$/.test(loc)) loc = 'body';
+  return { name: 'review_click', params: { page_path: path, link_location: loc, business: contentGroup(path) } };
+}
 function consultLinkLocation(anchor) {
   var marked = anchor.closest('[data-track]');
   if (marked) return marked.getAttribute('data-track') || 'body';
@@ -61,7 +71,9 @@ function consultLinkLocation(anchor) {
 document.addEventListener('click', function (e) {
   var anchor = e.target && e.target.closest ? e.target.closest('a[href]') : null;
   if (!anchor || typeof gtag !== 'function') return;
-  var event = consultClickEvent(anchor.getAttribute('href'), location.pathname, consultLinkLocation(anchor));
+  var href = anchor.getAttribute('href');
+  var loc = consultLinkLocation(anchor);
+  var event = consultClickEvent(href, location.pathname, loc) || reviewClickEvent(href, location.pathname, loc);
   if (!event) return;
   gtag('event', event.name, event.params);
 }, true);

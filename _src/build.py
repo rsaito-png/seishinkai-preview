@@ -596,7 +596,8 @@ LEO_EXTRA_CSS=LEO_CONSULT_CSS+'''.leo-days{max-width:880px;margin:0 auto;padding
 .leo-facts{max-width:720px;margin:0 auto;padding:8px 20px 48px}
 .leo-facts .leo-info-card{margin-bottom:20px}
 .leo-faq-link{text-align:center;margin:0}
-.leo-faq-link a{color:var(--leo-green);font-weight:700}
+.leo-maps-reviews{text-align:center;margin:0 0 12px;font-size:14.5px;line-height:1.8}
+.leo-faq-link a,.leo-maps-reviews a{color:var(--leo-green);font-weight:700}
 '''
 def leo_consult_html(rel):
     return f'<div class="leo-consult" id="leo-consult" data-track="leo"><a class="o" href="tel:07069670011">電話</a><a class="w" href="{LINE_ADD}">LINE</a><a class="o" href="{rel}contact/">お問い合わせ</a></div>'

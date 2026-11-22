@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const code = readFileSync(path.join(root, "assets/site.js"), "utf8");
-const api = new Function("document", `${code}\nreturn { consultClickEvent, inquiryAcceptedParams, contentGroup, scroll50Event };`)({
+const api = new Function("document", `${code}\nreturn { consultClickEvent, reviewClickEvent, inquiryAcceptedParams, contentGroup, scroll50Event };`)({
   querySelector() { return null; },
   querySelectorAll() { return []; },
   addEventListener() {},
@@ -60,4 +60,19 @@ test("internal LINE buttons and ordinary links are not consult events", () => {
   assert.equal(api.consultClickEvent("https://psr-seishinkai.org/contact/", "/", "body"), null);
   const cleaned = api.consultClickEvent("tel:0593150697", "/contact/?from=ad", "not a place");
   assert.deepEqual(cleaned.params, { page_path: "/contact/", link_location: "body", business: "contact" });
+});
+
+test("Google Maps review links fire review_click with the page and business, and do not include the cid", () => {
+  const href = "https://www.google.com/maps?cid=6914631722605448341";
+  const leo = api.reviewClickEvent(href, "/leo/", "reviews");
+  assert.equal(leo.name, "review_click");
+  assert.deepEqual(leo.params, { page_path: "/leo/", link_location: "reviews", business: "leo" });
+  assert.equal(JSON.stringify(leo).includes("691463"), false);
+  assert.equal(JSON.stringify(leo).includes("cid"), false);
+
+  const faq = api.reviewClickEvent(href, "/leo/faq/?from=home", "reviews");
+  assert.deepEqual(faq.params, { page_path: "/leo/faq/", link_location: "reviews", business: "leo" });
+
+  assert.equal(api.reviewClickEvent("https://www.google.com/maps/search/?api=1&query=三重県四日市市あさけが丘2-1-42", "/access/", "body"), null);
+  assert.equal(api.consultClickEvent(href, "/leo/", "reviews"), null);
 });

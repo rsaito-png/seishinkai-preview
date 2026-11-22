@@ -23,6 +23,12 @@ OFFICE_ID = '2450201047'
 AREA = ['四日市市', '菰野町', '川越町', '朝日町', '東員町']
 
 G = '<a href="{r}guide/jukyushasho/">受給者証ガイド</a>'
+MAPS_REVIEWS_URL = 'https://www.google.com/maps?cid=6914631722605448341'
+MAPS_REVIEWS_A = (
+    f'<a href="{MAPS_REVIEWS_URL}" target="_blank" rel="noopener"'
+    ' data-track="reviews">口コミをGoogleマップで見る</a>'
+)
+
 
 FAQ = [
     (
@@ -101,6 +107,10 @@ FAQ = [
         '場所はどこですか？',
         '三重県四日市市あさけが丘2-1-42 2階です。三岐線 山城駅から徒歩12分、名古屋西ICから車で約30分です。電話は070-6967-0011です。',
     ),
+    (
+        '利用者の声はありますか？',
+        'Googleマップに、保護者の方からの口コミがあります。2026年11月時点の評価は5.0（7件）です。' + MAPS_REVIEWS_A,
+    ),
 ]
 
 def faq_resolved(rel):
@@ -138,6 +148,7 @@ def facts_html(rel):
       <dd>お子さんやその日のメンバーに合わせて選びます。金曜は運動プログラム。</dd>
     </dl>
   </div>
+  <p class="leo-maps-reviews">Googleマップの口コミ評価 5.0（7件、2026年11月時点）　{MAPS_REVIEWS_A}</p>
   <p class="leo-faq-link"><a href="{rel}leo/faq/">レオのよくある質問</a></p>
 </section>'''
 
