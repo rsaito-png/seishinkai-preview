@@ -1947,4 +1947,59 @@ def stamp_ga():
                 nxt=nxt.replace("gtag('js', new Date());", "gtag('js', new Date());\n"+setline, 1)
             if nxt!=text:
                 open(fp,'w',encoding='utf-8').write(nxt)
+
+def normalize_apex_urls():
+    """手置きHTMLも含め、www をapexへ揃え、正規の canonical と og:url を付ける。"""
+    root=_o.path.abspath(OUT)
+    www=('https://www.psr-seishinkai.org','http://www.psr-seishinkai.org')
+    changed=0
+    for dirpath, dirnames, filenames in _o.walk(root):
+        dirnames[:] = [d for d in dirnames if d not in ('.git','archive','_src')]
+        for name in filenames:
+            if not name.endswith('.html'): continue
+            fp=_o.path.join(dirpath, name)
+            rel=_o.path.relpath(fp, root).replace('\\','/')
+            text=open(fp,encoding='utf-8').read()
+            nxt=text
+            for w in www:
+                nxt=nxt.replace(w, BASE)
+            nxt=nxt.replace('//www.psr-seishinkai.org', '//psr-seishinkai.org')
+            is_gallery=rel.startswith('design-gallery/')
+            is_404=rel=='404.html'
+            is_stub=('移動しました' in nxt and 'location.replace' in nxt)
+            if is_gallery:
+                if 'name="robots"' not in nxt:
+                    if '<meta charset="utf-8">' in nxt:
+                        nxt=nxt.replace('<meta charset="utf-8">','<meta charset="utf-8"><meta name="robots" content="noindex">',1)
+                    elif '<head>' in nxt:
+                        nxt=nxt.replace('<head>','<head><meta name="robots" content="noindex">',1)
+            elif not is_404 and not is_stub:
+                if rel=='index.html':
+                    path=''
+                elif rel.endswith('/index.html'):
+                    path=rel[:-len('index.html')]
+                else:
+                    path=rel
+                canon=BASE+'/'+path
+                if _re.search(r'<link\s+rel="canonical"', nxt, _re.I):
+                    nxt=_re.sub(r'(<link\s+rel="canonical"\s+href=")[^"]*(")', r'\1'+canon+r'\2', nxt, count=1, flags=_re.I)
+                else:
+                    tag='<link rel="canonical" href="'+canon+'">'
+                    if '<meta charset="utf-8">' in nxt:
+                        nxt=nxt.replace('<meta charset="utf-8">','<meta charset="utf-8">'+tag,1)
+                    elif '<head>' in nxt:
+                        nxt=nxt.replace('<head>','<head>'+tag,1)
+                if _re.search(r'<meta\s+property="og:url"', nxt, _re.I):
+                    nxt=_re.sub(r'(<meta\s+property="og:url"\s+content=")[^"]*(")', r'\1'+canon+r'\2', nxt, count=1, flags=_re.I)
+                elif 'rel="canonical"' in nxt:
+                    nxt=_re.sub(
+                        r'(<link\s+rel="canonical"\s+href="'+_re.escape(canon)+r'"\s*/?>)',
+                        r'\1\n<meta property="og:url" content="'+canon+'">',
+                        nxt, count=1, flags=_re.I)
+            if nxt!=text:
+                open(fp,'w',encoding='utf-8').write(nxt)
+                changed+=1
+    print('normalize_apex_urls: updated', changed, 'files')
+
 stamp_ga()
+normalize_apex_urls()
