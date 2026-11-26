@@ -227,7 +227,7 @@ def header(rel):
 <h4>INFO</h4>{info}
 {sns_html()}</div>
 '''
-def footer(rel):
+def footer(rel, fab_href=None):
     gs=CHROME.get('groups')
     cols=''
     for i,(_,lab,_,_,ks,_h) in enumerate(AUD):
@@ -239,7 +239,7 @@ def footer(rel):
 <div><h5>INFO</h5><ul>{''.join(f'<li><a href="{rel}{u}">{n}</a></li>' for n,u,sm in _infolinks('foot',_FOOT))}</ul>
 <h5 style="margin-top:20px">FOLLOW</h5>{sns_html(True).replace('class="sns"','class="sns" style="flex-direction:column;align-items:flex-start;gap:10px"')}</div>
 <p class="cp">{html.escape(CHROME.get('copy') or f'© 星心会 {ORG}')}</p></div></footer>
-<a class="fab" href="{rel}contact/">問合せフォーム</a>
+<a class="fab" href="{fab_href or (rel + "contact/")}">問合せフォーム</a>
 <script src="{rel}assets/site.js"></script>
 </body></html>'''
 def write(path,body):
@@ -891,11 +891,13 @@ def service_page(d):
 <div class="row"><a class="o" href="tel:{tel.replace("-","")}">{html.escape(CHROME.get('tel_label') or '電話')}</a><a class="w" href="{form}">{html.escape(CHROME.get('line_label') or '問合せフォーム')}</a></div>{'' if _tdup else f'<a class="tnum" href="tel:{tel.replace("-","")}">{tel}</a>'}{d.get("cta_note","")}</section>'''
     o+=footer(rel); write(path,o)
 
-def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub=''):
+def simple_page(path,title,desc,h1,en,body,photo=None,ld=None,sub='',hero_min=None,fab_href=None,hero_extra_class=''):
     rel=relof(path); o=head(rel,title,desc,path,ld)+header(rel)
     bg=f'<div class="bg" style="background-image:url({rel}img/{photo}.jpg)"></div>' if photo else f'<div class="big">{en.split()[0][:2]}</div>'
-    o+=f'<section class="hero short{"" if photo else " type"}" style="min-height:{"46svh" if photo else "34svh"}">{bg}<div class="hin"><p class="en">{en}</p><h1 class="long">{h1}</h1>{f"<p class=sub>{sub}</p>" if sub else ""}</div></section>'
-    o+=body(rel)+footer(rel); write(path,o)
+    min_h = hero_min if hero_min is not None else ("46svh" if photo else "34svh")
+    extra = f' {hero_extra_class}' if hero_extra_class else ''
+    o+=f'<section class="hero short{"" if photo else " type"}{extra}" style="min-height:{min_h}">{bg}<div class="hin"><p class="en">{en}</p><h1 class="long">{h1}</h1>{f"<p class=sub>{sub}</p>" if sub else ""}</div></section>'
+    o+=body(rel)+footer(rel, fab_href=fab_href); write(path,o)
 
 ACC='四日市市山城町／三岐線 山城駅から徒歩5分／名古屋西ICから車で約30分'
 ACC2='四日市市あさけが丘／三岐線 山城駅から徒歩12分／名古屋西ICから車で約30分'
@@ -1788,12 +1790,10 @@ simple_page('access/nagoya/','名古屋からのアクセス｜名古屋西ICか
 # 公開の問い合わせ方法は電話と問合せフォームのみ。公式LINEは公開しない。
 CONTACT_BLURB='星心会への相談は、電話059-315-0697、または問合せフォームで受け付けます。'
 _CONTACT_OPTIONS=['決まっていない','しちりんの会','自立支援寮　梁山泊','生活介護事業所　茶夢','訪問支援　金斗雲','児発・放デイ　レオ','ペアレントトレーニング','発達検査','雇用定着サポート','ストレスチェック','エージェントコンサル','ストレスチェック実施者養成研修','研修','オンライン呼吸法教室']
-def contact(rel): return f'''<section class="blk" data-track="contact"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
-<ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>
-<section class="blk" style="padding-top:0"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
+def contact(rel): return f'''<section class="blk"><div class="h"><span class="en">FORM</span><h2>フォーム</h2></div>
 <p style="font-size:14px">このフォームの内容は、東京のデータベースに保存します。受付の処理は国外で行われる可能性があります。通知メールや自動返信はありません。</p>
 <p style="font-size:13px;color:var(--soft);margin-top:8px">営業・勧誘目的のご連絡はご遠慮ください。</p>
-<style>.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
+<style>.hero.contact-hero{{min-height:0}}.hero.contact-hero .hin{{padding:20px 24px 16px}}#contact-intake{{scroll-margin-top:80px}}@media(max-width:899px){{.hero.contact-hero .hin h1,.hero.contact-hero .hin h1.long{{margin:8px 0 !important;font-size:24px !important}}}}.form label{{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}}.form input,.form select,.form textarea{{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}}.form textarea{{min-height:140px;resize:vertical}}.form button:disabled{{opacity:.55;cursor:not-allowed;transform:none}}.form .hp{{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}}#contact-error:empty{{display:none}}#contact-error{{color:#9f1239;font-size:14px}}</style>
 <form id="contact-intake" class="form" method="post" action="/contact/" onsubmit="return false" novalidate>
 <label for="contact-service">相談したい事業</label><select id="contact-service" name="service">{''.join(f'<option>{html.escape(s)}</option>' for s in _CONTACT_OPTIONS)}</select>
 <label for="contact-name">お名前</label><input id="contact-name" name="name" type="text" autocomplete="name" maxlength="80" required>
@@ -1803,13 +1803,15 @@ def contact(rel): return f'''<section class="blk" data-track="contact"><div clas
 <button class="btn" type="submit" disabled style="margin-top:18px;width:100%">送信</button>
 <p id="contact-status" role="status" style="margin-top:8px">送信は停止しています。受付の準備が終わるまで、このフォームからは送れません。お電話 <a href="tel:0593150697">059-315-0697</a> をご利用ください。</p>
 <p id="contact-error" role="alert" style="margin-top:8px"></p>
-<p style="font-size:12px;color:var(--soft);margin-top:8px"><a href="{rel}privacy/">プライバシーポリシー</a>が適用されます。</p></form></section>'''
+<p style="font-size:12px;color:var(--soft);margin-top:8px"><a href="{rel}privacy/">プライバシーポリシー</a>が適用されます。</p></form></section>
+<section class="blk" data-track="contact"><div class="h"><span class="en">TEL</span><h2>電話</h2></div><a class="big30" href="tel:0593150697" style="text-decoration:none;letter-spacing:.08em">059-315-0697</a><p style="color:var(--soft);font-size:13px;margin-top:6px">星心会（本部・全事業の窓口）</p>
+<ul class="lst" style="margin-top:20px"><li><b>レオ</b><a href="tel:07069670011" style="display:inline">070-6967-0011</a></li></ul></section>'''
 def _finish_contact_page():
     fp=os.path.join(OUT,'contact','index.html')
     if os.path.isfile(fp):
         print('contact: preserved hand-edited page')
         return
-    simple_page('contact/','問合せフォーム｜電話059-315-0697｜星心会（三重県四日市市）',CONTACT_BLURB,'問合せフォーム','CONTACT',contact)
+    simple_page('contact/','問合せフォーム｜電話059-315-0697｜星心会（三重県四日市市）',CONTACT_BLURB,'問合せフォーム','CONTACT',contact,hero_min='0',fab_href='#contact-intake',hero_extra_class='contact-hero')
     rel='../'
     o=open(fp,encoding='utf-8').read()
     stopper='''<script>
