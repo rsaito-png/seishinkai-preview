@@ -345,6 +345,8 @@ body.sct-page .fab{display:none}
 .sct-stage{background:#f2cb4d;color:#241910}
 .sct-split{max-width:1180px;margin:0 auto;padding:28px 32px 32px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"copy fig" "main opt";column-gap:40px;row-gap:0;align-items:start}
 .sct-copy{grid-area:copy;padding-bottom:20px}
+.sct-open{margin:0 0 16px}
+.sct-open span{display:inline-block;background:#b93812;color:#fff8ec;font-family:"Noto Sans JP","Inter",sans-serif;font-weight:700;font-size:clamp(1rem,2.2vw,1.18rem);letter-spacing:.22em;text-indent:.22em;line-height:1.2;padding:.48em 1.15em;box-shadow:inset 0 0 0 1px rgba(255,248,236,.45)}
 .sct-kicker{margin:0 0 12px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-size:13px;font-weight:500;letter-spacing:.18em;color:#9a3412}
 .sct h1{position:relative;margin:0;padding-left:22px;font-family:"Kaisei Decol","Noto Sans JP",serif;font-weight:700;font-size:clamp(1.9rem,3.6vw,3.05rem);line-height:1.2;letter-spacing:.04em}
 .sct h1::before{content:"";position:absolute;left:0;top:.32em;width:14px;height:14px;background:linear-gradient(#b93812,#b93812) center/14px 3px no-repeat,linear-gradient(#b93812,#b93812) center/3px 14px no-repeat}
@@ -430,6 +432,7 @@ body.sct-page .fab{display:none}
     o+=f'''<main class="sct">
 <section class="sct-stage"><div class="sct-split">
 <div class="sct-copy">
+<p class="sct-open"><span>1月開講</span></p>
 <p class="sct-kicker">労働安全衛生法に基づく実施者養成研修</p>
 <h1><span class="ln">ストレスチェック</span><span class="ln sct-title-b">実施者養成研修</span></h1>
 <p class="sct-lead">{d.get("sub") or ""}</p>
