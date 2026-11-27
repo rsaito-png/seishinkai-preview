@@ -422,7 +422,7 @@ body.sct-page .fab{display:none}
     o=o.replace('<body>','<body class="sct-page">',1)
     o=o.replace('</head>','<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">'+style+'</head>',1)
     g=(d.get('gal') or [('sct_soudan','相談の様子のイラスト')])[0]
-    acts=f'''<div class="sct-acts" data-track="sct"><a class="sct-btn sct-btn-go" href="https://rsaito-png.github.io/portal/sct.html">申し込む</a><a class="sct-btn sct-btn-talk" href="{rel}contact/">問合せフォーム</a></div><p class="sct-quiet">電話 <a href="tel:0593150697">059-315-0697</a></p>'''
+    acts=f'''<div class="sct-acts" data-track="sct"><a class="sct-btn sct-btn-go" href="https://training.psr-seishinkai.org/">申し込む</a><a class="sct-btn sct-btn-talk" href="{rel}contact/">問合せフォーム</a></div><p class="sct-quiet">電話 <a href="tel:0593150697">059-315-0697</a></p>'''
     glance='''<dl class="sct-glance"><div><dt>対象</dt><dd>歯科医師・看護師・精神保健福祉士・公認心理師</dd></div><div><dt>日程・形式</dt><dd>Google Meetのリアルタイム開催。3科目・合計5時間（科目1が2時間、科目2と科目3が各1.5時間）。開催日は申込ページの募集回です。定員はお問い合わせください。</dd></div><div><dt>費用</dt><dd>3科目一括 12,800円（税込）。科目1の免除が承認された場合は10,800円（税込）。</dd></div><div><dt>申し込み</dt><dd>申込ページでアカウントを作り、資格を確認し、開催回を選んで、Squareのカード決済をします。</dd></div></dl>'''
     subjects=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(n)}</h3>{_sct_bits(a)}</div></article>' for i,(n,s,a) in enumerate(d.get('what') or [],1))
     steps=''.join(f'<article class="sct-item"><p class="sct-idx">{i}</p><div><h3>{html.escape(t)}</h3>{_sct_bits(x)}</div></article>' for i,(en,t,x) in enumerate(d.get('flow') or [],1))
@@ -443,7 +443,7 @@ body.sct-page .fab{display:none}
 <p class="sct-rate-k">法定の養成研修</p>
 <p class="sct-rate-n">12,800円</p>
 <p class="sct-rate-d">税込・3科目一括・合計5時間。<br>Google Meetでリアルタイムに受講します。<br>科目1の免除が承認された場合は<span class="sct-nw">10,800円（税込）です。</span></p>
-<p><a class="sct-go" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>
+<p><a class="sct-go" href="https://training.psr-seishinkai.org/">申込ページへ</a></p>
 </div>
 <div class="sct-opt">
 <p class="sct-rate-k">任意の実務研修</p>
@@ -1151,7 +1151,7 @@ PAGES.append(dict(path='business/stress-check-training/',keep_desc=True,deco=Tru
  desc='歯科医師・看護師・精神保健福祉士・公認心理師向けの実施者養成研修です。Google Meetのリアルタイム開催で、3科目・合計5時間。受講料は税込12,800円（科目1免除の承認後は10,800円）。開催回は申込ページで募集します。',
  cat='労働安全衛生法に基づく実施者養成研修',copy=['ストレスチェックの','実施者になるための研修です。'],sub='',acc='',
  what_h='3つの<br>科目',what=[],flow=[],info=[],faq=[],
- rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://rsaito-png.github.io/portal/sct.html">申込ページへ</a></p>'))
+ rel=[('ストレスチェック','business/stress-check/'),('研修','business/training/')],cta_h='申し込む・相談する',cta_note='<p style="margin-top:18px"><a class="btn" href="https://training.psr-seishinkai.org/">申込ページへ</a></p>'))
 
 PAGES.append(dict(path='business/training/',name='研修',en='TRAINING',short=True,type='Service',
  title='研修｜児童指導員研修・合気道護身術｜三重県四日市市 星心会',
@@ -1905,7 +1905,7 @@ L+='''補足：
 - 茶夢は統合失調症・自閉症の方のための日中の居場所です。
 - メンタルピアレジデンス・梁山泊は、障害者雇用で働く人の住まいです。一般の賃貸住居で、居宅介護を利用できます。受給者証は不要です。精神障害のある人は、雇用されても仕事が続かないことが多いです。ハローワーク紹介で一般企業（就労継続支援A型を除く）に就職した人の、就職後1年の職場定着率は49.3%です（障害者職業総合センター「障害者の就業状況等に関する調査研究」調査研究報告書No.137、2017年）。栄養豊かな食事、居宅介護による家事のサポート、社会経験豊富な職員からのアドバイスがあります。親元を出て働きながら暮らせます。日本全国から入居できます。就職活動の足がかりにも使えます。障害者雇用で働いている方、障害者雇用での就職を目指す方にも向いています。入居できるのは男性の方です（部屋は5室、2026年12月時点で空きは2室）。企業・JEED・ハローワーク・労働局からの紹介・連携は本部（059-315-0697）が窓口です。
 - しちりんの会は自費参加です（手続き・診断不要、不定期土曜11:00〜、三重県菰野町田光、食材費込み3,000円）。
-- ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://rsaito-png.github.io/portal/sct.html
+- ストレスチェック実施者養成研修は、歯科医師・看護師・精神保健福祉士・公認心理師が対象です。Google Meetのリアルタイム開催で、科目1 2時間・科目2 1.5時間・科目3 1.5時間の計5時間です。受講料は3科目12,800円、科目1免除（衛生管理者）10,800円（いずれも税込）です。申込：https://training.psr-seishinkai.org/
 - 発達検査はWISC-V（小1〜高2）・新版K式（未就学児）で、各25,000円（税込）です。
 - オンライン呼吸法教室は、毎週火曜 9:30〜10:00（30分）、Google Meetです。カメラはオフでも参加できます。個人は月額3,000円。法人はご相談ください。医療や治療の代わりではありません。申し込みは問合せフォーム（https://psr-seishinkai.org/contact/?service=kokyu ）または電話 059-315-0697 です。
 

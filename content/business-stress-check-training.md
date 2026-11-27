@@ -96,7 +96,7 @@ Squareカード決済
 
 ### 申し込み
 
-[申込ページ](https://rsaito-png.github.io/portal/sct.html)からお申し込みください。
+[申込ページ](https://training.psr-seishinkai.org/)からお申し込みください。
 
 ### 参考資料
 
